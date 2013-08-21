@@ -5,12 +5,12 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
 	<servlet>
-		<servlet-name>Weixin</servlet-name>
+		<servlet-name>WeixinGW</servlet-name>
 		<servlet-class>lemon.apiserver.servlet.WXMPGateWay</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Weixin</servlet-name>
-		<url-pattern>./WeixinMp</url-pattern>
+		<servlet-name>WeixinGW</servlet-name>
+		<url-pattern>/WeixinMp</url-pattern>
 	</servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
