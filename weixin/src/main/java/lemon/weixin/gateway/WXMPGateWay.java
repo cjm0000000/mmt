@@ -1,4 +1,4 @@
-package lemon.apiserver.servlet;
+package lemon.weixin.gateway;
 
 import java.io.IOException;
 import java.io.PrintWriter;

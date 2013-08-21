@@ -6,7 +6,7 @@
 
 	<servlet>
 		<servlet-name>WeixinGW</servlet-name>
-		<servlet-class>lemon.apiserver.servlet.WXMPGateWay</servlet-class>
+		<servlet-class>lemon.weixin.gateway.WXMPGateWay</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WeixinGW</servlet-name>

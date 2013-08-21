@@ -11,12 +11,11 @@
 	<modules>
 		<module>shared</module>
 		<module>weixin</module>
-    <module>apiserver</module>
   </modules>
 	<properties>
 		<mmt-version>0.0.1-SNAPSHOT</mmt-version>
-		<mmt-shared-version>0.0.1-SNAPSHOT</mmt-shared-version>
-		<mmt-weixin-version>0.0.1-SNAPSHOT</mmt-weixin-version>
+		<mmt-shared-version>0.0.5-SNAPSHOT</mmt-shared-version>
+		<mmt-weixin-version>0.0.3-SNAPSHOT</mmt-weixin-version>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

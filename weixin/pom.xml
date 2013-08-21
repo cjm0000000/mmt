@@ -11,7 +11,19 @@
 	<groupId>lemon.weixin</groupId>
 	<artifactId>weixin</artifactId>
 	<version>${mmt-weixin-version}</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>lemon.shared</groupId>
+			<artifactId>shared</artifactId>
+			<version>${mmt-shared-version}</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
