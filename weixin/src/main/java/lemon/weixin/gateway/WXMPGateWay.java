@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lemon.shared.api.MmtAPI;
+import lemon.weixin.biz.WXGZAPI;
+
 /**
  * The gateway of weixin
  * @author lemzhang
@@ -26,7 +29,9 @@ public class WXMPGateWay extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
-		out.print("hello.");
+		MmtAPI api = new WXGZAPI();
+		String msg = null;
+		out.print(api.getReplayMsg(msg));
 	}
 
 
