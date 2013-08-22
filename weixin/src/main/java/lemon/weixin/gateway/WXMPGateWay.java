@@ -40,10 +40,11 @@ public class WXMPGateWay extends HttpServlet {
 		//随机字符串
 		String echostr = req.getParameter("echostr");
 		
-		System.out.println(signature);
-		System.out.println(timestamp);
-		System.out.println(nonce);
-		System.out.println(echostr);
+		System.out.println("signature="+signature);
+		System.out.println("timestamp="+timestamp);
+		System.out.println("nonce="+nonce);
+		System.out.println("echostr="+echostr);
+        
 	}
 
 	/**
