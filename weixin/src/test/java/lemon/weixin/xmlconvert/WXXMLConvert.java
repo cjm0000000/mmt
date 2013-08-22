@@ -7,12 +7,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.EventType;
 import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
+import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.util.WXHelper;
 
@@ -149,6 +151,7 @@ public class WXXMLConvert {
 	}
 	
 	@Test
+	@Ignore
 	public void testMusicMessage() {
 		xStream.processAnnotations(MusicMessage.class);
 		MusicMessage msg = new MusicMessage();
@@ -168,6 +171,41 @@ public class WXXMLConvert {
 				"http://music.baidu.com/a/a/d.mp3".equals(msg2.getMusicUrl()));
 		assertTrue("MUSIC HqMusicUrl message convert faild.",
 				"HQmusic  ss s".equals(msg2.getHqMusicUrl()));
+	}
+	
+	@Test
+	public void testNewsMessage() {
+		xStream.processAnnotations(NewsMessage.class);
+		NewsMessage msg = new NewsMessage();
+		msg.setToUserName("weixin");
+		msg.setFromUserName("lemon");
+		msg.setCreateTime(new Date().getTime());
+		msg.setArticleCount(2);
+		
+		Article a1 = new Article();
+		a1.setTitle("Title A1");
+		a1.setDescription("DESC A1");
+		a1.setPicUrl("pic.taobao.com/aaas/asdf.jpg");
+		a1.setUrl("http://www.baidu.com");
+		
+		Article a2 = new Article();
+		a2.setTitle("Title A2");
+		a2.setDescription("DESC A2");
+		a2.setPicUrl("pic2.taobao.com/aaas/asdf222.jpg");
+		a2.setUrl("http://www.yousas.com");
+		
+		Article[] articles = {a1,a2};
+		
+		msg.setArticles(articles);
+		msg.setMsgId(1024102410241024L);
+		String str = xStream.toXML(msg);
+		System.out.println(str);
+		System.out.println(msg.getArticleCount());
+		NewsMessage msg2 = (NewsMessage) xStream.fromXML(str);
+		System.out.println(msg2.getArticleCount());
+		
+		assertTrue("News ArticleCount message convert faild.",
+				msg.getArticleCount() == msg2.getArticleCount());
 	}
 
 }

@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @author lemon
  * 
  */
+@XStreamAlias("xml")
 public class NewsMessage extends BasicMessage {
 	/** ArticleCount(图文消息个数，限制为10条以内) */
 	@XStreamAlias("ArticleCount")
