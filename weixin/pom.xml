@@ -19,6 +19,11 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+		<dependency>
 			<groupId>lemon.shared</groupId>
 			<artifactId>shared</artifactId>
 			<version>${mmt-shared-version}</version>

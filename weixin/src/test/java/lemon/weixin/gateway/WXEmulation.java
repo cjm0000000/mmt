@@ -1,4 +1,4 @@
-package lemon.weixin;
+package lemon.weixin.gateway;
 
 import java.io.BufferedReader;
 import java.io.IOException;
