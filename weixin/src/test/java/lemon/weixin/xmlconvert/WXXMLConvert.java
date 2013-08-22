@@ -12,6 +12,7 @@ import lemon.weixin.bean.message.EventType;
 import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.LocationMessage;
+import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.util.WXHelper;
 
@@ -125,6 +126,7 @@ public class WXXMLConvert {
 	}
 	
 	@Test
+	@Ignore
 	public void testEventMessage() {
 		xStream.processAnnotations(EventMessage.class);
 		EventMessage msg = new EventMessage();
@@ -144,6 +146,28 @@ public class WXXMLConvert {
 				EventType.SUBSCRIBE.equals(msg2.getEventType()));
 		assertTrue("EVENT KEYS message convert faild.",
 				"0dfsafkqwnriksdk".equals(msg2.getEventKey()));
+	}
+	
+	@Test
+	public void testMusicMessage() {
+		xStream.processAnnotations(MusicMessage.class);
+		MusicMessage msg = new MusicMessage();
+		msg.setToUserName("weixin");
+		msg.setFromUserName("lemon");
+		msg.setCreateTime(new Date().getTime());
+		msg.setMusicUrl("http://music.baidu.com/a/a/d.mp3");
+		msg.setHqMusicUrl("HQmusic  ss s");
+		msg.setMsgId(1024102410241024L);
+		String str = xStream.toXML(msg);
+		System.out.println(str);
+		System.out.println(msg.getMusicUrl());
+		MusicMessage msg2 = (MusicMessage) xStream.fromXML(str);
+		System.out.println(msg2.getMusicUrl());
+		
+		assertTrue("MUSIC URL message convert faild.",
+				"http://music.baidu.com/a/a/d.mp3".equals(msg2.getMusicUrl()));
+		assertTrue("MUSIC HqMusicUrl message convert faild.",
+				"HQmusic  ss s".equals(msg2.getHqMusicUrl()));
 	}
 
 }

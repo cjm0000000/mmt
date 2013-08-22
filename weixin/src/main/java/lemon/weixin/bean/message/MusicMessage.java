@@ -1,12 +1,14 @@
 package lemon.weixin.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import static lemon.weixin.util.WXHelper.cDATA;
 
 /**
  * Music message
  * @author lemon
  *
  */
+@XStreamAlias("xml")
 public class MusicMessage extends BasicMessage {
 	/** MusicUrl */
 	@XStreamAlias("MusicUrl")
@@ -23,12 +25,12 @@ public class MusicMessage extends BasicMessage {
 		return musicUrl;
 	}
 	public void setMusicUrl(String musicUrl) {
-		this.musicUrl = musicUrl;
+		this.musicUrl = cDATA(musicUrl);
 	}
 	public String getHqMusicUrl() {
 		return hqMusicUrl;
 	}
 	public void setHqMusicUrl(String hqMusicUrl) {
-		this.hqMusicUrl = hqMusicUrl;
+		this.hqMusicUrl = cDATA(hqMusicUrl);
 	}
 }
