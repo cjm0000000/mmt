@@ -18,7 +18,7 @@ public class WXGZAPI implements MmtAPI {
 
 	@Override
 	public String getReplayMsg(String msg) {
-		return null;
+		return "hello, welcome to weixin.";
 	}
 
 }
