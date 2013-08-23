@@ -1,13 +1,14 @@
-package lemon.shared.log.bean;
+package lemon.shared.weixin.bean;
 
 import java.util.Date;
 
 /**
- * Site access log object
+ * Site access log object for weixin
  * @author lemon
  *
  */
 public class SiteAccessLog {
+	private int id;
 	private String signature;
 	private String timestamp;
 	private String nonce;
@@ -43,6 +44,12 @@ public class SiteAccessLog {
 	}
 	public void setLog_date(Date log_date) {
 		this.log_date = log_date;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

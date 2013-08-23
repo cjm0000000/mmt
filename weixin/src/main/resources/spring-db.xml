@@ -13,8 +13,8 @@
 
 	<bean id="mmtDS" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db" />
-		<property name="user" value="mmtuser" />
+		<property name="jdbcUrl" value="jdbc:mysql://173.39.170.136:3306/mmt_db" />
+		<property name="user" value="root" />
 		<property name="password" value="123456" />
 		<property name="acquireIncrement" value="3" />
 		<property name="acquireRetryAttempts" value="30"/>
@@ -30,7 +30,8 @@
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mmtDS" />
-		<property name="configLocation" value="classpath:mybatis.xml" />
+		<!-- <property name="configLocation" value="classpath:mybatis.xml" /> -->
+		<property name="mapperLocations" value="classpath*:dao/weixin/*.xml" />
 	</bean>
 	<!-- <bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

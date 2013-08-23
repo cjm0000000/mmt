@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author lemon
  *
  */
+@XStreamAlias("xml")
 public class BasicMessage {
 	/** ToUserName */
 	@XStreamAlias("ToUserName")

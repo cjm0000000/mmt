@@ -121,6 +121,11 @@
 			<version>5.1.20</version>
 		</dependency>
 		<!-- ========== MYSQL驱动配置结束 ========== -->
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

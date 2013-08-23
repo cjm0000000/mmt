@@ -37,7 +37,6 @@ public class WXXMLConvert {
 	}
 
 	@Test
-	@Ignore
 	public void testTextMessage() {
 		xStream.processAnnotations(TextMessage.class);
 		TextMessage txt = new TextMessage();
@@ -174,6 +173,7 @@ public class WXXMLConvert {
 	}
 	
 	@Test
+	@Ignore
 	public void testNewsMessage() {
 		xStream.processAnnotations(NewsMessage.class);
 		NewsMessage msg = new NewsMessage();

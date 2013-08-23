@@ -1,6 +1,11 @@
 package lemon.weixin.util;
 
 import java.io.Writer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
@@ -14,7 +19,7 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  * @author lemon
  * 
  */
-public class WXHelper {
+public final class WXHelper {
 	/** This is local charset */
 	public static final String LOCAL_CHARSET = "UTF-8";
 	/** This is remote charset */
@@ -23,6 +28,8 @@ public class WXHelper {
 	public static final String PREFIX_CDATA = "<![CDATA[";
 	/** CDATA suffix */
 	public static final String SUFFIX_CDATA = "]]>";
+
+	private static Log logger = LogFactory.getLog(WXHelper.class);
 
 	/**
 	 * Get Xstream instance
@@ -71,5 +78,31 @@ public class WXHelper {
 	 */
 	public static String cDATA(String str) {
 		return PREFIX_CDATA + str + SUFFIX_CDATA;
+	}
+
+	public static String sha1(String str) {
+		try {
+			byte[] digest = MessageDigest.getInstance("SHA1").digest(
+					str.getBytes());
+			return toHexString(digest);
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("ERROR:SHA1 faild! " + e.getMessage());
+		}
+		return null;
+	}
+
+	private static String toHexString(byte[] digest) {
+		String str = "";
+		String tempStr = "";
+
+		for (int i = 0; i < digest.length; i++) {
+			tempStr = (Integer.toHexString(digest[i] & 0xff));
+			if (tempStr.length() == 1) {
+				str = str + "0" + tempStr;
+			} else {
+				str = str + tempStr;
+			}
+		}
+		return str.toLowerCase();
 	}
 }

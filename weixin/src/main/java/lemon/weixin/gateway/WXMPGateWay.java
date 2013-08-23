@@ -5,14 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lemon.shared.api.MmtAPI;
-import lemon.weixin.biz.WXGZAPI;
+import lemon.shared.weixin.bean.SiteAccessLog;
 import static lemon.weixin.util.WXHelper.*;
 
 /**
@@ -23,7 +29,9 @@ import static lemon.weixin.util.WXHelper.*;
  */
 public class WXMPGateWay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final MmtAPI wxAPI = new WXGZAPI();
+	private static Log logger = LogFactory.getLog(WXMPGateWay.class);
+	@Autowired
+	private MmtAPI wxAPI;
 
 	/**
 	 * 验证网址接入
@@ -40,11 +48,26 @@ public class WXMPGateWay extends HttpServlet {
 		//随机字符串
 		String echostr = req.getParameter("echostr");
 		
-		System.out.println("signature="+signature);
-		System.out.println("timestamp="+timestamp);
-		System.out.println("nonce="+nonce);
-		System.out.println("echostr="+echostr);
-        
+		logger.debug("signature="+signature);
+		logger.debug("timestamp="+timestamp);
+		logger.debug("nonce="+nonce);
+		logger.debug("echostr="+echostr);
+		
+		//参数装箱
+		Map<String, Object> paramMap = new HashMap<>();
+		
+		SiteAccessLog log = new SiteAccessLog();
+		log.setEchostr(echostr);
+		log.setNonce(nonce);
+		log.setSignature(signature);
+		log.setTimestamp(timestamp);
+		
+		paramMap.put("SiteAccess", log);
+		
+		//验证签名
+		if(wxAPI.verifySignature(paramMap))
+			resp.getWriter().print(echostr);
+		resp.getWriter().print("I think you are not Weixin Server.");
 	}
 
 	/**
@@ -55,6 +78,7 @@ public class WXMPGateWay extends HttpServlet {
 			throws ServletException, IOException {
 		// first, get the message
 		String msg = getMessage(req);
+		logger.debug(msg);
 		// second, save log
 		// TODO save log
 
@@ -92,7 +116,7 @@ public class WXMPGateWay extends HttpServlet {
 		try {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
-			System.out.println(msg);
+			logger.debug(msg);
 			out.println(wxAPI.getReplayMsg(msg));
 			out.flush();
 		} finally {
