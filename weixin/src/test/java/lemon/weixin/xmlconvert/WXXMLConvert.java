@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import lemon.weixin.MessageFactory;
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.EventType;
@@ -39,12 +40,7 @@ public class WXXMLConvert {
 	@Test
 	public void testTextMessage() {
 		xStream.processAnnotations(TextMessage.class);
-		TextMessage txt = new TextMessage();
-		txt.setToUserName("weixin");
-		txt.setFromUserName("lemon");
-		txt.setCreateTime(new Date().getTime());
-		txt.setContent("hello,weixin, I am \"lemon\".");
-		txt.setMsgId(1024102410241024L);
+		TextMessage txt = MessageFactory.makeTextMsg();
 		String msg = xStream.toXML(txt);
 		System.out.println(msg);
 		System.out.println(txt.getContent());

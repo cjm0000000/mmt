@@ -17,11 +17,11 @@ public interface MmtAPI {
 	boolean verifySignature(Map<String, Object> params);
 	
 	/**
-	 * generate replay message
+	 * process the message
 	 * @param msg
 	 * @return
 	 */
-	String getReplayMsg(String msg);
+	String processMsg(String msg);
 	
 	
 }

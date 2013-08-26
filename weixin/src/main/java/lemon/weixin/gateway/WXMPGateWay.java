@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.weixin.bean.SiteAccessLog;
+import lemon.weixin.biz.WXGZAPI;
 import static lemon.weixin.util.WXHelper.*;
 
 /**
@@ -31,7 +32,7 @@ public class WXMPGateWay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Log logger = LogFactory.getLog(WXMPGateWay.class);
 	@Autowired
-	private MmtAPI wxAPI;
+	private MmtAPI wxAPI = new WXGZAPI();
 
 	/**
 	 * 验证网址接入
@@ -67,7 +68,7 @@ public class WXMPGateWay extends HttpServlet {
 		//验证签名
 		if(wxAPI.verifySignature(paramMap))
 			resp.getWriter().print(echostr);
-		resp.getWriter().print("I think you are not Weixin Server.");
+		resp.getWriter().print("I think you are not the Weixin Server.");
 	}
 
 	/**
@@ -76,14 +77,11 @@ public class WXMPGateWay extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// first, get the message
+		// first, parse the message
 		String msg = getMessage(req);
 		logger.debug(msg);
-		// second, save log
-		// TODO save log
-
-		// third, replay message by business logic
-		sendMessage(resp,msg);
+		// third, process message by business logic
+		processMessage(resp,msg);
 	}
 
 	/**
@@ -110,14 +108,20 @@ public class WXMPGateWay extends HttpServlet {
 		}
 	}
 
-	private void sendMessage(HttpServletResponse resp, String msg)
+	/**
+	 * Process message by business logic
+	 * @param resp
+	 * @param msg
+	 * @throws IOException
+	 */
+	private void processMessage(HttpServletResponse resp, String msg)
 			throws IOException {
 		PrintWriter out = null;
 		try {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			out.println(wxAPI.getReplayMsg(msg));
+			out.println(wxAPI.processMsg(msg));
 			out.flush();
 		} finally {
 			if (null != out)
