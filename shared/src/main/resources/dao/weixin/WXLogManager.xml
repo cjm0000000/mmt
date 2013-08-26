@@ -3,7 +3,18 @@
 <mapper namespace="lemon.shared.weixin.dao.WXLogManager">
 	<insert id="saveSiteAccessLog" useGeneratedKeys="true"
 		keyProperty="id" parameterType="lemon.shared.weixin.bean.SiteAccessLog">
-		insert into weixin_log_siteaccess(signature,timestamp,nonce,echostr,log_date)
-			select #{signature},#{timestamp},#{nonce},#{echostr},now()
+		insert into weixin_log_siteaccess(cust_id,signature,timestamp,nonce,echostr,log_date)
+			select #{cust_id},#{signature},#{timestamp},#{nonce},#{echostr},now()
 	</insert>
+	<insert id="saveMessageLog" useGeneratedKeys="true"
+		keyProperty="id" parameterType="lemon.shared.weixin.bean.MsgLog">
+		insert into weixin_log_msg(cust_id,msgType,msg,log_date)
+			select #{cust_id},#{msgType},#{msg},now()
+	</insert>
+	<delete id="deleteSiteAccessLog" parameterType="int">
+		delete from weixin_log_siteaccess where id=#{id}
+	</delete>
+	<delete id="deleteMsgLog" parameterType="int">
+		delete from weixin_log_msg where id=#{id}
+	</delete>
 </mapper>

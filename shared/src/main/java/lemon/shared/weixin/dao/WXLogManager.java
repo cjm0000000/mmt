@@ -28,11 +28,23 @@ public interface WXLogManager {
 	 * 查询接入日志
 	 * @return
 	 */
-	List<SiteAccessLog> listSiteAccessLogs();
+	List<SiteAccessLog> listSiteAccessLogs(int cust_id);
 	
 	/**
-	 * 查询交易日志
+	 * 查询消息日志
 	 * @return
 	 */
-	List<MsgLog> listMsgLogs();
+	List<MsgLog> listMsgLogs(int cust_id);
+	
+	/**
+	 * 删除网址接入Log
+	 * @param id
+	 */
+	void deleteSiteAccessLog(int id);
+	
+	/**
+	 * 删除消息日志
+	 * @param id
+	 */
+	void deleteMsgLog(int id);
 }

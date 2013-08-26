@@ -51,7 +51,6 @@ public class WXXMLConvert {
 	}
 
 	@Test
-	@Ignore
 	public void testImageMessage() {
 		xStream.processAnnotations(ImageMessage.class);
 		ImageMessage img = new ImageMessage();
@@ -70,7 +69,6 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	@Ignore
 	public void testLocationMessage() {
 		xStream.processAnnotations(LocationMessage.class);
 		LocationMessage msg = new LocationMessage();
@@ -97,7 +95,6 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	@Ignore
 	public void testLinkMessage() {
 		xStream.processAnnotations(LinkMessage.class);
 		LinkMessage msg = new LinkMessage();
@@ -123,7 +120,6 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	@Ignore
 	public void testEventMessage() {
 		xStream.processAnnotations(EventMessage.class);
 		EventMessage msg = new EventMessage();
@@ -146,7 +142,6 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	@Ignore
 	public void testMusicMessage() {
 		xStream.processAnnotations(MusicMessage.class);
 		MusicMessage msg = new MusicMessage();
@@ -169,7 +164,6 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	@Ignore
 	public void testNewsMessage() {
 		xStream.processAnnotations(NewsMessage.class);
 		NewsMessage msg = new NewsMessage();

@@ -17,7 +17,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WeixinGW</servlet-name>
-		<url-pattern>/WeixinMp</url-pattern>
+		<url-pattern>/gateway/WeixinMp</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

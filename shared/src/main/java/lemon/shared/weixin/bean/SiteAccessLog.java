@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class SiteAccessLog {
 	private int id;
+	private int cust_id;
 	private String signature;
 	private String timestamp;
 	private String nonce;
@@ -50,6 +51,12 @@ public class SiteAccessLog {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getCust_id() {
+		return cust_id;
+	}
+	public void setCust_id(int cust_id) {
+		this.cust_id = cust_id;
 	}
 	
 }

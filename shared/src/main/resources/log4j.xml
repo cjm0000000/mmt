@@ -6,7 +6,7 @@
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
-				value="%-4r %d{dd/MM HH:mm:ss,SSS}[%t] %-5p %c{3}.%M %x - %m%n" />
+				value="%d{ABSOLUTE} %c:%L%x[%t] %-5p- %m%n" />
 		</layout>
 	</appender>
 	<logger name="lemon.shared">

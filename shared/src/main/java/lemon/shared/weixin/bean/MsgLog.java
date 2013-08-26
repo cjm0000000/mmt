@@ -10,11 +10,13 @@ import java.util.Date;
  */
 public class MsgLog {
 	private int id;
+	private int cust_id;
 	private String msgType;
 	private String msg;
 	private Date log_date;
 
-	private MsgLog(String msgType, String msg) {
+	private MsgLog(int cust_id, String msgType, String msg) {
+		this.cust_id = cust_id;
 		this.msg = msg;
 		this.msgType = msgType;
 	}
@@ -51,10 +53,18 @@ public class MsgLog {
 		this.msgType = msgType;
 	}
 
-	public static MsgLog createReciveLog(String msg) {
-		return new MsgLog("RECIVE", msg);
+	public int getCust_id() {
+		return cust_id;
 	}
-	public static MsgLog createSendLog(String msg) {
-		return new MsgLog("SEND", msg);
+
+	public void setCust_id(int cust_id) {
+		this.cust_id = cust_id;
+	}
+
+	public static MsgLog createReciveLog(int cust_id,String msg) {
+		return new MsgLog(cust_id, "RECEIVE", msg);
+	}
+	public static MsgLog createSendLog(int cust_id, String msg) {
+		return new MsgLog(cust_id, "SEND", msg);
 	}
 }
