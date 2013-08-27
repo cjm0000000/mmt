@@ -45,9 +45,9 @@ public class WXGZAPI implements MmtAPI {
 		saveAccessLog(log);
 		// nonce,token,timestamp dictionary sort
 		List<String> list = new ArrayList<>();
-		list.add(log.getTimestamp());
-		list.add(log.getEchostr());
 		list.add(log.getNonce());
+		list.add(log.getToken());
+		list.add(log.getTimestamp());
 		Collections.sort(list);
 		StringBuilder sb = new StringBuilder();
 		for (String str : list) {

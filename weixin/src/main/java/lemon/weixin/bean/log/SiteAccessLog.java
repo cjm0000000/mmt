@@ -15,6 +15,7 @@ public class SiteAccessLog {
 	private String nonce;
 	private String echostr;
 	private Date log_date;
+	private String token;
 	
 	public String getSignature() {
 		return signature;
@@ -57,6 +58,12 @@ public class SiteAccessLog {
 	}
 	public void setCust_id(int cust_id) {
 		this.cust_id = cust_id;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 }

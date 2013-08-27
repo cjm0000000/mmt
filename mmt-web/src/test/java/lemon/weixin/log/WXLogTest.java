@@ -44,6 +44,7 @@ public class WXLogTest {
 			log.setNonce(rnd.nextInt(10000) + "");
 			log.setEchostr("echosresdadakdov");
 			log.setCust_id(123);
+			log.setToken("token");
 			wXLogManager.saveSiteAccessLog(log);
 			logger.info("ID=" + log.getId());
 			assertNotEquals(0, log.getId());

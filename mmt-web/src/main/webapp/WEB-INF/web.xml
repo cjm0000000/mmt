@@ -11,14 +11,15 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<servlet>
-		<servlet-name>WeixinGW</servlet-name>
-		<servlet-class>lemon.weixin.gateway.WXMPGateWay</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WeixinGW</servlet-name>
-		<url-pattern>/gateway/WeixinMp</url-pattern>
-	</servlet-mapping>
+	<!-- 微信网关配置 -->
+	<filter>
+		<filter-name>MicroChat</filter-name>
+		<filter-class>lemon.weixin.gateway.MicroChatGateWay</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MicroChat</filter-name>
+		<url-pattern>/microchat/*</url-pattern>
+	</filter-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

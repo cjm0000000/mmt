@@ -1,44 +1,89 @@
 package lemon.weixin.gateway;
 
+import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
+import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import lemon.shared.api.MmtAPI;
+import lemon.shared.common.Customer;
 import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.biz.WXGZAPI;
-import static lemon.weixin.util.WXHelper.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
- * The gateway of Weixin
- * 
+ * MicroChat gateway
  * @author lemon
- * 
+ *
  */
-public class WXMPGateWay extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static Log logger = LogFactory.getLog(WXMPGateWay.class);
-	@Autowired
+public class MicroChatGateWay implements Filter {
+	private static Log logger = LogFactory.getLog(MicroChatGateWay.class);
 	private MmtAPI wxAPI = new WXGZAPI();
+	private static ConcurrentMap<String, Customer> custMap = null;
+	@Override
+	public void destroy() {
+		if(custMap != null)
+			custMap.clear();
+		logger.debug("MicroChatGateWay destory...");
+	}
 
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse res,
+			FilterChain filter) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		//confirm which customer is it
+		String shortPath = getShortPath(request.getServletPath());
+		logger.debug("shortPath=" + shortPath);
+		Customer cust = custMap.get(shortPath);
+		if(null == cust){
+			response.getWriter().print("No matchers.");
+			logger.error("the URL["+shortPath+"] have no matcher.");
+			return;
+		}
+		//check if this is channel for verify signature
+		boolean isVerifySignatureChannel = request.getMethod().equals("GET");
+		if(isVerifySignatureChannel)
+			verifySignature(cust,request,response);
+		else
+			msgWorker(cust,request,response);
+	}
+
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+		if(null == custMap)
+			custMap = new ConcurrentHashMap<>();
+		//TODO load customers to map
+	}
+	
 	/**
 	 * 验证网址接入
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
 	 */
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	private void verifySignature(Customer cust, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//微信加密签名
 		String signature = req.getParameter("signature");
@@ -62,6 +107,8 @@ public class WXMPGateWay extends HttpServlet {
 		log.setNonce(nonce);
 		log.setSignature(signature);
 		log.setTimestamp(timestamp);
+		log.setCust_id(cust.getCust_id());
+		log.setToken(cust.getToken());
 		
 		paramMap.put("SiteAccess", log);
 		
@@ -70,20 +117,22 @@ public class WXMPGateWay extends HttpServlet {
 			resp.getWriter().print(echostr);
 		resp.getWriter().print("I think you are not the Weixin Server.");
 	}
-
+	
 	/**
 	 * 消息通信接口
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
 	 */
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+	private void msgWorker(Customer cust, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// first, parse the message
 		String msg = getMessage(req);
-		logger.debug(msg);
 		// third, process message by business logic
-		processMessage(resp,msg);
+		processMessage(cust.getCust_id(), resp,msg);
 	}
-
+	
 	/**
 	 * get receive message via input stream
 	 * 
@@ -114,14 +163,13 @@ public class WXMPGateWay extends HttpServlet {
 	 * @param msg
 	 * @throws IOException
 	 */
-	private void processMessage(HttpServletResponse resp, String msg)
+	private void processMessage(int cust_id, HttpServletResponse resp, String msg)
 			throws IOException {
 		PrintWriter out = null;
 		try {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			int cust_id = getCustId(msg);
 			out.println(wxAPI.processMsg(cust_id, msg));
 			out.flush();
 		} finally {
@@ -131,12 +179,11 @@ public class WXMPGateWay extends HttpServlet {
 	}
 	
 	/**
-	 * TODO get customer ID
-	 * @param msg
+	 * Get the unique path
+	 * @param path
 	 * @return
 	 */
-	private int getCustId(String msg){
-		return 0;
+	private String getShortPath(String path){
+		return path.substring(path.lastIndexOf(File.separator)).substring(1);
 	}
-
 }

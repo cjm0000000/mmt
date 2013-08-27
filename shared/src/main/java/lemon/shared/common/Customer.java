@@ -1,4 +1,4 @@
-package lemon.web.system.bean;
+package lemon.shared.common;
 
 /**
  * Customer
@@ -10,6 +10,8 @@ public class Customer {
 	private int cust_id;
 	
 	private String cust_name;
+	
+	private String token;
 
 	public int getCust_id() {
 		return cust_id;
@@ -25,6 +27,14 @@ public class Customer {
 
 	public void setCust_name(String cust_name) {
 		this.cust_name = cust_name;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 }
