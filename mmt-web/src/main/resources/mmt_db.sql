@@ -207,10 +207,10 @@ CREATE TABLE `system_user_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
   `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
-  `dept_id` char(10) NOT NULL DEFAULT '' COMMENT '部门编号',
+  `cust_id` char(10) NOT NULL DEFAULT '' COMMENT '客户编号',
   PRIMARY KEY (`id`),
-  KEY `IDX_sys_user_role` (`user_id`,`role_id`,`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+  KEY `IDX_sys_user_role` (`user_id`,`role_id`,`cust_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='用户角色表'
 
 #
 # Dumping data for table system_user_role
@@ -251,3 +251,12 @@ CREATE TABLE `weixin_log_siteaccess` (
   `log_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='微信接入日志';
+
+CREATE TABLE `customer` (
+  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cust_name` varchar(255) NOT NULL DEFAULT '',
+  `token` char(32) NOT NULL DEFAULT '',
+  `memo` varchar(255) NOT NULL DEFAULT '',
+  `status` char(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`cust_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户信息表'

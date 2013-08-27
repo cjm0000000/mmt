@@ -12,6 +12,10 @@ public class Customer {
 	private String cust_name;
 	
 	private String token;
+	
+	private String memo;
+	
+	private String status;
 
 	public int getCust_id() {
 		return cust_id;
@@ -35,6 +39,22 @@ public class Customer {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
