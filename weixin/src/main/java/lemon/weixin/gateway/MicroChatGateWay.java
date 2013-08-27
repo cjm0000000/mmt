@@ -4,7 +4,6 @@ import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
 import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,6 +52,7 @@ public class MicroChatGateWay implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		//confirm which customer is it
+		logger.debug(request.getServletPath());
 		String shortPath = getShortPath(request.getServletPath());
 		logger.debug("shortPath=" + shortPath);
 		Customer cust = custMap.get(shortPath);
@@ -74,6 +74,7 @@ public class MicroChatGateWay implements Filter {
 		if(null == custMap)
 			custMap = new ConcurrentHashMap<>();
 		//TODO load customers to map
+			logger.info("微信网关初始化成功...");
 	}
 	
 	/**
@@ -184,6 +185,7 @@ public class MicroChatGateWay implements Filter {
 	 * @return
 	 */
 	private String getShortPath(String path){
-		return path.substring(path.lastIndexOf(File.separator)).substring(1);
+		return path.substring(path.lastIndexOf("/")).substring(1);
 	}
+
 }
