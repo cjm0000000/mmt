@@ -1,9 +1,9 @@
-package lemon.shared.weixin.dao;
+package lemon.weixin.dao;
 
 import java.util.List;
 
-import lemon.shared.weixin.bean.MsgLog;
-import lemon.shared.weixin.bean.SiteAccessLog;
+import lemon.weixin.bean.log.MsgLog;
+import lemon.weixin.bean.log.SiteAccessLog;
 
 import org.springframework.stereotype.Repository;
 

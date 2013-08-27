@@ -1,4 +1,4 @@
-package lemon.shared.weixin.bean;
+package lemon.weixin.bean;
 
 /**
  * Some configs with weixin

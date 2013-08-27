@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.shared.weixin.dao.WXLogManager">
+<mapper namespace="lemon.weixin.dao.WXLogManager">
 	<insert id="saveSiteAccessLog" useGeneratedKeys="true"
-		keyProperty="id" parameterType="lemon.shared.weixin.bean.SiteAccessLog">
+		keyProperty="id" parameterType="lemon.weixin.bean.log.SiteAccessLog">
 		insert into weixin_log_siteaccess(cust_id,signature,timestamp,nonce,echostr,log_date)
 			select #{cust_id},#{signature},#{timestamp},#{nonce},#{echostr},now()
 	</insert>
 	<insert id="saveMessageLog" useGeneratedKeys="true"
-		keyProperty="id" parameterType="lemon.shared.weixin.bean.MsgLog">
+		keyProperty="id" parameterType="lemon.weixin.bean.log.MsgLog">
 		insert into weixin_log_msg(cust_id,msgType,msg,log_date)
 			select #{cust_id},#{msgType},#{msg},now()
 	</insert>

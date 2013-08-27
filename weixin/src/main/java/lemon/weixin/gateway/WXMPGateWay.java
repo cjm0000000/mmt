@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.weixin.bean.SiteAccessLog;
+import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.biz.WXGZAPI;
 import static lemon.weixin.util.WXHelper.*;
 
@@ -121,12 +121,22 @@ public class WXMPGateWay extends HttpServlet {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			out.println(wxAPI.processMsg(msg));
+			int cust_id = getCustId(msg);
+			out.println(wxAPI.processMsg(cust_id, msg));
 			out.flush();
 		} finally {
 			if (null != out)
 				out.close();
 		}
+	}
+	
+	/**
+	 * TODO get customer ID
+	 * @param msg
+	 * @return
+	 */
+	private int getCustId(String msg){
+		return 0;
 	}
 
 }

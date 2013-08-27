@@ -3,7 +3,7 @@ package lemon.weixin;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import lemon.shared.weixin.bean.WeiXinConfig;
+import lemon.weixin.bean.WeiXinConfig;
 
 /**
  * WeiXin configs

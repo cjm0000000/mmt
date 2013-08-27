@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.common.MsgParser;
-import lemon.shared.weixin.bean.MsgLog;
-import lemon.shared.weixin.bean.SiteAccessLog;
-import lemon.shared.weixin.dao.WXLogManager;
+import lemon.weixin.bean.log.MsgLog;
+import lemon.weixin.bean.log.SiteAccessLog;
+import lemon.weixin.dao.WXLogManager;
 import lemon.weixin.util.WXHelper;
 
 /**
@@ -60,9 +60,9 @@ public class WXGZAPI implements MmtAPI {
 	}
 
 	@Override
-	public String processMsg(String msg) {
+	public String processMsg(int cust_id, String msg) {
 		//save received log
-		saveReciveMessageLog(msg);
+		saveReciveMessageLog(cust_id, msg);
 		//get message type
 		String msgType = getMsgType(msg);
 		//get message parser
@@ -71,7 +71,7 @@ public class WXGZAPI implements MmtAPI {
 		String rMsg = parser.parseMessage(msg);
 		//save log
 		if(rMsg == null)
-			saveSendMessageLog(rMsg);
+			saveSendMessageLog(cust_id, rMsg);
 		//replay weixin message
 		return rMsg;
 	}
@@ -86,19 +86,21 @@ public class WXGZAPI implements MmtAPI {
 	
 	/**
 	 * save revive message log
+	 * @param cust_id
 	 * @param msg
 	 */
-	private void saveReciveMessageLog(String msg){
-		MsgLog log = MsgLog.createReciveLog(msg);
+	private void saveReciveMessageLog(int cust_id, String msg){
+		MsgLog log = MsgLog.createReciveLog(cust_id, msg);
 		wxLogManager.saveMessageLog(log);
 	}
 	
 	/**
 	 * save send message log
+	 * @param cust_id
 	 * @param msg
 	 */
-	private void saveSendMessageLog(String msg){
-		MsgLog log = MsgLog.createSendLog(msg);
+	private void saveSendMessageLog(int cust_id, String msg){
+		MsgLog log = MsgLog.createSendLog(cust_id, msg);
 		wxLogManager.saveMessageLog(log);
 	}
 

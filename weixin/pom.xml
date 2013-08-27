@@ -11,7 +11,7 @@
 	<groupId>lemon.weixin</groupId>
 	<artifactId>weixin</artifactId>
 	<version>${mmt-weixin-version}</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
