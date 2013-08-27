@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lemon.system.mapper.ConfigMapper">
+	<select id="list" parameterType="string" resultType="lemon.system.bean.Config">
+		select a.config_name,a.`key`,a.value,a.config_sm
+			from oa_system_config a
+		where a.config_name=#{config_name}
+	</select>
+	<select id="load" parameterType="lemon.system.bean.Config" resultType="lemon.system.bean.Config">
+		select a.config_name,a.`key`,a.value,a.config_sm
+			from oa_system_config a
+		where a.config_name=#{config_name}
+			and a.key=#{key}
+	</select>
+	<insert id="add" parameterType="lemon.system.bean.Config" >
+		insert into oa_system_config(config_name,`key`,value,config_sm)
+			select #{config_name},#{key},#{value},#{config_sm}
+	</insert>
+	<update id="edit" parameterType="lemon.system.bean.Config">
+		update oa_system_config a
+			set a.value=#{value},
+				a.config_sm=#{config_sm}
+			where a.config_name=#{config_name}
+				and a.`key`=#{key}
+	</update>
+	<delete id="delete" parameterType="lemon.system.bean.Config">
+		delete from oa_system_config
+			where config_name=#{config_name}
+				and `key`=#{key}
+	</delete>
+	<select id="bakConfig" statementType="CALLABLE">
+		{call oa_kq_kqsj_bak()}
+	</select>
+</mapper>
