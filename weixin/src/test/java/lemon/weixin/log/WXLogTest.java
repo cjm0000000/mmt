@@ -36,7 +36,7 @@ public class WXLogTest {
 	@Test
 	public void saveLog() {
 		logger.info("begin...");
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			SecureRandom rnd = new SecureRandom();
 			SiteAccessLog log = new SiteAccessLog();
 			log.setSignature("signature123213123123123");
@@ -55,7 +55,7 @@ public class WXLogTest {
 	@Test
 	public void msgLog(){
 		logger.info("begin...");
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			MsgLog receive = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377529956729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am \"lemon\".]]></Content></xml>");
 			wXLogManager.saveMessageLog(receive);
 			logger.info("ID=" + receive.getId());

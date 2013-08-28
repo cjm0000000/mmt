@@ -6,15 +6,9 @@ package lemon.shared.common;
  *
  */
 public class Customer {
-	
 	private int cust_id;
-	
 	private String cust_name;
-	
-	private String token;
-	
 	private String memo;
-	
 	private String status;
 
 	public int getCust_id() {
@@ -31,14 +25,6 @@ public class Customer {
 
 	public void setCust_name(String cust_name) {
 		this.cust_name = cust_name;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 
 	public String getMemo() {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
+//TODO convert XML SQL to Annotation
 public interface WXLogManager {
 	/**
 	 * 保存网址接入Log

@@ -13,6 +13,8 @@ public class WeiXinConfig {
 	/** 开发者微信号 */
 	private String wx_account;
 	
+	private String timestamp;
+	
 	public String getToken() {
 		return token;
 	}
@@ -30,5 +32,24 @@ public class WeiXinConfig {
 	}
 	public void setCust_id(int cust_id) {
 		this.cust_id = cust_id;
+	}
+	public String getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("cust_id=");
+		sb.append(cust_id);
+		sb.append(",token=");
+		sb.append(token);
+		sb.append(",wx_account=");
+		sb.append(wx_account);
+		sb.append(",timestamp=");
+		sb.append(timestamp);
+		return sb.toString();
 	}
 }

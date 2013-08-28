@@ -32,9 +32,8 @@ public class CustomerTest {
 	public void testCustomerMapper(){
 		Customer cust = add();
 		assertNotEquals(0, cust.getCust_id());
-		String token = "A&*HIO(@(@H(F@()))@JDWJ()!Q@";
-		update(cust, token);
-		assertEquals(token, cust.getToken());
+		String memo = "A&*HIO(@(@H(F@()))@JDWJ()!Q@";
+		update(cust, memo);
 		assertNotEquals(0, list().size());
 	}
 	
@@ -42,14 +41,13 @@ public class CustomerTest {
 		Customer cust = new Customer();
 		cust.setCust_name("Insigma");
 		cust.setMemo("MEMO...");
-		cust.setToken("0ccccccccccccccccccccccccccc");
 		cust.setStatus("1");
 		custMapper.save(cust);
 		return cust;
 	}
 	
-	private void update(Customer cust,String token){
-		cust.setToken(token);
+	private void update(Customer cust,String memo){
+		cust.setMemo(memo);
 		custMapper.update(cust);
 	}
 	

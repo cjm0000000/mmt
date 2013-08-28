@@ -23,7 +23,7 @@ public final class WXHelper {
 	/** This is local charset */
 	public static final String LOCAL_CHARSET = "UTF-8";
 	/** This is remote charset */
-	public static final String TARGET_CHARSET = "UTF-8";
+	public static final String TARGET_CHARSET = "GBK";
 	/** CDATA prefix */
 	public static final String PREFIX_CDATA = "<![CDATA[";
 	/** CDATA suffix */

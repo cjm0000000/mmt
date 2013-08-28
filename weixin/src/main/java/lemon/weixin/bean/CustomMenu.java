@@ -6,5 +6,5 @@ package lemon.weixin.bean;
  *
  */
 public class CustomMenu {
-
+	//TODO build weixin customer menu
 }

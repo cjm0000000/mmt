@@ -255,8 +255,15 @@ CREATE TABLE `weixin_log_siteaccess` (
 CREATE TABLE `customer` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT,
   `cust_name` varchar(255) NOT NULL DEFAULT '',
-  `token` char(32) NOT NULL DEFAULT '',
   `memo` varchar(255) NOT NULL DEFAULT '',
   `status` char(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户信息表'
+
+CREATE TABLE `weixin_config` (
+  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
+  `wx_account` varchar(50) NOT NULL DEFAULT '',
+  `token` varchar(255) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL ,
+  PRIMARY KEY (`cust_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'

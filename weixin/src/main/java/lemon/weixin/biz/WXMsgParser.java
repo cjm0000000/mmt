@@ -21,7 +21,7 @@ public abstract class WXMsgParser implements MsgParser {
 		switch (msgType) {
 		case MsgType.TEXT:
 			return new TextMsgParser();
-
+		//TODO add other message parser
 		default:
 			return null;
 		}

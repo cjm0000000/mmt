@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -23,12 +24,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.common.Customer;
+import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.biz.WXGZAPI;
+import lemon.weixin.dao.WeiXinConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * MicroChat gateway
@@ -38,7 +41,9 @@ import org.apache.commons.logging.LogFactory;
 public class MicroChatGateWay implements Filter {
 	private static Log logger = LogFactory.getLog(MicroChatGateWay.class);
 	private MmtAPI wxAPI = new WXGZAPI();
-	private static ConcurrentMap<String, Customer> custMap = null;
+	@Autowired
+	private WeiXinConfigMapper weiXinConfigMapper;
+	private static ConcurrentMap<String, WeiXinConfig> custMap = null;
 	@Override
 	public void destroy() {
 		if(custMap != null)
@@ -55,8 +60,8 @@ public class MicroChatGateWay implements Filter {
 		logger.debug(request.getServletPath());
 		String shortPath = getShortPath(request.getServletPath());
 		logger.debug("shortPath=" + shortPath);
-		Customer cust = custMap.get(shortPath);
-		if(null == cust){
+		WeiXinConfig config = custMap.get(shortPath);
+		if(null == config){
 			response.getWriter().print("No matchers.");
 			logger.error("the URL["+shortPath+"] have no matcher.");
 			return;
@@ -64,16 +69,19 @@ public class MicroChatGateWay implements Filter {
 		//check if this is channel for verify signature
 		boolean isVerifySignatureChannel = request.getMethod().equals("GET");
 		if(isVerifySignatureChannel)
-			verifySignature(cust,request,response);
+			verifySignature(config,request,response);
 		else
-			msgWorker(cust,request,response);
+			msgWorker(config,request,response);
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		if(null == custMap)
 			custMap = new ConcurrentHashMap<>();
-		//TODO load customers to map
+			List<WeiXinConfig> list = weiXinConfigMapper.activeList();
+			for (WeiXinConfig wxcfg : list) {
+				custMap.put(wxcfg.getToken(), wxcfg);
+			}
 			logger.info("微信网关初始化成功...");
 	}
 	
@@ -84,7 +92,7 @@ public class MicroChatGateWay implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void verifySignature(Customer cust, HttpServletRequest req, HttpServletResponse resp)
+	private void verifySignature(WeiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//微信加密签名
 		String signature = req.getParameter("signature");
@@ -108,8 +116,8 @@ public class MicroChatGateWay implements Filter {
 		log.setNonce(nonce);
 		log.setSignature(signature);
 		log.setTimestamp(timestamp);
-		log.setCust_id(cust.getCust_id());
-		log.setToken(cust.getToken());
+		log.setCust_id(config.getCust_id());
+		log.setToken(config.getToken());
 		
 		paramMap.put("SiteAccess", log);
 		
@@ -126,12 +134,12 @@ public class MicroChatGateWay implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void msgWorker(Customer cust, HttpServletRequest req, HttpServletResponse resp)
+	private void msgWorker(WeiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// first, parse the message
 		String msg = getMessage(req);
 		// third, process message by business logic
-		processMessage(cust.getCust_id(), resp,msg);
+		processMessage(config.getCust_id(), resp,msg);
 	}
 	
 	/**
