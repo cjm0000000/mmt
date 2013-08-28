@@ -38,7 +38,7 @@ public abstract class WXMsgParser implements MsgParser {
 		case MsgType.NEWS:
 			return new NewsMsgParser();
 		default:
-			return null;
+			throw new WeiXinException("Incorrect message type.");
 		}
 	}
 	
