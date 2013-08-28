@@ -11,8 +11,6 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -24,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lemon.shared.api.MmtAPI;
+import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.biz.WXGZAPI;
@@ -43,11 +42,9 @@ public class MicroChatGateWay implements Filter {
 	private MmtAPI wxAPI = new WXGZAPI();
 	@Autowired
 	private WeiXinConfigMapper weiXinConfigMapper;
-	private static ConcurrentMap<String, WeiXinConfig> custMap = null;
 	@Override
 	public void destroy() {
-		if(custMap != null)
-			custMap.clear();
+		WeiXin.destory();
 		logger.debug("MicroChatGateWay destory...");
 	}
 
@@ -60,7 +57,7 @@ public class MicroChatGateWay implements Filter {
 		logger.debug(request.getServletPath());
 		String shortPath = getShortPath(request.getServletPath());
 		logger.debug("shortPath=" + shortPath);
-		WeiXinConfig config = custMap.get(shortPath);
+		WeiXinConfig config = WeiXin.getConfig(shortPath);
 		if(null == config){
 			response.getWriter().print("No matchers.");
 			logger.error("the URL["+shortPath+"] have no matcher.");
@@ -76,13 +73,12 @@ public class MicroChatGateWay implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		if(null == custMap)
-			custMap = new ConcurrentHashMap<>();
-			List<WeiXinConfig> list = weiXinConfigMapper.activeList();
-			for (WeiXinConfig wxcfg : list) {
-				custMap.put(wxcfg.getToken(), wxcfg);
-			}
-			logger.info("微信网关初始化成功...");
+		WeiXin.init();
+		List<WeiXinConfig> list = weiXinConfigMapper.activeList();
+		for (WeiXinConfig wxcfg : list) {
+			WeiXin.setConfig(wxcfg.getToken(), wxcfg);
+		}
+		logger.info("微信网关初始化成功...");
 	}
 	
 	/**

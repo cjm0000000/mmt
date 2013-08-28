@@ -6,30 +6,44 @@ import java.util.concurrent.ConcurrentMap;
 import lemon.weixin.bean.WeiXinConfig;
 
 /**
- * WeiXin configs
+ * WeiXin configures
  * 
  * @author lemon
  * 
  */
 public class WeiXin {
-	private static ConcurrentMap<Integer, Object> configs = new ConcurrentHashMap<>();
+	
+	private static ConcurrentMap<String, WeiXinConfig> configs;
+
+	public static void init() {
+		if (configs == null)
+			configs = new ConcurrentHashMap<>();
+		else
+			configs.clear();
+	}
 
 	/**
 	 * 获取WeiXin通用配置
 	 * 
-	 * @param cust_id
+	 * @param token
 	 * @return
 	 */
-	public static WeiXinConfig getConfig(int cust_id) {
-		return (WeiXinConfig) configs.get(cust_id);
+	public static WeiXinConfig getConfig(String token) {
+		return configs.get(token);
 	}
 
 	/**
 	 * 更改WeiXin通用配置
-	 * @param cust_id
+	 * 
+	 * @param token
 	 * @param config
 	 */
-	public static void setConfig(int cust_id, WeiXinConfig config) {
-		configs.put(cust_id, config);
+	public static void setConfig(String token, WeiXinConfig config) {
+		configs.put(token, config);
+	}
+	
+	public static void destory(){
+		if(null != configs)
+			configs.clear();
 	}
 }
