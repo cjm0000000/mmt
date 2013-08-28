@@ -1,5 +1,6 @@
 package lemon.weixin.biz;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -114,6 +115,7 @@ public class WXGZAPI implements MmtAPI {
 		InputStream is = null;
 		try {
 			try {
+				is = new ByteArrayInputStream(msg.getBytes());
 				Document doc = new SAXBuilder().build(is);
 				Element e = doc.getRootElement().getChild("MsgType");
 				return e.getValue();
@@ -122,7 +124,7 @@ public class WXGZAPI implements MmtAPI {
 					is.close();
 			}
 		} catch (IOException | JDOMException e) {
-			logger.error("can't get message type:" + e.getMessage());
+			logger.error("Can't get message type:" + e.getMessage());
 		}
 		return null;
 	}
