@@ -34,7 +34,7 @@ public class WXLogTest {
 	}
 
 	@Test
-	public void saveLog() {
+	public void siteAccessLog() {
 		logger.info("begin...");
 		for (int i = 0; i < 10; i++) {
 			SecureRandom rnd = new SecureRandom();

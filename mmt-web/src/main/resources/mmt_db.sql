@@ -231,7 +231,7 @@ CREATE TABLE `weixin_log_msg` (
   `cust_id` int(11) NOT NULL DEFAULT '0',
   `msgType` varchar(8) DEFAULT NULL,
   `msg` text,
-  `log_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `token` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='微信信息日志';
@@ -248,7 +248,7 @@ CREATE TABLE `weixin_log_siteaccess` (
   `timestamp` varchar(20) DEFAULT NULL,
   `nonce` varchar(30) DEFAULT NULL,
   `echostr` varchar(50) DEFAULT NULL,
-  `log_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='微信接入日志';
 
