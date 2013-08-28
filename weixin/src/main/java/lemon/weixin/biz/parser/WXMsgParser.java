@@ -11,7 +11,7 @@ import lemon.shared.common.MsgParser;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MsgType;
-import lemon.weixin.biz.customer.CustomerReplyMsg;
+import lemon.weixin.biz.customer.CustMsgBiz;
 
 /**
  * A message parser for WeiXin
@@ -65,13 +65,13 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @return an string message
 	 */
 	private String process(String token, Message msg){
-		CustomerReplyMsg biz = null;
+		CustMsgBiz biz = null;
 		WeiXinConfig cfg = WeiXin.getConfig(token);
 		if(null == cfg)
 			return null;
 		try {
-			biz = (CustomerReplyMsg) Class.forName(cfg.getBizClass()).newInstance();
-			return biz.reply(msg);
+			biz = (CustMsgBiz) Class.forName(cfg.getBizClass()).newInstance();
+			return biz.processBiz(msg);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			logger.error("Can't find business implement class.");

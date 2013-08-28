@@ -3,15 +3,15 @@ package lemon.weixin.biz.customer;
 import lemon.shared.common.Message;
 
 /**
- * For all customer reply message
+ * For all customer message business
  * @author lemon
  *
  */
-public interface CustomerReplyMsg {
+public interface CustMsgBiz {
 	/**
 	 * Customer message process 
 	 * @param msg
 	 * @return a string message
 	 */
-	String reply(Message msg);
+	String processBiz(Message msg);
 }
