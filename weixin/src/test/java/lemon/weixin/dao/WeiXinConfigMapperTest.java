@@ -54,6 +54,8 @@ public class WeiXinConfigMapperTest {
 		cfg.setCust_id(cust_id);
 		cfg.setToken("Junit Test Token");
 		cfg.setWx_account("Junit Test WeiXin Account");
+		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");
+		cfg.setUnsubscribe_msg("You have unsubscribe Junit Test, thank you.");
 		configMapper.save(cfg);
 		List<WeiXinConfig> list = configMapper.activeList();
 		for (WeiXinConfig weiXinConfig : list) {

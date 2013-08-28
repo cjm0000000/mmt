@@ -16,6 +16,10 @@ public class WeiXinConfig {
 	private String timestamp;
 	/** 业务代码实现 */
 	private String bizClass;
+	/** 用户订阅时推送的消息 */
+	private String subscribe_msg;
+	/** 用户取消订阅时推送的消息 */
+	private String unsubscribe_msg;
 	
 	public String getToken() {
 		return token;
@@ -47,6 +51,18 @@ public class WeiXinConfig {
 	public void setBizClass(String bizClass) {
 		this.bizClass = bizClass;
 	}
+	public String getSubscribe_msg() {
+		return subscribe_msg;
+	}
+	public void setSubscribe_msg(String subscribe_msg) {
+		this.subscribe_msg = subscribe_msg;
+	}
+	public String getUnsubscribe_msg() {
+		return unsubscribe_msg;
+	}
+	public void setUnsubscribe_msg(String unsubscribe_msg) {
+		this.unsubscribe_msg = unsubscribe_msg;
+	}
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("cust_id=");
@@ -57,6 +73,12 @@ public class WeiXinConfig {
 		sb.append(wx_account);
 		sb.append(",timestamp=");
 		sb.append(timestamp);
+		sb.append(",bizClass=");
+		sb.append(bizClass);
+		sb.append(",subscribe_msg=");
+		sb.append(subscribe_msg);
+		sb.append(",unsubscribe_msg=");
+		sb.append(unsubscribe_msg);
 		return sb.toString();
 	}
 }

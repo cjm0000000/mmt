@@ -252,6 +252,7 @@ CREATE TABLE `weixin_log_siteaccess` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='微信接入日志';
 
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT,
   `cust_name` varchar(255) NOT NULL DEFAULT '',
@@ -260,10 +261,13 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户信息表'
 
+DROP TABLE IF EXISTS `weixin_config`;
 CREATE TABLE `weixin_config` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT,
   `wx_account` varchar(50) NOT NULL DEFAULT '',
   `token` varchar(255) NOT NULL DEFAULT '',
-  `timestamp` timestamp NOT NULL ,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `subscribe_msg` text COMMENT '订阅事件需要发送的消息',
+  `unsubscribe_msg` text COMMENT '取消订阅事件需要发送的消息',
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
