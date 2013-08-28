@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 
  */
 @XStreamAlias("xml")
-public class NewsMessage extends BasicMessage {
+public class NewsMessage extends WeiXinMessage {
 	/** ArticleCount(图文消息个数，限制为10条以内) */
 	@XStreamAlias("ArticleCount")
 	private int articleCount;

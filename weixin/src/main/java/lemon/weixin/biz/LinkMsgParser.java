@@ -3,16 +3,16 @@ package lemon.weixin.biz;
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
-import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.util.WXHelper;
 
 /**
- * A text message parser
+ * A link message parser
  * 
  * @author lemon
  * 
  */
-public final class TextMsgParser extends WXMsgParser {
+public final class LinkMsgParser extends WXMsgParser {
 	private XStream xStream = WXHelper.createXstream();
 
 	/**
@@ -22,14 +22,14 @@ public final class TextMsgParser extends WXMsgParser {
 	 * @return
 	 */
 	@Override
-	public final TextMessage toMsg(String msg) {
-		xStream.processAnnotations(TextMessage.class);
-		return (TextMessage) xStream.fromXML(msg);
+	public final LinkMessage toMsg(String msg) {
+		xStream.processAnnotations(LinkMessage.class);
+		return (LinkMessage) xStream.fromXML(msg);
 	}
 
 	@Override
 	public final String toXML(Message rMsg) {
-		xStream.processAnnotations(TextMessage.class);
+		xStream.processAnnotations(LinkMessage.class);
 		return xStream.toXML(rMsg);
 	}
 }

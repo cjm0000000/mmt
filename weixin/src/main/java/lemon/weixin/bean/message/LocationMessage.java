@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
-public class LocationMessage extends BasicMessage {
+public class LocationMessage extends WeiXinMessage {
 	/** Location_X */
 	@XStreamAlias("Location_X")
 	private double location_X;

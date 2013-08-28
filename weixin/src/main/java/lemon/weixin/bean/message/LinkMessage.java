@@ -9,7 +9,7 @@ import static lemon.weixin.util.WXHelper.cDATA;
  *
  */
 @XStreamAlias("xml")
-public class LinkMessage extends BasicMessage {
+public class LinkMessage extends WeiXinMessage {
 	/** Title */
 	@XStreamAlias("Title")
 	private String title;

@@ -8,12 +8,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
- * Basic message
+ * WeiXin message
  * 
  * @author lemon
  * 
  */
-public class BasicMessage implements Message,Cloneable {
+public class WeiXinMessage implements Message,Cloneable {
 	/** ToUserName */
 	@XStreamAlias("ToUserName")
 	protected String toUserName;
@@ -31,7 +31,7 @@ public class BasicMessage implements Message,Cloneable {
 	@XStreamOmitField
 	protected long msgId;
 
-	public BasicMessage(String msgType) {
+	public WeiXinMessage(String msgType) {
 		this.msgType = cDATA(msgType);
 	}
 
@@ -71,10 +71,10 @@ public class BasicMessage implements Message,Cloneable {
 		this.msgId = msgId;
 	}
 
-	public BasicMessage cloneMsg() {
-		BasicMessage bm = null;
+	public WeiXinMessage cloneMsg() {
+		WeiXinMessage bm = null;
 		try {
-			bm = (BasicMessage) this.clone();
+			bm = (WeiXinMessage) this.clone();
 			if(null == bm) return null;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();

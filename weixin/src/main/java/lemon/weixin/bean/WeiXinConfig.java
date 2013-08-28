@@ -1,7 +1,7 @@
 package lemon.weixin.bean;
 
 /**
- * Some configs with weixin
+ * Some configures with WeiXin
  * @author lemon
  *
  */
@@ -12,8 +12,10 @@ public class WeiXinConfig {
 	private String token;
 	/** 开发者微信号 */
 	private String wx_account;
-	
+	/** 时间戳 */
 	private String timestamp;
+	/** 业务代码实现 */
+	private String bizClass;
 	
 	public String getToken() {
 		return token;
@@ -39,7 +41,12 @@ public class WeiXinConfig {
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
-	
+	public String getBizClass() {
+		return bizClass;
+	}
+	public void setBizClass(String bizClass) {
+		this.bizClass = bizClass;
+	}
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("cust_id=");

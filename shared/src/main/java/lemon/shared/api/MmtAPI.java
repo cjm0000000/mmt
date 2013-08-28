@@ -21,7 +21,7 @@ public interface MmtAPI {
 	 * @param msg
 	 * @return
 	 */
-	String processMsg(int cust_id, String msg);
+	String processMsg(String token, String msg);
 	
 	
 }

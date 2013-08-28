@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 
  */
 @XStreamAlias("xml")
-public class TextMessage extends BasicMessage {
+public class TextMessage extends WeiXinMessage {
 	/** Content */
 	@XStreamAlias("Content")
 	private String content;

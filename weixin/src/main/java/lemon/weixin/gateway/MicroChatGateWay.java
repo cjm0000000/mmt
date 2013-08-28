@@ -135,7 +135,7 @@ public class MicroChatGateWay implements Filter {
 		// first, parse the message
 		String msg = getMessage(req);
 		// third, process message by business logic
-		processMessage(config.getCust_id(), resp,msg);
+		processMessage(config.getToken(), resp,msg);
 	}
 	
 	/**
@@ -168,14 +168,14 @@ public class MicroChatGateWay implements Filter {
 	 * @param msg
 	 * @throws IOException
 	 */
-	private void processMessage(int cust_id, HttpServletResponse resp, String msg)
+	private void processMessage(String token, HttpServletResponse resp, String msg)
 			throws IOException {
 		PrintWriter out = null;
 		try {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			out.println(wxAPI.processMsg(cust_id, msg));
+			out.println(wxAPI.processMsg(token, msg));
 			out.flush();
 		} finally {
 			if (null != out)

@@ -8,10 +8,10 @@ package lemon.shared.common;
 public interface MsgParser {
 	
 	/**
-	 * parse message and generate a replay message
+	 * Parse message and generate a replay message
 	 * @param msg
 	 * @return
 	 */
-	String parseMessage(String msg);
+	String parseMessage(String token, String msg);
 	
 }

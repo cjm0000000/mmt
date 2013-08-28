@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
-public class ImageMessage extends BasicMessage {
+public class ImageMessage extends WeiXinMessage {
 	/** PicUrl */
 	@XStreamAlias("PicUrl")
 	private String picUrl;

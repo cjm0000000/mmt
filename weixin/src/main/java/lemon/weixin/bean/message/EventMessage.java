@@ -10,7 +10,7 @@ import static lemon.weixin.util.WXHelper.cDATA;
  *
  */
 @XStreamAlias("xml")
-public class EventMessage extends BasicMessage {
+public class EventMessage extends WeiXinMessage {
 	/** Event */
 	@XStreamAlias("Event")
 	private String eventType; 

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.common.MsgParser;
+import lemon.weixin.WeiXin;
+import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.dao.WXLogManager;
@@ -61,7 +63,9 @@ public class WXGZAPI implements MmtAPI {
 	}
 
 	@Override
-	public String processMsg(int cust_id, String msg) {
+	public String processMsg(String token, String msg) {
+		WeiXinConfig cfg = WeiXin.getConfig(token);
+		int cust_id = cfg.getCust_id();
 		//save received log
 		saveReciveMessageLog(cust_id, msg);
 		//get message type
@@ -69,11 +73,11 @@ public class WXGZAPI implements MmtAPI {
 		//get message parser
 		parser = WXMsgParser.getParser(msgType);
 		//process message and generate replay message
-		String rMsg = parser.parseMessage(msg);
+		String rMsg = parser.parseMessage(token, msg);
 		//save log
 		if(rMsg == null)
 			saveSendMessageLog(cust_id, rMsg);
-		//replay weixin message
+		//replay WeiXin message
 		return rMsg;
 	}
 

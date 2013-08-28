@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
+import lemon.weixin.WeiXin;
+import lemon.weixin.bean.WeiXinConfig;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +36,13 @@ public class MessageTest {
 		ApplicationContext acx = new ClassPathXmlApplicationContext(resource);
 		api = (MmtAPI) acx.getBean(MmtAPI.class);
 		assertNotNull(api);
+		WeiXin.init();
+		WeiXinConfig cfg = new WeiXinConfig();
+		cfg.setCust_id(100);
+		cfg.setToken("a");
+		cfg.setWx_account("0577hr");
+		cfg.setBizClass("lemon.weixin.biz.customer.yuanda.YD_0577HR");
+		WeiXin.setConfig("a", cfg);
 	}
 	
 	@Test
@@ -48,7 +57,7 @@ public class MessageTest {
 	@Test
 	public void textMsgTest(){
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
-		String result = api.processMsg(1, txtMsg);
+		String result = api.processMsg("a", txtMsg);
 		logger.debug(result);
 	}
 }
