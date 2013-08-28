@@ -51,13 +51,19 @@ public class MessageTest {
 		InputStream is = new ByteArrayInputStream(msg.getBytes());
 		Document doc = new SAXBuilder().build(is);
 		Element msgType = doc.getRootElement().getChild("MsgType");
-		System.out.println(msgType.getValue());
+		logger.debug(msgType.getValue());
 		Assert.assertTrue("text".equals(msgType.getValue()));
 	}
 	@Test
 	public void textMsgTest(){
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		String result = api.processMsg("a", txtMsg);
+		logger.debug(result);
+	}
+	@Test
+	public void eventMsgTest(){
+		String eventMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
+		String result = api.processMsg("a", eventMsg);
 		logger.debug(result);
 	}
 }

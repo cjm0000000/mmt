@@ -2,6 +2,9 @@ package lemon.weixin.xmlconvert;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -30,9 +33,11 @@ import static org.junit.Assert.*;
  */
 @RunWith(JUnit4.class)
 public class WXXMLConvert {
+	private static Log logger = LogFactory.getLog(WXXMLConvert.class);
 	private XStream xStream;
-
-	public WXXMLConvert() {
+	
+	@Before
+	public void init() {
 		xStream = WXHelper.createXstream();
 	}
 
@@ -41,10 +46,10 @@ public class WXXMLConvert {
 		xStream.processAnnotations(TextMessage.class);
 		TextMessage txt = MessageFactory.makeTextMsg();
 		String msg = xStream.toXML(txt);
-		System.out.println(msg);
-		System.out.println(txt.getContent());
+		logger.debug(msg);
+		logger.debug(txt.getContent());
 		TextMessage txt2 = (TextMessage) xStream.fromXML(msg);
-		System.out.println(txt2.getContent());
+		logger.debug(txt2.getContent());
 		assertTrue("Text message convert succesfully.",
 				"hello,weixin, I am \"lemon\".".equals(txt2.getContent()));
 	}
@@ -59,10 +64,10 @@ public class WXXMLConvert {
 		img.setPicUrl("http://www.baidu.com/sadsaf");
 		img.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(img);
-		System.out.println(msg);
-		System.out.println(img.getPicUrl());
+		logger.debug(msg);
+		logger.debug(img.getPicUrl());
 		ImageMessage img2 = (ImageMessage) xStream.fromXML(msg);
-		System.out.println(img2.getPicUrl());
+		logger.debug(img2.getPicUrl());
 		assertTrue("Image message convert succesfully.",
 				"http://www.baidu.com/sadsaf".equals(img2.getPicUrl()));
 	}
@@ -80,10 +85,10 @@ public class WXXMLConvert {
 		msg.setLabel("I am here.<xml>\"\"</xml>");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		System.out.println(str);
-		System.out.println(msg.getLabel());
+		logger.debug(str);
+		logger.debug(msg.getLabel());
 		LocationMessage msg2 = (LocationMessage) xStream.fromXML(str);
-		System.out.println(msg2.getLabel());
+		logger.debug(msg2.getLabel());
 
 		assertTrue("Location X message convert faild.",
 				msg.getLocation_X() == msg2.getLocation_X());
@@ -105,10 +110,10 @@ public class WXXMLConvert {
 		msg.setUrl("http://www.163.com/s/a/d/f/a");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		System.out.println(str);
-		System.out.println(msg.getTitle());
+		logger.debug(str);
+		logger.debug(msg.getTitle());
 		LinkMessage msg2 = (LinkMessage) xStream.fromXML(str);
-		System.out.println(msg2.getTitle());
+		logger.debug(msg2.getTitle());
 		
 		assertTrue("Link Title message convert faild.",
 				"Link \"TEST\" Title".equals(msg2.getTitle()));
@@ -129,10 +134,10 @@ public class WXXMLConvert {
 		msg.setEventKey("0dfsafkqwnriksdk");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		System.out.println(str);
-		System.out.println(msg.getEventType());
+		logger.debug(str);
+		logger.debug(msg.getEventType());
 		EventMessage msg2 = (EventMessage) xStream.fromXML(str);
-		System.out.println(msg2.getEventType());
+		logger.debug(msg2.getEventType());
 		
 		assertTrue("EVENT TYPE message convert faild.",
 				EventType.SUBSCRIBE.equals(msg2.getEventType()));
@@ -151,10 +156,10 @@ public class WXXMLConvert {
 		msg.setHqMusicUrl("HQmusic  ss s");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		System.out.println(str);
-		System.out.println(msg.getMusicUrl());
+		logger.debug(str);
+		logger.debug(msg.getMusicUrl());
 		MusicMessage msg2 = (MusicMessage) xStream.fromXML(str);
-		System.out.println(msg2.getMusicUrl());
+		logger.debug(msg2.getMusicUrl());
 		
 		assertTrue("MUSIC URL message convert faild.",
 				"http://music.baidu.com/a/a/d.mp3".equals(msg2.getMusicUrl()));
@@ -188,10 +193,10 @@ public class WXXMLConvert {
 		msg.setArticles(articles);
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		System.out.println(str);
-		System.out.println(msg.getArticleCount());
+		logger.debug(str);
+		logger.debug(msg.getArticleCount());
 		NewsMessage msg2 = (NewsMessage) xStream.fromXML(str);
-		System.out.println(msg2.getArticleCount());
+		logger.debug(msg2.getArticleCount());
 		
 		assertTrue("News ArticleCount message convert faild.",
 				msg.getArticleCount() == msg2.getArticleCount());
