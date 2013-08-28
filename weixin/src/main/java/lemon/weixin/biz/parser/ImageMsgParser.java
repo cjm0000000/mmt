@@ -1,18 +1,18 @@
-package lemon.weixin.biz;
+package lemon.weixin.biz.parser;
 
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
-import lemon.weixin.bean.message.LinkMessage;
+import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.util.WXHelper;
 
 /**
- * A link message parser
+ * An image message parser
  * 
  * @author lemon
  * 
  */
-public final class LinkMsgParser extends WXMsgParser {
+public final class ImageMsgParser extends WXMsgParser {
 	private XStream xStream = WXHelper.createXstream();
 
 	/**
@@ -22,14 +22,14 @@ public final class LinkMsgParser extends WXMsgParser {
 	 * @return
 	 */
 	@Override
-	public final LinkMessage toMsg(String msg) {
-		xStream.processAnnotations(LinkMessage.class);
-		return (LinkMessage) xStream.fromXML(msg);
+	public final ImageMessage toMsg(String msg) {
+		xStream.processAnnotations(ImageMessage.class);
+		return (ImageMessage) xStream.fromXML(msg);
 	}
 
 	@Override
 	public final String toXML(Message rMsg) {
-		xStream.processAnnotations(LinkMessage.class);
+		xStream.processAnnotations(ImageMessage.class);
 		return xStream.toXML(rMsg);
 	}
 }

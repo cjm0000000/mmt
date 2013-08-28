@@ -1,18 +1,18 @@
-package lemon.weixin.biz;
+package lemon.weixin.biz.parser;
 
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
-import lemon.weixin.bean.message.MusicMessage;
+import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.util.WXHelper;
 
 /**
- * An music message parser
+ * A link message parser
  * 
  * @author lemon
  * 
  */
-public final class MusicMsgParser extends WXMsgParser {
+public final class LinkMsgParser extends WXMsgParser {
 	private XStream xStream = WXHelper.createXstream();
 
 	/**
@@ -22,14 +22,14 @@ public final class MusicMsgParser extends WXMsgParser {
 	 * @return
 	 */
 	@Override
-	public final MusicMessage toMsg(String msg) {
-		xStream.processAnnotations(MusicMessage.class);
-		return (MusicMessage) xStream.fromXML(msg);
+	public final LinkMessage toMsg(String msg) {
+		xStream.processAnnotations(LinkMessage.class);
+		return (LinkMessage) xStream.fromXML(msg);
 	}
 
 	@Override
 	public final String toXML(Message rMsg) {
-		xStream.processAnnotations(MusicMessage.class);
+		xStream.processAnnotations(LinkMessage.class);
 		return xStream.toXML(rMsg);
 	}
 }

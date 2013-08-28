@@ -23,6 +23,7 @@ import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SiteAccessLog;
+import lemon.weixin.biz.parser.WXMsgParser;
 import lemon.weixin.dao.WXLogManager;
 import lemon.weixin.util.WXHelper;
 
@@ -72,6 +73,8 @@ public class WeiXinAPI implements MmtAPI {
 		String msgType = getMsgType(msg);
 		//get message parser
 		parser = WXMsgParser.getParser(msgType);
+		if(null == parser)
+			throw new WeiXinException("No parser find.");
 		//process message and generate replay message
 		String rMsg = parser.parseMessage(token, msg);
 		//save log

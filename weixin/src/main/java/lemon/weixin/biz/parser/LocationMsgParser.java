@@ -1,4 +1,4 @@
-package lemon.weixin.biz;
+package lemon.weixin.biz.parser;
 
 import com.thoughtworks.xstream.XStream;
 

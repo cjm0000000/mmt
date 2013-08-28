@@ -1,4 +1,7 @@
-package lemon.weixin.biz;
+package lemon.weixin.biz.parser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,30 +19,15 @@ import lemon.weixin.biz.customer.CustomerReplyMsg;
  *
  */
 public abstract class WXMsgParser implements MsgParser {
-	
+	private static Map<String, MsgParser> parsers;
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
 	
+	static{
+		initParserInstances();
+	}
+	
 	public static MsgParser getParser(String msgType){
-		if(null == msgType)
-			return null;
-		switch (msgType) {
-		case MsgType.TEXT:
-			return new TextMsgParser();
-		case MsgType.EVENT:
-			return new EventMsgParser();
-		case MsgType.IMAGE:
-			return new ImageMsgParser();
-		case MsgType.LINK:
-			return new LinkMsgParser();
-		case MsgType.LOCATION:
-			return new LocationMsgParser();
-		case MsgType.MUSIC:
-			return new MusicMsgParser();
-		case MsgType.NEWS:
-			return new NewsMsgParser();
-		default:
-			throw new WeiXinException("Incorrect message type.");
-		}
+		return parsers.get(msgType);
 	}
 	
 	/**
@@ -55,6 +43,21 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @return
 	 */
 	protected abstract String toXML(Message rMsg);
+	
+	/**
+	 * Generate replay message
+	 * @param token
+	 * @param msg
+	 * @return
+	 */
+	public final String parseMessage(String token, String msg){
+		Message message = toMsg(msg);
+		// process business
+		String retMsg = process(token, message);
+		logger.debug("Generate replay message:" + retMsg);
+		// build replay message
+		return retMsg;
+	}
 	
 	/**
 	 * Business process
@@ -77,17 +80,18 @@ public abstract class WXMsgParser implements MsgParser {
 	}
 	
 	/**
-	 * Generate replay message
-	 * @param token
-	 * @param msg
-	 * @return
+	 * Initialize parser instances
 	 */
-	public final String parseMessage(String token, String msg){
-		Message message = toMsg(msg);
-		// process business
-		String retMsg = process(token, message);
-		logger.debug("Generate replay message:" + retMsg);
-		// build replay message
-		return retMsg;
+	private static void initParserInstances() {
+		if (null == parsers) {
+			parsers = new HashMap<>(8, 1F);
+			parsers.put(MsgType.EVENT, new EventMsgParser());
+			parsers.put(MsgType.IMAGE, new ImageMsgParser());
+			parsers.put(MsgType.LINK, new LinkMsgParser());
+			parsers.put(MsgType.LOCATION, new LocationMsgParser());
+			parsers.put(MsgType.MUSIC, new MusicMsgParser());
+			parsers.put(MsgType.NEWS, new NewsMsgParser());
+			parsers.put(MsgType.TEXT, new TextMsgParser());
+		}
 	}
 }
