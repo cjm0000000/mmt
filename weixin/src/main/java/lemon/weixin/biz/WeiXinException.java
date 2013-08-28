@@ -1,7 +1,7 @@
 package lemon.weixin.biz;
 
 /**
- * WXGZException
+ * WeiXinException
  * @author lemon
  *
  */
@@ -9,7 +9,7 @@ public class WeiXinException extends RuntimeException {
 	static final long serialVersionUID = 1662900257135756746L;
 
 	/**
-	 * Constructs an {@code WXGZException} with {@code null} as its error detail
+	 * Constructs an {@code WeiXinException} with {@code null} as its error detail
 	 * message.
 	 */
 	public WeiXinException() {

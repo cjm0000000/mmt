@@ -27,14 +27,14 @@ import lemon.weixin.dao.WXLogManager;
 import lemon.weixin.util.WXHelper;
 
 /**
- * The Weixin API for message
+ * The WeiXin API for message
  * 
  * @author lemon
  * 
  */
 @Service
-public class WXGZAPI implements MmtAPI {
-	private static Log logger = LogFactory.getLog(WXGZAPI.class);
+public class WeiXinAPI implements MmtAPI {
+	private static Log logger = LogFactory.getLog(WeiXinAPI.class);
 	@Autowired
 	private WXLogManager wxLogManager;
 	private MsgParser parser;
