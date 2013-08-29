@@ -5,7 +5,6 @@ import static lemon.weixin.util.WXHelper.cDATA;
 import lemon.shared.common.Message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * WeiXin message
@@ -28,8 +27,7 @@ public class WeiXinMessage implements Message,Cloneable {
 	protected String msgType;
 	/** MsgId */
 	@XStreamAlias("MsgId")
-	@XStreamOmitField
-	protected long msgId;
+	protected Long msgId;
 
 	public WeiXinMessage(String msgType) {
 		this.msgType = cDATA(msgType);
@@ -63,28 +61,12 @@ public class WeiXinMessage implements Message,Cloneable {
 		return msgType;
 	}
 
-	public long getMsgId() {
+	public Long getMsgId() {
 		return msgId;
 	}
 
-	public void setMsgId(long msgId) {
+	public void setMsgId(Long msgId) {
 		this.msgId = msgId;
-	}
-
-	public WeiXinMessage cloneMsg() {
-		WeiXinMessage bm = null;
-		try {
-			bm = (WeiXinMessage) this.clone();
-			if(null == bm) return null;
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		// exchange from user and to user
-		String fromUserName = bm.getFromUserName();
-		bm.setFromUserName(bm.getToUserName());
-		bm.setToUserName(fromUserName);
-		bm.setCreateTime(System.currentTimeMillis());
-		return bm;
 	}
 
 	public String toString() {

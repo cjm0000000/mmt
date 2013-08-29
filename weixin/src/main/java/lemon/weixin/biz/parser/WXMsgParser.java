@@ -11,6 +11,7 @@ import lemon.shared.common.MsgParser;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MsgType;
+import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.customer.CustMsgBiz;
 
 /**
@@ -54,7 +55,6 @@ public abstract class WXMsgParser implements MsgParser {
 		Message message = toMsg(msg);
 		// process business
 		String retMsg = process(token, message);
-		logger.debug("Generate replay message:" + retMsg);
 		// build replay message
 		return retMsg;
 	}
@@ -68,15 +68,15 @@ public abstract class WXMsgParser implements MsgParser {
 		CustMsgBiz biz = null;
 		WeiXinConfig cfg = WeiXin.getConfig(token);
 		if(null == cfg)
-			return null;
+			throw new WeiXinException("No customer's configure find.");
 		try {
 			biz = (CustMsgBiz) Class.forName(cfg.getBizClass()).newInstance();
-			return biz.processBiz(msg);
+			return biz.processBiz(token, msg);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			logger.error("Can't find business implement class.");
+			throw new WeiXinException("Can't find business implement class: "+cfg.getBizClass());
 		}
-		return null;
 	}
 	
 	/**

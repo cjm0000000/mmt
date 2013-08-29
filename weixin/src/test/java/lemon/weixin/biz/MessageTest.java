@@ -1,6 +1,6 @@
 package lemon.weixin.biz;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.io.InputStream;
 import lemon.shared.api.MmtAPI;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.biz.parser.TextMsgParser;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -26,8 +26,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class MessageTest {
-	private static Log logger = LogFactory.getLog(MessageTest.class);
 	private MmtAPI api;
+	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
+	private final String unsubscribe_msg = "You have unsubscribe Lemon Test, Thank you!";
+	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	
 	@Before
 	public void init() {
@@ -39,10 +41,12 @@ public class MessageTest {
 		WeiXin.init();
 		WeiXinConfig cfg = new WeiXinConfig();
 		cfg.setCust_id(100);
-		cfg.setToken("a");
-		cfg.setWx_account("0577hr");
-		cfg.setBizClass("lemon.weixin.biz.customer.yuanda.YD_0577HR");
-		WeiXin.setConfig("a", cfg);
+		cfg.setToken(TOKEN);
+		cfg.setWx_account("lemon_test");
+		cfg.setBizClass("lemon.weixin.biz.LemonMessageBiz");
+		cfg.setSubscribe_msg(Subscribe_msg);
+		cfg.setUnsubscribe_msg(unsubscribe_msg);
+		WeiXin.setConfig(TOKEN, cfg);
 	}
 	
 	@Test
@@ -51,19 +55,29 @@ public class MessageTest {
 		InputStream is = new ByteArrayInputStream(msg.getBytes());
 		Document doc = new SAXBuilder().build(is);
 		Element msgType = doc.getRootElement().getChild("MsgType");
-		logger.debug(msgType.getValue());
 		Assert.assertTrue("text".equals(msgType.getValue()));
 	}
 	@Test
 	public void textMsgTest(){
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
-		String result = api.processMsg("a", txtMsg);
-		logger.debug(result);
+		String result = api.processMsg(TOKEN, txtMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), "Lemon Text message replay.");
 	}
 	@Test
-	public void eventMsgTest(){
+	public void subscribeTest(){
 		String eventMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
-		String result = api.processMsg("a", eventMsg);
-		logger.debug(result);
+		String result = api.processMsg(TOKEN, eventMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), Subscribe_msg);
 	}
+	
+	@Test
+	public void unsubscribe(){
+		String eventMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
+		String result = api.processMsg(TOKEN, eventMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), unsubscribe_msg);
+	}
+	
 }

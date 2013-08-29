@@ -67,6 +67,7 @@ public class WeiXinAPI implements MmtAPI {
 	public String processMsg(String token, String msg) {
 		WeiXinConfig cfg = WeiXin.getConfig(token);
 		int cust_id = cfg.getCust_id();
+		logger.debug("Receive a message: " + msg);
 		//save received log
 		saveReciveMessageLog(cust_id, msg);
 		//get message type
@@ -77,6 +78,7 @@ public class WeiXinAPI implements MmtAPI {
 			throw new WeiXinException("No parser find.");
 		//process message and generate replay message
 		String rMsg = parser.parseMessage(token, msg);
+		logger.debug("Generate a reply message: " + rMsg);
 		//save log
 		if(rMsg == null)
 			saveSendMessageLog(cust_id, rMsg);

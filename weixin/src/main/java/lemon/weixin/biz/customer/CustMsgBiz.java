@@ -9,9 +9,12 @@ import lemon.shared.common.Message;
  */
 public interface CustMsgBiz {
 	/**
-	 * Customer message process 
+	 * Customer message process<BR>
+	 * token is unique for every customer
+	 * @param token
 	 * @param msg
-	 * @return a string message
+	 * @return
 	 */
-	String processBiz(Message msg);
+	String processBiz(String token, Message msg);
+	
 }
