@@ -138,6 +138,7 @@ public class MicroChatGateWay implements Filter {
 		String msg = getMessage(req);
 		// third, process message by business logic
 		processMessage(config.getToken(), resp,msg);
+		//FIXME I should make a difference from mmt_token to wx_token
 	}
 	
 	/**
