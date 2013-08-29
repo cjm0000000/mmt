@@ -1,25 +1,31 @@
 package lemon.weixin.bean;
 
 /**
- * Some configures with WeiXin
+ * Customer's configures of WeiXin
  * @author lemon
  *
  */
 public class WeiXinConfig {
 	/** MMT客户编号 */
 	private int cust_id;
-	/** 接入需要提供的TOKEN */
+	/** 客户在微信接口填写的TOKEN */
 	private String token;
-	/** 开发者微信号 */
+	/** MMT客户微信号 */
 	private String wx_account;
 	/** 时间戳 */
 	private String timestamp;
 	/** 业务代码实现 */
-	private String bizClass;
+	private String biz_class;
 	/** 用户订阅时推送的消息 */
 	private String subscribe_msg;
 	/** 用户取消订阅时推送的消息 */
 	private String unsubscribe_msg;
+	/** 客户在微信的第三方用户唯一凭证 */
+	private String appid;
+	/** 客户在微信的第三方用户唯一凭证密钥 */
+	private String secret;
+	/** 客户微信API的URL，系统内唯一 */
+	private String api_url;
 	
 	public String getToken() {
 		return token;
@@ -45,11 +51,11 @@ public class WeiXinConfig {
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
-	public String getBizClass() {
-		return bizClass;
+	public String getBiz_class() {
+		return biz_class;
 	}
-	public void setBizClass(String bizClass) {
-		this.bizClass = bizClass;
+	public void setBiz_class(String biz_class) {
+		this.biz_class = biz_class;
 	}
 	public String getSubscribe_msg() {
 		return subscribe_msg;
@@ -63,6 +69,24 @@ public class WeiXinConfig {
 	public void setUnsubscribe_msg(String unsubscribe_msg) {
 		this.unsubscribe_msg = unsubscribe_msg;
 	}
+	public String getAppid() {
+		return appid;
+	}
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+	public String getSecret() {
+		return secret;
+	}
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+	public String getApi_url() {
+		return api_url;
+	}
+	public void setApi_url(String api_url) {
+		this.api_url = api_url;
+	}
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("cust_id=");
@@ -74,7 +98,7 @@ public class WeiXinConfig {
 		sb.append(",timestamp=");
 		sb.append(timestamp);
 		sb.append(",bizClass=");
-		sb.append(bizClass);
+		sb.append(biz_class);
 		sb.append(",subscribe_msg=");
 		sb.append(subscribe_msg);
 		sb.append(",unsubscribe_msg=");

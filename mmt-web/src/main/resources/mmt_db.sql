@@ -261,13 +261,21 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户信息表'
 
+INSERT INTO `customer` (`cust_id`,`cust_name`,`memo`,`status`) VALUES (1,'MMT','MMT','1');
+
 DROP TABLE IF EXISTS `weixin_config`;
 CREATE TABLE `weixin_config` (
-  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cust_id` int(11) NOT NULL DEFAULT '0',
   `wx_account` varchar(50) NOT NULL DEFAULT '',
   `token` varchar(255) NOT NULL DEFAULT '',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `subscribe_msg` text COMMENT '订阅事件需要发送的消息',
   `unsubscribe_msg` text COMMENT '取消订阅事件需要发送的消息',
+  `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
+  `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
+  `secret` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证密钥',
+  `api_url` char(32) NOT NULL DEFAULT '' COMMENT '客户微信API的URL(UNIQUE)',
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
+
+INSERT INTO `weixin_config` (`cust_id`,`wx_account`,`token`,`timestamp`,`subscribe_msg`,`unsubscribe_msg`,`biz_class`,`appid`,`secret`,`api_url`) VALUES (1,'mmtchat','QEQdsqo!#!)*','2013-08-29 22:23:59','accsd459@)!*#)*#','accsd459@)!*#)*#','lemon.weixin.biz.LemonMessageBiz','','','mmtchat0801012'),(10,'Junit Test WeiXin Account','Junit Test Token','2013-08-29 23:25:05','Welcome to subscribe Junit Test','You have unsubscribe Junit Test, thank you.','com.com.XXX','APPID','secret','ASDLADLKJFWQ');

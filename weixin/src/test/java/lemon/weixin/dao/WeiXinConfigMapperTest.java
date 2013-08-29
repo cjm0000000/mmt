@@ -56,6 +56,10 @@ public class WeiXinConfigMapperTest {
 		cfg.setWx_account("Junit Test WeiXin Account");
 		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");
 		cfg.setUnsubscribe_msg("You have unsubscribe Junit Test, thank you.");
+		cfg.setApi_url("ASDLADLKJFWQ");
+		cfg.setAppid("APPID");
+		cfg.setSecret("secret");
+		cfg.setBiz_class("com.com.XXX");
 		configMapper.save(cfg);
 		List<WeiXinConfig> list = configMapper.activeList();
 		for (WeiXinConfig weiXinConfig : list) {

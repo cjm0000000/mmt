@@ -22,19 +22,19 @@ public interface WeiXinConfigMapper {
 	 * @param cust_id
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.subscribe_msg, A.unsubscribe_msg FROM weixin_config A WHERE A.cust_id=#{cust_id}")
+	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.unsubscribe_msg, A.appid, A.secret, A.api_url FROM weixin_config A WHERE A.cust_id=#{cust_id}")
 	public WeiXinConfig get(int cust_id);
 	/**
 	 * Get all active configures
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.subscribe_msg, A.unsubscribe_msg FROM weixin_config A, customer C WHERE A.cust_id=C.cust_id AND C.status='1'")
+	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.unsubscribe_msg, A.appid, A.secret, A.api_url FROM weixin_config A, customer C WHERE A.cust_id=C.cust_id AND C.status='1'")
 	public List<WeiXinConfig> activeList();
 	/**
 	 * Add WeiXin configure
 	 * @param config
 	 */
-	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,unsubscribe_msg) SELECT #{cust_id},#{wx_account},#{token},#{subscribe_msg},#{unsubscribe_msg}")
+	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,unsubscribe_msg,biz_class,appid,secret,api_url) SELECT #{cust_id},#{wx_account},#{token},#{subscribe_msg},#{unsubscribe_msg},#{biz_class},#{appid},#{secret},#{api_url}")
 	public void save(WeiXinConfig config);
 	
 	/**

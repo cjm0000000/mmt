@@ -8,10 +8,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
+import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
+
 public class WXEmulation {
-	private static final String _URL = "http://127.0.0.1:8080/weixin/WeixinMp";
-	private static final String LOCAL_CHARSET = "UTF-8";
-	private static final String TARGET_CHARSET = "GBK";
+	private static final String _URL = "http://58.100.127.55/mmt-web/microchat/mmtchat0801012";
 
 	public static void main(String[] args) {
 		WXEmulation wx = new WXEmulation();

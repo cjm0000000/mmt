@@ -47,7 +47,7 @@ public class MessageTest {
 		cfg.setCust_id(100);
 		cfg.setToken(TOKEN);
 		cfg.setWx_account("lemon_test");
-		cfg.setBizClass("lemon.weixin.biz.LemonMessageBiz");
+		cfg.setBiz_class("lemon.weixin.biz.LemonMessageBiz");
 		cfg.setSubscribe_msg(Subscribe_msg);
 		cfg.setUnsubscribe_msg(unsubscribe_msg);
 		WeiXin.setConfig(TOKEN, cfg);

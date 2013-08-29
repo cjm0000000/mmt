@@ -70,12 +70,12 @@ public abstract class WXMsgParser implements MsgParser {
 		if(null == cfg)
 			throw new WeiXinException("No customer's configure find.");
 		try {
-			biz = (CustMsgBiz) Class.forName(cfg.getBizClass()).newInstance();
+			biz = (CustMsgBiz) Class.forName(cfg.getBiz_class()).newInstance();
 			return biz.processBiz(token, msg);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			logger.error("Can't find business implement class.");
-			throw new WeiXinException("Can't find business implement class: "+cfg.getBizClass());
+			throw new WeiXinException("Can't find business implement class: "+cfg.getBiz_class());
 		}
 	}
 	
