@@ -14,7 +14,7 @@ WeiXin feature is Integrated, You can easy use the it.
 	
 Here is MySQL code, you can see full SQL at [SQL CODE] (https://github.com/cjm0000000/mmt/blob/master/mmt-web/src/main/resources/mmt_db.sql)
 	
-	Table `weixin_config`
+	# Table weixin_config
 	CREATE TABLE `weixin_config` (
 	  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
 	  `wx_account` varchar(50) NOT NULL DEFAULT '',
@@ -25,7 +25,7 @@ Here is MySQL code, you can see full SQL at [SQL CODE] (https://github.com/cjm00
 	  PRIMARY KEY (`cust_id`)
 	) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
 	
-	Table `customer`
+	# Table customer
 	CREATE TABLE `customer` (
 	  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
 	  `cust_name` varchar(255) NOT NULL DEFAULT '',
@@ -34,7 +34,7 @@ Here is MySQL code, you can see full SQL at [SQL CODE] (https://github.com/cjm00
 	  PRIMARY KEY (`cust_id`)
 	) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户信息表'
 	
-	Table `weixin_log_siteaccess`
+	# Table weixin_log_siteaccess
 	CREATE TABLE `weixin_log_siteaccess` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `cust_id` int(11) NOT NULL DEFAULT '0',
@@ -47,7 +47,7 @@ Here is MySQL code, you can see full SQL at [SQL CODE] (https://github.com/cjm00
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='微信接入日志';
 	
-	Table `weixin_log_msg`
+	# Table weixin_log_msg
 	CREATE TABLE `weixin_log_msg` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `cust_id` int(11) NOT NULL DEFAULT '0',
