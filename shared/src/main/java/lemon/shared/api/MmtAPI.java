@@ -23,5 +23,10 @@ public interface MmtAPI {
 	 */
 	String processMsg(String token, String msg);
 	
-	
+	/**
+	 * Get access token
+	 * @param url
+	 * @return
+	 */
+	String getAcessToken(String url);
 }

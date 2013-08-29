@@ -46,4 +46,19 @@ public class WeiXin {
 		if(null != configs)
 			configs.clear();
 	}
+	
+	/**
+	 * Send message to WeiXin and receive a message from WeiXin<BR>
+	 * default timeout is 5 seconds.
+	 * @param token	
+	 * 			customer's token
+	 * @param url	request URL
+	 * @param method	request method, GET or POST
+	 * @param params	request params
+	 * @return
+	 */
+	public static String send(String token, String url, String method, Object... params) {
+		// TODO Implement message sender
+		return null;
+	}
 }
