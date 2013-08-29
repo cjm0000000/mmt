@@ -9,7 +9,11 @@ import java.io.InputStream;
 import lemon.shared.api.MmtAPI;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.bean.message.MusicMessage;
+import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.biz.parser.MusicMsgParser;
+import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
 
 import org.jdom.Document;
@@ -66,18 +70,58 @@ public class MessageTest {
 	}
 	@Test
 	public void subscribeTest(){
-		String eventMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
-		String result = api.processMsg(TOKEN, eventMsg);
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
 		TextMessage msg = new TextMsgParser().toMsg(result);
 		assertEquals(msg.getContent(), Subscribe_msg);
 	}
 	
 	@Test
 	public void unsubscribe(){
-		String eventMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
-		String result = api.processMsg(TOKEN, eventMsg);
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
 		TextMessage msg = new TextMsgParser().toMsg(result);
 		assertEquals(msg.getContent(), unsubscribe_msg);
+	}
+	@Test
+	public void linkMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377753855909</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), "Lemon Link message replay.");
+	}
+	
+	@Test
+	public void imageMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754117379</CreateTime><MsgType><![CDATA[image]]></MsgType><MsgId>1024102410241024</MsgId><PicUrl><![CDATA[http://www.baidu.com/sadsaf]]></PicUrl></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), "Lemon Image message replay.");
+	}
+	
+	@Test
+	public void locationMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754299991</CreateTime><MsgType><![CDATA[location]]></MsgType><MsgId>1024102410241024</MsgId><Location__X>23.134521</Location__X><Location__Y>113.358803</Location__Y><Scale>20</Scale><Label><![CDATA[I am here.<xml>\"sdf\"</xml>]]></Label></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), "Lemon Location message replay.");
+	}
+	
+	@Test
+	public void musicMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754486787</CreateTime><MsgType><![CDATA[music]]></MsgType><MsgId>1024102410241024</MsgId><MusicUrl><![CDATA[http://music.baidu.com/a/a/d.mp3]]></MusicUrl><HQMusicUrl><![CDATA[HQmusic  ss s]]></HQMusicUrl></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
+		MusicMessage msg = new MusicMsgParser().toMsg(result);
+		assertEquals(msg.getMusicUrl(), "nusic URL");
+		assertEquals(msg.getHqMusicUrl(), "HQ music URL");
+	}
+	
+	@Test
+	public void newsMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754656922</CreateTime><MsgType><![CDATA[news]]></MsgType><MsgId>1024102410241024</MsgId><ArticleCount>2</ArticleCount><Articles><item><Title><![CDATA[Title A1]]></Title><Description><![CDATA[DESC A1]]></Description><PicUrl><![CDATA[pic.taobao.com/aaas/asdf.jpg]]></PicUrl><Url><![CDATA[http://www.baidu.com]]></Url></item><item><Title><![CDATA[Title A2]]></Title><Description><![CDATA[DESC A2]]></Description><PicUrl><![CDATA[pic2.taobao.com/aaas/asdf222.jpg]]></PicUrl><Url><![CDATA[http://www.yousas.com]]></Url></item></Articles></xml>";
+		String result = api.processMsg(TOKEN, recvMsg);
+		NewsMessage msg = new NewsMsgParser().toMsg(result);
+		assertEquals(msg.getArticleCount(), 2);
 	}
 	
 }
