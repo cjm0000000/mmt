@@ -5,14 +5,15 @@ WeiXin feature is Integrated, You can easy use the it.
 ## User guide
 
 ### 1. configure the WeiXin feature at web.xml:
-<filter>
-	<filter-name>MicroChat</filter-name>
-	<filter-class>lemon.weixin.gateway.MicroChatGateWay</filter-class>
-</filter>
-<filter-mapping>
-	<filter-name>MicroChat</filter-name>
-	<url-pattern>/microchat/*</url-pattern>
-</filter-mapping>
+
+	<filter>
+		<filter-name>MicroChat</filter-name>
+		<filter-class>lemon.weixin.gateway.MicroChatGateWay</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MicroChat</filter-name>
+		<url-pattern>/microchat/*</url-pattern>
+	</filter-mapping>
 
 ### 2. implement your personalized message business:
 @see lemon.weixin.biz.customer.CustBasicMsgBiz
