@@ -25,21 +25,23 @@ import lemon.shared.api.MmtAPI;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
-import lemon.weixin.biz.WeiXinAPI;
 import lemon.weixin.dao.WeiXinConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * MicroChat gateway
  * @author lemon
  *
  */
+@Service("microChatGW")
 public class MicroChatGateWay implements Filter {
 	private static Log logger = LogFactory.getLog(MicroChatGateWay.class);
-	private MmtAPI wxAPI = new WeiXinAPI();
+	@Autowired
+	private MmtAPI wxAPI;
 	@Autowired
 	private WeiXinConfigMapper weiXinConfigMapper;
 	@Override
