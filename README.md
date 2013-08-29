@@ -70,7 +70,7 @@ Here is MySQL code, you can see full SQL at [SQL CODE] (https://github.com/cjm00
 
 ### 4. implement your personalized message business:
 
-You can implement your business by extends lemon.weixin.biz.customer.CustBasicMsgBiz,
+You can implement your business by extends `lemon.weixin.biz.customer.CustBasicMsgBiz`,
 this class supply an easy subscribe implement.
 
 =====
