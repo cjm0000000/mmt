@@ -21,7 +21,7 @@ import lemon.weixin.biz.parser.TextMsgParser;
 public class LemonMessageBiz extends CustBasicMsgBiz {
 
 	@Override
-	public String processImageMsg(String token, ImageMessage msg) {
+	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Image message replay.");

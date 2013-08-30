@@ -15,12 +15,6 @@ import lemon.weixin.util.WXHelper;
 public final class LocationMsgParser extends WXMsgParser {
 	private XStream xStream = WXHelper.createXstream();
 
-	/**
-	 * Convert XML to Message
-	 * 
-	 * @param msg
-	 * @return
-	 */
 	@Override
 	public final LocationMessage toMsg(String msg) {
 		xStream.processAnnotations(LocationMessage.class);

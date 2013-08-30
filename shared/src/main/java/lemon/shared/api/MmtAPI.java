@@ -3,7 +3,7 @@ package lemon.shared.api;
 import java.util.Map;
 
 /**
- * unified operation for mmt
+ * MMT message API
  * @author lemon
  * @date 2013-08-21
  *
@@ -17,16 +17,17 @@ public interface MmtAPI {
 	boolean verifySignature(Map<String, Object> params);
 	
 	/**
-	 * process the message
-	 * @param msg
-	 * @return
+	 * process message and return a result
+	 * @param mmt_token MMT system token
+	 * @param msg input message
+	 * @return	reply message
 	 */
-	String processMsg(String token, String msg);
+	String processMsg(String mmt_token, String msg);
 	
 	/**
-	 * Get access token
+	 * Third-part get access token
 	 * @param url
-	 * @return
+	 * @return 
 	 */
 	String getAcessToken(String url);
 }

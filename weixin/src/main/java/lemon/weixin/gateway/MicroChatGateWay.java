@@ -78,7 +78,7 @@ public class MicroChatGateWay implements Filter {
 		WeiXin.init();
 		List<WeiXinConfig> list = weiXinConfigMapper.activeList();
 		for (WeiXinConfig wxcfg : list) {
-			WeiXin.setConfig(wxcfg.getToken(), wxcfg);
+			WeiXin.setConfig(wxcfg);
 		}
 		logger.info("微信网关初始化成功...");
 	}
@@ -137,7 +137,7 @@ public class MicroChatGateWay implements Filter {
 		// first, parse the message
 		String msg = getMessage(req);
 		// third, process message by business logic
-		processMessage(config.getToken(), resp,msg);
+		processMessage(config.getApi_url(), resp,msg);
 		//FIXME I should make a difference from mmt_token to wx_token
 	}
 	
@@ -167,18 +167,19 @@ public class MicroChatGateWay implements Filter {
 
 	/**
 	 * Process message by business logic
+	 * @param mmt_token	MMT system's token
 	 * @param resp
 	 * @param msg
 	 * @throws IOException
 	 */
-	private void processMessage(String token, HttpServletResponse resp, String msg)
+	private void processMessage(String mmt_token, HttpServletResponse resp, String msg)
 			throws IOException {
 		PrintWriter out = null;
 		try {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			out.println(wxAPI.processMsg(token, msg));
+			out.println(wxAPI.processMsg(mmt_token, msg));
 			out.flush();
 		} finally {
 			if (null != out)
@@ -192,6 +193,7 @@ public class MicroChatGateWay implements Filter {
 	 * @return
 	 */
 	private String getShortPath(String path){
+		//FIXME short path bug
 		return path.substring(path.lastIndexOf("/")).substring(1);
 	}
 

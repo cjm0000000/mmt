@@ -47,31 +47,32 @@ public abstract class WXMsgParser implements MsgParser {
 	
 	/**
 	 * Generate replay message
-	 * @param token
+	 * @param mmt_token
 	 * @param msg
 	 * @return
 	 */
-	public final String parseMessage(String token, String msg){
+	public final String parseMessage(String mmt_token, String msg){
 		Message message = toMsg(msg);
 		// process business
-		String retMsg = process(token, message);
+		String retMsg = process(mmt_token, message);
 		// build replay message
 		return retMsg;
 	}
 	
 	/**
 	 * Business process
-	 * @param txt
+	 * @param mmt_token
+	 * @param msg
 	 * @return an string message
 	 */
-	private String process(String token, Message msg){
+	private String process(String mmt_token, Message msg){
 		CustMsgBiz biz = null;
-		WeiXinConfig cfg = WeiXin.getConfig(token);
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		if(null == cfg)
 			throw new WeiXinException("No customer's configure find.");
 		try {
 			biz = (CustMsgBiz) Class.forName(cfg.getBiz_class()).newInstance();
-			return biz.processBiz(token, msg);
+			return biz.processBiz(mmt_token, msg);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			logger.error("Can't find business implement class.");

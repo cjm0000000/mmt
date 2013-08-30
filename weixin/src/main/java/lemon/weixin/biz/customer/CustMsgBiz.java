@@ -3,18 +3,17 @@ package lemon.weixin.biz.customer;
 import lemon.shared.common.Message;
 
 /**
- * For all customer message business
+ * Customer message business interface
  * @author lemon
  *
  */
 public interface CustMsgBiz {
 	/**
 	 * Customer message process<BR>
-	 * token is unique for every customer
-	 * @param token
+	 * @param mmt_token	is unique in MMT system
 	 * @param msg
 	 * @return
 	 */
-	String processBiz(String token, Message msg);
+	String processBiz(String mmt_token, Message msg);
 	
 }

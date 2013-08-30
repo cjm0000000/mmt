@@ -15,12 +15,6 @@ import lemon.weixin.util.WXHelper;
 public final class ImageMsgParser extends WXMsgParser {
 	private XStream xStream = WXHelper.createXstream();
 
-	/**
-	 * Convert XML to Message
-	 * 
-	 * @param msg
-	 * @return
-	 */
 	@Override
 	public final ImageMessage toMsg(String msg) {
 		xStream.processAnnotations(ImageMessage.class);

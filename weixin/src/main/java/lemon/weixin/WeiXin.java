@@ -18,6 +18,9 @@ public class WeiXin {
 	
 	private static ConcurrentMap<String, WeiXinConfig> configs;
 
+	/**
+	 * 清空Map
+	 */
 	public static void init() {
 		if (configs == null)
 			configs = new ConcurrentHashMap<>();
@@ -27,24 +30,24 @@ public class WeiXin {
 
 	/**
 	 * 获取WeiXin通用配置
-	 * 
-	 * @param token
+	 * @param mmt_token
 	 * @return
 	 */
-	public static WeiXinConfig getConfig(String token) {
-		return configs.get(token);
+	public static WeiXinConfig getConfig(String mmt_token) {
+		return configs.get(mmt_token);
 	}
 
 	/**
-	 * 更改WeiXin通用配置
-	 * 
-	 * @param token
+	 * 设置WeiXin通用配置
 	 * @param config
 	 */
-	public static void setConfig(String token, WeiXinConfig config) {
-		configs.put(token, config);
+	public static void setConfig(WeiXinConfig config) {
+		configs.put(config.getApi_url(), config);
 	}
 	
+	/**
+	 * 销毁Map
+	 */
 	public static void destory(){
 		if(null != configs)
 			configs.clear();
