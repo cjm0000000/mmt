@@ -193,8 +193,9 @@ public class MicroChatGateWay implements Filter {
 	 * @return
 	 */
 	private String getShortPath(String path){
-		//FIXME short path bug
+		if(path.lastIndexOf("/") == 0)
+			path = path + "/";
 		return path.substring(path.lastIndexOf("/")).substring(1);
 	}
-
+	
 }
