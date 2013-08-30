@@ -93,7 +93,8 @@ public class WeiXinAPI implements MmtAPI {
 	 * 
 	 */
 	@Override
-	public String getAcessToken(String url) {
+	public String getAcessToken() {
+		// FIXME properties on context startup
 		// TODO get access token from WeiXin server
 		return null;
 	}

@@ -26,8 +26,7 @@ public interface MmtAPI {
 	
 	/**
 	 * Third-part get access token
-	 * @param url
-	 * @return 
+	 * @return access_token
 	 */
-	String getAcessToken(String url);
+	String getAcessToken();
 }

@@ -1,6 +1,8 @@
 package lemon.weixin;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -15,8 +17,15 @@ import lemon.weixin.gateway.MicroChatMessager;
  * 
  */
 public class WeiXin {
-	
 	private static ConcurrentMap<String, WeiXinConfig> configs;
+	/** 通用接口URL */
+	private static String commonUrl;
+	/** 创建菜单URL */
+	private static String menuURL_CREATE;
+	/** 查询菜单URL */
+	private static String menuURL_SEARCH;
+	/** 删除菜单URL */
+	private static String menuURL_DELETE;
 
 	/**
 	 * 清空Map
@@ -26,6 +35,11 @@ public class WeiXin {
 			configs = new ConcurrentHashMap<>();
 		else
 			configs.clear();
+		try {
+			loadWeiXinProperties();
+		} catch (IOException e) {
+			throw new WeiXinException("Load weixin properties faild. "+ e.getCause());
+		}
 	}
 
 	/**
@@ -87,5 +101,53 @@ public class WeiXin {
 			throw new WeiXinException("Get message faild: " + e.getCause());
 		}
 		return replyMsg;
+	}
+	
+	/**
+	 * Get common request URL
+	 * @return
+	 */
+	public static String getCommonUrl(){
+		return commonUrl;
+	}
+	
+	/**
+	 * Get create menu URL
+	 * @return
+	 */
+	public static String getCreateMenuUrl(){
+		return menuURL_CREATE;
+	}
+	
+	/**
+	 * Get search menu URL
+	 * @return
+	 */
+	public static String getSearchMenuUrl(){
+		return menuURL_SEARCH;
+	}
+	
+	/**
+	 * Get delete menu URL
+	 * @return
+	 */
+	public static String getDeleteMenuUrl(){
+		return menuURL_DELETE;
+	}
+	
+	private static void loadWeiXinProperties() throws IOException{
+		InputStream in = null;
+		try{
+			in = WeiXin.class.getResourceAsStream("weixin.properties");
+			Properties p = new Properties();
+			p.load(in);
+			commonUrl = p.getProperty("common-url");
+			menuURL_CREATE = p.getProperty("menu-create-url");
+			menuURL_SEARCH = p.getProperty("menu-search-url");
+			menuURL_DELETE = p.getProperty("menu-delete-url");
+		}finally{
+			if(null != in)
+				in.close();
+		}
 	}
 }
