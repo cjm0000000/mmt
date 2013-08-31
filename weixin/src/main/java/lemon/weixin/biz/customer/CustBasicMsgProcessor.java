@@ -20,7 +20,7 @@ import lemon.weixin.biz.parser.TextMsgParser;
  * @author lemon
  *
  */
-public abstract class CustBasicMsgBiz implements CustMsgBiz {
+public abstract class CustBasicMsgProcessor implements CustMsgProcessor {
 	
 	public final String processBiz(String mmt_token, Message msg) {
 		if(msg == null)

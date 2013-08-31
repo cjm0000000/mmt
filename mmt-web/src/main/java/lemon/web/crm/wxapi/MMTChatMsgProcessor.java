@@ -1,4 +1,4 @@
-package lemon.weixin.biz;
+package lemon.web.crm.wxapi;
 
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
@@ -18,13 +18,13 @@ import lemon.weixin.biz.parser.TextMsgParser;
  * @author lemon
  *
  */
-public class LemonMessageBiz extends CustBasicMsgProcessor {
+public class MMTChatMsgProcessor extends CustBasicMsgProcessor {
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("Lemon Image message replay.");
+		replyMsg.setContent("MMTChat Image message replay.");
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
@@ -32,7 +32,7 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 	public String processLinkMsg(String token, LinkMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("Lemon Link message replay.");
+		replyMsg.setContent("MMTChat Link message replay.");
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
@@ -40,7 +40,7 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 	public String processLocationMsg(String token, LocationMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("Lemon Location message replay.");
+		replyMsg.setContent("MMTChat Location message replay.");
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
@@ -48,8 +48,8 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 	public String processMusicMsg(String token, MusicMessage msg) {
 		MusicMessage replyMsg = new MusicMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setMusicUrl("nusic URL");
-		replyMsg.setHqMusicUrl("HQ music URL");
+		replyMsg.setMusicUrl("MMTChat nusic URL");
+		replyMsg.setHqMusicUrl("MMTChat HQ music URL");
 		return new MusicMsgParser().toXML(replyMsg);
 	}
 
@@ -60,13 +60,13 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 		replyMsg.setArticleCount(2);
 		
 		Article a1 = new Article();
-		a1.setTitle("New 1");
+		a1.setTitle("MMTChat New 1");
 		a1.setDescription("DESC A1");
 		a1.setPicUrl("pic.taobao.com/aaas/asdf.jpg");
 		a1.setUrl("http://www.baidu.com");
 		
 		Article a2 = new Article();
-		a2.setTitle("New 2");
+		a2.setTitle("MMTChat New 2");
 		a2.setDescription("DESC A2");
 		a2.setPicUrl("pic2.taobao.com/aaas/asdf222.jpg");
 		a2.setUrl("http://www.yousas.com");
@@ -81,7 +81,7 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 	public String processTextMsg(String token, TextMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("Lemon Text message replay.");
+		replyMsg.setContent("MMTChat Text message replay.");
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
@@ -89,7 +89,7 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 	public String processClickEvent(String token, EventMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("Lemon Event Click message replay.");
+		replyMsg.setContent("MMTChat Event Click message replay.");
 		return new TextMsgParser().toXML(replyMsg);
 	}
 

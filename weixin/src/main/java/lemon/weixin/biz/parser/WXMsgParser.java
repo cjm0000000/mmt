@@ -12,7 +12,7 @@ import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MsgType;
 import lemon.weixin.biz.WeiXinException;
-import lemon.weixin.biz.customer.CustMsgBiz;
+import lemon.weixin.biz.customer.CustMsgProcessor;
 
 /**
  * A message parser for WeiXin
@@ -66,12 +66,12 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @return an string message
 	 */
 	private String process(String mmt_token, Message msg){
-		CustMsgBiz biz = null;
+		CustMsgProcessor biz = null;
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		if(null == cfg)
 			throw new WeiXinException("No customer's configure find.");
 		try {
-			biz = (CustMsgBiz) Class.forName(cfg.getBiz_class()).newInstance();
+			biz = (CustMsgProcessor) Class.forName(cfg.getBiz_class()).newInstance();
 			return biz.processBiz(mmt_token, msg);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {

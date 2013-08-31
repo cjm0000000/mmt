@@ -7,7 +7,7 @@ import lemon.shared.common.Message;
  * @author lemon
  *
  */
-public interface CustMsgBiz {
+public interface CustMsgProcessor {
 	/**
 	 * Customer message process<BR>
 	 * @param mmt_token	is unique in MMT system
