@@ -138,7 +138,7 @@ public class WeiXin {
 	private static void loadWeiXinProperties() throws IOException{
 		InputStream in = null;
 		try{
-			in = WeiXin.class.getResourceAsStream("weixin.properties");
+			in = WeiXin.class.getClassLoader().getResourceAsStream("weixin.properties");
 			Properties p = new Properties();
 			p.load(in);
 			commonUrl = p.getProperty("common-url");

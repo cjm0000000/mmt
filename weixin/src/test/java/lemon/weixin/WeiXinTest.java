@@ -12,6 +12,7 @@ public class WeiXinTest {
 	@Before
 	public void init(){
 		WeiXin.init();
+		
 	}
 	@Test
 	public void testWeiXinProperties() {
@@ -19,6 +20,5 @@ public class WeiXinTest {
 		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/create", WeiXin.getCreateMenuUrl());
 		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/get", WeiXin.getSearchMenuUrl());
 		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/delete", WeiXin.getDeleteMenuUrl());
-		//FIXME get WeiXin properties failed
 	}
 }
