@@ -58,9 +58,11 @@ public class WeiXinAPI implements MmtAPI {
 			sb.append(str);
 		}
 		// sha1 for signature
-		String sh1str = WXHelper.sha1(log.getSignature());
+		String sha1str = WXHelper.sha1(sb.toString());
+		logger.debug("After SHA1:" + sha1str);
 		// compare
-		return sb.toString().equalsIgnoreCase(sh1str);
+		logger.debug("signature:" + log.getSignature());
+		return sha1str.equalsIgnoreCase(log.getSignature());
 	}
 
 	@Override

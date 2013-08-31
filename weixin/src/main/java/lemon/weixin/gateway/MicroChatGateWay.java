@@ -56,7 +56,6 @@ public class MicroChatGateWay implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		//confirm which customer is it
-		logger.debug(request.getServletPath());
 		String shortPath = getShortPath(request.getServletPath());
 		logger.debug("shortPath=" + shortPath);
 		WeiXinConfig config = WeiXin.getConfig(shortPath);
