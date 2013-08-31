@@ -89,11 +89,10 @@ public class WeiXin {
 	 * Get a message from the URL<BR>
 	 * default timeout is 5 seconds.
 	 * @param url
-	 * @param msg
 	 * @param params
 	 * @return
 	 */
-	public static String getMsg(String url, String msg, Object... params){
+	public static String getMsg(String url, Object... params){
 		String replyMsg = null;
 		try {
 			replyMsg = MicroChatMessager.send(url, "GET", null, params);

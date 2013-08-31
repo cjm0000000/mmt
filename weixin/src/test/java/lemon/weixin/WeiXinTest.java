@@ -16,9 +16,9 @@ public class WeiXinTest {
 	}
 	@Test
 	public void testWeiXinProperties() {
-		assertEquals("https://api.weixin.qq.com/cgi-bin/token", WeiXin.getCommonUrl());
-		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/create", WeiXin.getCreateMenuUrl());
-		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/get", WeiXin.getSearchMenuUrl());
-		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/delete", WeiXin.getDeleteMenuUrl());
+		assertEquals("https://api.weixin.qq.com/cgi-bin/token?grant_type=#{MMT}&appid=#{MMT}&secret=#{MMT}", WeiXin.getCommonUrl());
+		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{MMT}", WeiXin.getCreateMenuUrl());
+		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=#{MMT}", WeiXin.getSearchMenuUrl());
+		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=#{MMT}", WeiXin.getDeleteMenuUrl());
 	}
 }

@@ -87,16 +87,15 @@ public class WeiXinAPI implements MmtAPI {
 	}
 	
 	/**
-	 * @param url the request URL, such as: <BR>
+	 *  @param url the request URL, such as: <BR>
 	 * 		https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
-	 * 		you can get appid and appsecret from {@link lemon.weixin.bean.WeiXinConfig WeiXinConfig} 
-	 * 
+	 * 		you can get appid and appsecret from {@link lemon.weixin.bean.WeiXinConfig WeiXinConfig}
 	 */
 	@Override
-	public String getAcessToken() {
-		// FIXME properties on context startup
-		// TODO get access token from WeiXin server
-		return null;
+	public String getAcessToken(String mmt_token) {
+		String url = WeiXin.getCommonUrl();
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		return WeiXin.getMsg(url, "client_credential",cfg.getAppid(),cfg.getSecret());
 	}
 
 	/**
