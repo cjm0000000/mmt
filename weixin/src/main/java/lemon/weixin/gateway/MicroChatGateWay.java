@@ -119,8 +119,10 @@ public class MicroChatGateWay implements Filter {
 		paramMap.put("SiteAccess", log);
 		
 		//验证签名
-		if(wxAPI.verifySignature(paramMap))
+		if(wxAPI.verifySignature(paramMap)){
 			resp.getWriter().print(echostr);
+			return;
+		}
 		resp.getWriter().print("I think you are not the Weixin Server.");
 	}
 	

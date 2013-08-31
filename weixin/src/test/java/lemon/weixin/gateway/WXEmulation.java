@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import lemon.weixin.WeiXin;
 import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
 import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
 
@@ -16,7 +17,8 @@ public class WXEmulation {
 
 	public static void main(String[] args) {
 		WXEmulation wx = new WXEmulation();
-		wx.pushTextMsg();
+		//wx.pushTextMsg();
+		wx.testSignature();
 	}
 
 	public void pushTextMsg() {
@@ -100,6 +102,16 @@ public class WXEmulation {
 			if (null != is)
 				is.close();
 		}
+	}
+	
+	public void testSignature(){
+		String signature = "794c3811a093f3b21817d8998b979e50f647019f";
+		String timestamp = "1377959222";
+		String nonce = "1378062726";
+		String echostr = "5918734435873848631";
+		String url = "http://115.28.1.159/mmt-web/microchat/925f51c7ea78ad4581d377bb89542a7bc779cc3c?signature="+signature+"&timestamp="+timestamp+"&nonce="+nonce+"&echostr="+echostr;
+		String result = WeiXin.getMsg(url);
+		System.out.println(result);
 	}
 
 }

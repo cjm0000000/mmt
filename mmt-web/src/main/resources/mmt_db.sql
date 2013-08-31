@@ -274,7 +274,7 @@ CREATE TABLE `weixin_config` (
   `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
   `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
   `secret` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证密钥',
-  `api_url` char(32) NOT NULL DEFAULT '' COMMENT '客户微信API的URL(UNIQUE)',
+  `api_url` char(40) NOT NULL DEFAULT '' COMMENT '客户微信API的URL(UNIQUE)',
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
 
