@@ -81,8 +81,8 @@ public class WeiXinAPI implements MmtAPI {
 		//process message and generate replay message
 		String rMsg = parser.parseMessage(token, msg);
 		logger.debug("Generate a reply message: " + rMsg);
-		//save log
-		if(rMsg == null)
+		//save reply log
+		if(rMsg != null)
 			saveSendMessageLog(cust_id, rMsg);
 		//replay WeiXin message
 		return rMsg;

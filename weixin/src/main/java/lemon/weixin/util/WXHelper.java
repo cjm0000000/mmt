@@ -20,10 +20,10 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  * 
  */
 public final class WXHelper {
-	/** This is local charset */
+	/** This is local encoding */
 	public static final String LOCAL_CHARSET = "UTF-8";
-	/** This is remote charset */
-	public static final String TARGET_CHARSET = "GBK";
+	/** This is remote encoding */
+	public static final String TARGET_CHARSET = "UTF-8";
 	/** CDATA prefix */
 	public static final String PREFIX_CDATA = "<![CDATA[";
 	/** CDATA suffix */
@@ -32,7 +32,7 @@ public final class WXHelper {
 	private static Log logger = LogFactory.getLog(WXHelper.class);
 
 	/**
-	 * Get Xstream instance
+	 * Get XStream instance
 	 * 
 	 * @return
 	 */

@@ -243,10 +243,10 @@ DROP TABLE IF EXISTS `weixin_log_siteaccess`;
 CREATE TABLE `weixin_log_siteaccess` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cust_id` int(11) NOT NULL DEFAULT '0',
-  `signature` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
-  `timestamp` varchar(20) DEFAULT NULL,
-  `nonce` varchar(30) DEFAULT NULL,
-  `echostr` varchar(50) DEFAULT NULL,
+  `signature` char(40) NOT NULL DEFAULT '' COMMENT '签名',
+  `timestamp` char(10) DEFAULT NULL,
+  `nonce` char(10) DEFAULT NULL,
+  `echostr` char(19) DEFAULT NULL,
   `token`	varchar(50) NOT NULL,
   `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
