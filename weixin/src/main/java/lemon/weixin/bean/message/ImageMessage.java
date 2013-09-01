@@ -14,10 +14,14 @@ public class ImageMessage extends WeiXinMessage {
 	/** PicUrl */
 	@XStreamAlias("PicUrl")
 	private String picUrl;
+	/** MediaId */
+	@XStreamAlias("MediaId")
+	private String mediaId;
 
 	public ImageMessage(){
 		super(MsgType.IMAGE);
 	}
+	
 	public String getPicUrl() {
 		return picUrl;
 	}
@@ -25,4 +29,13 @@ public class ImageMessage extends WeiXinMessage {
 	public void setPicUrl(String picUrl) {
 		this.picUrl = WXHelper.cDATA(picUrl);
 	}
+
+	public String getMediaId() {
+		return mediaId;
+	}
+
+	public void setMediaId(String mediaId) {
+		this.mediaId = WXHelper.cDATA(mediaId);
+	}
+	
 }

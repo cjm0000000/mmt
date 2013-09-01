@@ -8,10 +8,14 @@ import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.VideoMessage;
+import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.biz.customer.CustBasicMsgProcessor;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.biz.parser.VideoMsgParser;
+import lemon.weixin.biz.parser.VoiceMsgParser;
 
 /**
  * Lemon message test business
@@ -91,6 +95,25 @@ public class LemonMessageBiz extends CustBasicMsgProcessor {
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Event Click message replay.");
 		return new TextMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processVideoMsg(String mmt_token, VideoMessage msg) {
+		VideoMessage replyMsg = new VideoMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setMediaId(msg.getMediaId());
+		replyMsg.setThumbMediaId(msg.getThumbMediaId());
+		return new VideoMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
+		VoiceMessage replyMsg = new VoiceMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setFormat(msg.getFormat());
+		replyMsg.setMediaId(msg.getMediaId());
+		replyMsg.setRecognition(msg.getRecognition());
+		return new VoiceMsgParser().toXML(replyMsg);
 	}
 
 }

@@ -25,7 +25,7 @@ import lemon.shared.api.MmtAPI;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
-import lemon.weixin.dao.WeiXinConfigMapper;
+import lemon.weixin.dao.WXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +43,7 @@ public class MicroChatGateWay implements Filter {
 	@Autowired
 	private MmtAPI wxAPI;
 	@Autowired
-	private WeiXinConfigMapper weiXinConfigMapper;
+	private WXConfigMapper weiXinConfigMapper;
 	@Override
 	public void destroy() {
 		WeiXin.destory();

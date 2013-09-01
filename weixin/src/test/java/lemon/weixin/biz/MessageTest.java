@@ -12,9 +12,13 @@ import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.VideoMessage;
+import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.biz.parser.VideoMsgParser;
+import lemon.weixin.biz.parser.VoiceMsgParser;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -54,7 +58,7 @@ public class MessageTest {
 		cfg.setUnsubscribe_msg(unsubscribe_msg);
 		WeiXin.setConfig(cfg);
 	}
-	
+	//FIXME use production data to test
 	@Test
 	public void parserMsgType() throws JDOMException, IOException{
 		String msg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
@@ -124,6 +128,25 @@ public class MessageTest {
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		NewsMessage msg = new NewsMsgParser().toMsg(result);
 		assertEquals(msg.getArticleCount(), 2);
+	}
+	
+	@Test
+	public void videoMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
+		String result = api.processMsg(MMT_TOKEN, recvMsg);
+		VideoMessage msg = new VideoMsgParser().toMsg(result);
+		assertEquals(msg.getThumbMediaId(), "gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk");
+		assertEquals(msg.getMediaId(), "Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd");
+	}
+	
+	@Test
+	public void voiceMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
+		String result = api.processMsg(MMT_TOKEN, recvMsg);
+		VoiceMessage msg = new VoiceMsgParser().toMsg(result);
+		assertEquals(msg.getFormat(), "amr");
+		assertEquals(msg.getMediaId(), "PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj");
+		assertEquals(msg.getRecognition(), "");
 	}
 	
 }

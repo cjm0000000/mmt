@@ -11,6 +11,8 @@ import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.VideoMessage;
+import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.bean.message.WeiXinMessage;
 import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.parser.TextMsgParser;
@@ -39,7 +41,11 @@ public abstract class CustBasicMsgProcessor implements CustMsgProcessor {
 			return processNewsMsg(mmt_token,(NewsMessage) msg);
 		else if(msg instanceof TextMessage)
 			return processTextMsg(mmt_token,(TextMessage) msg);
-		return "Welcome to MMT message robot.";
+		else if(msg instanceof VideoMessage)
+			return processVideoMsg(mmt_token, (VideoMessage) msg);
+		else if(msg instanceof VoiceMessage)
+			return processVoiceMsg(mmt_token, (VoiceMessage) msg);
+		return null;
 	}
 	
 	/**
@@ -118,6 +124,22 @@ public abstract class CustBasicMsgProcessor implements CustMsgProcessor {
 	 * @return
 	 */
 	public abstract String processClickEvent(String mmt_token, EventMessage msg);
+	
+	/**
+	 * process video event
+	 * @param mmt_token
+	 * @param msg
+	 * @return
+	 */
+	public abstract String processVideoMsg(String mmt_token, VideoMessage msg);
+	
+	/**
+	 * process voice message
+	 * @param mmt_token
+	 * @param msg
+	 * @return
+	 */
+	public abstract String processVoiceMsg(String mmt_token, VoiceMessage msg);
 	
 	/**
 	 * process subscribe event<BR>

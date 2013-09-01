@@ -21,4 +21,8 @@ public interface MsgType {
 	String MUSIC = "music";
 	/** 图文消息 */
 	String NEWS = "news";
+	/** 语音消息 */
+	String VOICE = "voice";
+	/** 视频消息 */
+	String VIDEO = "video";
 }

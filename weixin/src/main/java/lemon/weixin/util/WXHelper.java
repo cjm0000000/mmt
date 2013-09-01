@@ -80,6 +80,11 @@ public final class WXHelper {
 		return PREFIX_CDATA + str + SUFFIX_CDATA;
 	}
 
+	/**
+	 * SHA1 
+	 * @param str
+	 * @return
+	 */
 	public static String sha1(String str) {
 		try {
 			byte[] digest = MessageDigest.getInstance("SHA1").digest(
@@ -88,6 +93,16 @@ public final class WXHelper {
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("ERROR:SHA1 faild! " + e.getMessage());
 		}
+		return null;
+	}
+	
+	/**
+	 * MD5
+	 * @param str
+	 * @return
+	 */
+	public static String md5(String str){
+		//TODO add MD5 implement
 		return null;
 	}
 

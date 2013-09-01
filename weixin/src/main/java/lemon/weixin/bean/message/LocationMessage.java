@@ -19,7 +19,7 @@ public class LocationMessage extends WeiXinMessage {
 	private double location_Y;
 	/** Scale */
 	@XStreamAlias("Scale")
-	private int Scale;
+	private int scale;
 	/** Label */
 	@XStreamAlias("Label")
 	private String label;
@@ -40,10 +40,10 @@ public class LocationMessage extends WeiXinMessage {
 		this.location_Y = location_Y;
 	}
 	public int getScale() {
-		return Scale;
+		return scale;
 	}
 	public void setScale(int scale) {
-		Scale = scale;
+		this.scale = scale;
 	}
 	public String getLabel() {
 		return label;

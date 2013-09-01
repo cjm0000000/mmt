@@ -85,7 +85,7 @@ public abstract class WXMsgParser implements MsgParser {
 	 */
 	private static void initParserInstances() {
 		if (null == parsers) {
-			parsers = new HashMap<>(8, 1F);
+			parsers = new HashMap<>(1 << 4);
 			parsers.put(MsgType.EVENT, new EventMsgParser());
 			parsers.put(MsgType.IMAGE, new ImageMsgParser());
 			parsers.put(MsgType.LINK, new LinkMsgParser());
@@ -93,6 +93,8 @@ public abstract class WXMsgParser implements MsgParser {
 			parsers.put(MsgType.MUSIC, new MusicMsgParser());
 			parsers.put(MsgType.NEWS, new NewsMsgParser());
 			parsers.put(MsgType.TEXT, new TextMsgParser());
+			parsers.put(MsgType.VIDEO, new VideoMsgParser());
+			parsers.put(MsgType.VOICE, new VoiceMsgParser());
 		}
 	}
 }

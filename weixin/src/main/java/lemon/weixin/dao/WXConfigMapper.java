@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface WeiXinConfigMapper {
+public interface WXConfigMapper {
 	/**
 	 * Get a WeiXin configure
 	 * @param cust_id

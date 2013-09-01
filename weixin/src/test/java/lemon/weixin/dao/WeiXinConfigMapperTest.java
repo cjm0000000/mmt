@@ -19,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class WeiXinConfigMapperTest {
-	private WeiXinConfigMapper configMapper;
+	private WXConfigMapper configMapper;
 	private CustomerMapper custMapper;
 	private static Log logger = LogFactory.getLog(WeiXinConfigMapperTest.class);
 	@Before
@@ -27,7 +27,7 @@ public class WeiXinConfigMapperTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		ApplicationContext acx = new ClassPathXmlApplicationContext(resource);
-		configMapper = (WeiXinConfigMapper) acx.getBean(WeiXinConfigMapper.class);
+		configMapper = (WXConfigMapper) acx.getBean(WXConfigMapper.class);
 		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
 		assertNotNull(configMapper);
 		assertNotNull(custMapper);

@@ -8,6 +8,8 @@ import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.VideoMessage;
+import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.biz.customer.CustBasicMsgProcessor;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
@@ -91,6 +93,18 @@ public class MMTChatMsgProcessor extends CustBasicMsgProcessor {
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("MMTChat Event Click message replay.");
 		return new TextMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processVideoMsg(String mmt_token, VideoMessage msg) {
+		// TODO build video message reply
+		return null;
+	}
+
+	@Override
+	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
+		// TODO build voice message reply
+		return null;
 	}
 
 }

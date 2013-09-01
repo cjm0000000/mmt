@@ -1,5 +1,5 @@
 package lemon.weixin.dao;
 
-public class CustomerMenuMapper {
+public class WXCustMenuMapper {
 	//TODO add customer menu mapper
 }
