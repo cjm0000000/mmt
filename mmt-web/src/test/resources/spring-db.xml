@@ -20,9 +20,9 @@
 		<property name="acquireRetryAttempts" value="30"/>
 		<property name="acquireRetryDelay" value="1000"/>
 		<property name="maxIdleTime" value="60" />
-		<property name="initialPoolSize" value="5"/>
-		<property name="minPoolSize" value="5"/>
-		<property name="maxPoolSize" value="30" />
+		<property name="initialPoolSize" value="1"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="1" />
 		<property name="idleConnectionTestPeriod" value="60" />
 		<property name="checkoutTimeout" value="30000"/>
 	</bean>
