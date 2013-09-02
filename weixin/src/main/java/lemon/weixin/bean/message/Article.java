@@ -1,6 +1,8 @@
 package lemon.weixin.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import static lemon.weixin.util.WXHelper.cDATA;
 
 /**
@@ -23,6 +25,9 @@ public class Article {
 	/** Url(点击图文消息跳转链接) */
 	@XStreamAlias("Url")
 	private String url;
+	/** Article's ID */
+	@XStreamOmitField
+	private int id;
 
 	public String getTitle() {
 		return title;
@@ -55,4 +60,13 @@ public class Article {
 	public void setUrl(String url) {
 		this.url = cDATA(url);
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

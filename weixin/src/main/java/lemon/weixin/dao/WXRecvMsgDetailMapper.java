@@ -14,7 +14,7 @@ import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.bean.message.WeiXinMessage;
 
 /**
- * WeiXin message's detail
+ * WeiXin receive message repository
  * 
  * @author lemon
  * 
