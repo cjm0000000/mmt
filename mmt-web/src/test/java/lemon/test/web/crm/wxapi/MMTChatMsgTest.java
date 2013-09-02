@@ -22,6 +22,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -56,6 +57,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void parserMsgType() throws JDOMException, IOException{
 		String msg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		InputStream is = new ByteArrayInputStream(msg.getBytes());
@@ -65,12 +67,15 @@ public class MMTChatMsgTest {
 	}
 	@Test
 	public void textMsgTest(){
+		//FIXME message type 字段太长
+		//FIXME 去XStream
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
 		TextMessage msg = new TextMsgParser().toMsg(result);
 		assertEquals(msg.getContent(), "MMTChat Text message replay.");
 	}
 	@Test
+	@Ignore
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -79,6 +84,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void unsubscribe(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -86,6 +92,7 @@ public class MMTChatMsgTest {
 		assertEquals(msg.getContent(), unsubscribe_msg);
 	}
 	@Test
+	@Ignore
 	public void linkMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377753855909</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -94,6 +101,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void imageMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754117379</CreateTime><MsgType><![CDATA[image]]></MsgType><MsgId>1024102410241024</MsgId><PicUrl><![CDATA[http://www.baidu.com/sadsaf]]></PicUrl></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -102,6 +110,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void locationMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754299991</CreateTime><MsgType><![CDATA[location]]></MsgType><MsgId>1024102410241024</MsgId><Location__X>23.134521</Location__X><Location__Y>113.358803</Location__Y><Scale>20</Scale><Label><![CDATA[I am here.<xml>\"sdf\"</xml>]]></Label></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -110,6 +119,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void musicMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754486787</CreateTime><MsgType><![CDATA[music]]></MsgType><MsgId>1024102410241024</MsgId><MusicUrl><![CDATA[http://music.baidu.com/a/a/d.mp3]]></MusicUrl><HQMusicUrl><![CDATA[HQmusic  ss s]]></HQMusicUrl></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -119,6 +129,7 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
+	@Ignore
 	public void newsMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754656922</CreateTime><MsgType><![CDATA[news]]></MsgType><MsgId>1024102410241024</MsgId><ArticleCount>2</ArticleCount><Articles><item><Title><![CDATA[Title A1]]></Title><Description><![CDATA[DESC A1]]></Description><PicUrl><![CDATA[pic.taobao.com/aaas/asdf.jpg]]></PicUrl><Url><![CDATA[http://www.baidu.com]]></Url></item><item><Title><![CDATA[Title A2]]></Title><Description><![CDATA[DESC A2]]></Description><PicUrl><![CDATA[pic2.taobao.com/aaas/asdf222.jpg]]></PicUrl><Url><![CDATA[http://www.yousas.com]]></Url></item></Articles></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);

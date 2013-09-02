@@ -1,7 +1,10 @@
 package lemon.web.crm.wxapi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lemon.weixin.WeiXin;
+import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.ImageMessage;
@@ -12,6 +15,7 @@ import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.bean.message.VideoMessage;
 import lemon.weixin.bean.message.VoiceMessage;
+import lemon.weixin.biz.WeiXinMsgHelper;
 import lemon.weixin.biz.customer.WXCustBasicMsgProcessor;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
@@ -24,12 +28,16 @@ import lemon.weixin.biz.parser.TextMsgParser;
  */
 @Service
 public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
+	@Autowired
+	private WeiXinMsgHelper msgHelper;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("MMTChat Image message replay.");
+		replyMsg.setContent("<a href=" + msg.getPicUrl() + ">下载图片</a>");
+		//save send log
+		msgHelper.saveSendTextMsg(replyMsg);
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
@@ -38,28 +46,69 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("MMTChat Link message replay.");
+		//save send log
+		msgHelper.saveSendTextMsg(replyMsg);
 		return new TextMsgParser().toXML(replyMsg);
 	}
 
 	@Override
 	public String processLocationMsg(String token, LocationMessage msg) {
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("MMTChat Location message replay.");
-		return new TextMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processMusicMsg(String token, MusicMessage msg) {
+		//receive location message, reply a music message
 		MusicMessage replyMsg = new MusicMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setMusicUrl("MMTChat nusic URL");
 		replyMsg.setHqMusicUrl("MMTChat HQ music URL");
+		//save log
+		msgHelper.saveSendMusicMsg(replyMsg);
 		return new MusicMsgParser().toXML(replyMsg);
 	}
 
 	@Override
+	public String processMusicMsg(String token, MusicMessage msg) {
+		//暂时不能接收音乐信息
+		return null;
+	}
+
+	@Override
 	public String processNewsMsg(String token, NewsMessage msg) {
+		//暂时不能接收图文消息
+		return null;
+	}
+
+	@Override
+	public String processTextMsg(String mmt_token, TextMessage msg) {
+		TextMessage replyMsg = new TextMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setContent("You said: " + msg.getContent());
+		//save log
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		replyMsg.setCust_id(cfg.getCust_id());
+		msgHelper.saveSendTextMsg(replyMsg);
+		return new TextMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processClickEvent(String token, EventMessage msg) {
+		TextMessage replyMsg = new TextMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setContent("MMTChat Event Click message replay.");
+		//save log
+		msgHelper.saveSendTextMsg(replyMsg);
+		return new TextMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processVideoMsg(String mmt_token, VideoMessage msg) {
+		TextMessage replyMsg = new TextMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setContent("You send me a video, thanks!");
+		//save log
+		msgHelper.saveSendTextMsg(replyMsg);
+		return new TextMsgParser().toXML(replyMsg);
+	}
+
+	@Override
+	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
 		NewsMessage replyMsg = new NewsMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setArticleCount(2);
@@ -75,39 +124,11 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		a2.setDescription("DESC A2");
 		a2.setPicUrl("pic2.taobao.com/aaas/asdf222.jpg");
 		a2.setUrl("http://www.yousas.com");
-		
 		Article[] articles = {a1,a2};
-		
 		replyMsg.setArticles(articles);
+		//save log
+		msgHelper.saveSendNewsMsg(replyMsg);
 		return new NewsMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processTextMsg(String token, TextMessage msg) {
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("MMTChat Text message replay.");
-		return new TextMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processClickEvent(String token, EventMessage msg) {
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("MMTChat Event Click message replay.");
-		return new TextMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processVideoMsg(String mmt_token, VideoMessage msg) {
-		// TODO build video message reply
-		return null;
-	}
-
-	@Override
-	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
-		// TODO build voice message reply
-		return null;
 	}
 
 }

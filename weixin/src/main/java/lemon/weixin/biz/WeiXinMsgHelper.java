@@ -3,17 +3,9 @@ package lemon.weixin.biz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.bean.message.VideoMessage;
-import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.bean.message.WeiXinMessage;
+import lemon.weixin.bean.message.*;
 import lemon.weixin.dao.WXRecvMsgDetailMapper;
+import lemon.weixin.dao.WXSendMsgDetailMapper;
 
 /**
  * WeiXin message helper
@@ -22,15 +14,18 @@ import lemon.weixin.dao.WXRecvMsgDetailMapper;
  */
 @Service
 public final class WeiXinMsgHelper {
+	//FIXME fix encoding problem
 	@Autowired
 	private WXRecvMsgDetailMapper recvMsgMapper;
+	@Autowired
+	private WXSendMsgDetailMapper sendMsgMapper;
 	
 	/**
 	 * save received WeiXin event message
 	 * @param msg
 	 */
 	public void saveRecvEventMsg(EventMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveEventMsgDetail(msg);
 	}
 	
@@ -39,7 +34,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvImageMsg(ImageMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveImageMsgDetail(msg);
 	}
 	
@@ -48,7 +43,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvLinkMsg(LinkMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveLinkMsgDetail(msg);
 	}
 	
@@ -57,7 +52,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvLocationMsg(LocationMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveLocationMsgDetail(msg);
 	}
 	
@@ -66,7 +61,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvTextMsg(TextMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveTextMsgDetail(msg);
 	}
 	
@@ -75,7 +70,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvVideoMsg(VideoMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveVideoMessageDetail(msg);
 	}
 	
@@ -84,7 +79,7 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveRecvVoiceMsg(VoiceMessage msg){
-		saveWeiXinMsg(msg);
+		saveRecvMsg(msg);
 		recvMsgMapper.saveVoiceMsgDetail(msg);
 	}
 	
@@ -93,8 +88,8 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveSendMusicMsg(MusicMessage msg){
-		saveWeiXinMsg(msg);
-		//TODO save send music message
+		saveSendMsg(msg);
+		sendMsgMapper.saveMusicMsgDetail(msg);
 	}
 	
 	/**
@@ -102,8 +97,12 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveSendNewsMsg(NewsMessage msg){
-		saveWeiXinMsg(msg);
-		//TODO save send news message
+		saveSendMsg(msg);
+		sendMsgMapper.saveNewsMsgDetail(msg);
+		for (Article article : msg.getArticles()) {
+			article.setId(msg.getId());
+			sendMsgMapper.saveNewsArticles(article);
+		}
 	}
 	
 	/**
@@ -111,15 +110,23 @@ public final class WeiXinMsgHelper {
 	 * @param msg
 	 */
 	public void saveSendTextMsg(TextMessage msg){
-		saveWeiXinMsg(msg);
-		//TODO save send text message
+		saveSendMsg(msg);
+		sendMsgMapper.saveTextMsgDetail(msg);
 	}
 	
 	/**
-	 * save WeiXin common message 
+	 * save WeiXin common receive message 
 	 * @param msg
 	 */
-	private void saveWeiXinMsg(WeiXinMessage msg){
+	private void saveRecvMsg(WeiXinMessage msg){
 		recvMsgMapper.saveMsgDetail(msg);
+	}
+	
+	/**
+	 * save WeiXin common receive message 
+	 * @param msg
+	 */
+	private void saveSendMsg(WeiXinMessage msg){
+		sendMsgMapper.saveMsgDetail(msg);
 	}
 }

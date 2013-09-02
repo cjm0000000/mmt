@@ -88,6 +88,7 @@ public abstract class WXMsgParser implements MsgParser {
 	 * Initialize parser instances
 	 */
 	private static void initParserInstances() {
+		//FIXME let spring manage these parsers
 		if (null == parsers) {
 			parsers = new HashMap<>(1 << 4);
 			parsers.put(MsgType.EVENT, new EventMsgParser());
