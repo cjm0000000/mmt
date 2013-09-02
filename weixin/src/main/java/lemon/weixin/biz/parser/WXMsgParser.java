@@ -5,14 +5,17 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import lemon.shared.MMTContext;
 import lemon.shared.common.Message;
 import lemon.shared.common.MsgParser;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MsgType;
+import lemon.weixin.bean.message.WeiXinMessage;
 import lemon.weixin.biz.WeiXinException;
-import lemon.weixin.biz.customer.CustMsgProcessor;
+import lemon.weixin.biz.customer.WXCustMsgProcessor;
 
 /**
  * A message parser for WeiXin
@@ -22,6 +25,8 @@ import lemon.weixin.biz.customer.CustMsgProcessor;
 public abstract class WXMsgParser implements MsgParser {
 	private static Map<String, MsgParser> parsers;
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
+	@Autowired
+	private MMTContext mmtContext;
 	
 	static{
 		initParserInstances();
@@ -36,7 +41,7 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @param msg
 	 * @return
 	 */
-	protected abstract Message toMsg(String msg);
+	protected abstract WeiXinMessage toMsg(String msg);
 	
 	/**
 	 * Convert WeiXin message to XML
@@ -52,7 +57,7 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @return
 	 */
 	public final String parseMessage(String mmt_token, String msg){
-		Message message = toMsg(msg);
+		WeiXinMessage message = toMsg(msg);
 		// process business
 		String retMsg = process(mmt_token, message);
 		// build replay message
@@ -65,18 +70,17 @@ public abstract class WXMsgParser implements MsgParser {
 	 * @param msg
 	 * @return an string message
 	 */
-	private String process(String mmt_token, Message msg){
-		CustMsgProcessor biz = null;
+	private String process(String mmt_token, WeiXinMessage msg){
+		WXCustMsgProcessor biz = null;
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		if(null == cfg)
 			throw new WeiXinException("No customer's configure find.");
 		try {
-			biz = (CustMsgProcessor) Class.forName(cfg.getBiz_class()).newInstance();
+			biz = (WXCustMsgProcessor) MMTContext.getApplicationContext().getBean(Class.forName(cfg.getBiz_class()));
 			return biz.processBiz(mmt_token, msg);
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			logger.error("Can't find business implement class.");
-			throw new WeiXinException("Can't find business implement class: "+cfg.getBiz_class());
+		} catch (ClassNotFoundException e) {
+			logger.error("Can't find business implement class: " + cfg.getBiz_class());
+			throw new WeiXinException("Can't find business implement class: " + cfg.getBiz_class());
 		}
 	}
 	

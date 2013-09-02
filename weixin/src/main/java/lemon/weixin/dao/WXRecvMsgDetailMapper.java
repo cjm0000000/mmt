@@ -8,9 +8,9 @@ import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.bean.message.VideoMessage;
+import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.bean.message.WeiXinMessage;
 
 /**
@@ -21,8 +21,6 @@ import lemon.weixin.bean.message.WeiXinMessage;
  */
 @Repository
 public interface WXRecvMsgDetailMapper {
-	// FIXME save message detail to database
-
 	/**
 	 * save message detail
 	 * 
@@ -71,18 +69,18 @@ public interface WXRecvMsgDetailMapper {
 	 */
 	@Insert("INSERT INTO weixin_recvmsg_link(detail_id,title,description,url) SELECT #{id}, #{title}, #{description},#{url}")
 	void saveLinkMsgDetail(LinkMessage msg);
-	//FIXME save voice message
 	/**
 	 *save voice message detail
 	 * 
 	 * @param msg
 	 */
-	void saveVoiceMsgDetail(MusicMessage msg);
-	//FIXME save video message
+	@Insert("INSERT INTO weixin_recvmsg_voice(detail_id,mediaId,format,recognition) SELECT #{id}, #{mediaId}, #{format},#{recognition}")
+	void saveVoiceMsgDetail(VoiceMessage msg);
 	/**
 	 * save video message detail
 	 * 
 	 * @param msg
 	 */
-	void saveVedioMessageDetail(NewsMessage msg);
+	@Insert("INSERT INTO weixin_recvmsg_video(detail_id,mediaId,thumbMediaId) SELECT #{id}, #{mediaId}, #{thumbMediaId}")
+	void saveVideoMessageDetail(VideoMessage msg);
 }

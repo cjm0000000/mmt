@@ -1,5 +1,7 @@
 package lemon.web.crm.wxapi;
 
+import org.springframework.stereotype.Service;
+
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.ImageMessage;
@@ -10,7 +12,7 @@ import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.bean.message.VideoMessage;
 import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.biz.customer.CustBasicMsgProcessor;
+import lemon.weixin.biz.customer.WXCustBasicMsgProcessor;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
@@ -20,7 +22,8 @@ import lemon.weixin.biz.parser.TextMsgParser;
  * @author lemon
  *
  */
-public class MMTChatMsgProcessor extends CustBasicMsgProcessor {
+@Service
+public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {

@@ -1,20 +1,12 @@
 package lemon.weixin.biz.customer;
 
-import lemon.shared.common.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.EventType;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.bean.message.VideoMessage;
-import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.bean.message.WeiXinMessage;
+import lemon.weixin.bean.message.*;
 import lemon.weixin.biz.WeiXinException;
+import lemon.weixin.biz.WeiXinMsgHelper;
 import lemon.weixin.biz.parser.TextMsgParser;
 
 /**
@@ -22,29 +14,51 @@ import lemon.weixin.biz.parser.TextMsgParser;
  * @author lemon
  *
  */
-public abstract class CustBasicMsgProcessor implements CustMsgProcessor {
+public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
+	@Autowired
+	private WeiXinMsgHelper wxMsgHelper;
 	
-	public final String processBiz(String mmt_token, Message msg) {
+	public final String processBiz(String mmt_token, WeiXinMessage msg) {
 		if(msg == null)
 			throw new WeiXinException("receive a null message.");
+		//save receive message
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		msg.setCust_id(cfg.getCust_id());
 		if(msg instanceof EventMessage){
+			//save event message
+			wxMsgHelper.saveRecvEventMsg((EventMessage) msg);
 			return processEvent(mmt_token,(EventMessage) msg);
-		}else if(msg instanceof ImageMessage)
+		}else if(msg instanceof ImageMessage){
+			//save image message
+			wxMsgHelper.saveRecvImageMsg((ImageMessage) msg);
 			return processImageMsg(mmt_token,(ImageMessage) msg);
-		else if(msg instanceof LinkMessage)
+		}else if(msg instanceof LinkMessage){
+			//save link message
+			wxMsgHelper.saveRecvLinkMsg((LinkMessage) msg);
 			return processLinkMsg(mmt_token,(LinkMessage) msg);
-		else if(msg instanceof LocationMessage)
+		}else if(msg instanceof LocationMessage){
+			//save location message
+			wxMsgHelper.saveRecvLocationMsg((LocationMessage) msg);
 			return processLocationMsg(mmt_token,(LocationMessage) msg);
-		else if(msg instanceof MusicMessage)
+		}else if(msg instanceof MusicMessage){
+			//暂时不会收到音乐消息
 			return processMusicMsg(mmt_token,(MusicMessage) msg);
-		else if(msg instanceof NewsMessage)
+		}else if(msg instanceof NewsMessage){
+			//暂时不会收到图文消息
 			return processNewsMsg(mmt_token,(NewsMessage) msg);
-		else if(msg instanceof TextMessage)
+		}else if(msg instanceof TextMessage){
+			//save text message
+			wxMsgHelper.saveRecvTextMsg((TextMessage) msg);
 			return processTextMsg(mmt_token,(TextMessage) msg);
-		else if(msg instanceof VideoMessage)
+		}else if(msg instanceof VideoMessage){
+			//save video message
+			wxMsgHelper.saveRecvVideoMsg((VideoMessage) msg);
 			return processVideoMsg(mmt_token, (VideoMessage) msg);
-		else if(msg instanceof VoiceMessage)
+		}else if(msg instanceof VoiceMessage){
+			//save voice message
+			wxMsgHelper.saveRecvVoiceMsg((VoiceMessage) msg);
 			return processVoiceMsg(mmt_token, (VoiceMessage) msg);
+		}
 		return null;
 	}
 	
@@ -150,6 +164,7 @@ public abstract class CustBasicMsgProcessor implements CustMsgProcessor {
 	 * @return
 	 */
 	protected String subscribe(String mmt_token, EventMessage msg){
+		//FIXME save fans
 		//get customer's configure
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		TextMessage replyMsg = new TextMessage();

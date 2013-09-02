@@ -18,6 +18,7 @@ public class WeiXinConfig {
 	private String biz_class;
 	/** 用户订阅时推送的消息 */
 	private String subscribe_msg;
+	//FIXME remove unsubscribe_msg
 	/** 用户取消订阅时推送的消息 */
 	private String unsubscribe_msg;
 	/** 客户在微信的第三方用户唯一凭证 */
