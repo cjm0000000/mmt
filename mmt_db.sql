@@ -21,7 +21,6 @@ CREATE TABLE `weixin_config` (
   `wx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '微信接入TOKEN',
   `subscribe_msg` text COMMENT '订阅事件需要发送的消息',
-  `unsubscribe_msg` text COMMENT '取消订阅事件需要发送的消息',
   `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
   `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
   `secret` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证密钥',

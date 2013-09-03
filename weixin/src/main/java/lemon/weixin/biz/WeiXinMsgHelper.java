@@ -21,6 +21,15 @@ public final class WeiXinMsgHelper {
 	private WXSendMsgDetailMapper sendMsgMapper;
 	
 	/**
+	 * get receive text message by id
+	 * @param msg_id
+	 * @return
+	 */
+	public TextMessage getRecvTextMsg(int msg_id){
+		return recvMsgMapper.getTextMsg(msg_id);
+	}
+	
+	/**
 	 * save received WeiXin event message
 	 * @param msg
 	 */

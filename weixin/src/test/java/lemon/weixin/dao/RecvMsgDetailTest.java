@@ -98,5 +98,10 @@ public class RecvMsgDetailTest {
 		assertNotEquals(msgObj.getId(),0);
 		assertEquals(msgObj.getMsgId().longValue(), 5919298509730742383L);
 	}
+	@Test
+	public void testGetTextMsg(){
+		TextMessage msg = msgHelper.getRecvTextMsg(148);
+		System.out.println(msg.getContent());
+	}
 
 }

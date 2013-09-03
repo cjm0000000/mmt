@@ -13,7 +13,7 @@
 
 	<bean id="mmtDS" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="user" value="root" />
 		<property name="password" value="a" />
 		<property name="acquireIncrement" value="3" />
