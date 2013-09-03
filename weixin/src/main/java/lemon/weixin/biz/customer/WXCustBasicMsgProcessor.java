@@ -4,14 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.bean.log.SubscribeLog;
+import lemon.weixin.bean.log.UnSubscribeLog;
 import lemon.weixin.bean.message.*;
 import lemon.weixin.biz.WeiXinException;
+import lemon.weixin.biz.WeiXinFansManager;
 import lemon.weixin.biz.WeiXinMsgHelper;
 import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.dao.WXLogManager;
 
 /**
  * Basic customer message processor
  * @author lemon
+ * @version 1.0
  *
  */
 public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
@@ -19,6 +24,10 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	private WeiXinMsgHelper wxMsgHelper;
 	@Autowired
 	private TextMsgParser textMsgParser;
+	@Autowired
+	private WXLogManager wxLogManager;
+	@Autowired
+	private WeiXinFansManager wxFansManager;
 	
 	public final String processBiz(String mmt_token, WeiXinMessage msg) {
 		if(msg == null)
@@ -69,7 +78,7 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 		if(null == eventType)
 			throw new WeiXinException("Incorrect event type.");
 		if(EventType.SUBSCRIBE.equalsIgnoreCase(eventType)) //process subscribe event
-			return subscribe(mmt_token, msg);
+			return preSubscribe(mmt_token, msg);
 		else if(EventType.UNSUBSCRIBE.equalsIgnoreCase(eventType))//process unsubscribe event
 			return unsubscribe(mmt_token, msg);
 		else if (EventType.CLICK.equalsIgnoreCase(eventType)) //process CLICK event
@@ -143,12 +152,9 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 * @param msg
 	 * @return
 	 */
-	protected String subscribe(String mmt_token, EventMessage msg){
-		//FIXME save fans
-		//FIXME save subscribe log
+	protected String subscribe(WeiXinConfig cfg, EventMessage msg){
 		//FIXME customer operation logic
 		//get customer's configure
-		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent(cfg.getSubscribe_msg());
@@ -164,10 +170,15 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 * @return
 	 */
 	protected String unsubscribe(String mmt_token, EventMessage msg){
-		//FIXME Don't send message, because customer can't receive message, what we can do is save the customer's message to database.
 		//get customer's configure
-		//WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
-		
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		//save unsubscribe log
+		UnSubscribeLog log = new UnSubscribeLog();
+		log.setCust_id(cfg.getCust_id());
+		log.setWxid(msg.getFromUserName());
+		wxLogManager.saveUnSubscribeLog(log);
+		//update fans information
+		wxFansManager.disableFans(cfg.getCust_id(), msg.getFromUserName());
 		return null;
 	}
 	
@@ -183,4 +194,28 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 		replyMsg.setCreateTime(System.currentTimeMillis());
 		replyMsg.setMsgId(null);
 	}
+	
+	/**
+	 * save log before do subscribe
+	 * @param mmt_token
+	 * @param msg
+	 * @return
+	 */
+	private final String preSubscribe(String mmt_token, EventMessage msg){
+		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		//save subscribe log
+		SubscribeLog log = new SubscribeLog();
+		log.setCust_id(cfg.getCust_id());
+		log.setWxid(msg.getFromUserName());
+		wxLogManager.saveSubscribeLog(log);
+		//save fans
+		WeiXinFans fans = new WeiXinFans();
+		fans.setCust_id(cfg.getCust_id());
+		fans.setNick_name(null);
+		fans.setWxid(msg.getFromUserName());
+		wxFansManager.saveFans(fans);
+		//process subscribe business
+		return subscribe(cfg, msg);
+	}
+	
 }

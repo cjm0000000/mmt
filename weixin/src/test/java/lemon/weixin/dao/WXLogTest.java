@@ -1,10 +1,12 @@
-package lemon.weixin.log;
+package lemon.weixin.dao;
 
 import java.security.SecureRandom;
 import java.util.Date;
 
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SiteAccessLog;
+import lemon.weixin.bean.log.SubscribeLog;
+import lemon.weixin.bean.log.UnSubscribeLog;
 import lemon.weixin.dao.WXLogManager;
 
 import org.apache.commons.logging.Log;
@@ -56,18 +58,34 @@ public class WXLogTest {
 	public void msgLog(){
 		logger.info("begin...");
 		for (int i = 0; i < 10; i++) {
-			MsgLog receive = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377529956729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am \"lemon\".]]></Content></xml>");
+			MsgLog receive = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378001728</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[你好]]></Content><MsgId>5918472355591487529</MsgId></xml>");
 			wXLogManager.saveMessageLog(receive);
 			logger.info("ID=" + receive.getId());
 			assertNotEquals(0, receive.getId());
 			wXLogManager.deleteMsgLog(receive.getId());
 			
-			MsgLog send = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377530060575</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>2</ArticleCount><Articles><item><Title><![CDATA[Title A1]]></Title><Description><![CDATA[DESC A1]]></Description><PicUrl><![CDATA[pic.taobao.com/aaas/asdf.jpg]]></PicUrl><Url><![CDATA[http://www.baidu.com]]></Url></item><item><Title><![CDATA[Title A2]]></Title><Description><![CDATA[DESC A2]]></Description><PicUrl><![CDATA[pic2.taobao.com/aaas/asdf222.jpg]]></PicUrl><Url><![CDATA[http://www.yousas.com]]></Url></item></Articles></xml>");
+			MsgLog send = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378001728</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[你好]]></Content><MsgId>5918472355591487529</MsgId></xml>");
 			wXLogManager.saveMessageLog(send);
 			logger.info("ID=" + send.getId());
 			assertNotEquals(0, send.getId());
 			wXLogManager.deleteMsgLog(send.getId());
 		}
 		logger.info("end...");
+	}
+	
+	@Test
+	public void subscribeLog(){
+		SubscribeLog log = new SubscribeLog();
+		log.setCust_id(100);
+		log.setWxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
+		wXLogManager.saveSubscribeLog(log);
+	}
+	
+	@Test
+	public void unSubscribeLog(){
+		UnSubscribeLog log = new UnSubscribeLog();
+		log.setCust_id(100);
+		log.setWxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
+		wXLogManager.saveUnSubscribeLog(log);
 	}
 }

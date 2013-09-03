@@ -4,6 +4,8 @@ import java.util.List;
 
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SiteAccessLog;
+import lemon.weixin.bean.log.SubscribeLog;
+import lemon.weixin.bean.log.UnSubscribeLog;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -14,12 +16,13 @@ import org.springframework.stereotype.Repository;
  * This class is for WeiXin's log
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 @Repository
 public interface WXLogManager {
 	/**
-	 * 保存网址接入Log
+	 * Save site access log
 	 * 
 	 * @param log
 	 */
@@ -35,23 +38,40 @@ public interface WXLogManager {
 	@Insert("INSERT INTO weixin_log_msg(cust_id,msgType,msg) SELECT #{cust_id},#{msgType},#{msg}")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	void saveMessageLog(MsgLog log);
+	
+	/**
+	 * save subscribe log
+	 * @param log
+	 */
+	@Insert("INSERT INTO weixin_log_subscribe(cust_id,wxid) SELECT #{cust_id},#{wxid}")
+	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	void saveSubscribeLog(SubscribeLog log);
+	
+	/**
+	 * save unsubscribe log
+	 * @param log
+	 */
+	@Insert("INSERT INTO weixin_log_unsubscribe(cust_id,wxid) SELECT #{cust_id},#{wxid}")
+	void saveUnSubscribeLog(UnSubscribeLog log);
 
 	/**
-	 * 查询接入日志
+	 * query for site access log 
 	 * 
 	 * @return
 	 */
+	// TODO query for site access log
 	List<SiteAccessLog> listSiteAccessLogs(int cust_id);
 
 	/**
-	 * 查询消息日志
+	 * query for message log
 	 * 
 	 * @return
 	 */
+	// TODO query for message log
 	List<MsgLog> listMsgLogs(int cust_id);
 
 	/**
-	 * 删除网址接入Log
+	 * delete site access log
 	 * 
 	 * @param id
 	 */
@@ -59,7 +79,7 @@ public interface WXLogManager {
 	void deleteSiteAccessLog(int id);
 
 	/**
-	 * 删除消息日志
+	 * delete message log
 	 * 
 	 * @param id
 	 */

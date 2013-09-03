@@ -37,10 +37,10 @@ CREATE TABLE `weixin_fans` (
   `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
-  `subscribe_dt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '订阅时间',
   `status` char(1) NOT NULL DEFAULT '1' COMMENT '状态（1：订阅：0：取消订阅）',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
   PRIMARY KEY (`wxid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表'
 
 #
 # 微信消息日志表
