@@ -14,7 +14,6 @@ import lemon.weixin.dao.WXSendMsgDetailMapper;
  */
 @Service
 public final class WeiXinMsgHelper {
-	//FIXME fix encoding problem
 	@Autowired
 	private WXRecvMsgDetailMapper recvMsgMapper;
 	@Autowired

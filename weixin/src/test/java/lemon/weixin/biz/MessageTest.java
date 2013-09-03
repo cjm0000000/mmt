@@ -23,7 +23,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -34,7 +33,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MessageTest {
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
-	private final String unsubscribe_msg = "You have unsubscribe Lemon Test, Thank you!";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private WeiXinMsgHelper msgHelper;
@@ -60,14 +58,12 @@ public class MessageTest {
 		WeiXin.setConfig(cfg);
 	}
 	@Test
-	@Ignore
 	public void testSaveTextMsg(){
 		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
 		TextMessage msg = new TextMsgParser().toMsg(txtMsg);
 		msgHelper.saveRecvTextMsg(msg);
 	}
 	@Test
-	@Ignore
 	public void parserMsgType() throws JDOMException, IOException{
 		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
 		InputStream is = new ByteArrayInputStream(msg.getBytes());
@@ -83,7 +79,6 @@ public class MessageTest {
 		assertEquals(msg.getContent(), "Lemon Text message replay.");
 	}
 	@Test
-	@Ignore
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090586</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -91,15 +86,12 @@ public class MessageTest {
 		assertEquals(msg.getContent(), Subscribe_msg);
 	}
 	@Test
-	@Ignore
 	public void unsubscribe(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090569</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
-		assertEquals(msg.getContent(), unsubscribe_msg);
+		assertEquals(result, null);
 	}
 	@Test
-	@Ignore
 	public void linkMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377753855909</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -107,7 +99,6 @@ public class MessageTest {
 		assertEquals(msg.getContent(), "Lemon Link message replay.");
 	}
 	@Test
-	@Ignore
 	public void imageMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091075</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS45ib4XPBm8jLD27oeCgOrlsjgJuUictQTHXw/0]]></PicUrl><MsgId>5918856098034483283</MsgId><MediaId><![CDATA[ZTjFiu7uLSfqupgRn2z4uZT8JqulZXKntm6ERVXrFtcppQOTF9x8Ow-cCb1yoUoy]]></MediaId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -115,7 +106,6 @@ public class MessageTest {
 		assertEquals(msg.getContent(), "Lemon Image message replay.");
 	}
 	@Test
-	@Ignore
 	public void locationMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[???????????????????????26? ????: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -124,7 +114,6 @@ public class MessageTest {
 	}
 	
 	@Test
-	@Ignore
 	public void videoMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -133,7 +122,6 @@ public class MessageTest {
 		assertEquals(msg.getMediaId(), "Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd");
 	}
 	@Test
-	@Ignore
 	public void voiceMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);

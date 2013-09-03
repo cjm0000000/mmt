@@ -1,8 +1,11 @@
 package lemon.weixin.biz.parser;
 
+import org.springframework.stereotype.Service;
+
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
+import lemon.weixin.bean.message.MsgType;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.util.WXXStreamHelper;
 
@@ -12,6 +15,7 @@ import lemon.weixin.util.WXXStreamHelper;
  * @author lemon
  * 
  */
+@Service(MsgType.NEWS)
 public final class NewsMsgParser extends WXMsgParser {
 	private XStream xStream = WXXStreamHelper.createXstream();
 

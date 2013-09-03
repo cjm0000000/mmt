@@ -143,6 +143,8 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 */
 	protected String subscribe(String mmt_token, EventMessage msg){
 		//FIXME save fans
+		//FIXME save subscribe log
+		//FIXME customer operation logic
 		//get customer's configure
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		TextMessage replyMsg = new TextMessage();
