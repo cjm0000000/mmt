@@ -17,6 +17,8 @@ import lemon.weixin.biz.parser.TextMsgParser;
 public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	@Autowired
 	private WeiXinMsgHelper wxMsgHelper;
+	@Autowired
+	private TextMsgParser textMsgParser;
 	
 	public final String processBiz(String mmt_token, WeiXinMessage msg) {
 		if(msg == null)
@@ -150,7 +152,7 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent(cfg.getSubscribe_msg());
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 	
 	/**

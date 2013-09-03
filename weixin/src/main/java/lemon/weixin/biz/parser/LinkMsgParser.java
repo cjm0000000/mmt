@@ -2,12 +2,9 @@ package lemon.weixin.biz.parser;
 
 import org.springframework.stereotype.Service;
 
-import com.thoughtworks.xstream.XStream;
-
 import lemon.shared.common.Message;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.MsgType;
-import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * A link message parser
@@ -17,7 +14,6 @@ import lemon.weixin.util.WXXStreamHelper;
  */
 @Service(MsgType.LINK)
 public final class LinkMsgParser extends WXMsgParser {
-	private XStream xStream = WXXStreamHelper.createXstream();
 
 	@Override
 	public final LinkMessage toMsg(String msg) {

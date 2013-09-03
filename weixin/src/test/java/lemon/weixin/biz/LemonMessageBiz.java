@@ -1,5 +1,6 @@
 package lemon.weixin.biz;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lemon.weixin.bean.message.EventMessage;
@@ -21,13 +22,18 @@ import lemon.weixin.biz.parser.VoiceMsgParser;
  */
 @Service
 public class LemonMessageBiz extends WXCustBasicMsgProcessor {
-
+	@Autowired
+	private TextMsgParser textMsgParser;
+	@Autowired
+	private VideoMsgParser videoMsgParser;
+	@Autowired
+	private VoiceMsgParser voiceMsgParser;
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Image message replay.");
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -35,7 +41,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Link message replay.");
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -43,7 +49,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Location message replay.");
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -51,7 +57,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Text message replay.");
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Event Click message replay.");
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -68,7 +74,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setMediaId(msg.getMediaId());
 		replyMsg.setThumbMediaId(msg.getThumbMediaId());
-		return new VideoMsgParser().toXML(replyMsg);
+		return videoMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -78,7 +84,7 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		replyMsg.setFormat(msg.getFormat());
 		replyMsg.setMediaId(msg.getMediaId());
 		replyMsg.setRecognition(msg.getRecognition());
-		return new VoiceMsgParser().toXML(replyMsg);
+		return voiceMsgParser.toXML(replyMsg);
 	}
 
 }

@@ -3,6 +3,8 @@ package lemon.weixin.biz.parser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.thoughtworks.xstream.XStream;
+
 import lemon.shared.MMTContext;
 import lemon.shared.common.Message;
 import lemon.shared.common.MsgParser;
@@ -11,6 +13,7 @@ import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.WeiXinMessage;
 import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.customer.WXCustMsgProcessor;
+import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * A message parser for WeiXin
@@ -20,10 +23,12 @@ import lemon.weixin.biz.customer.WXCustMsgProcessor;
 public abstract class WXMsgParser implements MsgParser {
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
 	
+	protected XStream xStream = WXXStreamHelper.createXstream();
+	
 	public static MsgParser getParser(String msgType){
 		return (MsgParser) MMTContext.getApplicationContext().getBean(msgType);
 	}
-	//FIXME remove all new TextMsgParser() construct
+	
 	/**
 	 * Convert string to message 
 	 * @param msg

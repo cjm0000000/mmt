@@ -30,6 +30,12 @@ import lemon.weixin.biz.parser.TextMsgParser;
 public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 	@Autowired
 	private WeiXinMsgHelper msgHelper;
+	@Autowired
+	private TextMsgParser textMsgParser;
+	@Autowired
+	private MusicMsgParser musicMsgParser;
+	@Autowired
+	private NewsMsgParser newsMsgParser;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -38,7 +44,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setContent("<a href=" + msg.getPicUrl() + ">下载图片</a>");
 		//save send log
 		msgHelper.saveSendTextMsg(replyMsg);
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -48,7 +54,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setContent("MMTChat Link message replay.");
 		//save send log
 		msgHelper.saveSendTextMsg(replyMsg);
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -60,7 +66,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setHqMusicUrl("MMTChat HQ music URL");
 		//save log
 		msgHelper.saveSendMusicMsg(replyMsg);
-		return new MusicMsgParser().toXML(replyMsg);
+		return musicMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -72,7 +78,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		replyMsg.setCust_id(cfg.getCust_id());
 		msgHelper.saveSendTextMsg(replyMsg);
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -82,7 +88,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setContent("MMTChat Event Click message replay.");
 		//save log
 		msgHelper.saveSendTextMsg(replyMsg);
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -92,7 +98,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setContent("You send me a video, thanks!");
 		//save log
 		msgHelper.saveSendTextMsg(replyMsg);
-		return new TextMsgParser().toXML(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
@@ -116,7 +122,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		replyMsg.setArticles(articles);
 		//save log
 		msgHelper.saveSendNewsMsg(replyMsg);
-		return new NewsMsgParser().toXML(replyMsg);
+		return newsMsgParser.toXML(replyMsg);
 	}
 
 }

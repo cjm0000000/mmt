@@ -37,11 +37,12 @@ public class MessageTest {
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private WeiXinMsgHelper msgHelper;
 	private MMTContext contextUtil;
+	private ApplicationContext acx;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		ApplicationContext acx = new ClassPathXmlApplicationContext(resource);
+		acx = new ClassPathXmlApplicationContext(resource);
 		api = acx.getBean(MmtAPI.class);
 		msgHelper = acx.getBean(WeiXinMsgHelper.class);
 		contextUtil = acx.getBean(MMTContext.class);
@@ -60,7 +61,7 @@ public class MessageTest {
 	@Test
 	public void testSaveTextMsg(){
 		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
-		TextMessage msg = new TextMsgParser().toMsg(txtMsg);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(txtMsg);
 		msgHelper.saveRecvTextMsg(msg);
 	}
 	@Test
@@ -75,14 +76,14 @@ public class MessageTest {
 	public void textMsgTest(){
 		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Text message replay.");
 	}
 	@Test
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090586</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), Subscribe_msg);
 	}
 	@Test
@@ -95,21 +96,21 @@ public class MessageTest {
 	public void linkMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377753855909</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Link message replay.");
 	}
 	@Test
 	public void imageMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091075</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS45ib4XPBm8jLD27oeCgOrlsjgJuUictQTHXw/0]]></PicUrl><MsgId>5918856098034483283</MsgId><MediaId><![CDATA[ZTjFiu7uLSfqupgRn2z4uZT8JqulZXKntm6ERVXrFtcppQOTF9x8Ow-cCb1yoUoy]]></MediaId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Image message replay.");
 	}
 	@Test
 	public void locationMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[???????????????????????26? ????: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
+		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Location message replay.");
 	}
 	
@@ -117,7 +118,7 @@ public class MessageTest {
 	public void videoMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		VideoMessage msg = new VideoMsgParser().toMsg(result);
+		VideoMessage msg = acx.getBean(VideoMsgParser.class).toMsg(result);
 		assertEquals(msg.getThumbMediaId(), "gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk");
 		assertEquals(msg.getMediaId(), "Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd");
 	}
@@ -125,7 +126,7 @@ public class MessageTest {
 	public void voiceMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		VoiceMessage msg = new VoiceMsgParser().toMsg(result);
+		VoiceMessage msg = acx.getBean(VoiceMsgParser.class).toMsg(result);
 		assertEquals(msg.getFormat(), "amr");
 		assertEquals(msg.getMediaId(), "PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj");
 		assertEquals(msg.getRecognition(), "");
