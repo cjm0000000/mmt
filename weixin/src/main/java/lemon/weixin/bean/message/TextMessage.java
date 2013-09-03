@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import static lemon.weixin.util.WXHelper.cDATA;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -14,6 +14,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class TextMessage extends WeiXinMessage {
 	/** Content */
 	@XStreamAlias("Content")
+	@XStreamCDATA
 	private String content;
 
 	public TextMessage(){
@@ -24,6 +25,6 @@ public class TextMessage extends WeiXinMessage {
 	}
 
 	public void setContent(String content) {
-		this.content = cDATA(content);
+		this.content = content;
 	}
 }

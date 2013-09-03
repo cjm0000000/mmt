@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lemon.shared.api.MmtAPI;
+import lemon.shared.util.SecureUtil;
 import lemon.weixin.bean.log.SiteAccessLog;
-import lemon.weixin.util.WXHelper;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class WeiXinAPITest {
 	public void testHSA1(){
 		String str = "b";
 		String result = "e9d71f5ee7c92d6dc9e92ffdad17b8bd49418f98";
-		String afterHSA1 = WXHelper.sha1(str);
+		String afterHSA1 = SecureUtil.sha1(str);
 		assertTrue(afterHSA1.equals(result));
 	}
 }

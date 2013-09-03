@@ -1,9 +1,9 @@
 package lemon.weixin.bean.message;
 
+import lemon.weixin.xstream.annotations.XStreamCDATA;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
-import static lemon.weixin.util.WXHelper.cDATA;
 
 /**
  * Article for news message
@@ -15,15 +15,19 @@ import static lemon.weixin.util.WXHelper.cDATA;
 public class Article {
 	/** Title */
 	@XStreamAlias("Title")
+	@XStreamCDATA
 	private String title;
 	/** Description */
 	@XStreamAlias("Description")
+	@XStreamCDATA
 	private String description;
 	/** PicUrl(图片链接，支持JPG、PNG格式，较好的效果为大图640*320，小图80*80) */
 	@XStreamAlias("PicUrl")
+	@XStreamCDATA
 	private String picUrl;
 	/** Url(点击图文消息跳转链接) */
 	@XStreamAlias("Url")
+	@XStreamCDATA
 	private String url;
 	/** Article's ID */
 	@XStreamOmitField
@@ -34,7 +38,7 @@ public class Article {
 	}
 
 	public void setTitle(String title) {
-		this.title = cDATA(title);
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -42,7 +46,7 @@ public class Article {
 	}
 
 	public void setDescription(String description) {
-		this.description = cDATA(description);
+		this.description = description;
 	}
 
 	public String getPicUrl() {
@@ -50,7 +54,7 @@ public class Article {
 	}
 
 	public void setPicUrl(String picUrl) {
-		this.picUrl = cDATA(picUrl);
+		this.picUrl = picUrl;
 	}
 
 	public String getUrl() {
@@ -58,7 +62,7 @@ public class Article {
 	}
 
 	public void setUrl(String url) {
-		this.url = cDATA(url);
+		this.url = url;
 	}
 
 	public int getId() {

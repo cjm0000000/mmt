@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.common.MsgParser;
+import lemon.shared.util.SecureUtil;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.biz.parser.WXMsgParser;
 import lemon.weixin.dao.WXLogManager;
-import lemon.weixin.util.WXHelper;
 
 /**
  * The WeiXin API for message
@@ -58,7 +58,7 @@ public class WeiXinAPI implements MmtAPI {
 			sb.append(str);
 		}
 		// sha1 for signature
-		String sha1str = WXHelper.sha1(sb.toString());
+		String sha1str = SecureUtil.sha1(sb.toString());
 		logger.debug("After SHA1:" + sha1str);
 		// compare
 		logger.debug("signature:" + log.getSignature());

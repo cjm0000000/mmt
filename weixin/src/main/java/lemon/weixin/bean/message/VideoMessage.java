@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import static lemon.weixin.util.WXHelper.cDATA;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class VideoMessage extends MediaMessage {
 	/** ThumbMediaId */
 	@XStreamAlias("ThumbMediaId")
+	@XStreamCDATA
 	private String thumbMediaId;
 	
 	public VideoMessage() {
@@ -24,7 +25,7 @@ public class VideoMessage extends MediaMessage {
 	}
 
 	public void setThumbMediaId(String thumbMediaId) {
-		this.thumbMediaId = cDATA(thumbMediaId);
+		this.thumbMediaId = thumbMediaId;
 	}
 
 }

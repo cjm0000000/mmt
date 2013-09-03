@@ -1,7 +1,8 @@
-package lemon.web.util;
+package lemon.shared.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
@@ -13,10 +14,21 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AESHelper {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * Secure Util for MMT
+ * 
+ * @author lemon
+ * 
+ */
+public class SecureUtil {
+	private static Log logger = LogFactory.getLog(SecureUtil.class);
 	private static final String S = "abcdefghijklmnopqrstuvwxyz1234567890,.`-=/ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+";
+	
 	/**
-	 * 加密
+	 * AES加密
 	 * 
 	 * @param content
 	 *            需要加密的内容
@@ -24,7 +36,7 @@ public class AESHelper {
 	 *            加密密钥
 	 * @return
 	 */
-	public static String encrypt(String content, String encryptKey) {
+	public static String aesEncrypt(String content, String encryptKey) {
 		try {
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
 			kgen.init(128, new SecureRandom(encryptKey.getBytes()));
@@ -51,9 +63,9 @@ public class AESHelper {
 		}
 		return null;
 	}
-
+	
 	/**
-	 * 解密
+	 * AES解密
 	 * 
 	 * @param content
 	 *            待解密内容
@@ -61,7 +73,7 @@ public class AESHelper {
 	 *            解密密钥
 	 * @return
 	 */
-	public static String decrypt(String hexString, String encryptKey) {
+	public static String aesDecrypt(String hexString, String encryptKey) {
 		try {
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
 			kgen.init(128, new SecureRandom(encryptKey.getBytes()));
@@ -70,7 +82,7 @@ public class AESHelper {
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
 			cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
-			byte[] result = cipher.doFinal(parseHexStr2Byte(hexString));
+			byte[] result = cipher.doFinal(toByteArray(hexString));
 			return new String(result); // 加密
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -86,7 +98,7 @@ public class AESHelper {
 		return null;
 	}
 	
-    /**将二进制转换成16进制
+	/**将二进制转换成16进制
      * @param buf
      * @return
      */
@@ -102,23 +114,41 @@ public class AESHelper {
             return sb.toString();
     }
     
-    /**将16进制转换为二进制
-     * @param hexStr
-     * @return
-     */
-    public static byte[] parseHexStr2Byte(String hexStr) {
-            if (hexStr.length() < 1)
-                    return null;
-            byte[] result = new byte[hexStr.length()/2];
-            for (int i = 0;i< hexStr.length()/2; i++) {
-                    int high = Integer.parseInt(hexStr.substring(i*2, i*2+1), 16);
-                    int low = Integer.parseInt(hexStr.substring(i*2+1, i*2+2), 16);
-                    result[i] = (byte) (high * 16 + low);
-            }
-            return result;
-    }
-    
-    /**
+	/**
+	 * SHA1
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String sha1(String str) {
+		try {
+			byte[] digest = MessageDigest.getInstance("SHA1").digest(
+					str.getBytes());
+			return toHexString(digest);
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("ERROR:SHA1 faild! " + e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * MD5
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String md5(String str) {
+		try {
+			byte[] digest = MessageDigest.getInstance("MD5").digest(
+					str.getBytes());
+			return toHexString(digest);
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("ERROR:SHA1 faild! " + e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
      * 生成密钥
      * @param length
      * @return
@@ -132,6 +162,42 @@ public class AESHelper {
 		}
     	return sb.toString();
     }
+
+	/**
+	 * byte to hex
+	 * @param digest
+	 * @return
+	 */
+	private static String toHexString(byte[] digest) {
+		String str = "";
+		String tempStr = "";
+
+		for (int i = 0; i < digest.length; i++) {
+			tempStr = (Integer.toHexString(digest[i] & 0xff));
+			if (tempStr.length() == 1) {
+				str = str + "0" + tempStr;
+			} else {
+				str = str + tempStr;
+			}
+		}
+		return str.toLowerCase();
+	}
+	
+	/**将16进制转换为二进制
+     * @param hexStr
+     * @return
+     */
+    private static byte[] toByteArray(String hexStr) {
+            if (hexStr.length() < 1)
+                    return null;
+            byte[] result = new byte[hexStr.length()/2];
+            for (int i = 0;i< hexStr.length()/2; i++) {
+                    int high = Integer.parseInt(hexStr.substring(i*2, i*2+1), 16);
+                    int low = Integer.parseInt(hexStr.substring(i*2+1, i*2+2), 16);
+                    result[i] = (byte) (high * 16 + low);
+            }
+            return result;
+    }
 	
 	public static void main(String[] args){
         String content = "pass";
@@ -139,9 +205,10 @@ public class AESHelper {
         System.out.println(secureKey);
         //加密
         System.out.println("加密前：" + content);
-        String secCode = encrypt(content, secureKey);
+        String secCode = aesEncrypt(content, secureKey);
         System.out.println(secCode);
         System.out.println(secCode.length());
-        System.out.println("解密后：" + decrypt(secCode, secureKey));
+        System.out.println("解密后：" + aesDecrypt(secCode, secureKey));
 	}
+
 }

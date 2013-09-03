@@ -8,8 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
-import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
+import static lemon.weixin.WeiXin.LOCAL_CHARSET;
+import static lemon.weixin.WeiXin.TARGET_CHARSET;
 
 /**
  * WeiXin message robot

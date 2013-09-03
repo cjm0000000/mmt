@@ -9,8 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import lemon.weixin.WeiXin;
-import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
-import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
+import static lemon.weixin.WeiXin.LOCAL_CHARSET;
+import static lemon.weixin.WeiXin.TARGET_CHARSET;
 
 public class WXEmulation {
 	private static final String _URL = "http://58.100.127.55/mmt-web/microchat/mmtchat0801012";

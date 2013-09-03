@@ -1,7 +1,7 @@
 package lemon.weixin.gateway;
 
-import static lemon.weixin.util.WXHelper.LOCAL_CHARSET;
-import static lemon.weixin.util.WXHelper.TARGET_CHARSET;
+import static lemon.weixin.WeiXin.LOCAL_CHARSET;
+import static lemon.weixin.WeiXin.TARGET_CHARSET;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -17,6 +17,10 @@ import lemon.weixin.gateway.MicroChatMessager;
  * 
  */
 public class WeiXin {
+	/** This is local encoding */
+	public static final String LOCAL_CHARSET = "UTF-8";
+	/** This is remote encoding */
+	public static final String TARGET_CHARSET = "UTF-8";
 	private static ConcurrentMap<String, WeiXinConfig> configs;
 	/** 通用接口URL */
 	private static String commonUrl;

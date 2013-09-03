@@ -1,8 +1,8 @@
 package lemon.weixin.bean.message;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
-import static lemon.weixin.util.WXHelper.cDATA;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Event message
@@ -13,8 +13,10 @@ import static lemon.weixin.util.WXHelper.cDATA;
 public class EventMessage extends WeiXinMessage {
 	/** Event */
 	@XStreamAlias("Event")
+	@XStreamCDATA
 	private String eventType; 
 	/** EventKey(事件KEY值，与自定义菜单接口中KEY值对应) */
+	@XStreamCDATA
 	@XStreamAlias("EventKey")
 	private String eventKey;
 	
@@ -25,12 +27,12 @@ public class EventMessage extends WeiXinMessage {
 		return eventType;
 	}
 	public void setEventType(String eventType) {
-		this.eventType = cDATA(eventType);
+		this.eventType = eventType;
 	}
 	public String getEventKey() {
 		return eventKey;
 	}
 	public void setEventKey(String eventKey) {
-		this.eventKey = cDATA(eventKey);
+		this.eventKey = eventKey;
 	}
 }

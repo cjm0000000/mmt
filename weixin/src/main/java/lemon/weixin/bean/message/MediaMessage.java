@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import static lemon.weixin.util.WXHelper.cDATA;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class MediaMessage extends WeiXinMessage {
 	/** MediaId */
 	@XStreamAlias("MediaId")
+	@XStreamCDATA
 	protected String mediaId;
 	
 	public MediaMessage(String msgType) {
@@ -24,7 +25,7 @@ public class MediaMessage extends WeiXinMessage {
 	}
 
 	public void setMediaId(String mediaId) {
-		this.mediaId = cDATA(mediaId);
+		this.mediaId = mediaId;
 	}
 
 }

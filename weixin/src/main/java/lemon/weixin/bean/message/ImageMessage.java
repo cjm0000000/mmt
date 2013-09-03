@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -10,13 +10,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
-public class ImageMessage extends WeiXinMessage {
+public class ImageMessage extends MediaMessage {
 	/** PicUrl */
 	@XStreamAlias("PicUrl")
+	@XStreamCDATA
 	private String picUrl;
-	/** MediaId */
-	@XStreamAlias("MediaId")
-	private String mediaId;
 
 	public ImageMessage(){
 		super(MsgType.IMAGE);
@@ -27,15 +25,7 @@ public class ImageMessage extends WeiXinMessage {
 	}
 
 	public void setPicUrl(String picUrl) {
-		this.picUrl = WXHelper.cDATA(picUrl);
+		this.picUrl = picUrl;
 	}
 
-	public String getMediaId() {
-		return mediaId;
-	}
-
-	public void setMediaId(String mediaId) {
-		this.mediaId = WXHelper.cDATA(mediaId);
-	}
-	
 }

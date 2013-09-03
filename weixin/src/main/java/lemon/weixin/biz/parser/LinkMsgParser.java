@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
 import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * A link message parser
@@ -13,7 +13,7 @@ import lemon.weixin.util.WXHelper;
  * 
  */
 public final class LinkMsgParser extends WXMsgParser {
-	private XStream xStream = WXHelper.createXstream();
+	private XStream xStream = WXXStreamHelper.createXstream();
 
 	@Override
 	public final LinkMessage toMsg(String msg) {

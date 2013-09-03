@@ -67,12 +67,10 @@ public class MMTChatMsgTest {
 	}
 	@Test
 	public void textMsgTest(){
-		//FIXME message type 字段太长
-		//FIXME 去XStream
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
 		TextMessage msg = new TextMsgParser().toMsg(result);
-		assertEquals(msg.getContent(), "MMTChat Text message replay.");
+		assertEquals(msg.getContent(), "You said: hello,weixin, I am lemon.");
 	}
 	@Test
 	@Ignore

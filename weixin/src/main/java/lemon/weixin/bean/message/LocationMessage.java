@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -22,6 +22,7 @@ public class LocationMessage extends WeiXinMessage {
 	private int scale;
 	/** Label */
 	@XStreamAlias("Label")
+	@XStreamCDATA
 	private String label;
 	
 	public LocationMessage(){
@@ -49,6 +50,6 @@ public class LocationMessage extends WeiXinMessage {
 		return label;
 	}
 	public void setLabel(String label) {
-		this.label = WXHelper.cDATA(label);
+		this.label = label;
 	}
 }

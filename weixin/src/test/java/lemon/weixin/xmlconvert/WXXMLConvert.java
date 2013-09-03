@@ -19,7 +19,7 @@ import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.util.WXXStreamHelper;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -38,7 +38,7 @@ public class WXXMLConvert {
 	
 	@Before
 	public void init() {
-		xStream = WXHelper.createXstream();
+		xStream = WXXStreamHelper.createXstream();
 	}
 
 	@Test

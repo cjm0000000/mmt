@@ -1,7 +1,8 @@
 package lemon.weixin.bean.message;
 
+import lemon.weixin.xstream.annotations.XStreamCDATA;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import static lemon.weixin.util.WXHelper.cDATA;
 
 /**
  * link message
@@ -12,12 +13,15 @@ import static lemon.weixin.util.WXHelper.cDATA;
 public class LinkMessage extends WeiXinMessage {
 	/** Title */
 	@XStreamAlias("Title")
+	@XStreamCDATA
 	private String title;
 	/** Description */
 	@XStreamAlias("Description")
+	@XStreamCDATA
 	private String description;
 	/** Url */
 	@XStreamAlias("Url")
+	@XStreamCDATA
 	private String url;
 	
 	public LinkMessage(){
@@ -27,18 +31,18 @@ public class LinkMessage extends WeiXinMessage {
 		return title;
 	}
 	public void setTitle(String title) {
-		this.title = cDATA(title);
+		this.title = title;
 	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
-		this.description = cDATA(description);
+		this.description = description;
 	}
 	public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {
-		this.url = cDATA(url);
+		this.url = url;
 	}
 }

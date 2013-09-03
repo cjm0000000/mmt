@@ -2,6 +2,7 @@ package lemon.weixin.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import lemon.weixin.bean.message.EventMessage;
@@ -83,4 +84,12 @@ public interface WXRecvMsgDetailMapper {
 	 */
 	@Insert("INSERT INTO weixin_recvmsg_video(detail_id,mediaId,thumbMediaId) SELECT #{id}, #{mediaId}, #{thumbMediaId}")
 	void saveVideoMessageDetail(VideoMessage msg);
+	
+	/**
+	 * get text message
+	 * @param id
+	 * @return
+	 */
+	@Select("SELECT A.id,A.cust_id,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId, B.content FROM weixin_recvmsg_detail A, weixin_recvmsg_text B WHERE A.id=B.detail_id AND A.msgType='text' AND A.id=#{id}")
+	TextMessage getTextMsg(int id);
 }

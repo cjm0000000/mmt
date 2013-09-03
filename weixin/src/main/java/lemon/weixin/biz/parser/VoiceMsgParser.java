@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
 import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * A voice message parser
@@ -13,7 +13,7 @@ import lemon.weixin.util.WXHelper;
  * 
  */
 public final class VoiceMsgParser extends WXMsgParser {
-	private XStream xStream = WXHelper.createXstream();
+	private XStream xStream = WXXStreamHelper.createXstream();
 
 	@Override
 	public final VoiceMessage toMsg(String msg) {

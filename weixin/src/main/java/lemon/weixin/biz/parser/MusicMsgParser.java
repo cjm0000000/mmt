@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.common.Message;
 import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.util.WXHelper;
+import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * An music message parser
@@ -13,7 +13,7 @@ import lemon.weixin.util.WXHelper;
  * 
  */
 public final class MusicMsgParser extends WXMsgParser {
-	private XStream xStream = WXHelper.createXstream();
+	private XStream xStream = WXXStreamHelper.createXstream();
 
 	@Override
 	public final MusicMessage toMsg(String msg) {

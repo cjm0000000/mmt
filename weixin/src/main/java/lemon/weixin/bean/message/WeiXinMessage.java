@@ -1,7 +1,7 @@
 package lemon.weixin.bean.message;
 
-import static lemon.weixin.util.WXHelper.cDATA;
 import lemon.shared.common.Message;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -12,18 +12,21 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author lemon
  * 
  */
-public class WeiXinMessage implements Message,Cloneable {
+public class WeiXinMessage implements Message {
 	/** ToUserName */
 	@XStreamAlias("ToUserName")
+	@XStreamCDATA
 	protected String toUserName;
 	/** FromUserName */
 	@XStreamAlias("FromUserName")
+	@XStreamCDATA
 	protected String fromUserName;
 	/** CreateTime */
 	@XStreamAlias("CreateTime")
 	protected long createTime;
 	/** MsgType */
 	@XStreamAlias("MsgType")
+	@XStreamCDATA
 	protected String msgType;
 	/** MsgId */
 	@XStreamAlias("MsgId")
@@ -36,7 +39,7 @@ public class WeiXinMessage implements Message,Cloneable {
 	protected int cust_id;
 
 	public WeiXinMessage(String msgType) {
-		this.msgType = cDATA(msgType);
+		this.msgType = msgType;
 	}
 
 	public String getFromUserName() {
@@ -44,7 +47,7 @@ public class WeiXinMessage implements Message,Cloneable {
 	}
 
 	public void setFromUserName(String fromUserName) {
-		this.fromUserName = cDATA(fromUserName);
+		this.fromUserName = fromUserName;
 	}
 
 	public String getToUserName() {
@@ -52,7 +55,7 @@ public class WeiXinMessage implements Message,Cloneable {
 	}
 
 	public void setToUserName(String toUserName) {
-		this.toUserName = cDATA(toUserName);
+		this.toUserName = toUserName;
 	}
 
 	public long getCreateTime() {

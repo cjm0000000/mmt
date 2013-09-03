@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import static lemon.weixin.util.WXHelper.cDATA;
+import lemon.weixin.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -13,9 +13,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class VoiceMessage extends MediaMessage {
 	/** Format */
 	@XStreamAlias("Format")
+	@XStreamCDATA
 	private String format;
 	/** Recognition */
 	@XStreamAlias("Recognition")
+	@XStreamCDATA
 	private String recognition;
 
 	public VoiceMessage() {
@@ -27,7 +29,7 @@ public class VoiceMessage extends MediaMessage {
 	}
 
 	public void setFormat(String format) {
-		this.format = cDATA(format);
+		this.format = format;
 	}
 
 	public String getRecognition() {
@@ -35,7 +37,7 @@ public class VoiceMessage extends MediaMessage {
 	}
 
 	public void setRecognition(String recognition) {
-		this.recognition = cDATA(recognition);
+		this.recognition = recognition;
 	}
 	
 }
