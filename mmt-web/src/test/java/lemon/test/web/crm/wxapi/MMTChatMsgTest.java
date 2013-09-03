@@ -22,7 +22,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,7 +32,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MMTChatMsgTest {
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
-	private final String unsubscribe_msg = "You have unsubscribe Lemon Test, Thank you!";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	
@@ -56,7 +54,6 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
-	@Ignore
 	public void parserMsgType() throws JDOMException, IOException{
 		String msg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		InputStream is = new ByteArrayInputStream(msg.getBytes());
@@ -72,7 +69,6 @@ public class MMTChatMsgTest {
 		assertEquals(msg.getContent(), "You said: hello,weixin, I am lemon.");
 	}
 	@Test
-	@Ignore
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -81,15 +77,12 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
-	@Ignore
 	public void unsubscribe(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
-		assertEquals(msg.getContent(), unsubscribe_msg);
+		assertNull(result);
 	}
 	@Test
-	@Ignore
 	public void linkMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377753855909</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -98,40 +91,34 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
-	@Ignore
 	public void imageMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754117379</CreateTime><MsgType><![CDATA[image]]></MsgType><MsgId>1024102410241024</MsgId><PicUrl><![CDATA[http://www.baidu.com/sadsaf]]></PicUrl></xml>";
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378027514</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS49qltXnkjkg3DOcQSI8CO1NxptcHC16yhQ/0]]></PicUrl><MsgId>5918583105618182187</MsgId><MediaId><![CDATA[7scBMzahwP7VG0exqbE4PwDhmu87f3jiYCdOueP0gpzghvrAugPxKHvMYxTLjQqX]]></MediaId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = new TextMsgParser().toMsg(result);
-		assertEquals(msg.getContent(), "MMTChat Image message replay.");
+		assertEquals(msg.getContent(), "<a href=http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS49qltXnkjkg3DOcQSI8CO1NxptcHC16yhQ/0>下载图片</a>");
 	}
 	
 	@Test
-	@Ignore
 	public void locationMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754299991</CreateTime><MsgType><![CDATA[location]]></MsgType><MsgId>1024102410241024</MsgId><Location__X>23.134521</Location__X><Location__Y>113.358803</Location__Y><Scale>20</Scale><Label><![CDATA[I am here.<xml>\"sdf\"</xml>]]></Label></xml>";
-		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		TextMessage msg = new TextMsgParser().toMsg(result);
-		assertEquals(msg.getContent(), "MMTChat Location message replay.");
-	}
-	
-	@Test
-	@Ignore
-	public void musicMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754486787</CreateTime><MsgType><![CDATA[music]]></MsgType><MsgId>1024102410241024</MsgId><MusicUrl><![CDATA[http://music.baidu.com/a/a/d.mp3]]></MusicUrl><HQMusicUrl><![CDATA[HQmusic  ss s]]></HQMusicUrl></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		MusicMessage msg = new MusicMsgParser().toMsg(result);
 		assertEquals(msg.getMusicUrl(), "MMTChat nusic URL");
 		assertEquals(msg.getHqMusicUrl(), "MMTChat HQ music URL");
 	}
-	
 	@Test
-	@Ignore
-	public void newsMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754656922</CreateTime><MsgType><![CDATA[news]]></MsgType><MsgId>1024102410241024</MsgId><ArticleCount>2</ArticleCount><Articles><item><Title><![CDATA[Title A1]]></Title><Description><![CDATA[DESC A1]]></Description><PicUrl><![CDATA[pic.taobao.com/aaas/asdf.jpg]]></PicUrl><Url><![CDATA[http://www.baidu.com]]></Url></item><item><Title><![CDATA[Title A2]]></Title><Description><![CDATA[DESC A2]]></Description><PicUrl><![CDATA[pic2.taobao.com/aaas/asdf222.jpg]]></PicUrl><Url><![CDATA[http://www.yousas.com]]></Url></item></Articles></xml>";
+	public void voiceMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378193706</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[fLHx02T1fxxHyN1j2C1xiDnjklwpEYb3EyvkxykCeQ1VAlqpvepM-l4jOIKYkIo4]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5919296894823039086</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		NewsMessage msg = new NewsMsgParser().toMsg(result);
 		assertEquals(msg.getArticleCount(), 2);
 	}
 	
+	@Test
+	public void videoMsgTest(){
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378194082</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[1BZrnnbpR-Es-kuOzWbWKCpuWonEy-5r7PrZd4lliGeqwumf-ik7obib7eiALxWc]]></MediaId><ThumbMediaId><![CDATA[DeuiUHn9EW8ETn10s1BCnDM8ScTuixsMMTjaNWtIKJzJPS6Xz92VXVGUREeu89yp]]></ThumbMediaId><MsgId>5919298509730742383</MsgId></xml>";
+		String result = api.processMsg(MMT_TOKEN, recvMsg);
+		TextMessage msg = new TextMsgParser().toMsg(result);
+		assertEquals(msg.getContent(), "You send me a video, thanks!");
+	}
 }

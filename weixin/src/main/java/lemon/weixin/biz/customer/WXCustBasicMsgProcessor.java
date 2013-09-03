@@ -162,11 +162,9 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	protected String unsubscribe(String mmt_token, EventMessage msg){
 		//FIXME Don't send message, because customer can't receive message, what we can do is save the customer's message to database.
 		//get customer's configure
-		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent(null);
-		return new TextMsgParser().toXML(replyMsg);
+		//WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		
+		return null;
 	}
 	
 	/**
