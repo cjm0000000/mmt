@@ -40,12 +40,6 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 			//save location message
 			wxMsgHelper.saveRecvLocationMsg((LocationMessage) msg);
 			return processLocationMsg(mmt_token,(LocationMessage) msg);
-		}else if(msg instanceof MusicMessage){
-			//暂时不会收到音乐消息
-			return processMusicMsg(mmt_token,(MusicMessage) msg);
-		}else if(msg instanceof NewsMessage){
-			//暂时不会收到图文消息
-			return processNewsMsg(mmt_token,(NewsMessage) msg);
 		}else if(msg instanceof TextMessage){
 			//save text message
 			wxMsgHelper.saveRecvTextMsg((TextMessage) msg);
@@ -105,22 +99,6 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 * @return
 	 */
 	public abstract String processLocationMsg(String mmt_token, LocationMessage msg);
-	
-	/**
-	 * process music message
-	 * @param mmt_token
-	 * @param msg
-	 * @return
-	 */
-	public abstract String processMusicMsg(String mmt_token, MusicMessage msg);
-	
-	/**
-	 * process news message
-	 * @param mmt_token
-	 * @param msg
-	 * @return
-	 */
-	public abstract String processNewsMsg(String mmt_token, NewsMessage msg);
 	
 	/**
 	 * process text message

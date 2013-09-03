@@ -2,19 +2,14 @@ package lemon.weixin.biz;
 
 import org.springframework.stereotype.Service;
 
-import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.bean.message.VideoMessage;
 import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.biz.customer.WXCustBasicMsgProcessor;
-import lemon.weixin.biz.parser.MusicMsgParser;
-import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
 import lemon.weixin.biz.parser.VideoMsgParser;
 import lemon.weixin.biz.parser.VoiceMsgParser;
@@ -49,39 +44,6 @@ public class LemonMessageBiz extends WXCustBasicMsgProcessor {
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("Lemon Location message replay.");
 		return new TextMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processMusicMsg(String token, MusicMessage msg) {
-		MusicMessage replyMsg = new MusicMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setMusicUrl("nusic URL");
-		replyMsg.setHqMusicUrl("HQ music URL");
-		return new MusicMsgParser().toXML(replyMsg);
-	}
-
-	@Override
-	public String processNewsMsg(String token, NewsMessage msg) {
-		NewsMessage replyMsg = new NewsMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setArticleCount(2);
-		
-		Article a1 = new Article();
-		a1.setTitle("New 1");
-		a1.setDescription("DESC A1");
-		a1.setPicUrl("pic.taobao.com/aaas/asdf.jpg");
-		a1.setUrl("http://www.baidu.com");
-		
-		Article a2 = new Article();
-		a2.setTitle("New 2");
-		a2.setDescription("DESC A2");
-		a2.setPicUrl("pic2.taobao.com/aaas/asdf222.jpg");
-		a2.setUrl("http://www.yousas.com");
-		
-		Article[] articles = {a1,a2};
-		
-		replyMsg.setArticles(articles);
-		return new NewsMsgParser().toXML(replyMsg);
 	}
 
 	@Override

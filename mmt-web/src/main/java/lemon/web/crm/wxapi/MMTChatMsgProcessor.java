@@ -64,18 +64,6 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 	}
 
 	@Override
-	public String processMusicMsg(String token, MusicMessage msg) {
-		//暂时不能接收音乐信息
-		return null;
-	}
-
-	@Override
-	public String processNewsMsg(String token, NewsMessage msg) {
-		//暂时不能接收图文消息
-		return null;
-	}
-
-	@Override
 	public String processTextMsg(String mmt_token, TextMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);

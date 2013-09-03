@@ -35,7 +35,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		<!-- ========== slf4j�?置开始 ========== -->
+		<!-- ========== slf4配置开始 ========== -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -46,9 +46,8 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.4</version>
 		</dependency>
-		<!-- ========== slf4j�?置结�?� ========== -->
-		<!-- ========== slf4j�?置结�?� ========== -->
-		<!-- Spring�?置开始 -->
+		<!-- ========== slf4j配置结束 ========== -->
+		<!-- Spring配置开始 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -80,8 +79,8 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- ========== Spring�?置结�?� ========== -->
-		<!-- ========== Mybatis�?置开始 ========== -->
+		<!-- ========== Spring配置结束 ========== -->
+		<!-- ========== Mybatis配置开始 ========== -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -92,26 +91,28 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<!-- ========== Mybatis�?置结�?� ========== -->
-		<!-- ========== c3p0�?置开始 ========== -->
+		<!-- ========== Mybatis配置结束 ========== -->
+		<!-- ========== c3p0配置开始 ========== -->
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 		</dependency>
-		<!-- ========== c3p0�?置结�?� ========== -->
-		<!-- ========== MYSQL驱动�?置开始 ========== -->
+		<!-- ========== c3p0配置结束========== -->
+		<!-- ========== MYSQL驱动配置开始 ========== -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.20</version>
 		</dependency>
-		<!-- ========== MYSQL驱动�?置结�?� ========== -->
+		<!-- ========== MYSQL驱动配置结束 ========== -->
+		<!-- ========== JDOM配置开始 ========== -->
 		<dependency>
 			<groupId>jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<!-- ========== JDOM配置结束 ========== -->
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
