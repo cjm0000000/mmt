@@ -41,7 +41,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("<a href=" + msg.getPicUrl() + ">下载图片</a>");
+		replyMsg.setContent("<a href='" + msg.getPicUrl() + "'>下载图片</a>");
 		//save send log
 		msgHelper.saveSendTextMsg(replyMsg);
 		return textMsgParser.toXML(replyMsg);
