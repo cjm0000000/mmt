@@ -165,7 +165,7 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent(cfg.getUnsubscribe_msg());
+		replyMsg.setContent(null);
 		return new TextMsgParser().toXML(replyMsg);
 	}
 	

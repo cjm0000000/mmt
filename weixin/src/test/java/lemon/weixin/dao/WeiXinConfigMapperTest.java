@@ -55,7 +55,6 @@ public class WeiXinConfigMapperTest {
 		cfg.setToken("Junit Test Token");
 		cfg.setWx_account("Junit Test WeiXin Account");
 		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");
-		cfg.setUnsubscribe_msg("You have unsubscribe Junit Test, thank you.");
 		cfg.setApi_url("ASDLADLKJFWQ");
 		cfg.setAppid("APPID");
 		cfg.setSecret("secret");

@@ -52,7 +52,6 @@ public class MMTChatMsgTest {
 		cfg.setWx_account("lemon_test");
 		cfg.setBiz_class("lemon.web.crm.wxapi.MMTChatMsgProcessor");
 		cfg.setSubscribe_msg(Subscribe_msg);
-		cfg.setUnsubscribe_msg(unsubscribe_msg);
 		WeiXin.setConfig(cfg);
 	}
 	

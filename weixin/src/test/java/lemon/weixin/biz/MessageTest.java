@@ -57,7 +57,6 @@ public class MessageTest {
 		cfg.setWx_account("lemon_test");
 		cfg.setBiz_class("lemon.weixin.biz.LemonMessageBiz");
 		cfg.setSubscribe_msg(Subscribe_msg);
-		cfg.setUnsubscribe_msg(unsubscribe_msg);
 		WeiXin.setConfig(cfg);
 	}
 	@Test
