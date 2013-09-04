@@ -23,7 +23,7 @@ public class OnlineUserContext {
 		userMap = new HashMap<String, User>();
 		connections = 0;
 	}
-	public static OnlineUserContext getInstance(){
+	public synchronized static OnlineUserContext getInstance(){
 		if(instance==null)
 			instance = new OnlineUserContext();
 		return instance;

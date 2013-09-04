@@ -34,7 +34,7 @@ public class WeiXin {
 	/**
 	 * 清空Map
 	 */
-	public static void init() {
+	public synchronized static void init() {
 		if (configs == null)
 			configs = new ConcurrentHashMap<>();
 		else
