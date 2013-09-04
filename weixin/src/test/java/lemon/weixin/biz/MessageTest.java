@@ -6,8 +6,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import lemon.shared.MMTContext;
 import lemon.shared.api.MmtAPI;
+import lemon.shared.common.Customer;
+import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.TextMessage;
@@ -16,6 +17,7 @@ import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.biz.parser.TextMsgParser;
 import lemon.weixin.biz.parser.VideoMsgParser;
 import lemon.weixin.biz.parser.VoiceMsgParser;
+import lemon.weixin.dao.WXConfigMapper;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -36,9 +38,12 @@ public class MessageTest {
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
+	private final String bizClass = "lemon.weixin.biz.LemonMessageBiz";
+	private final int cust_id = 100;
 	private WeiXinMsgHelper msgHelper;
-	private MMTContext contextUtil;
 	private ApplicationContext acx;
+	private CustomerMapper customerMapper;
+	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
 		//FIXME Refactoring to support subscribe
@@ -47,17 +52,41 @@ public class MessageTest {
 		acx = new ClassPathXmlApplicationContext(resource);
 		api = acx.getBean(MmtAPI.class);
 		msgHelper = acx.getBean(WeiXinMsgHelper.class);
-		contextUtil = acx.getBean(MMTContext.class);
-		assertNotNull(contextUtil);
+		customerMapper = acx.getBean(CustomerMapper.class);
+		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
+		assertNotNull(msgHelper);
+		assertNotNull(customerMapper);
+		assertNotNull(wxConfigMapper);
+		
+		//add customer
+		Customer cust = customerMapper.get(cust_id);
+		if(cust == null){
+			cust = new Customer();
+			cust.setCust_id(cust_id);
+			cust.setCust_name("Test");
+			cust.setMemo("");
+			cust.setStatus("1");
+			customerMapper.save(cust);
+			assertNotEquals(cust.getCust_id(), 0);
+		}
+		
+		//add WeiXin configure
+		WeiXinConfig cfg = wxConfigMapper.get(cust_id);
+		if(null == cfg){
+			cfg = new WeiXinConfig();
+			cfg.setCust_id(cust_id);
+			cfg.setToken(TOKEN);
+			cfg.setApi_url(MMT_TOKEN);
+			cfg.setWx_account("lemon_test");
+			cfg.setAppid("");
+			cfg.setSecret("");
+			cfg.setBiz_class(bizClass);
+			cfg.setSubscribe_msg(Subscribe_msg);
+			wxConfigMapper.save(cfg);
+			assertNotEquals(cfg.getCust_id(), 0);
+		}
 		WeiXin.init();
-		WeiXinConfig cfg = new WeiXinConfig();
-		cfg.setCust_id(25);
-		cfg.setToken(TOKEN);
-		cfg.setApi_url(MMT_TOKEN);
-		cfg.setWx_account("lemon_test");
-		cfg.setBiz_class("lemon.weixin.biz.LemonMessageBiz");
-		cfg.setSubscribe_msg(Subscribe_msg);
 		WeiXin.setConfig(cfg);
 	}
 	@Test
@@ -82,7 +111,6 @@ public class MessageTest {
 		assertEquals(msg.getContent(), "Lemon Text message replay.");
 	}
 	@Test
-	@Ignore
 	//FIXME subscribeTest
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090586</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
