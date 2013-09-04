@@ -7,8 +7,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;;
 
 /**
- * get the spring context
+ * MMT context, it's a spring context
  * @author lemon
+ * @version 1.0
  *
  */
 @Component

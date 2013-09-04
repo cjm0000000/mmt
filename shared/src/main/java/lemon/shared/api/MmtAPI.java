@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * MMT message API
  * @author lemon
+ * @version 1.0
  * @date 2013-08-21
  *
  */
@@ -12,7 +13,7 @@ public interface MmtAPI {
 	/**
 	 * verify the signature
 	 * @param params
-	 * @return
+	 * @return if signature is valid return true, else return false.
 	 */
 	boolean verifySignature(Map<String, Object> params);
 	
@@ -27,7 +28,7 @@ public interface MmtAPI {
 	/**
 	 * Third-part get access token
 	 * @param mmt_token
-	 * @return
+	 * @return access token
 	 */
 	String getAcessToken(String mmt_token);
 }

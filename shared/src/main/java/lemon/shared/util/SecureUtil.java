@@ -21,9 +21,10 @@ import org.apache.commons.logging.LogFactory;
  * Secure Util for MMT
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-public class SecureUtil {
+public final class SecureUtil {
 	private static Log logger = LogFactory.getLog(SecureUtil.class);
 	private static final String S = "abcdefghijklmnopqrstuvwxyz1234567890,.`-=/ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+";
 	

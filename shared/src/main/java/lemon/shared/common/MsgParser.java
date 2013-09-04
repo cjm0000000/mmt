@@ -3,6 +3,7 @@ package lemon.shared.common;
 /**
  * Message parser
  * @author lemon
+ * @version 1.0
  *
  */
 public interface MsgParser {

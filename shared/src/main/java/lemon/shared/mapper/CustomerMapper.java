@@ -13,13 +13,14 @@ import org.springframework.stereotype.Repository;
 /**
  * Customer mapper
  * @author lemon
+ * @version 1.0
  *
  */
 @Repository
 public interface CustomerMapper {
 	
 	/**
-	 * Get a customer by id
+	 * Get customer by id
 	 * @param cust_id
 	 * @return
 	 */

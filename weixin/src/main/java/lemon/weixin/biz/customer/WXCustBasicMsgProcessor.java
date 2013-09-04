@@ -154,7 +154,6 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 * @return
 	 */
 	protected String subscribe(WeiXinConfig cfg, EventMessage msg){
-		//FIXME customer operation logic
 		//get customer's configure
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
