@@ -7,14 +7,18 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
+import lemon.shared.common.Customer;
+import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.biz.WeiXinMsgHelper;
 import lemon.weixin.biz.parser.MusicMsgParser;
 import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.dao.WXConfigMapper;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -22,7 +26,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -35,22 +38,54 @@ public class MMTChatMsgTest {
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
+	private final String bizClass = "lemon.web.crm.wxapi.MMTChatMsgProcessor";
+	private final int cust_id = 200;
+	private WeiXinMsgHelper msgHelper;
 	private ApplicationContext acx;
+	private CustomerMapper customerMapper;
+	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = (MmtAPI) acx.getBean(MmtAPI.class);
+		api = acx.getBean(MmtAPI.class);
+		msgHelper = acx.getBean(WeiXinMsgHelper.class);
+		customerMapper = acx.getBean(CustomerMapper.class);
+		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
+		assertNotNull(msgHelper);
+		assertNotNull(customerMapper);
+		assertNotNull(wxConfigMapper);
+		
+		//add customer
+		Customer cust = customerMapper.get(cust_id);
+		if(cust == null){
+			cust = new Customer();
+			cust.setCust_id(cust_id);
+			cust.setCust_name("Test");
+			cust.setMemo("");
+			cust.setStatus("1");
+			customerMapper.save(cust);
+			assertNotEquals(cust.getCust_id(), 0);
+		}
+		
+		//add WeiXin configure
+		WeiXinConfig cfg = wxConfigMapper.get(cust_id);
+		if(null == cfg){
+			cfg = new WeiXinConfig();
+			cfg.setCust_id(cust_id);
+			cfg.setToken(TOKEN);
+			cfg.setApi_url(MMT_TOKEN);
+			cfg.setWx_account("lemon_test");
+			cfg.setAppid("");
+			cfg.setSecret("");
+			cfg.setBiz_class(bizClass);
+			cfg.setSubscribe_msg(Subscribe_msg);
+			wxConfigMapper.save(cfg);
+			assertNotEquals(cfg.getCust_id(), 0);
+		}
 		WeiXin.init();
-		WeiXinConfig cfg = new WeiXinConfig();
-		cfg.setCust_id(25);
-		cfg.setToken(TOKEN);
-		cfg.setApi_url(MMT_TOKEN);
-		cfg.setWx_account("lemon_test");
-		cfg.setBiz_class("lemon.web.crm.wxapi.MMTChatMsgProcessor");
-		cfg.setSubscribe_msg(Subscribe_msg);
 		WeiXin.setConfig(cfg);
 	}
 	
@@ -70,8 +105,6 @@ public class MMTChatMsgTest {
 		assertEquals(msg.getContent(), "You said: hello,weixin, I am lemon.");
 	}
 	@Test
-	@Ignore
-	//FIXME subscribeTest
 	public void subscribeTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
@@ -80,8 +113,6 @@ public class MMTChatMsgTest {
 	}
 	
 	@Test
-	@Ignore
-	//FIXME unsubscribe
 	public void unsubscribe(){
 		String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377682037695</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[0dfsafkqwnriksdk]]></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);

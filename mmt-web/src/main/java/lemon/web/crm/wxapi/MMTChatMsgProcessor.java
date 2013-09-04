@@ -24,6 +24,7 @@ import lemon.weixin.biz.parser.TextMsgParser;
 /**
  * Lemon message test business
  * @author lemon
+ * @version 1.0
  *
  */
 @Service

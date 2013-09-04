@@ -34,12 +34,13 @@ CREATE TABLE `weixin_config` (
 #
 
 CREATE TABLE `weixin_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
   `status` char(1) NOT NULL DEFAULT '1' COMMENT '状态（1：订阅：0：取消订阅）',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
-  PRIMARY KEY (`wxid`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表'
 
 #

@@ -15,7 +15,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="user" value="root" />
-		<property name="password" value="a" />
+		<property name="password" value="1qaz@WSX" />
 		<property name="acquireIncrement" value="3" />
 		<property name="acquireRetryAttempts" value="30"/>
 		<property name="acquireRetryDelay" value="1000"/>

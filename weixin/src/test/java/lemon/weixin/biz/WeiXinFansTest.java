@@ -1,7 +1,7 @@
 package lemon.weixin.biz;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.weixin.bean.message.WeiXinFans;
+import lemon.weixin.bean.WeiXinFans;
 
 import org.junit.Before;
 import org.junit.Test;

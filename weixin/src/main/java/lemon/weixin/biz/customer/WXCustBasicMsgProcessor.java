@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.bean.WeiXinFans;
 import lemon.weixin.bean.log.SubscribeLog;
 import lemon.weixin.bean.log.UnSubscribeLog;
 import lemon.weixin.bean.message.*;

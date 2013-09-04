@@ -1,6 +1,6 @@
 package lemon.weixin.biz;
 
-import lemon.weixin.bean.message.WeiXinFans;
+import lemon.weixin.bean.WeiXinFans;
 import lemon.weixin.dao.WXFansMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;

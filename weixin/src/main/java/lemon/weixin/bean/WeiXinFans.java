@@ -1,4 +1,4 @@
-package lemon.weixin.bean.message;
+package lemon.weixin.bean;
 
 /**
  * Bean for WeiXin fans
@@ -6,6 +6,7 @@ package lemon.weixin.bean.message;
  * @version 1.0
  */
 public class WeiXinFans {
+	private int id;
 	private String wxid;
 	private int cust_id;
 	private String nick_name;
@@ -40,6 +41,12 @@ public class WeiXinFans {
 	}
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
