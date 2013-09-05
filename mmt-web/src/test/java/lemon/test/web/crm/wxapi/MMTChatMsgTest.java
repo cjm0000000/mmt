@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.common.Customer;
+import lemon.shared.entity.Customer;
+import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
@@ -59,14 +60,14 @@ public class MMTChatMsgTest {
 		assertNotNull(wxConfigMapper);
 		
 		//add customer
-		Customer cust = customerMapper.get(cust_id);
+		Customer cust = customerMapper.getCustomer(cust_id);
 		if(cust == null){
 			cust = new Customer();
 			cust.setCust_id(cust_id);
 			cust.setCust_name("Test");
 			cust.setMemo("");
-			cust.setStatus("1");
-			customerMapper.save(cust);
+			cust.setStatus(Status.AVAILABLE);
+			customerMapper.addCustomer(cust);
 			assertNotEquals(cust.getCust_id(), 0);
 		}
 		

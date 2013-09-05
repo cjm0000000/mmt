@@ -4,7 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.common.Customer;
+import lemon.shared.entity.Customer;
+import lemon.shared.entity.CustomerService;
+import lemon.shared.entity.ServiceType;
+import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
 
 import org.junit.Before;
@@ -29,30 +32,62 @@ public class CustomerTest {
 	}
 	
 	@Test
-	public void testCustomerMapper(){
-		Customer cust = add();
+	public void testCustomerBusiness(){
+		Customer cust = addCustomer();
 		assertNotEquals(0, cust.getCust_id());
 		String memo = "A&*HIO(@(@H(F@()))@JDWJ()!Q@";
-		update(cust, memo);
+		updateCustomer(cust, memo);
 		assertNotEquals(0, list().size());
+		cust = custMapper.getCustomer(cust.getCust_id());
+		CustomerService service = addService(cust.getCust_id());
+		assertNotNull(service);
+		assertEquals(service.getExpire_time(), "0000-00-00 00:00");
+		assertEquals(service.getStatus(), Status.AVAILABLE);
+		
+		CustomerService s1 = custMapper.getServiceById(service.getId());
+		assertNotNull(s1);
+		assertEquals(s1.getStatus(), Status.AVAILABLE);
+		assertEquals(s1.getService(), ServiceType.WEIXIN);
+		
+		CustomerService s2 = custMapper.getService(cust.getCust_id(), ServiceType.WEIXIN);
+		assertNotNull(s2);
+		assertEquals(s2.getStatus(), Status.AVAILABLE);
+		assertEquals(s2.getService(), ServiceType.WEIXIN);
+		
+		CustomerService s3 = custMapper.getService(cust.getCust_id(), ServiceType.OTHER);
+		assertNull(s3);
+		
+		List<CustomerService> list = custMapper.getServives(cust.getCust_id());
+		assertNotNull(list);
+		assertNotEquals(0, list.size());
 	}
 	
-	private Customer add(){
+	private CustomerService addService(int cust_id){
+		CustomerService service = new CustomerService();
+		service.setCust_id(cust_id);
+		service.setService(ServiceType.WEIXIN);
+		service.setExpire_time("0000-00-00 00:00");
+		service.setStatus(Status.AVAILABLE);
+		custMapper.addService(service);
+		return service;
+	}
+	
+	private Customer addCustomer(){
 		Customer cust = new Customer();
-		cust.setCust_name("Insigma");
+		cust.setCust_name("LEMON TEST CUSTOMER");
 		cust.setMemo("MEMO...");
-		cust.setStatus("1");
-		custMapper.save(cust);
+		cust.setStatus(Status.AVAILABLE);
+		custMapper.addCustomer(cust);
 		return cust;
 	}
 	
-	private void update(Customer cust,String memo){
+	private void updateCustomer(Customer cust,String memo){
 		cust.setMemo(memo);
-		custMapper.update(cust);
+		custMapper.updateCustomer(cust);
 	}
 	
 	private List<Customer> list(){
-		return custMapper.activeList();
+		return custMapper.activeCustomerList();
 	}
 
 }

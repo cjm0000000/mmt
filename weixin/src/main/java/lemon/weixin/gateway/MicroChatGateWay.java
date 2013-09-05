@@ -75,7 +75,7 @@ public class MicroChatGateWay implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		WeiXin.init();
-		List<WeiXinConfig> list = weiXinConfigMapper.activeList();
+		List<WeiXinConfig> list = weiXinConfigMapper.availableList();
 		for (WeiXinConfig wxcfg : list) {
 			WeiXin.setConfig(wxcfg);
 		}

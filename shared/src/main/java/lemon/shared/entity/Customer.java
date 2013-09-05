@@ -1,4 +1,4 @@
-package lemon.shared.common;
+package lemon.shared.entity;
 
 /**
  * Customer entity
@@ -10,7 +10,7 @@ public class Customer {
 	private int cust_id;
 	private String cust_name;
 	private String memo;
-	private String status;
+	private Status status;
 
 	public int getCust_id() {
 		return cust_id;
@@ -36,11 +36,11 @@ public class Customer {
 		this.memo = memo;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	

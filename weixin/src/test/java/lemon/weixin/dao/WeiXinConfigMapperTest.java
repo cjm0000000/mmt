@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.common.Customer;
+import lemon.shared.entity.Customer;
+import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.bean.WeiXinConfig;
 
@@ -35,13 +36,13 @@ public class WeiXinConfigMapperTest {
 	@Test
 	public void crud(){
 		int cust_id = 10;
-		Customer cust = custMapper.get(cust_id);
+		Customer cust = custMapper.getCustomer(cust_id);
 		if(null == cust){
 			cust = new Customer();
 			cust.setCust_name("JUnit Test Customer");
 			cust.setMemo("JUnit Test");
-			cust.setStatus("1");
-			custMapper.save(cust);
+			cust.setStatus(Status.AVAILABLE);
+			custMapper.addCustomer(cust);
 			cust_id = cust.getCust_id();
 		}
 		assertNotEquals(0, cust_id);
@@ -60,7 +61,7 @@ public class WeiXinConfigMapperTest {
 		cfg.setSecret("secret");
 		cfg.setBiz_class("com.com.XXX");
 		configMapper.save(cfg);
-		List<WeiXinConfig> list = configMapper.activeList();
+		List<WeiXinConfig> list = configMapper.availableList();
 		for (WeiXinConfig weiXinConfig : list) {
 			assertNotNull(weiXinConfig.getTimestamp());
 			logger.debug(weiXinConfig);

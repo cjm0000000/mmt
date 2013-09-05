@@ -8,9 +8,23 @@ CREATE TABLE `customer` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '客户ID',
   `cust_name` varchar(255) NOT NULL DEFAULT '' COMMENT '客户名称',
   `memo` varchar(255) NOT NULL DEFAULT '' COMMENT '客户介绍',
-  `status` char(1) NOT NULL DEFAULT '1' COMMENT '状态（1：有效；0：无效）',
+  `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
+
+#
+# 客户服务开通情况表
+#
+
+CREATE TABLE `customer_service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service` char(10) NOT NULL DEFAULT '' COMMENT '服务',
+  `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
+  `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '服务到期时间（0000-00-00表示永久有效）',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表'
 
 #
 # 微信配置表
