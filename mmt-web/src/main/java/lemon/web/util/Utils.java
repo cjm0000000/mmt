@@ -80,7 +80,7 @@ public class Utils {
 	 */
 	public static List<String> getGroupIdsByDept(User u){
 		List<String> list = new ArrayList<String>();
-		list.add("OA1111-"+u.getRole_id()+"-"+u.getDept_code());
+		//list.add("OA1111-"+u.getRole_id()+"-"+u.getDept_code());
 		return list;
 	}
 	
