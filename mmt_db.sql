@@ -1,4 +1,18 @@
-USE `mmt_db`;
+#
+# 登录日志表
+#
+
+CREATE TABLE `system_log_login` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+  `role_id` int(11) NOT NULL COMMENT '角色ID',
+  `logintime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `loginstatus` char(11) DEFAULT NULL COMMENT '登陆状态',
+  `loginip` char(15) DEFAULT NULL COMMENT '登陆地IP',
+  PRIMARY KEY (`id`),
+  KEY `IDX_log_login_user` (`user_id`,`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='登录日志表'
 
 #
 # 客户信息表
