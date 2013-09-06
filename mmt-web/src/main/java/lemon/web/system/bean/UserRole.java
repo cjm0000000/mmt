@@ -1,7 +1,7 @@
 package lemon.web.system.bean;
 
 /**
- * 用户角色实体
+ * user role
  * @author 张连明
  * @date Mar 28, 2012 9:15:16 PM
  *

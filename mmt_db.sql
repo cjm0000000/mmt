@@ -15,6 +15,77 @@ CREATE TABLE `system_log_login` (
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='登录日志表'
 
 #
+# 用户表
+#
+CREATE TABLE `system_user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
+  `password` char(128) NOT NULL DEFAULT '' COMMENT '用户密码',
+  `xm` varchar(20) DEFAULT NULL COMMENT '用户姓名',
+  `sfzh` char(18) DEFAULT NULL COMMENT '身份证号码',
+  `sjhm` char(11) DEFAULT NULL COMMENT '手机号码',
+  `islock` char(11) NOT NULL DEFAULT '' COMMENT '锁定状态',
+  `bz` varchar(200) DEFAULT NULL COMMENT '备注',
+  `status` char(11) NOT NULL DEFAULT '' COMMENT '用户状态',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='用户表'
+
+#
+# 角色表
+#
+CREATE TABLE `system_role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_name` varchar(30) DEFAULT NULL COMMENT '角色名称',
+  `role_desc` varchar(200) NOT NULL DEFAULT '' COMMENT '角色说明',
+  `status` char(11) NOT NULL DEFAULT '' COMMENT '角色状态',
+  `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
+  `reloadable` char(11) NOT NULL DEFAULT '' COMMENT '在登录的时候是否重新生成菜单',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表'
+
+#
+# 用户角色表
+#
+CREATE TABLE `system_user_role` (
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表'
+
+#
+# 角色权限表
+#
+CREATE TABLE `system_role_menu` (
+  `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
+  `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
+  KEY `IDX_sys_role_menu` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表'
+
+#
+# 角色默认权限表
+#
+CREATE TABLE `system_role_menu_default` (
+  `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
+  `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
+  KEY `IDX_sys_role_menu_default` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色默认权限表'
+
+#
+# 系统菜单表
+#
+CREATE TABLE `system_menu` (
+  `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
+  `menu_name` char(50) DEFAULT NULL COMMENT '菜单名称',
+  `menulevcod` char(1) DEFAULT NULL COMMENT '菜单等级',
+  `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
+  `menuurl` varchar(100) DEFAULT NULL COMMENT '菜单链接',
+  `menuico` varchar(60) DEFAULT NULL COMMENT '菜单风格',
+  `sort` decimal(4,0) DEFAULT '0' COMMENT '排序号',
+  `iconCls` varchar(20) DEFAULT '' COMMENT '功能样式',
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表'
+
+#
 # 客户信息表
 #
 

@@ -1,77 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.system.mapper.RoleMapper">
+<mapper namespace="lemon.web.system.mapper.RoleMapper">
 	<parameterMap type="map" id="authorityMap">
-		<parameter property="user_id" jdbcType="NUMERIC" javaType="int" />
+		<parameter property="role_id" jdbcType="NUMERIC" javaType="int" />
 		<parameter property="list" jdbcType="NULL" javaType="ArrayList" />
 	</parameterMap>
-	<select id="getRoles" parameterType="map"
-		resultType="lemon.system.bean.Role">
-		select a.role_id,a.role_name,a.zt,a.role_desc,a.sort
-			from system_role a where zt='1' order by a.sort
-		<if test="start!=null and start!=0">
-			limit #{start},#{limit}
+	<select id="getRoleList" parameterType="int" resultType="lemon.web.system.bean.Role">
+		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort 
+			FROM system_role A 
+		WHERE A.`status`='AVAILABLE' 
+		ORDER BY A.sort
+		<if test="limit!=0">
+			 LIMIT #{start},#{limit}
 		</if>
 	</select>
-	<select id="getRole" parameterType="int"
-		resultType="lemon.system.bean.Role">
-		select a.role_id,a.role_name,a.zt,a.role_desc,a.sort
-			from system_role a where a.role_id=#{role_id}
+	<select id="getRsCnt" resultType="int" parameterType="int">
+		SELECT count(1) cnt 
+			FROM system_role A 
+		WHERE A.`status`='AVAILABLE'
 	</select>
-	<select id="checkRoleName" parameterType="string"
-		resultType="int">
-		select count(1) cnt
-			from system_role a where a.role_name=#{role_name} and a.zt='1'
-	</select>
-	<select id="getRsCnt" resultType="int"
-		parameterType="int">
-		select count(1) cnt
-			from system_role a where a.zt='1'
-	</select>
-	
-	<insert id="addRole" parameterType="lemon.system.bean.Role" useGeneratedKeys="true" keyProperty="role_id">
-		insert into system_role(role_name,role_desc,sort)
-			select #{role_name},#{role_desc},#{sort}
+	<insert id="addRole" parameterType="lemon.web.system.bean.Role" useGeneratedKeys="true" keyProperty="role_id">
+		INSERT INTO system_role(role_name,role_desc,status,sort,reloadable) 
+			SELECT #{role_name},#{role_desc},#{status},#{sort},#{reloadable}
 	</insert>
-	<update id="update" parameterType="lemon.system.bean.Role">
-		update system_role
-			set role_name=#{role_name},
-			role_desc=#{role_desc},
-			sort=#{sort}
-		where role_id=#{role_id}
+	<update id="update" parameterType="lemon.web.system.bean.Role">
+		UPDATE system_role A 
+			SET A.role_name=#{role_name}, 
+				A.role_desc=#{role_desc}, 
+				A.sort=#{sort}, 
+				A.`status`=#{status}, 
+				A.reloadable=#{reloadable} 
+			WHERE A.role_id=#{role_id}
 	</update>
-	<update id="delete" parameterType="int">
-		update system_role
-			set zt='0'
-		where role_id in 
-		<foreach collection="array" item="roles" index="index" open="(" separator="," close=")">
-			#{roles}
+	<update id="batchDelete" parameterType="int">
+		UPDATE system_role A
+			SET A.`status`='UNAVAILABLE'
+		WHERE A.role_id IN 
+		<foreach collection="array" item="role_ids" index="index" open="(" separator="," close=")">
+			#{role_ids}
 		</foreach>
 	</update>
+	<select id="getRole" parameterType="int" resultType="lemon.web.system.bean.Role">
+		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort 
+			FROM system_role A WHERE A.role_id=#{role_id}
+	</select>
+	<select id="checkRoleName" parameterType="string" resultType="int">
+		SELECT count(1) cnt
+			FROM system_role A 
+		WHERE A.role_name=#{role_name} 
+			AND A.`status`='AVAILABLE'
+	</select>
 	<delete id="deleteRoleAuthority" parameterType="int">
-		delete from system_role_menu where role_id=#{role_id}
+		DELETE FROM system_role_menu WHERE role_id=#{role_id}
 	</delete>
 	<insert id="setDefaultRoleAuthority" parameterType="int">
-		insert into system_role_menu(role_id,menu_id) 
-			select #{role_id},menu_code
-		from system_role_menu_default a
+		INSERT INTO system_role_menu(role_id,menu_id) 
+			SELECT A.role_id,A.menu_id
+		FROM system_role_menu_default A
+			WHERE A.role_id=#{role_id}
 	</insert>
 	<insert id="setRoleAuthority" parameterMap="authorityMap">
-		insert into system_role_menu(role_id,menu_id) 
-			select #{role_id},menu_code
-		from system_menu a where a.menu_code in 
+		INSERT INTO system_role_menu(role_id,menu_id) 
+			SELECT #{role_id},menu_code
+				FROM system_menu A 
+			WHERE a.menu_code IN 
 		<foreach collection="list" item="list" index="index" open="(" separator="," close=")">
 			#{list}
 		</foreach>
 	</insert>
-	<select id="getAuthority" parameterType="int" resultType="lemon.system.bean.Menu">
-		select a.menu_code,a.menu_name,a.menulevcod,a.supmenucode,a.menuico,b.menu_id  authority
+	<select id="getAuthority" parameterType="int" resultType="lemon.web.system.bean.Menu">
+		SELECT a.menu_id,a.menu_name,a.menulevcod,a.supmenucode,a.menuico,b.menu_id  authority
         	from system_menu a        
-        		left join system_role_menu b on a.menu_code=b.menu_id and b.role_id=#{role_id}
-			where a.menu_code != '0000000000'
+        		left join system_role_menu b on a.menu_id=b.menu_id and b.role_id=#{role_id}
+			where a.menu_id != 0
 		order by a.menulevcod,a.sort
 	</select>
 	<update id="updateReload" parameterType="int">
-		update system_role a set a.reload='0' where a.role_id=#{role_id}
+		UPDATE system_role A 
+			SET a.reloadable='UNAVAILABLE' 
+		WHERE A.role_id=#{role_id}
 	</update>
 </mapper>

@@ -39,7 +39,8 @@ public class MenuServiceImpl implements MenuService {
 	public boolean reConfigMenuTreeByRoleId(int role_id,File file) {
 		if(createMenuFile(file, role_id)){
 			//改变状态
-			roleMapper.updateReload(role_id);
+			//TODO update role Reload
+			//roleMapper.updateReload(role_id);
 			return true;
 		}
 		

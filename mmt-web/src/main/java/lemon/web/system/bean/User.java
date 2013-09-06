@@ -1,5 +1,7 @@
 package lemon.web.system.bean;
 
+import lemon.shared.entity.Status;
+
 
 /**
  * User entity
@@ -14,9 +16,9 @@ public class User {
 	private String user_name;
 	private String sfzh;
 	private String sjhm;
-	private String islock;
+	private Status islock;
 	private String bz;
-	private String status;
+	private Status status;
 	private int role_id;
 	private String role_name;
 	private String xm;
@@ -61,11 +63,11 @@ public class User {
 		this.sjhm = sjhm;
 	}
 
-	public String getIslock() {
+	public Status getIslock() {
 		return islock;
 	}
 
-	public void setIslock(String islock) {
+	public void setIslock(Status islock) {
 		this.islock = islock;
 	}
 
@@ -77,11 +79,11 @@ public class User {
 		this.bz = bz;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
