@@ -74,7 +74,7 @@ CREATE TABLE `system_role_menu_default` (
 # 系统菜单表
 #
 CREATE TABLE `system_menu` (
-  `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
+  `menu_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` char(50) DEFAULT NULL COMMENT '菜单名称',
   `menulevcod` char(1) DEFAULT NULL COMMENT '菜单等级',
   `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',

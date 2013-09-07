@@ -1,7 +1,6 @@
 package lemon.web.system.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
@@ -69,11 +68,14 @@ public interface RoleMapper {
 	 * @param role_id
 	 */
 	void deleteRoleAuthority(int role_id);
+	
 	/**
 	 * set role's authority
-	 * @param map
+	 * @param role_id
+	 * @param menu_ids
 	 */
-	void setRoleAuthority(Map<String, Object> map);
+	void setRoleAuthority(@Param("role_id") int role_id,
+			@Param("list") int[] menu_ids);
 	
 	/**
 	 * set role's default authority
