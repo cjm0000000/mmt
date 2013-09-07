@@ -21,13 +21,13 @@ CREATE TABLE `system_user` (
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
   `password` char(128) NOT NULL DEFAULT '' COMMENT '用户密码',
   `xm` varchar(20) DEFAULT NULL COMMENT '用户姓名',
-  `sfzh` char(18) DEFAULT NULL COMMENT '身份证号码',
-  `sjhm` char(11) DEFAULT NULL COMMENT '手机号码',
+  `idcard` char(18) DEFAULT NULL COMMENT '身份证号码',
+  `mphone` char(11) DEFAULT NULL COMMENT '手机号码',
   `islock` char(11) NOT NULL DEFAULT '' COMMENT '锁定状态',
   `bz` varchar(200) DEFAULT NULL COMMENT '备注',
   `status` char(11) NOT NULL DEFAULT '' COMMENT '用户状态',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='用户表'
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='用户表'
 
 #
 # 角色表

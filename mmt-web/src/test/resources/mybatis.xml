@@ -22,5 +22,6 @@
 	<!-- 非注解的sql映射文件配置，如果使用mybatis注解，该mapper无需配置，但是如果mybatis注解中包含@resultMap注解，则mapper必须配置，给resultMap注解使用 -->
 	<mappers>
 		<mapper resource="dao/system/RoleMapper.xml" />
+		<mapper resource="dao/system/UserMapper.xml" />
 	</mappers>
 </configuration>
