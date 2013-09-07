@@ -20,7 +20,7 @@
 		<mmt-web-version>1.0-SNAPSHOT</mmt-web-version>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>3.2.4.RELEASE</org.springframework-version>
 	</properties>
 	<dependencies>
 
@@ -84,12 +84,12 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.1.1</version>
+			<version>3.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.1.1</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- ========== Mybatis配置结束 ========== -->
 		<!-- ========== c3p0配置开始 ========== -->
@@ -103,14 +103,14 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.20</version>
+			<version>5.1.26</version>
 		</dependency>
 		<!-- ========== MYSQL驱动配置结束 ========== -->
 		<!-- ========== JDOM配置开始 ========== -->
 		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.1</version>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>2.0.5</version>
 		</dependency>
 		<!-- ========== JDOM配置结束 ========== -->
 	</dependencies>
