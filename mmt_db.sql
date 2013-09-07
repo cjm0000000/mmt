@@ -1,7 +1,6 @@
 #
 # 登录日志表
 #
-
 CREATE TABLE `system_log_login` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` int(11) NOT NULL COMMENT '用户ID',
@@ -49,6 +48,7 @@ CREATE TABLE `system_role` (
 CREATE TABLE `system_user_role` (
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
   `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表'
 
@@ -88,7 +88,6 @@ CREATE TABLE `system_menu` (
 #
 # 客户信息表
 #
-
 CREATE TABLE `customer` (
   `cust_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '客户ID',
   `cust_name` varchar(255) NOT NULL DEFAULT '' COMMENT '客户名称',
@@ -98,9 +97,18 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
 
 #
+# 用户配置表
+#
+CREATE TABLE `system_user_config` (
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户编号',
+  `key` varchar(128) DEFAULT NULL COMMENT '配置名称',
+  `value` varchar(256) DEFAULT NULL COMMENT '配置内容',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表'
+
+#
 # 客户服务开通情况表
 #
-
 CREATE TABLE `customer_service` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -114,7 +122,6 @@ CREATE TABLE `customer_service` (
 #
 # 微信配置表
 #
-
 CREATE TABLE `weixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `wx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
@@ -131,7 +138,6 @@ CREATE TABLE `weixin_config` (
 #
 # 微信粉丝表
 #
-
 CREATE TABLE `weixin_fans` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
@@ -145,7 +151,6 @@ CREATE TABLE `weixin_fans` (
 #
 # 微信消息日志表
 #
-
 CREATE TABLE `weixin_log_msg` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -158,7 +163,6 @@ CREATE TABLE `weixin_log_msg` (
 #
 # 微信接口接入日志
 #
-
 CREATE TABLE `weixin_log_siteaccess` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -174,7 +178,6 @@ CREATE TABLE `weixin_log_siteaccess` (
 #
 # 微信订阅日志表
 #
-
 CREATE TABLE `weixin_log_subscribe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -186,7 +189,6 @@ CREATE TABLE `weixin_log_subscribe` (
 #
 # 微信退订日志表
 #
-
 CREATE TABLE `weixin_log_unsubscribe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -198,7 +200,6 @@ CREATE TABLE `weixin_log_unsubscribe` (
 #
 # 微信接收消息汇总表
 #
-
 CREATE TABLE `weixin_recvmsg_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -214,7 +215,6 @@ CREATE TABLE `weixin_recvmsg_detail` (
 #
 # 微信事件消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_event` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
@@ -225,7 +225,6 @@ CREATE TABLE `weixin_recvmsg_event` (
 #
 # 微信图片消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_image` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `picUrl` varchar(100) DEFAULT NULL COMMENT '图片链接',
@@ -236,7 +235,6 @@ CREATE TABLE `weixin_recvmsg_image` (
 #
 # 微信链接消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_link` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `title` varchar(250) DEFAULT '' COMMENT '标题',
@@ -248,7 +246,6 @@ CREATE TABLE `weixin_recvmsg_link` (
 #
 # 微信地理位置消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_location` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
@@ -261,7 +258,6 @@ CREATE TABLE `weixin_recvmsg_location` (
 #
 # 微信文本消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_text` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `content` text COMMENT '文本内容',
@@ -271,7 +267,6 @@ CREATE TABLE `weixin_recvmsg_text` (
 #
 # 微信视频消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_video` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `mediaId` char(64) NOT NULL,
@@ -282,7 +277,6 @@ CREATE TABLE `weixin_recvmsg_video` (
 #
 # 微信语音消息接收表
 #
-
 CREATE TABLE `weixin_recvmsg_voice` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `mediaId` char(64) NOT NULL,
@@ -294,7 +288,6 @@ CREATE TABLE `weixin_recvmsg_voice` (
 #
 # 微信消息发送汇总表
 #
-
 CREATE TABLE `weixin_sendmsg_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
@@ -309,7 +302,6 @@ CREATE TABLE `weixin_sendmsg_detail` (
 #
 # 微信音乐消息发送表
 #
-
 CREATE TABLE `weixin_sendmsg_music` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
   `musicUrl` varchar(100) NOT NULL DEFAULT '' COMMENT '音乐地址',
@@ -320,7 +312,6 @@ CREATE TABLE `weixin_sendmsg_music` (
 #
 # 微信图文消息发送表
 #
-
 CREATE TABLE `weixin_sendmsg_news` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
   `articleCount` decimal(2,0) NOT NULL DEFAULT '0' COMMENT '文章数量',
@@ -330,7 +321,6 @@ CREATE TABLE `weixin_sendmsg_news` (
 #
 # 微信图文消息发送表——文章
 #
-
 CREATE TABLE `weixin_sendmsg_news_article` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应news表ID',
@@ -344,7 +334,6 @@ CREATE TABLE `weixin_sendmsg_news_article` (
 #
 # 微信文本消息发送表
 #
-
 CREATE TABLE `weixin_sendmsg_text` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
   `content` text NOT NULL COMMENT '文本内容',
