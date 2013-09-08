@@ -79,6 +79,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 		<!-- ========== Spring配置结束 ========== -->
 		<!-- ========== Mybatis配置开始 ========== -->
 		<dependency>

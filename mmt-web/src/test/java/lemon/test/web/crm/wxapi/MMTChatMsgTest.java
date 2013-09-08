@@ -21,10 +21,10 @@ import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
 import lemon.weixin.dao.WXConfigMapper;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
