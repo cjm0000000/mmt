@@ -4,7 +4,9 @@ import java.util.List;
 
 import lemon.web.system.bean.User;
 
+import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,6 +22,7 @@ public interface UserMapper {
 	 * add user
 	 * @param user
 	 */
+	@Lang(RawLanguageDriver.class)
 	void addUser(User user);
 	
 	/**
@@ -28,6 +31,7 @@ public interface UserMapper {
 	 * @param role_id
 	 * @param cust_id
 	 */
+	@Lang(RawLanguageDriver.class)
 	void addUserRole(@Param("user_id") int user_id,
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
 	
@@ -36,6 +40,7 @@ public interface UserMapper {
 	 * @param user_name
 	 * @return user_id
 	 */
+	@Lang(RawLanguageDriver.class)
 	int getUserIdByName(String user_name);
 	
 	/**
@@ -44,6 +49,7 @@ public interface UserMapper {
 	 * @param id
 	 * @return {@link lemon.web.system.bean.User User}
 	 */
+	@Lang(RawLanguageDriver.class)
 	User getUserById(int user_id);
 
 	/**
@@ -52,6 +58,7 @@ public interface UserMapper {
 	 * @param password
 	 * @return {@link lemon.web.system.bean.User User}
 	 */
+	@Lang(RawLanguageDriver.class)
 	User checkLogin(@Param("user_name") String user_name,
 			@Param("password") String password);
 
@@ -65,15 +72,18 @@ public interface UserMapper {
 	 * get user list
 	 * @param page
 	 * @param limit
-	 * @return	a list of {@link lemon.web.system.bean.User User}
+	 * @param user_name
+	 * @return
 	 */
-	List<User> getUserList(@Param("start") int page, @Param("limit") int limit);
+	List<User> getUserList(@Param("start") int page, @Param("limit") int limit,
+			@Param("user_name") String user_name);
 	
 	/**
 	 * get user count
+	 * @param user_name
 	 * @return
 	 */
-	int getUserCnt();
+	int getUserCnt(@Param("user_name") String user_name);
 	
 	/**
 	 * update user role and customer
@@ -81,6 +91,7 @@ public interface UserMapper {
 	 * @param role_id
 	 * @param cust_id
 	 */
+	@Lang(RawLanguageDriver.class)
 	void updateUserRole(@Param("user_id") int user_id,
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
 }

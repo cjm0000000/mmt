@@ -47,6 +47,7 @@
 		</foreach>
 	</update>
 	<select id="getUserList" resultType="lemon.web.system.bean.User">
+		<bind name="_user_name" value="(user_name == null ? '' : user_name) + '%'" />
 		SELECT A.user_id,A.user_name,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
@@ -55,15 +56,22 @@
            		LEFT JOIN system_role C ON B.role_id=C.role_id
            		LEFT JOIN customer D ON B.cust_id=D.cust_id
 		WHERE A.`status`='AVAILABLE' 
+		<if test="user_name != null and user_name != ''">
+			AND A.user_name LIKE #{_user_name}
+		</if>
 			ORDER BY A.user_name
 		<if test="limit!=0">
 			LIMIT #{start},#{limit}
 		</if>
 	</select>
 	<select id="getUserCnt" resultType="int">
+		<bind name="_user_name" value="(user_name == null ? '' : user_name) + '%'" />
 		SELECT COUNT(A.user_id) 
 			FROM system_user A 
 		WHERE A.`status`='AVAILABLE'
+		<if test="user_name != null and user_name != ''">
+			AND A.user_name LIKE #{_user_name}
+		</if>
 	</select>
 	<update id="updateUserRole">
 		UPDATE system_user_role A

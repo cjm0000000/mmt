@@ -94,8 +94,8 @@ public class UserMapperTest {
 	
 	@Test
 	public void getUserList(){
-		List<User> list = userMapper.getUserList(0, 0);
-		int cnt = userMapper.getUserCnt();
+		List<User> list = userMapper.getUserList(0, 0,null);
+		int cnt = userMapper.getUserCnt(null);
 		assertEquals(cnt, list.size());
 	}
 	
