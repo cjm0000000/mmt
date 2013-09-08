@@ -10,25 +10,30 @@ import lemon.shared.entity.ServiceType;
 import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class CustomerTest {
-	
+	private AbstractApplicationContext acx;
 	private CustomerMapper custMapper;
 	
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		ApplicationContext acx = new ClassPathXmlApplicationContext(resource);
+		acx = new ClassPathXmlApplicationContext(resource);
 		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
 		assertNotNull(custMapper);
+	}
+	@After
+	public void destory(){
+		acx.close();
 	}
 	
 	@Test

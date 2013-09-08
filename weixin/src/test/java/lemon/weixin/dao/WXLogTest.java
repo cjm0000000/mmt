@@ -11,28 +11,33 @@ import lemon.weixin.dao.WXLogManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
 import static org.junit.Assert.*;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class WXLogTest {
 	private static Log logger = LogFactory.getLog(WXLogTest.class);
 	private WXLogManager wXLogManager;
+	private AbstractApplicationContext acx;
 
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		ApplicationContext acx = new ClassPathXmlApplicationContext(resource);
+		acx = new ClassPathXmlApplicationContext(resource);
 		wXLogManager = (WXLogManager) acx.getBean(WXLogManager.class);
 		assertNotNull(wXLogManager);
+	}
+	@After
+	public void destory(){
+		acx.close();
 	}
 
 	@Test
