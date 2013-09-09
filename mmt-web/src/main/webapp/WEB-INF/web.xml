@@ -24,6 +24,16 @@
 		<filter-name>microChatGW</filter-name>
 		<url-pattern>/microchat/*</url-pattern>
 	</filter-mapping>
+	<!-- Spring MVC 配置 -->
+	<servlet>
+		<servlet-name>MMTDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MMTDispatcher</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
