@@ -11,7 +11,7 @@ public class Menu {
 	private int menu_id;
 	private String menu_name;
 	private String menulevcod;
-	private String supmenucode;
+	private int supmenucode;
 	private String menuurl;
 	private String menuico;
 	private int sort;
@@ -36,10 +36,10 @@ public class Menu {
 	public void setMenulevcod(String menulevcod) {
 		this.menulevcod = menulevcod;
 	}
-	public String getSupmenucode() {
+	public int getSupmenucode() {
 		return supmenucode;
 	}
-	public void setSupmenucode(String supmenucode) {
+	public void setSupmenucode(int supmenucode) {
 		this.supmenucode = supmenucode;
 	}
 	public String getMenuurl() {

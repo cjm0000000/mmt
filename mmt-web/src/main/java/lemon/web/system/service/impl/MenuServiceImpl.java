@@ -28,7 +28,7 @@ public class MenuServiceImpl implements MenuService {
 	private MenuMapper menuMapper;
 	
 	public List<Tree> getMenuTreeOnIndex(int role_id) {
-		List<Menu> list = menuMapper.getMenuTree(role_id);
+		List<Menu> list = null;//menuMapper.getMenuTree(role_id);
 		return Utils.getMenuTree2(list,2);
 	}
 

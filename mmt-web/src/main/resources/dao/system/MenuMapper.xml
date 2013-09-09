@@ -1,59 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.system.mapper.MenuMapper">
-	<parameterMap type="map" id="menu_code">
-		<parameter property="newmenucode" jdbcType="CHAR" javaType="String" />
-	</parameterMap>
-	<select id="listAllMenu" parameterType="int"
-		resultType="lemon.system.bean.Menu">
-		select a.menu_code,a.menu_name,a.menulevcod,a.supmenucode,a.menuurl,a.menuico,a.sort
-			from system_menu a order by a.menulevcod,a.sort
-	</select>
-
-	<select id="getMenuTree" resultType="lemon.system.bean.Menu"
-		parameterType="int">
-		select b.menu_code,b.menu_name,b.menulevcod,b.supmenucode,b.menuurl,b.menuico
-			from system_role_menu a,system_menu b 
-		WHERE a.menu_id=b.menu_code 
-			and a.role_id=#{role_id} 
-		order by b.menulevcod,b.sort
-	</select>
-	
-	<insert id="add" parameterType="lemon.system.bean.Menu">
-		insert into
-		system_menu(menu_code,menu_name,menulevcod,supmenucode,menuurl,menuico,sort)
-			select #{menu_code},#{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort}
+<mapper namespace="lemon.web.system.mapper.MenuMapper">
+	<insert id="addMenu" parameterType="lemon.web.system.bean.Menu" useGeneratedKeys="true" keyProperty="menu_id">
+		INSERT INTO system_menu(menu_name,menulevcod,supmenucode,menuurl,menuico,sort) 
+			SELECT #{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort}
 	</insert>
-	<update id="edit" parameterType="lemon.system.bean.Menu">
-		update system_menu a
-			set menu_name=#{menu_name},
-			a.menulevcod=#{menulevcod},
-			a.supmenucode=#{supmenucode},
-			a.menuurl=#{menuurl},
-			a.menuico=#{menuico},
-			a.sort=#{sort}
-		where a.menu_code=#{menu_code}
-	</update>
-	<delete id="delMenu" parameterType="string">
-		delete from system_menu where menu_code=#{menu_code}
+	<delete id="deleteMenu" parameterType="int">
+		DELETE FROM system_menu WHERE menu_id=#{menu_id}
 	</delete>
-	<select id="getParentMenus" resultType="lemon.system.bean.Menu">
-		select a.menu_code,a.menu_name,a.menulevcod,a.supmenucode,a.menuurl,a.menuico,a.sort
-			from system_menu a
-		where a.menulevcod in ('1','2')
-		order by a.menulevcod,a.sort
-	</select>
-	<select id="createMenuCode" statementType="CALLABLE" parameterMap="menu_code">
-    	{call system_createMenuCode(#{newmenucode, jdbcType=CHAR, mode=OUT})}
-	</select>
-	<select id="loadMenu" resultType="lemon.system.bean.Menu" parameterType="string">
-		select a.menu_code,a.menu_name,a.menulevcod,a.supmenucode,a.menuurl,a.menuico,a.sort
-			from system_menu a
-		where a.menu_code=#{menu_code}
-	</select>
-	<update id="reloadMenuFlag" parameterType="string">
-		update system_role a
-			set a.reload='1'
-		where exists(select 1 from system_role_menu b where a.role_id=b.role_id and b.menu_id=#{menu_code})
+	<update id="editMenu" parameterType="lemon.web.system.bean.Menu">
+		UPDATE system_menu A
+			<set>
+				<if test="menu_name != null and menu_name != ''">
+					A.menu_name=#{menu_name},
+				</if>
+				<if test="menulevcod != null and menulevcod != ''">
+					A.menulevcod=#{menulevcod},
+				</if>
+				<if test="supmenucode > 0">
+					A.supmenucode=#{supmenucode},
+				</if>
+				<if test="menuurl != null and menuurl != ''">
+					A.menuurl=#{menuurl},
+				</if>
+				<if test="menuico != null and menuico != ''">
+					A.menuico=#{menuico},
+				</if>
+				<if test="sort != null and sort != ''">
+					A.sort=#{sort}
+				</if>
+			</set>
+		WHERE A.menu_id=#{menu_id}
 	</update>
+	<select id="getMenu" parameterType="int" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.menu_id=#{menu_id}
+	</select>
+	<select id="getMenuList" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A 
+		ORDER BY A.menulevcod,A.sort
+	</select>
+	<select id="getMenuListByRole" parameterType="int" resultType="lemon.web.system.bean.Menu">
+		SELECT B.menu_id,B.menu_name,B.menulevcod,B.supmenucode,B.menuurl,B.menuico
+			FROM system_role_menu A,system_menu B
+		WHERE A.menu_id=B.menu_id
+			AND A.role_id=#{role_id} 
+		ORDER BY B.menulevcod,B.sort
+	</select>
+	<select id="getMenuListByLevel" parameterType="string" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.menulevcod=#{level}
+		ORDER BY A.menulevcod,A.sort
+	</select>
 </mapper>
