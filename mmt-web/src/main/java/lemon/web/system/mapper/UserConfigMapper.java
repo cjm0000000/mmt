@@ -6,8 +6,10 @@ import lemon.web.system.bean.UserConfig;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,12 +23,38 @@ import org.springframework.stereotype.Repository;
 public interface UserConfigMapper {
 	
 	/**
+	 * add user configure item
+	 * @param item
+	 */
+	@Insert("INSERT INTO system_user_config(user_id,`key`,value) SELECT #{user_id},#{key},#{value}")
+	@Lang(RawLanguageDriver.class)
+	void addItem(UserConfig item);
+	
+	/**
+	 * delete user configure item
+	 * @param user_id
+	 * @param key
+	 */
+	@Delete("DELETE FROM system_user_config WHERE user_id=#{user_id} AND `key`=#{key}")
+	@Lang(RawLanguageDriver.class)
+	void deleteItem(@Param("user_id") int user_id, @Param("key") String key);
+	
+	/**
+	 * delete user configure items
+	 * @param user_id
+	 */
+	@Delete("DELETE FROM system_user_config WHERE user_id=#{user_id}")
+	@Lang(RawLanguageDriver.class)
+	void deleteItems(@Param("user_id") int user_id);
+	
+	/**
 	 * get user configure item
 	 * @param user_id
 	 * @param key
 	 * @return
 	 */
 	@Select("SELECT A.user_id, A.`key`, A.value FROM system_user_config A WHERE A.user_id=#{user_id} AND A.key=#{key}")
+	@Lang(RawLanguageDriver.class)
 	UserConfig getItem(@Param("user_id") int user_id, @Param("key") String key);
 
 	/**
@@ -35,20 +63,6 @@ public interface UserConfigMapper {
 	 * @return
 	 */
 	@Select("SELECT A.user_id, A.`key`, A.value FROM system_user_config A WHERE A.user_id=#{user_id}")
+	@Lang(RawLanguageDriver.class)
 	List<UserConfig> getItems(int user_id);
-
-	/**
-	 * save user configure item
-	 * @param item
-	 */
-	@Insert("INSERT INTO system_user_config(user_id,key,value) SELECT #{user_id},#{key},#{value}")
-	void saveItem(UserConfig item);
-
-	/**
-	 * delete user configure item
-	 * @param user_id
-	 * @param key
-	 */
-	@Delete("DELETE system_user_config A WHERE A.user_id=#{user_id} AND A.key=#{key}")
-	void deleteItem(@Param("user_id") int user_id, @Param("key") String key);
 }

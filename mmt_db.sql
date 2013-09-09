@@ -86,6 +86,16 @@ CREATE TABLE `system_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表'
 
 #
+# 用户配置表
+#
+CREATE TABLE `system_user_config` (
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户编号',
+  `key` varchar(128) DEFAULT NULL COMMENT '配置名称',
+  `value` varchar(256) DEFAULT NULL COMMENT '配置内容',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表'
+
+#
 # 客户信息表
 #
 CREATE TABLE `customer` (
@@ -95,16 +105,6 @@ CREATE TABLE `customer` (
   `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
-
-#
-# 用户配置表
-#
-CREATE TABLE `system_user_config` (
-  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `key` varchar(128) DEFAULT NULL COMMENT '配置名称',
-  `value` varchar(256) DEFAULT NULL COMMENT '配置内容',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表'
 
 #
 # 客户服务开通情况表
