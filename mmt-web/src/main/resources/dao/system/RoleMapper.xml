@@ -76,4 +76,12 @@
 			SET a.reloadable='UNAVAILABLE' 
 		WHERE A.role_id=#{role_id}
 	</update>
+	<update id="setReloadFlag" parameterType="int">
+		UPDATE system_role A
+			SET A.reloadable='AVAILABLE'
+		WHERE EXISTS(
+			SELECT 1 FROM system_role_menu B 
+				WHERE A.role_id=B.role_id 
+					AND b.menu_id=#{menu_id})
+	</update>
 </mapper>

@@ -93,6 +93,12 @@ public class RoleMapperTest {
 		assertNotEquals(0, list.size());
 	}
 	
+	@Test
+	@Ignore
+	public void setReloadFlag(){
+		roleMapper.setReloadFlag(1);
+	}
+	
 	private Role addRole(){
 		Role role = new Role();
 		role.setReloadable(Status.AVAILABLE);

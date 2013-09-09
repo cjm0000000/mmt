@@ -5,7 +5,9 @@ import java.util.List;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 
+import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -89,5 +91,12 @@ public interface RoleMapper {
 	 * @return
 	 */
 	List<Menu> getAuthority(int role_id);
+	
+	/**
+	 * set role's menu reload flag
+	 * @param menu_id
+	 */
+	@Lang(RawLanguageDriver.class)
+	void setReloadFlag(int menu_id);
 	
 }
