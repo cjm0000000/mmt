@@ -23,6 +23,7 @@ public class LoginAction {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(@ModelAttribute("user")User user){
+		System.out.println("Login...");
 		User u = userMapper.checkLogin(user.getUser_name(), user.getPassword());
 		if(u != null){
 			//TODO set session or generate token
