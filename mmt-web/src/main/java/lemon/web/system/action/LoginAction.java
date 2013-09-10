@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LoginAction {
-	private static final String SUCCESS = "success";
+	private static final String SUCCESS = "redirect:index.html";
 	@Autowired
 	private UserMapper userMapper;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(@ModelAttribute("user")User user){
 		System.out.println("Login...");
+		System.out.println(user.getUser_name());
 		User u = userMapper.checkLogin(user.getUser_name(), user.getPassword());
 		if(u != null){
 			//TODO set session or generate token
