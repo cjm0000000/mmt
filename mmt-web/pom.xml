@@ -6,11 +6,10 @@
 	<parent>
 		<groupId>lemon</groupId>
 		<artifactId>mmt</artifactId>
-		<version>${mmt-version}</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>lemon.web</groupId>
 	<artifactId>mmt-web</artifactId>
-	<version>${mmt-web-version}</version>
 	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
@@ -41,6 +40,11 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
 			</plugin>
+			<plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.0.5.v20130815</version>
+            </plugin>
 		</plugins>
 	</build>
 </project>

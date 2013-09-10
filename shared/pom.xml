@@ -6,11 +6,10 @@
 	<parent>
 		<groupId>lemon</groupId>
 		<artifactId>mmt</artifactId>
-		<version>${mmt-version}</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>lemon.shared</groupId>
 	<artifactId>shared</artifactId>
-	<version>${mmt-shared-version}</version>
 	<packaging>jar</packaging>
 	<build>
 		<plugins>

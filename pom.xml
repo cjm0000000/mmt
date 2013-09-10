@@ -7,14 +7,13 @@
 	<name>mmt</name>
 	<description>mobile marketing</description>
 	<packaging>pom</packaging>
-	<version>${mmt-version}</version>
+	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>shared</module>
 		<module>weixin</module>
     	<module>mmt-web</module>
-  </modules>
+  	</modules>
 	<properties>
-		<mmt-version>1.0-SNAPSHOT</mmt-version>
 		<mmt-shared-version>1.0-SNAPSHOT</mmt-shared-version>
 		<mmt-weixin-version>1.0-SNAPSHOT</mmt-weixin-version>
 		<mmt-web-version>1.0-SNAPSHOT</mmt-web-version>

@@ -6,11 +6,10 @@
 	<parent>
 		<groupId>lemon</groupId>
 		<artifactId>mmt</artifactId>
-		<version>${mmt-version}</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>lemon.weixin</groupId>
 	<artifactId>weixin</artifactId>
-	<version>${mmt-weixin-version}</version>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
