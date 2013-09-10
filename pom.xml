@@ -5,7 +5,7 @@
 	<groupId>lemon</groupId>
 	<artifactId>mmt</artifactId>
 	<name>mmt</name>
-	<description>mobile marketing</description>
+	<description>MMT Smart Robot</description>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<modules>
@@ -14,9 +14,6 @@
     	<module>mmt-web</module>
   	</modules>
 	<properties>
-		<mmt-shared-version>1.0-SNAPSHOT</mmt-shared-version>
-		<mmt-weixin-version>1.0-SNAPSHOT</mmt-weixin-version>
-		<mmt-web-version>1.0-SNAPSHOT</mmt-web-version>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>3.2.4.RELEASE</org.springframework-version>

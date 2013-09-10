@@ -11,7 +11,7 @@ CREATE TABLE `system_log_login` (
   `loginip` char(15) DEFAULT NULL COMMENT '登陆地IP',
   PRIMARY KEY (`id`),
   KEY `IDX_log_login_user` (`user_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='登录日志表'
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='登录日志表';
 
 #
 # 用户表
@@ -27,7 +27,7 @@ CREATE TABLE `system_user` (
   `bz` varchar(200) DEFAULT NULL COMMENT '备注',
   `status` char(11) NOT NULL DEFAULT '' COMMENT '用户状态',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='用户表'
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 #
 # 角色表
@@ -40,7 +40,7 @@ CREATE TABLE `system_role` (
   `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
   `reloadable` char(11) NOT NULL DEFAULT '' COMMENT '在登录的时候是否重新生成菜单',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 #
 # 用户角色表
@@ -50,7 +50,7 @@ CREATE TABLE `system_user_role` (
   `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 #
 # 角色权限表
@@ -59,7 +59,7 @@ CREATE TABLE `system_role_menu` (
   `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
   `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
   KEY `IDX_sys_role_menu` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
 #
 # 角色默认权限表
@@ -68,7 +68,7 @@ CREATE TABLE `system_role_menu_default` (
   `role_id` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
   `menu_id` int(10) NOT NULL DEFAULT '0' COMMENT '菜单编号',
   KEY `IDX_sys_role_menu_default` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色默认权限表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色默认权限表';
 
 #
 # 系统菜单表
@@ -83,7 +83,7 @@ CREATE TABLE `system_menu` (
   `sort` decimal(4,0) DEFAULT '0' COMMENT '排序号',
   `iconCls` varchar(20) DEFAULT '' COMMENT '功能样式',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表';
 
 #
 # 用户配置表
@@ -93,7 +93,7 @@ CREATE TABLE `system_user_config` (
   `key` varchar(128) DEFAULT NULL COMMENT '配置名称',
   `value` varchar(256) DEFAULT NULL COMMENT '配置内容',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表';
 
 #
 # 客户信息表
@@ -117,7 +117,7 @@ CREATE TABLE `customer_service` (
   `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '服务到期时间（0000-00-00表示永久有效）',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表'
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表';
 
 #
 # 微信配置表
@@ -146,7 +146,7 @@ CREATE TABLE `weixin_fans` (
   `status` char(1) NOT NULL DEFAULT '1' COMMENT '状态（1：订阅：0：取消订阅）',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表';
 
 #
 # 微信消息日志表
