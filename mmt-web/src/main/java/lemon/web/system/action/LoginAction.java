@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * For login business
@@ -31,12 +32,13 @@ public class LoginAction {
 	 * @return
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String user_name,String password,HttpSession session){
+	public ModelAndView login(String user_name,String password,HttpSession session){
 		User user = userMapper.checkLogin(user_name,password);
 		if(user != null){
 			session.setAttribute("user", user);
 		}
-		return HOME_PAGE;
+		
+		return new ModelAndView(HOME_PAGE,"user",user);
 	}
 	
 	/**
