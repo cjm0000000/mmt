@@ -1,11 +1,12 @@
 package lemon.web.system.action;
 
+import javax.servlet.http.HttpSession;
+
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,18 +18,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LoginAction {
-	private static final String SUCCESS = "redirect:index.html";
+	private static final String HOME_PAGE = "redirect:/";
 	@Autowired
 	private UserMapper userMapper;
 	
+	
+	/**
+	 * verify user login
+	 * @param user_name
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(@ModelAttribute("user")User user){
-		System.out.println("Login...");
-		System.out.println(user.getUser_name());
-		User u = userMapper.checkLogin(user.getUser_name(), user.getPassword());
-		if(u != null){
-			//TODO set session or generate token
+	public String login(String user_name,String password,HttpSession session){
+		User user = userMapper.checkLogin(user_name,password);
+		if(user != null){
+			session.setAttribute("user", user);
 		}
-		return SUCCESS;
+		return HOME_PAGE;
 	}
+	
+	/**
+	 * logout
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session){
+		session.removeAttribute("user");
+		return HOME_PAGE;
+	}
+	
 }

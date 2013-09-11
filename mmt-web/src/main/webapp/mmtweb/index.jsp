@@ -1,11 +1,11 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="cn">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="MMT Smart Robot">
+    <meta name="author" content="green120@126.com">
     <link rel="shortcut icon" href="images/favicon.png">
 
     <title>MMT Smart Robot</title>
@@ -37,7 +37,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -53,6 +53,7 @@
               </ul>
             </li>
           </ul>
+          Hello, ${sessionScope.user.user_name }
           <form method="post" action="cgi-bin/login" class="navbar-form navbar-right">
             <div class="form-group">
               <input type="text" name="user_name" placeholder="用户名" class="form-control">

@@ -11,9 +11,8 @@
 	<context:component-scan base-package="lemon.web" />
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/jsp/" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/mmtweb/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 </beans>
