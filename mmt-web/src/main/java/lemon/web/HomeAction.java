@@ -8,6 +8,7 @@ import lemon.web.system.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Home page
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeAction {
-	private static final String HOME_PAGE = "index";
+	private static final String VIEW_HOME_PAGE = "index";
 	@Autowired
 	private UserMapper userMapper;
 	
@@ -27,10 +28,10 @@ public class HomeAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="/index")
-	public String index(HttpSession session){
+	@RequestMapping(value="index")
+	public ModelAndView index(HttpSession session){
 		User user = (User) session.getAttribute("User");
-		return HOME_PAGE;
+		return new ModelAndView(VIEW_HOME_PAGE,"user",user);
 	}
 	
 	

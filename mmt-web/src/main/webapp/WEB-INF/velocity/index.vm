@@ -52,15 +52,20 @@
               </ul>
             </li>
           </ul>
-          <form method="post" action="cgi-bin/login" class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" name="user_name" placeholder="用户名" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" name="password" placeholder="密码" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">登 录</button>
-          </form>
+		#if($user)
+          	Welcome, $user.user_name
+		#else
+			<form method="get" action="cgi-bin/login" class="navbar-form navbar-right">
+	            <div class="form-group">
+	              <input type="text" name="user_name" placeholder="用户名" class="form-control">
+	            </div>
+	            <div class="form-group">
+	              <input type="password" name="password" placeholder="密码" class="form-control">
+	            </div>
+	            <button type="submit" class="btn btn-success">登 录</button>
+          	</form>
+		#end
+          
         </div><!--/.navbar-collapse -->
       </div>
     </div>
@@ -105,7 +110,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/bootstrap/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/assets/js/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </body>
 </html>

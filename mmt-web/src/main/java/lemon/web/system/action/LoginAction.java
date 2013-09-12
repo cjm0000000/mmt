@@ -3,16 +3,18 @@ package lemon.web.system.action;
 import javax.servlet.http.HttpSession;
 
 import lemon.shared.util.SecureUtil;
+import lemon.web.base.MMTAction;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.system.bean.User;
 import lemon.web.system.bean.UserConfig;
 import lemon.web.system.mapper.UserConfigMapper;
 import lemon.web.system.mapper.UserMapper;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -22,14 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class LoginAction {
-	private static final String HOME_PAGE = "redirect:/";
+public class LoginAction extends MMTAction {
+	/** 用户存放密钥的KEY */
 	private static final String ENCRYPY_KEY = "EncryptKey";
+	
+	private static Log logger = LogFactory.getLog(LoginAction.class);
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
 	private UserConfigMapper userConfigMapper;
-	//TODO 添加
 	
 	/**
 	 * verify user login
@@ -38,11 +41,16 @@ public class LoginAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+	@RequestMapping(value="/login")
 	public ModelAndView login(String user_name,String password,HttpSession session){
-		int user_id = userMapper.getUserIdByName(user_name);
-		if(user_id <= 0){
+		logger.debug("user_name=" + user_name);
+		if(null == user_name){
+			return new ModelAndView(VIEW_LOGIN_PAGE,null,null);
+		}
+		Integer user_id = userMapper.getUserIdByName(user_name);
+		if(user_id == null){
 			//用户不存在
+			return new ModelAndView(VIEW_LOGIN_PAGE,"error","用户名不存在！");
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
@@ -61,7 +69,7 @@ public class LoginAction {
 			session.setAttribute("user", user);
 		}
 		
-		return new ModelAndView(HOME_PAGE,"user",user);
+		return new ModelAndView(VIEW_HOME_PAGE,"user",user);
 	}
 	
 	/**
@@ -72,7 +80,7 @@ public class LoginAction {
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session){
 		session.removeAttribute("user");
-		return HOME_PAGE;
+		return VIEW_LOGOUT_PAGE;
 	}
 	
 }
