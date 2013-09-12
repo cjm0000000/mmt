@@ -32,8 +32,8 @@
 		<property name="dataSource" ref="mmtDS" />
 		<property name="configLocation" value="classpath:mybatis.xml" />
 	</bean>
-	<!-- <bean id="transactionManager"
+	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="mmtDS" />
-		</bean>-->
+	</bean>
 </beans>
