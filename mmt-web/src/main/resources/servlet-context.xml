@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
-	http://www.springframework.org/schema/mvc 
-	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
 	http://www.springframework.org/schema/beans 
   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
   http://www.springframework.org/schema/context
@@ -18,8 +16,6 @@
 			<props>
 				<prop key="input.encoding">UTF-8</prop>
 				<prop key="output.encoding">UTF-8</prop>
-				<prop key="directive.foreach.counter.name">loopCounter</prop>
-				<prop key="directive.foreach.counter.initial.value">0</prop>
 			</props>
 		</property>
 	</bean>
@@ -28,10 +24,11 @@
 		<property name="suffix" value=".vm" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/cgi-bin/*" />
-			<bean class="lemon.web.base.MMTHandlerInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">       
+	 <property name="interceptors">       
+	     <list>       
+	         <bean class="lemon.web.base.MMTHandlerInterceptor"></bean>      
+	     </list>       
+	 </property>       
+	</bean>
 </beans>

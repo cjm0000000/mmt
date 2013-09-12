@@ -7,7 +7,7 @@
     <meta name="description" content="MMT Smart Robot">
     <meta name="author" content="green120@126.com">
     <link rel="shortcut icon" href="../images/favicon.png">
-    <title>MMT Smart Robot</title>
+    <title>登 录</title>
 
     <!-- Bootstrap core CSS -->
 	<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> -->
@@ -69,12 +69,10 @@
 
       <form class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control" placeholder="Email address" autofocus>
-        <input type="password" class="form-control" placeholder="Password">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="text" name="user_name" class="form-control" placeholder="用户名" autofocus>
+        <input type="password" name="password" class="form-control" placeholder="密 &nbsp; &nbsp;码">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登 &nbsp;&nbsp;&nbsp;录</button>
       </form>
 
     </div> <!-- /container -->
