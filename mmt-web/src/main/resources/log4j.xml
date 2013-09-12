@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
 	<logger name="lemon.web">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 	<logger name="org.springframework">
 		<level value="INFO" />
@@ -22,7 +22,7 @@
 		<level value="INFO" />
 	</logger>
 	<root>
-		<priority value="INFO" />
+		<priority value="DEBUG" />
 		<appender-ref ref="CONSOLE" />
 	</root>
 </log4j:configuration>

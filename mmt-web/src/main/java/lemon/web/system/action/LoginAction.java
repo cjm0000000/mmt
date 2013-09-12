@@ -1,10 +1,13 @@
 package lemon.web.system.action;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lemon.shared.entity.Status;
 import lemon.shared.util.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.log.bean.LoginLog;
+import lemon.web.log.mapper.SystemLogManager;
 import lemon.web.system.bean.User;
 import lemon.web.system.bean.UserConfig;
 import lemon.web.system.mapper.UserConfigMapper;
@@ -33,6 +36,8 @@ public class LoginAction extends MMTAction {
 	private UserMapper userMapper;
 	@Autowired
 	private UserConfigMapper userConfigMapper;
+	@Autowired
+	private SystemLogManager systemLogManager;
 	
 	/**
 	 * verify user login
@@ -42,34 +47,41 @@ public class LoginAction extends MMTAction {
 	 * @return
 	 */
 	@RequestMapping(value="/login")
-	public ModelAndView login(String user_name,String password,HttpSession session){
-		logger.debug("user_name=" + user_name);
+	public ModelAndView login(String user_name,String password,HttpServletRequest request){
 		if(null == user_name){
-			return new ModelAndView(VIEW_LOGIN_PAGE,null,null);
+			return new ModelAndView(VIEW_LOGIN_PAGE,"",null);
 		}
 		Integer user_id = userMapper.getUserIdByName(user_name);
+		//提示信息
+		String msg = null;
 		if(user_id == null){
 			//用户不存在
-			return new ModelAndView(VIEW_LOGIN_PAGE,"error","用户名不存在！");
+			msg = "用户名不存在。";
+			logger.debug(msg);
+			password = null;
+			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
 		if(null == encryptKeyItem){
-			//TODO handle error
+			msg = "您的密钥没有设置，请联系管理员。";
+			password = null;
+			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		//验证用户名和密码
 		User user = userMapper.checkLogin(user_name,SecureUtil.aesEncrypt(password, encryptKeyItem.getValue()));
 		//保存日志
-		LoginLog log = new LoginLog();
-		log.setLoginip("");
-		log.setUser_name(user_name);
-		log.setUser_id(user_id);
-		//TODO 设置LOG
+		saveLoginLog(request.getRemoteAddr(), user_id, user_name,
+				user == null ? 0 : user.getRole_id(), user != null);
 		if(user != null){
-			session.setAttribute("user", user);
+			request.getSession().setAttribute(TOKEN, user);
+			return new ModelAndView(VIEW_HOME_PAGE,"user",user);
+		}else{
+			msg = "用户名和密码不匹配。";
+			password = null;
+			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		
-		return new ModelAndView(VIEW_HOME_PAGE,"user",user);
 	}
 	
 	/**
@@ -78,9 +90,32 @@ public class LoginAction extends MMTAction {
 	 * @return
 	 */
 	@RequestMapping(value="/logout")
-	public String logout(HttpSession session){
-		session.removeAttribute("user");
-		return VIEW_LOGOUT_PAGE;
+	public ModelAndView logout(HttpSession session){
+		session.removeAttribute(TOKEN);
+		return new ModelAndView(VIEW_LOGOUT_PAGE,"msg","您已经成功退出。");
+	}
+	
+	/**
+	 * save login log
+	 * @param ip
+	 * @param user_id
+	 * @param user_name
+	 * @param role_id
+	 * @param successLogin
+	 */
+	private void saveLoginLog(String ip, int user_id, String user_name,
+			int role_id, boolean successLogin) {
+		// 保存日志
+		LoginLog log = new LoginLog();
+		log.setLoginip(ip);
+		log.setUser_name(user_name);
+		log.setUser_id(user_id);
+		log.setRole_id(role_id);
+		if(successLogin)
+			log.setLoginstatus(Status.AVAILABLE);
+		else
+			log.setLoginstatus(Status.UNAVAILABLE);
+		systemLogManager.saveLoginLog(log);
 	}
 	
 }

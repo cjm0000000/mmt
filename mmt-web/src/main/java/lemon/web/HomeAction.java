@@ -1,8 +1,5 @@
 package lemon.web;
 
-import javax.servlet.http.HttpSession;
-
-import lemon.web.system.bean.User;
 import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +26,8 @@ public class HomeAction {
 	 * @return
 	 */
 	@RequestMapping(value="index")
-	public ModelAndView index(HttpSession session){
-		User user = (User) session.getAttribute("User");
-		return new ModelAndView(VIEW_HOME_PAGE,"user",user);
+	public ModelAndView index(){
+		return new ModelAndView(VIEW_HOME_PAGE,"",null);
 	}
 	
 	

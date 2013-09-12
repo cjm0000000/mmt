@@ -32,35 +32,35 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MMT Smart Robot</a>
+          <a class="navbar-brand" href="index">MMT Smart Robot</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            <li class="active"><a href="index">首 页</a></li>
+            <li><a href="#contact">联系我们</a></li>
+            #if($user_token)
+            	<li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">$user_token.user_name<b class="caret"></b></a>
+	              <ul class="dropdown-menu">
+	                <li><a href="#">账户设置</a></li>
+	                <li><a href="#">我的服务</a></li>
+	                <li><a href="#">Something else here</a></li>
+	                <li class="divider"></li>
+	                <li class="dropdown-header">Nav header</li>
+	                <li><a href="#">Separated link</a></li>
+	                <li><a href="#">One more separated link</a></li>
+	              </ul>
+	            </li>
+            	<li><a href="cgi-bin/logout">登 出</a></li>
+            #end
           </ul>
-		#if($user)
-          	Welcome, $user.user_name
-		#else
-			<form method="get" action="cgi-bin/login" class="navbar-form navbar-right">
+		#if(!$user_token)
+			<form method="post" action="cgi-bin/login" class="navbar-form navbar-right">
 	            <div class="form-group">
 	              <input type="text" name="user_name" placeholder="用户名" class="form-control">
 	            </div>
 	            <div class="form-group">
-	              <input type="password" name="password" placeholder="密码" class="form-control">
+	              <input type="password" name="password" placeholder="密 码" class="form-control">
 	            </div>
 	            <button type="submit" class="btn btn-success">登 录</button>
           	</form>

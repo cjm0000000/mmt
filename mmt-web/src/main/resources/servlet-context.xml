@@ -23,6 +23,7 @@
 		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
 		<property name="suffix" value=".vm" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="exposeSessionAttributes" value="true" />
 	</bean>
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">       
 	 <property name="interceptors">       

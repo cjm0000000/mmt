@@ -7,7 +7,7 @@
     <meta name="description" content="MMT Smart Robot">
     <meta name="author" content="green120@126.com">
     <link rel="shortcut icon" href="../images/favicon.png">
-    <title>登 录</title>
+    <title>登 出</title>
 
     <!-- Bootstrap core CSS -->
 	<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> -->
@@ -66,19 +66,12 @@
   <body>
     <div class="container">
 	#if($msg)
-		<div style="width:50%;margin: 0 auto;" class="alert alert-info fade in">
+		<div class="alert alert-success fade in">
 	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	        <strong>$msg
-	    </div>
+	        <h4>$msg</h4>
+	        <p><a href="../index">访问MMT Smart Robot 首页</></p>
+	      </div>
 	#end
-      <form method="post" class="form-signin">
-        <h2 class="form-signin-heading">请登录</h2>
-        <input type="text" name="user_name" class="form-control" placeholder="用户名" autofocus>
-        <input type="password" name="password" class="form-control" placeholder="密 &nbsp; &nbsp;码">
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登 &nbsp;&nbsp;&nbsp;录</button>
-      </form>
-
     </div> <!-- /container -->
 
 
