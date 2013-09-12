@@ -44,11 +44,11 @@
 	              <ul class="dropdown-menu">
 	                <li><a href="#">账户设置</a></li>
 	                <li><a href="#">我的服务</a></li>
-	                <li><a href="#">Something else here</a></li>
+	                #if($user_token.role_id == 1)
 	                <li class="divider"></li>
-	                <li class="dropdown-header">Nav header</li>
-	                <li><a href="#">Separated link</a></li>
-	                <li><a href="#">One more separated link</a></li>
+	                <li class="dropdown-header">管理员入口</li>
+	                <li><a href="cgi-bin/system">系统管理</a></li>
+	                #end
 	              </ul>
 	            </li>
             	<li><a href="cgi-bin/logout">登 出</a></li>

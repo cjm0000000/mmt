@@ -75,7 +75,7 @@ public class LoginAction extends MMTAction {
 				user == null ? 0 : user.getRole_id(), user != null);
 		if(user != null){
 			request.getSession().setAttribute(TOKEN, user);
-			return new ModelAndView(VIEW_HOME_PAGE,"user",user);
+			return new ModelAndView("redirect:/"+VIEW_HOME_PAGE,"user",user);
 		}else{
 			msg = "用户名和密码不匹配。";
 			password = null;

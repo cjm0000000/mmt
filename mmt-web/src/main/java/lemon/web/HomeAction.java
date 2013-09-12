@@ -1,5 +1,6 @@
 package lemon.web;
 
+import lemon.web.base.MMTAction;
 import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class HomeAction {
-	private static final String VIEW_HOME_PAGE = "index";
+public class HomeAction extends MMTAction {
 	@Autowired
 	private UserMapper userMapper;
 	
@@ -30,6 +30,14 @@ public class HomeAction {
 		return new ModelAndView(VIEW_HOME_PAGE,"",null);
 	}
 	
-	
+	/**
+	 * show home page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="system")
+	public ModelAndView systemIndex(){
+		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE,"",null);
+	}
 	
 }

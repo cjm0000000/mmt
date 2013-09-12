@@ -8,7 +8,9 @@ package lemon.web.base;
  */
 public class MMTAction {
 	/** 首页视图 */
-	protected static final String VIEW_HOME_PAGE = "redirect:/index";
+	protected static final String VIEW_HOME_PAGE = "index";
+	/** 系统首页视图 */
+	protected static final String VIEW_SYSTEM_HOME_PAGE = "system/index";
 	/** 登录页面视图 */
 	protected static final String VIEW_LOGIN_PAGE = "/login";
 	/** 登出页面视图 */
