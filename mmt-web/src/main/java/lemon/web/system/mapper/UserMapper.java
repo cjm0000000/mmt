@@ -36,12 +36,13 @@ public interface UserMapper {
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
 	
 	/**
-	 * get user id by user name
+	 * Get user id by user name.<BR>
+	 * If user not exists, return null
 	 * @param user_name
 	 * @return user_id
 	 */
 	@Lang(RawLanguageDriver.class)
-	int getUserIdByName(String user_name);
+	Integer getUserIdByName(String user_name);
 	
 	/**
 	 * get user by id
