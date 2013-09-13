@@ -6,6 +6,7 @@ import java.util.Date;
  * Message log
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 public class MsgLog {

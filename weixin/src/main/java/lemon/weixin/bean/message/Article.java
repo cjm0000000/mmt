@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * Article for news message
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 @XStreamAlias("item")

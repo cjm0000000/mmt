@@ -3,6 +3,7 @@ package lemon.weixin.biz;
 /**
  * WeiXinException
  * @author lemon
+ * @version 1.0
  *
  */
 public class WeiXinException extends RuntimeException {

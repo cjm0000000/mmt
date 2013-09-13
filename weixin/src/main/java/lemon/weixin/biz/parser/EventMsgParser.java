@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.MsgType;
  * An event message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.EVENT)
+@Service(WXMsgParser.PREFIX + MsgType.EVENT)
 public final class EventMsgParser extends WXMsgParser {
 
 	@Override

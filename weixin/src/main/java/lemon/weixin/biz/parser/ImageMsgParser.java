@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.MsgType;
  * An image message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.IMAGE)
+@Service(WXMsgParser.PREFIX + MsgType.IMAGE)
 public final class ImageMsgParser extends WXMsgParser {
 
 	@Override

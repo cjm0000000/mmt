@@ -7,6 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * video message
  * @author lemon
+ * @version 1.0
  *
  */
 @XStreamAlias("xml")

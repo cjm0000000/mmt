@@ -3,8 +3,9 @@ package lemon.weixin.bean.log;
 import java.util.Date;
 
 /**
- * Site access log object for weixin
+ * Site access log object for WeiXin
  * @author lemon
+ * @version 1.0
  *
  */
 public class SiteAccessLog {

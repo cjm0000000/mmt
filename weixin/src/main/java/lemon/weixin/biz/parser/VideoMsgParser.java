@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.VideoMessage;
  * A video message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.VIDEO)
+@Service(WXMsgParser.PREFIX + MsgType.VIDEO)
 public final class VideoMsgParser extends WXMsgParser {
 
 	@Override

@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.MusicMessage;
  * An music message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.MUSIC)
+@Service(WXMsgParser.PREFIX + MsgType.MUSIC)
 public final class MusicMsgParser extends WXMsgParser {
 
 	@Override

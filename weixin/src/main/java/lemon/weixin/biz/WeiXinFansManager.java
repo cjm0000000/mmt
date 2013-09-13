@@ -1,5 +1,6 @@
 package lemon.weixin.biz;
 
+import lemon.shared.entity.Status;
 import lemon.weixin.bean.WeiXinFans;
 import lemon.weixin.dao.WXFansMapper;
 
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class WeiXinFansManager {
 	@Autowired
 	private WXFansMapper wxFansMapper;
-	private static final String FANS_ENABLE = "1";
-	private static final String FANS_DISABLE = "0";
 	
 	/**
 	 * save fans information
@@ -27,10 +26,10 @@ public class WeiXinFansManager {
 		if(null == fans) throw new WeiXinException("Can't save, fans is null.");
 		WeiXinFans existsFans = wxFansMapper.getFans(fans.getCust_id(), fans.getWxid());
 		if(null == existsFans){//add fans
-			fans.setStatus(FANS_ENABLE);
+			fans.setStatus(Status.AVAILABLE);
 			wxFansMapper.saveFans(fans);
 		}else{//update fans
-			existsFans.setStatus(FANS_ENABLE);
+			existsFans.setStatus(Status.AVAILABLE);
 			wxFansMapper.updateFans(existsFans);
 		}
 	}
@@ -43,7 +42,7 @@ public class WeiXinFansManager {
 		WeiXinFans existsFans = wxFansMapper.getFans(cust_id, wxid);
 		if(null == existsFans) throw new WeiXinException("unsubscribe, but not subscribe.");
 		//disable fans
-		existsFans.setStatus(FANS_DISABLE);
+		existsFans.setStatus(Status.UNAVAILABLE);
 		wxFansMapper.updateFans(existsFans);
 	}
 

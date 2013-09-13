@@ -1,8 +1,9 @@
 package lemon.weixin.bean;
 
 /**
- * Weinxin API return code
+ * WeinXin API return code
  * @author lemon
+ * @version 1.0
  *
  */
 public class ReturnCode {

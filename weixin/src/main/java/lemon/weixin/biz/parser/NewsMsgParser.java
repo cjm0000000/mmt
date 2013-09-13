@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.NewsMessage;
  * A news message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.NEWS)
+@Service(WXMsgParser.PREFIX + MsgType.NEWS)
 public final class NewsMsgParser extends WXMsgParser {
 
 	@Override

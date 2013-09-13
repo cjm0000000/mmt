@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 /**
  * MicroChat gateway
  * @author lemon
+ * @version 1.0
  *
  */
 @Service("microChatGW")

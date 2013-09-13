@@ -14,6 +14,7 @@ import static lemon.weixin.WeiXin.TARGET_CHARSET;
 /**
  * WeiXin message robot
  * @author lemon
+ * @version 1.0
  *
  */
 public class MicroChatMessager {

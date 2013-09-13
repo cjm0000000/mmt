@@ -14,6 +14,7 @@ import lemon.weixin.bean.message.WeiXinMessage;
  * WeiXin send message repository
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 @Repository

@@ -5,6 +5,7 @@ import lemon.weixin.bean.message.WeiXinMessage;
 /**
  * WeiXin customer message business interface
  * @author lemon
+ * @version 1.0
  *
  */
 public interface WXCustMsgProcessor {

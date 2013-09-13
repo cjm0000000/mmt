@@ -1,5 +1,7 @@
 package lemon.weixin.bean;
 
+import lemon.shared.entity.Status;
+
 /**
  * Bean for WeiXin fans
  * @author lemon
@@ -10,7 +12,7 @@ public class WeiXinFans {
 	private String wxid;
 	private int cust_id;
 	private String nick_name;
-	private String status;
+	private Status status;
 	private String timestamp;
 	public String getWxid() {
 		return wxid;
@@ -30,10 +32,10 @@ public class WeiXinFans {
 	public void setNick_name(String nick_name) {
 		this.nick_name = nick_name;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	public String getTimestamp() {

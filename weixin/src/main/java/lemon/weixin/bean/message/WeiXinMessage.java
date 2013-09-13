@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * WeiXin message
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 public class WeiXinMessage implements Message {

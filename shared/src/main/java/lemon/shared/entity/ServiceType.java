@@ -9,5 +9,8 @@ package lemon.shared.entity;
 public enum ServiceType {
 	/** service for WeiXin */
 	WEIXIN,
+	/** service for YiXin */
+	YIXIN,
+	/** service for other */
 	OTHER
 }

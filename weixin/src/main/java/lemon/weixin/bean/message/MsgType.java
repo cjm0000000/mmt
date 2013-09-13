@@ -4,6 +4,7 @@ package lemon.weixin.bean.message;
  * message types
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 public interface MsgType {

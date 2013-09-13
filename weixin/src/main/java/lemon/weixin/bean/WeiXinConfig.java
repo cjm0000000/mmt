@@ -3,6 +3,7 @@ package lemon.weixin.bean;
 /**
  * Customer's configures of WeiXin
  * @author lemon
+ * @version 1.0
  *
  */
 public class WeiXinConfig {

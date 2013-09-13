@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.MsgType;
  * A location message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.LOCATION)
+@Service(WXMsgParser.PREFIX + MsgType.LOCATION)
 public final class LocationMsgParser extends WXMsgParser {
 
 	@Override

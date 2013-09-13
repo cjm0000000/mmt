@@ -4,6 +4,7 @@ package lemon.weixin.bean.message;
  * Event types
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 public interface EventType {

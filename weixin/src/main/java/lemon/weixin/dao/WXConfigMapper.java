@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Repository of WeiXin configures
  * @author lemon
+ * @version 1.0
  *
  */
 @Repository

@@ -30,8 +30,8 @@ import lemon.weixin.biz.customer.WXCustMsgProcessor;
  *
  */
 public abstract class WXMsgParser implements MsgParser {
+	public static final String PREFIX = "WX_";
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
-	
 	protected XStream xStream = XStreamHelper.createXstream();
 	
 	/**
@@ -41,7 +41,7 @@ public abstract class WXMsgParser implements MsgParser {
 	 */
 	public static MsgParser getParser(String msg){
 		String msgType = getMsgType(msg);
-		return (MsgParser) MMTContext.getApplicationContext().getBean(msgType);
+		return (MsgParser) MMTContext.getApplicationContext().getBean(PREFIX + msgType);
 	}
 	
 	/**

@@ -24,6 +24,7 @@ import lemon.weixin.dao.WXLogManager;
  * The WeiXin API for message
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 @Service

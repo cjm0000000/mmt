@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.TextMessage;
  * A text message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.TEXT)
+@Service(WXMsgParser.PREFIX + MsgType.TEXT)
 public final class TextMsgParser extends WXMsgParser {
 
 	@Override

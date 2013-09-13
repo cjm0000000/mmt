@@ -14,6 +14,7 @@ import lemon.weixin.gateway.MicroChatMessager;
  * WeiXin configures
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
 public class WeiXin {

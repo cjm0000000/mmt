@@ -21,7 +21,7 @@ public interface WXFansMapper {
 	 * save WeiXin fans
 	 * @param fans
 	 */
-	@Insert("INSERT INTO weixin_fans(wxid,cust_id,nick_name,status) SELECT #{wxid},#{cust_id},#{nick_name},'1'")
+	@Insert("INSERT INTO weixin_fans(wxid,cust_id,nick_name,status) SELECT #{wxid},#{cust_id},#{nick_name},'AVAILABLE'")
 	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
 	void saveFans(WeiXinFans fans);
 	

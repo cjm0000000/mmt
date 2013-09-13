@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.VoiceMessage;
  * A voice message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.VOICE)
+@Service(WXMsgParser.PREFIX + MsgType.VOICE)
 public final class VoiceMsgParser extends WXMsgParser {
 
 	@Override

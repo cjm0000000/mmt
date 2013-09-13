@@ -10,9 +10,10 @@ import lemon.weixin.bean.message.MsgType;
  * A link message parser
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-@Service(MsgType.LINK)
+@Service(WXMsgParser.PREFIX + MsgType.LINK)
 public final class LinkMsgParser extends WXMsgParser {
 
 	@Override

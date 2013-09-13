@@ -10,6 +10,7 @@ import lemon.weixin.dao.WXSendMsgDetailMapper;
 /**
  * WeiXin message helper
  * @author lemon
+ * @version 1.0
  *
  */
 @Service
