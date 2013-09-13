@@ -12,7 +12,8 @@
 		<module>shared</module>
 		<module>weixin</module>
     	<module>mmt-web</module>
-  	</modules>
+    	<module>yixin</module>
+	</modules>
 	<properties>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
