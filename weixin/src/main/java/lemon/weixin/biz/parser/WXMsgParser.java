@@ -1,7 +1,15 @@
 package lemon.weixin.biz.parser;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -26,8 +34,28 @@ public abstract class WXMsgParser implements MsgParser {
 	
 	protected XStream xStream = XStreamHelper.createXstream();
 	
-	public static MsgParser getParser(String msgType){
+	/**
+	 * Get message parser
+	 * @param msg
+	 * @return
+	 */
+	public static MsgParser getParser(String msg){
+		String msgType = getMsgType(msg);
 		return (MsgParser) MMTContext.getApplicationContext().getBean(msgType);
+	}
+	
+	/**
+	 * Generate replay message
+	 * @param mmt_token
+	 * @param msg
+	 * @return
+	 */
+	public final String parseMessage(String mmt_token, String msg){
+		WeiXinMessage message = toMsg(msg);
+		// process business
+		String retMsg = process(mmt_token, message);
+		// build replay message
+		return retMsg;
 	}
 	
 	/**
@@ -44,19 +72,6 @@ public abstract class WXMsgParser implements MsgParser {
 	 */
 	protected abstract String toXML(Message rMsg);
 	
-	/**
-	 * Generate replay message
-	 * @param mmt_token
-	 * @param msg
-	 * @return
-	 */
-	public final String parseMessage(String mmt_token, String msg){
-		WeiXinMessage message = toMsg(msg);
-		// process business
-		String retMsg = process(mmt_token, message);
-		// build replay message
-		return retMsg;
-	}
 	
 	/**
 	 * Business process
@@ -76,5 +91,28 @@ public abstract class WXMsgParser implements MsgParser {
 			logger.error("Can't find business implement class: " + cfg.getBiz_class());
 			throw new WeiXinException("Can't find business implement class: " + cfg.getBiz_class());
 		}
+	}
+	
+	/**
+	 * Get message type
+	 * @param msg
+	 * @return
+	 */
+	private static String getMsgType(String msg) {
+		InputStream is = null;
+		try {
+			try {
+				is = new ByteArrayInputStream(msg.getBytes());
+				Document doc = new SAXBuilder().build(is);
+				Element e = doc.getRootElement().getChild("MsgType");
+				return e.getValue();
+			} finally {
+				if (null != is)
+					is.close();
+			}
+		} catch (IOException | JDOMException e) {
+			logger.error("Can't get message type:" + e.getMessage());
+		}
+		return null;
 	}
 }

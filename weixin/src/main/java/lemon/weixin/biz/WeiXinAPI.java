@@ -1,8 +1,5 @@
 package lemon.weixin.biz;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,10 +7,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,10 +65,8 @@ public class WeiXinAPI implements MmtAPI {
 		logger.debug("Receive a message: " + msg);
 		//save received log
 		saveReciveMessageLog(cust_id, msg);
-		//get message type
-		String msgType = getMsgType(msg);
 		//get message parser
-		parser = WXMsgParser.getParser(msgType);
+		parser = WXMsgParser.getParser(msg);
 		if(null == parser)
 			throw new WeiXinException("No parser find.");
 		//process message and generate replay message
@@ -126,30 +117,6 @@ public class WeiXinAPI implements MmtAPI {
 	private void saveSendMessageLog(int cust_id, String msg){
 		MsgLog log = MsgLog.createSendLog(cust_id, msg);
 		wxLogManager.saveMessageLog(log);
-	}
-
-
-	/**
-	 * Get message type
-	 * @param msg
-	 * @return
-	 */
-	private String getMsgType(String msg) {
-		InputStream is = null;
-		try {
-			try {
-				is = new ByteArrayInputStream(msg.getBytes());
-				Document doc = new SAXBuilder().build(is);
-				Element e = doc.getRootElement().getChild("MsgType");
-				return e.getValue();
-			} finally {
-				if (null != is)
-					is.close();
-			}
-		} catch (IOException | JDOMException e) {
-			logger.error("Can't get message type:" + e.getMessage());
-		}
-		return null;
 	}
 
 }
