@@ -1,6 +1,6 @@
 package lemon.weixin.xmlconvert;
 
-import lemon.weixin.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

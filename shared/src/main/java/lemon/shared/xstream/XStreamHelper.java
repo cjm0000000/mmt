@@ -1,9 +1,9 @@
-package lemon.weixin.util;
+package lemon.shared.xstream;
 
 import java.io.Writer;
 import java.lang.reflect.Field;
 
-import lemon.weixin.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamCDATA;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -16,9 +16,10 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  * XStream help function
  * 
  * @author lemon
+ * @version 1.0
  * 
  */
-public final class WXXStreamHelper {
+public final class XStreamHelper {
 
 	/** CDATA prefix */
 	private static final String PREFIX_CDATA = "<![CDATA[";

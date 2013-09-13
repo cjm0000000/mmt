@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import lemon.shared.xstream.XStreamHelper;
 import lemon.weixin.MessageFactory;
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;
@@ -19,7 +20,6 @@ import lemon.weixin.bean.message.LocationMessage;
 import lemon.weixin.bean.message.MusicMessage;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.util.WXXStreamHelper;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -38,7 +38,7 @@ public class WXXMLConvert {
 	
 	@Before
 	public void init() {
-		xStream = WXXStreamHelper.createXstream();
+		xStream = XStreamHelper.createXstream();
 	}
 
 	@Test

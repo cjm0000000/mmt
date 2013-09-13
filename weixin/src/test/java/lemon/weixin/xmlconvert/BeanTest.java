@@ -1,6 +1,6 @@
 package lemon.weixin.xmlconvert;
 
-import lemon.weixin.util.WXXStreamHelper;
+import lemon.shared.xstream.XStreamHelper;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -12,7 +12,7 @@ public class BeanTest {
 	private XStream xStream;
 	@Before
 	public void init() {
-		xStream = WXXStreamHelper.createXstream();
+		xStream = XStreamHelper.createXstream();
 	}
 	
 	@Test

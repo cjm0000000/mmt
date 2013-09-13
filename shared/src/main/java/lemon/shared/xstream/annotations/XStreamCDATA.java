@@ -1,4 +1,4 @@
-package lemon.weixin.xstream.annotations;
+package lemon.shared.xstream.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  * generate CDATA for field
  * @author lemon
+ * @version 1.0
  *
  */
 @Retention(RetentionPolicy.RUNTIME)

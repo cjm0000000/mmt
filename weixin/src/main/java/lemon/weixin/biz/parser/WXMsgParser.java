@@ -8,22 +8,23 @@ import com.thoughtworks.xstream.XStream;
 import lemon.shared.MMTContext;
 import lemon.shared.common.Message;
 import lemon.shared.common.MsgParser;
+import lemon.shared.xstream.XStreamHelper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.WeiXinMessage;
 import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.customer.WXCustMsgProcessor;
-import lemon.weixin.util.WXXStreamHelper;
 
 /**
  * A message parser for WeiXin
  * @author lemon
+ * @version 1.0
  *
  */
 public abstract class WXMsgParser implements MsgParser {
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
 	
-	protected XStream xStream = WXXStreamHelper.createXstream();
+	protected XStream xStream = XStreamHelper.createXstream();
 	
 	public static MsgParser getParser(String msgType){
 		return (MsgParser) MMTContext.getApplicationContext().getBean(msgType);
