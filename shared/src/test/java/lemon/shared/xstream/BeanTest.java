@@ -1,4 +1,4 @@
-package lemon.weixin.xmlconvert;
+package lemon.shared.xstream;
 
 import lemon.shared.xstream.XStreamHelper;
 
