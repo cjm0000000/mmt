@@ -29,7 +29,7 @@ public interface YXConfigMapper {
 	 * Get all active configures
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.yx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.appid, A.secret, A.api_url FROM yixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND s.service='YIXIN'")
+	@Select("SELECT A.cust_id, A.yx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.appid, A.secret, A.api_url FROM yixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND S.service='YIXIN'")
 	public List<YiXinConfig> availableList();
 	/**
 	 * Add YiXin configure
