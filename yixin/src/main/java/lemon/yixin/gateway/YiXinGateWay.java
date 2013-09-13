@@ -1,7 +1,7 @@
-package lemon.weixin.gateway;
+package lemon.yixin.gateway;
 
-import static lemon.weixin.WeiXin.LOCAL_CHARSET;
-import static lemon.weixin.WeiXin.TARGET_CHARSET;
+import static lemon.yixin.YiXin.LOCAL_CHARSET;
+import static lemon.yixin.YiXin.TARGET_CHARSET;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,10 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lemon.shared.api.MmtAPI;
-import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.log.SiteAccessLog;
-import lemon.weixin.dao.WXConfigMapper;
+import lemon.yixin.YiXin;
+import lemon.yixin.bean.YiXinConfig;
+import lemon.yixin.bean.log.SiteAccessLog;
+import lemon.yixin.dao.YXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,22 +34,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * MicroChat gateway
+ * YiXin gateway
  * @author lemon
  * @version 1.0
  *
  */
-@Service("microChatGW")
-public class MicroChatGateWay implements Filter {
-	private static Log logger = LogFactory.getLog(MicroChatGateWay.class);
-	@Resource(name="weiXinAPI")
-	private MmtAPI wxAPI;
+@Service("yixinxGW")
+public class YiXinGateWay implements Filter {
+	private static Log logger = LogFactory.getLog(YiXinGateWay.class);
+	@Resource(name="yiXinAPI")
+	private MmtAPI yxAPI;
 	@Autowired
-	private WXConfigMapper weiXinConfigMapper;
+	private YXConfigMapper yiXinConfigMapper;
 	@Override
 	public void destroy() {
-		WeiXin.destory();
-		logger.debug("MicroChatGateWay destory...");
+		YiXin.destory();
+		logger.debug("YiXinGateWay destory...");
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MicroChatGateWay implements Filter {
 		//confirm which customer is it
 		String shortPath = getShortPath(request.getServletPath());
 		logger.debug("shortPath=" + shortPath);
-		WeiXinConfig config = WeiXin.getConfig(shortPath);
+		YiXinConfig config = YiXin.getConfig(shortPath);
 		if(null == config){
 			response.getWriter().print("No matchers.");
 			logger.error("the URL["+shortPath+"] have no matcher.");
@@ -76,12 +76,12 @@ public class MicroChatGateWay implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		WeiXin.init();
-		List<WeiXinConfig> list = weiXinConfigMapper.availableList();
-		for (WeiXinConfig wxcfg : list) {
-			WeiXin.setConfig(wxcfg);
+		YiXin.init();
+		List<YiXinConfig> list = yiXinConfigMapper.availableList();
+		for (YiXinConfig yxcfg : list) {
+			YiXin.setConfig(yxcfg);
 		}
-		logger.info("微信网关初始化成功...");
+		logger.info("易信网关初始化成功...");
 	}
 	
 	/**
@@ -91,9 +91,9 @@ public class MicroChatGateWay implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void verifySignature(WeiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
+	private void verifySignature(YiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//微信加密签名
+		//易信加密签名
 		String signature = req.getParameter("signature");
 		//时间戳
 		String timestamp = req.getParameter("timestamp");
@@ -121,11 +121,11 @@ public class MicroChatGateWay implements Filter {
 		paramMap.put("SiteAccess", log);
 		
 		//验证签名
-		if(wxAPI.verifySignature(paramMap)){
+		if(yxAPI.verifySignature(paramMap)){
 			resp.getWriter().print(echostr);
 			return;
 		}
-		resp.getWriter().print("I think you are not the Weixin Server.");
+		resp.getWriter().print("I think you are not the YiXin Server.");
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class MicroChatGateWay implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void msgWorker(WeiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
+	private void msgWorker(YiXinConfig config, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// first, parse the message
 		String msg = getMessage(req);
@@ -181,7 +181,7 @@ public class MicroChatGateWay implements Filter {
 			resp.setCharacterEncoding(LOCAL_CHARSET);
 			out = resp.getWriter();
 			logger.debug(msg);
-			out.println(wxAPI.processMsg(mmt_token, msg));
+			out.println(yxAPI.processMsg(mmt_token, msg));
 			out.flush();
 		} finally {
 			if (null != out)

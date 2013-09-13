@@ -11,8 +11,8 @@
 	<modules>
 		<module>shared</module>
 		<module>weixin</module>
+		<module>yixin</module>
     	<module>mmt-web</module>
-    	<module>yixin</module>
 	</modules>
 	<properties>
 		<mmt-jdk-version>1.7</mmt-jdk-version>

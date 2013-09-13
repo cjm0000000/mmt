@@ -1,36 +1,26 @@
-package lemon.web.crm.wxapi;
+package lemon.web.crm.yxapi;
+
+import lemon.yixin.YiXin;
+import lemon.yixin.bean.YiXinConfig;
+import lemon.yixin.bean.message.*;
+import lemon.yixin.biz.YiXinMsgHelper;
+import lemon.yixin.biz.customer.YXCustBasicMsgProcessor;
+import lemon.yixin.biz.parser.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.message.Article;
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.bean.message.VideoMessage;
-import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.biz.WeiXinMsgHelper;
-import lemon.weixin.biz.customer.WXCustBasicMsgProcessor;
-import lemon.weixin.biz.parser.MusicMsgParser;
-import lemon.weixin.biz.parser.NewsMsgParser;
-import lemon.weixin.biz.parser.TextMsgParser;
 
 /**
- * Lemon message test business
+ * Lemon message test business_YiXin implement
  * @author lemon
  * @version 1.0
  *
  */
 @Service
-public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
+public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	@Autowired
-	private WeiXinMsgHelper msgHelper;
+	private YiXinMsgHelper msgHelper;
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
@@ -76,7 +66,7 @@ public class MMTChatMsgProcessor extends WXCustBasicMsgProcessor {
 		buildReplyMsg(msg, replyMsg);
 		replyMsg.setContent("You said: " + msg.getContent());
 		//save log
-		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		YiXinConfig cfg = YiXin.getConfig(mmt_token);
 		replyMsg.setCust_id(cfg.getCust_id());
 		msgHelper.saveSendTextMsg(replyMsg);
 		return textMsgParser.toXML(replyMsg);

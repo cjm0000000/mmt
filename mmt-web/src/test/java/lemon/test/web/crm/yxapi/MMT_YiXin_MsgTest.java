@@ -1,4 +1,4 @@
-package lemon.test.web.crm.wxapi;
+package lemon.test.web.crm.yxapi;
 
 import static org.junit.Assert.*;
 
@@ -10,16 +10,16 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.entity.Customer;
 import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
-import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.biz.WeiXinMsgHelper;
-import lemon.weixin.biz.parser.MusicMsgParser;
-import lemon.weixin.biz.parser.NewsMsgParser;
-import lemon.weixin.biz.parser.TextMsgParser;
-import lemon.weixin.dao.WXConfigMapper;
+import lemon.yixin.YiXin;
+import lemon.yixin.bean.YiXinConfig;
+import lemon.yixin.bean.message.MusicMessage;
+import lemon.yixin.bean.message.NewsMessage;
+import lemon.yixin.bean.message.TextMessage;
+import lemon.yixin.biz.YiXinMsgHelper;
+import lemon.yixin.biz.parser.MusicMsgParser;
+import lemon.yixin.biz.parser.NewsMsgParser;
+import lemon.yixin.biz.parser.TextMsgParser;
+import lemon.yixin.dao.YXConfigMapper;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -34,26 +34,26 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class MMTChatMsgTest {
+public class MMT_YiXin_MsgTest {
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
-	private final String bizClass = "lemon.web.crm.wxapi.MMTChatMsgProcessor";
+	private final String bizClass = "lemon.web.crm.yxapi.MMT_YiXin_MsgProcessor";
 	private final int cust_id = 200;
-	private WeiXinMsgHelper msgHelper;
+	private YiXinMsgHelper msgHelper;
 	private ApplicationContext acx;
 	private CustomerMapper customerMapper;
-	private WXConfigMapper	wxConfigMapper;
+	private YXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(MmtAPI.class);
-		msgHelper = acx.getBean(WeiXinMsgHelper.class);
+		api = (MmtAPI) acx.getBean("yiXinAPI");
+		msgHelper = acx.getBean(YiXinMsgHelper.class);
 		customerMapper = acx.getBean(CustomerMapper.class);
-		wxConfigMapper = acx.getBean(WXConfigMapper.class);
+		wxConfigMapper = acx.getBean(YXConfigMapper.class);
 		assertNotNull(api);
 		assertNotNull(msgHelper);
 		assertNotNull(customerMapper);
@@ -71,14 +71,14 @@ public class MMTChatMsgTest {
 			assertNotEquals(cust.getCust_id(), 0);
 		}
 		
-		//add WeiXin configure
-		WeiXinConfig cfg = wxConfigMapper.get(cust_id);
+		//add YiXin configure
+		YiXinConfig cfg = wxConfigMapper.get(cust_id);
 		if(null == cfg){
-			cfg = new WeiXinConfig();
+			cfg = new YiXinConfig();
 			cfg.setCust_id(cust_id);
 			cfg.setToken(TOKEN);
 			cfg.setApi_url(MMT_TOKEN);
-			cfg.setWx_account("lemon_test");
+			cfg.setYx_account("lemon_test");
 			cfg.setAppid("");
 			cfg.setSecret("");
 			cfg.setBiz_class(bizClass);
@@ -86,8 +86,8 @@ public class MMTChatMsgTest {
 			wxConfigMapper.save(cfg);
 			assertNotEquals(cfg.getCust_id(), 0);
 		}
-		WeiXin.init();
-		WeiXin.setConfig(cfg);
+		YiXin.init();
+		YiXin.setConfig(cfg);
 	}
 	
 	@Test
