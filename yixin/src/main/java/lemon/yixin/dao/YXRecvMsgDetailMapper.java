@@ -47,7 +47,7 @@ public interface YXRecvMsgDetailMapper {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO yixin_recvmsg_location(detail_id,location_X,location_Y,scale,label) SELECT #{id}, #{location_X}, #{location_Y},#{scale},#{label}")
+	@Insert("INSERT INTO yixin_recvmsg_location(detail_id,location_X,location_Y,scale) SELECT #{id}, #{location_X}, #{location_Y},#{scale}")
 	void saveLocationMsgDetail(LocationMessage msg);
 
 	/**

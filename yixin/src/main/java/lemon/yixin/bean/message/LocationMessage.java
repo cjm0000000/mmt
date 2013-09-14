@@ -1,7 +1,5 @@
 package lemon.yixin.bean.message;
 
-import lemon.shared.xstream.annotations.XStreamCDATA;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -21,10 +19,6 @@ public class LocationMessage extends YiXinMessage {
 	/** Scale */
 	@XStreamAlias("Scale")
 	private int scale;
-	/** Label */
-	@XStreamAlias("Label")
-	@XStreamCDATA
-	private String label;
 	
 	public LocationMessage(){
 		super(MsgType.LOCATION);
@@ -46,11 +40,5 @@ public class LocationMessage extends YiXinMessage {
 	}
 	public void setScale(int scale) {
 		this.scale = scale;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
 	}
 }

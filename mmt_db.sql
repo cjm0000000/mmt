@@ -474,7 +474,6 @@ CREATE TABLE `yixin_recvmsg_location` (
   `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
   `location_Y` varchar(15) NOT NULL DEFAULT '0' COMMENT 'Y坐标',
   `scale` int(11) NOT NULL DEFAULT '0' COMMENT '放大倍数',
-  `label` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信地理位置消息接收表';
 
