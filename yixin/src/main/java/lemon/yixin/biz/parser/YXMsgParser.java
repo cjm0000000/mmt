@@ -102,7 +102,7 @@ public abstract class YXMsgParser implements MsgParser {
 		InputStream is = null;
 		try {
 			try {
-				is = new ByteArrayInputStream(msg.getBytes());
+				is = new ByteArrayInputStream(msg.getBytes(YiXin.LOCAL_CHARSET));
 				Document doc = new SAXBuilder().build(is);
 				Element e = doc.getRootElement().getChild("MsgType");
 				return e.getValue();

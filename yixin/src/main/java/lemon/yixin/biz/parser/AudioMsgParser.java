@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.common.Message;
 import lemon.yixin.bean.message.MsgType;
-import lemon.yixin.bean.message.VoiceMessage;
+import lemon.yixin.bean.message.AudioMessage;
 
 /**
  * A voice message parser
@@ -13,18 +13,18 @@ import lemon.yixin.bean.message.VoiceMessage;
  * @version 1.0
  * 
  */
-@Service(YXMsgParser.PREFIX + MsgType.VOICE)
-public final class VoiceMsgParser extends YXMsgParser {
+@Service(YXMsgParser.PREFIX + MsgType.AUDIO)
+public final class AudioMsgParser extends YXMsgParser {
 
 	@Override
-	public final VoiceMessage toMsg(String msg) {
-		xStream.processAnnotations(VoiceMessage.class);
-		return (VoiceMessage) xStream.fromXML(msg);
+	public final AudioMessage toMsg(String msg) {
+		xStream.processAnnotations(AudioMessage.class);
+		return (AudioMessage) xStream.fromXML(msg);
 	}
 
 	@Override
 	public final String toXML(Message rMsg) {
-		xStream.processAnnotations(VoiceMessage.class);
+		xStream.processAnnotations(AudioMessage.class);
 		return xStream.toXML(rMsg);
 	}
 }

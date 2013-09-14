@@ -27,7 +27,7 @@ public class RecvMsgDetailTest {
 	}
 	@Test
 	public void testSaveTextMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378001728</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[你好]]></Content><MsgId>5918472355591487529</MsgId></xml>";
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379080088</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>你好</Content></xml>";
 		TextMessage msgObj = acx.getBean(TextMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvTextMsg(msgObj);
@@ -36,7 +36,7 @@ public class RecvMsgDetailTest {
 	
 	@Test
 	public void testSaveImageMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378027514</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS49qltXnkjkg3DOcQSI8CO1NxptcHC16yhQ/0]]></PicUrl><MsgId>5918583105618182187</MsgId><MediaId><![CDATA[7scBMzahwP7VG0exqbE4PwDhmu87f3jiYCdOueP0gpzghvrAugPxKHvMYxTLjQqX]]></MediaId></xml>";
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129715</CreateTime>  <MsgId>17</MsgId>  <MsgType>image</MsgType>  <PicUrl>http://nos.netease.com/yixinpublic/pr_FzXvFRY8nrarFbQ9AphGAQ==_1379129714_6200108</PicUrl></xml>";
 		ImageMessage msgObj = acx.getBean(ImageMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvImageMsg(msgObj);
@@ -45,7 +45,7 @@ public class RecvMsgDetailTest {
 	
 	@Test
 	public void testSaveLocationMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378027962</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.302176</Location_X><Location_Y>120.158966</Location_Y><Scale>20</Scale><Label><![CDATA[浙江省 杭州市: 310000]]></Label><MsgId>5918585029763530796</MsgId></xml>";
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129814</CreateTime>  <MsgId>18</MsgId>  <MsgType>location</MsgType>  <Location_X>30.302664</Location_X>  <Location_Y>120.159327</Location_Y>  <Scale>15</Scale></xml>";
 		LocationMessage msgObj = acx.getBean(LocationMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvLocationMsg(msgObj);
@@ -54,7 +54,7 @@ public class RecvMsgDetailTest {
 	
 	@Test
 	public void testSaveEventMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378030035</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[TEst Key]]></EventKey></xml>";
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379085091</CreateTime>  <MsgId>21</MsgId>  <MsgType>event</MsgType>  <Event>subscribe</Event>  <EventKey></EventKey></xml>";
 		EventMessage msgObj = acx.getBean(EventMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvEventMsg(msgObj);
@@ -70,22 +70,22 @@ public class RecvMsgDetailTest {
 		assertNotEquals(msgObj.getId(),0);
 	}
 	@Test
-	public void testSaveVoiceMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378193706</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[fLHx02T1fxxHyN1j2C1xiDnjklwpEYb3EyvkxykCeQ1VAlqpvepM-l4jOIKYkIo4]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5919296894823039086</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
-		VoiceMessage msgObj = acx.getBean(VoiceMsgParser.class).toMsg(msg);
+	public void testSaveAudioMsg(){
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379086098</CreateTime>  <MsgId>29</MsgId>  <MsgType>audio</MsgType>  <url>http://nos.netease.com/yixinpublic/pr_B7StF30nYDDT7VWrGzQxuw==_1379086096_6169298</url>  <name>600c4c87-146c-4d62-acb1-30d3f9ee3532.aac</name>  <mimeType>audio/aac</mimeType></xml>";
+		AudioMessage msgObj = acx.getBean(AudioMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvVoiceMsg(msgObj);
 		assertNotEquals(msgObj.getId(),0);
-		assertEquals(msgObj.getMsgId().longValue(), 5919296894823039086L);
+		assertEquals(msgObj.getMsgId().longValue(), 29);
 	}
 	@Test
 	public void testSaveVideoMsg(){
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378194082</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[1BZrnnbpR-Es-kuOzWbWKCpuWonEy-5r7PrZd4lliGeqwumf-ik7obib7eiALxWc]]></MediaId><ThumbMediaId><![CDATA[DeuiUHn9EW8ETn10s1BCnDM8ScTuixsMMTjaNWtIKJzJPS6Xz92VXVGUREeu89yp]]></ThumbMediaId><MsgId>5919298509730742383</MsgId></xml>";
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129699</CreateTime>  <MsgId>15</MsgId>  <MsgType>video</MsgType>  <url>http://nos.netease.com/yixinpublic/pr_opNFMEeTepg0k2n3FbasyA==_1379129698_6206864</url>  <name>f4e5ce4254d188a590e31bbd0cb77fd5.mp4</name>  <mimeType>video/mp4</mimeType></xml>";
 		VideoMessage msgObj = acx.getBean(VideoMsgParser.class).toMsg(msg);
 		msgObj.setCust_id(10);
 		msgHelper.saveRecvVideoMsg(msgObj);
 		assertNotEquals(msgObj.getId(),0);
-		assertEquals(msgObj.getMsgId().longValue(), 5919298509730742383L);
+		assertEquals(msgObj.getMsgId().longValue(), 15);
 	}
 	@Test
 	public void testGetTextMsg(){

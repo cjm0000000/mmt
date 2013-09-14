@@ -23,7 +23,7 @@ public interface MsgType {
 	/** 图文消息 */
 	String NEWS = "news";
 	/** 语音消息 */
-	String VOICE = "voice";
+	String AUDIO = "audio";
 	/** 视频消息 */
 	String VIDEO = "video";
 }

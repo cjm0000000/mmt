@@ -491,21 +491,34 @@ CREATE TABLE `yixin_recvmsg_text` (
 #
 CREATE TABLE `yixin_recvmsg_video` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `mediaId` char(64) NOT NULL,
-  `thumbMediaId` varchar(255) NOT NULL,
+  `url` varchar(256) NOT NULL DEFAULT '' COMMENT '音频地址',
+  `name` varchar(200) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信视频消息接收表';
 
 #
+# 易信音乐消息接收表
+#
+CREATE TABLE `yixin_recvmsg_music` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `url` varchar(256) NOT NULL DEFAULT '' COMMENT '封面图片地址',
+  `name` varchar(200) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
+  `desc` text COMMENT '详情',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信音乐消息接收表';
+
+#
 # 易信语音消息接收表
 #
-CREATE TABLE `yixin_recvmsg_voice` (
+CREATE TABLE `yixin_recvmsg_audio` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `mediaId` char(64) NOT NULL,
-  `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
-  `recognition` varchar(255) NOT NULL,
+  `url` varchar(256) NOT NULL DEFAULT '' COMMENT '音频地址',
+  `name` varchar(200) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信语音消息接收表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信语音消息接收表'
 
 #
 # 易信消息发送汇总表

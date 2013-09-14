@@ -93,7 +93,7 @@ public class MMT_WeiXin_MsgTest {
 	@Test
 	public void parserMsgType() throws JDOMException, IOException{
 		String msg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
-		InputStream is = new ByteArrayInputStream(msg.getBytes());
+		InputStream is = new ByteArrayInputStream(msg.getBytes("UTF-8"));
 		Document doc = new SAXBuilder().build(is);
 		Element msgType = doc.getRootElement().getChild("MsgType");
 		Assert.assertTrue("text".equals(msgType.getValue()));

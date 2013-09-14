@@ -12,9 +12,10 @@ import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.*;
+import lemon.yixin.bean.message.MusicMessage;
 import lemon.yixin.bean.message.TextMessage;
 import lemon.yixin.bean.message.VideoMessage;
-import lemon.yixin.bean.message.VoiceMessage;
+import lemon.yixin.bean.message.AudioMessage;
 import lemon.yixin.biz.YiXinMsgHelper;
 import lemon.yixin.biz.parser.*;
 import lemon.yixin.dao.YXConfigMapper;
@@ -42,7 +43,7 @@ public class MessageTest {
 	private YiXinMsgHelper msgHelper;
 	private ApplicationContext acx;
 	private CustomerMapper customerMapper;
-	private YXConfigMapper	wxConfigMapper;
+	private YXConfigMapper	yxConfigMapper;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
@@ -51,11 +52,11 @@ public class MessageTest {
 		api = acx.getBean(MmtAPI.class);
 		msgHelper = acx.getBean(YiXinMsgHelper.class);
 		customerMapper = acx.getBean(CustomerMapper.class);
-		wxConfigMapper = acx.getBean(YXConfigMapper.class);
+		yxConfigMapper = acx.getBean(YXConfigMapper.class);
 		assertNotNull(api);
 		assertNotNull(msgHelper);
 		assertNotNull(customerMapper);
-		assertNotNull(wxConfigMapper);
+		assertNotNull(yxConfigMapper);
 		
 		//add customer
 		Customer cust = customerMapper.getCustomer(cust_id);
@@ -70,7 +71,7 @@ public class MessageTest {
 		}
 		
 		//add YiXin configure
-		YiXinConfig cfg = wxConfigMapper.get(cust_id);
+		YiXinConfig cfg = yxConfigMapper.get(cust_id);
 		if(null == cfg){
 			cfg = new YiXinConfig();
 			cfg.setCust_id(cust_id);
@@ -81,7 +82,7 @@ public class MessageTest {
 			cfg.setSecret("");
 			cfg.setBiz_class(bizClass);
 			cfg.setSubscribe_msg(Subscribe_msg);
-			wxConfigMapper.save(cfg);
+			yxConfigMapper.save(cfg);
 			assertNotEquals(cfg.getCust_id(), 0);
 		}
 		YiXin.init();
@@ -89,35 +90,35 @@ public class MessageTest {
 	}
 	@Test
 	public void testSaveTextMsg(){
-		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
+		String txtMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379080088</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>你好</Content></xml>";
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(txtMsg);
 		msgHelper.saveRecvTextMsg(msg);
 	}
 	@Test
 	public void parserMsgType() throws JDOMException, IOException{
-		String msg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
-		InputStream is = new ByteArrayInputStream(msg.getBytes());
+		String msg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379128652</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>你好</Content></xml>";
+		InputStream is = new ByteArrayInputStream(msg.getBytes("UTF-8"));
 		Document doc = new SAXBuilder().build(is);
 		Element msgType = doc.getRootElement().getChild("MsgType");
-		Assert.assertTrue("voice".equals(msgType.getValue()));
+		Assert.assertTrue("text".equals(msgType.getValue()));
 	}
 	@Test
 	public void textMsgTest(){
-		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
+		String txtMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379128652</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>你好</Content></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Text message replay.");
 	}
 	@Test
 	public void subscribeTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090586</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379085091</CreateTime>  <MsgId>21</MsgId>  <MsgType>event</MsgType>  <Event>subscribe</Event>  <EventKey></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), Subscribe_msg);
 	}
 	@Test
 	public void unsubscribe(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090569</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379083706</CreateTime>  <MsgId>12</MsgId>  <MsgType>event</MsgType>  <Event>unsubscribe</Event>  <EventKey></EventKey></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		assertEquals(result, null);
 	}
@@ -130,14 +131,14 @@ public class MessageTest {
 	}
 	@Test
 	public void imageMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091075</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS45ib4XPBm8jLD27oeCgOrlsjgJuUictQTHXw/0]]></PicUrl><MsgId>5918856098034483283</MsgId><MediaId><![CDATA[ZTjFiu7uLSfqupgRn2z4uZT8JqulZXKntm6ERVXrFtcppQOTF9x8Ow-cCb1yoUoy]]></MediaId></xml>";
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129715</CreateTime>  <MsgId>17</MsgId>  <MsgType>image</MsgType>  <PicUrl>http://nos.netease.com/yixinpublic/pr_FzXvFRY8nrarFbQ9AphGAQ==_1379129714_6200108</PicUrl></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Image message replay.");
 	}
 	@Test
 	public void locationMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[???????????????????????26? ????: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129814</CreateTime>  <MsgId>18</MsgId>  <MsgType>location</MsgType>  <Location_X>30.302664</Location_X>  <Location_Y>120.159327</Location_Y>  <Scale>15</Scale></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Location message replay.");
@@ -145,20 +146,31 @@ public class MessageTest {
 	
 	@Test
 	public void videoMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129699</CreateTime>  <MsgId>15</MsgId>  <MsgType>video</MsgType>  <url>http://nos.netease.com/yixinpublic/pr_opNFMEeTepg0k2n3FbasyA==_1379129698_6206864</url>  <name>f4e5ce4254d188a590e31bbd0cb77fd5.mp4</name>  <mimeType>video/mp4</mimeType></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		VideoMessage msg = acx.getBean(VideoMsgParser.class).toMsg(result);
-		assertEquals(msg.getThumbMediaId(), "gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk");
-		assertEquals(msg.getMediaId(), "Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd");
+		assertEquals(msg.getUrl(), "http://nos.netease.com/yixinpublic/pr_opNFMEeTepg0k2n3FbasyA==_1379129698_6206864");
+		assertEquals(msg.getName(), "f4e5ce4254d188a590e31bbd0cb77fd5.mp4");
+		assertEquals(msg.getMimeType(), "video/mp4");
 	}
 	@Test
-	public void voiceMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
+	public void audioMsgTest(){
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379086098</CreateTime>  <MsgId>29</MsgId>  <MsgType>audio</MsgType>  <url>http://nos.netease.com/yixinpublic/pr_B7StF30nYDDT7VWrGzQxuw==_1379086096_6169298</url>  <name>600c4c87-146c-4d62-acb1-30d3f9ee3532.aac</name>  <mimeType>audio/aac</mimeType></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		VoiceMessage msg = acx.getBean(VoiceMsgParser.class).toMsg(result);
-		assertEquals(msg.getFormat(), "amr");
-		assertEquals(msg.getMediaId(), "PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj");
-		assertEquals(msg.getRecognition(), "");
+		AudioMessage msg = acx.getBean(AudioMsgParser.class).toMsg(result);
+		assertEquals(msg.getUrl(), "http://nos.netease.com/yixinpublic/pr_B7StF30nYDDT7VWrGzQxuw==_1379086096_6169298");
+		assertEquals(msg.getName(), "600c4c87-146c-4d62-acb1-30d3f9ee3532.aac");
+		assertEquals(msg.getMimeType(), "audio/aac");
+	}
+	
+	@Test
+	public void musicMsgTest(){
+		String recvMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379129915</CreateTime>  <MsgId>20</MsgId>  <MsgType>music</MsgType>  <url>http://p3.music.126.net/h5PuQCIHeLkrqK0x33xAHg==/76965813957105.jpg</url>  <name>36220</name>  <mimeType>audio/mpeg</mimeType>  <desc>{&quot;id&quot;:365865,&quot;artists&quot;:&quot;My Little Airport&quot;,&quot;picUrl&quot;:&quot;http://p3.music.126.net/h5PuQCIHeLkrqK0x33xAHg==/76965813957105.jpg&quot;,&quot;albumId&quot;:36220,&quot;audio&quot;:&quot;http://m1.music.126.net/8xbwk09vVjKZdfxVxDMv0A==/2094569650923372.mp3&quot;,&quot;album&quot;:&quot;在动物园散步才是正经事&quot;,&quot;name&quot;:&quot;王菲，关于你的眉&quot;}</desc></xml>";
+		String result = api.processMsg(MMT_TOKEN, recvMsg);
+		MusicMessage msg = acx.getBean(MusicMsgParser.class).toMsg(result);
+		assertEquals(msg.getUrl(), "http://p3.music.126.net/h5PuQCIHeLkrqK0x33xAHg==/76965813957105.jpg");
+		assertEquals(msg.getName(), "36220");
+		assertEquals(msg.getMimeType(), "audio/mpeg");
 	}
 	
 }

@@ -1,7 +1,5 @@
 package lemon.yixin.bean.message;
 
-import lemon.shared.xstream.annotations.XStreamCDATA;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -11,30 +9,18 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
-public class MusicMessage extends YiXinMessage {
-	/** MusicUrl */
-	@XStreamAlias("MusicUrl")
-	@XStreamCDATA
-	private String musicUrl;
-	/** HQMusicUrl */
-	@XStreamAlias("HQMusicUrl")
-	@XStreamCDATA
-	private String hqMusicUrl;
+public class MusicMessage extends MediaMessage {
+
+	private String desc;
 	
 	public MusicMessage(){
-		super(MsgType.MUSIC);
+		super(MsgType.MUSIC, "audio/mpeg");
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	
-	public String getMusicUrl() {
-		return musicUrl;
-	}
-	public void setMusicUrl(String musicUrl) {
-		this.musicUrl = musicUrl;
-	}
-	public String getHqMusicUrl() {
-		return hqMusicUrl;
-	}
-	public void setHqMusicUrl(String hqMusicUrl) {
-		this.hqMusicUrl = hqMusicUrl;
-	}
 }

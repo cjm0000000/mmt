@@ -23,10 +23,6 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	private YiXinMsgHelper msgHelper;
 	@Autowired
 	private TextMsgParser textMsgParser;
-	@Autowired
-	private MusicMsgParser musicMsgParser;
-	@Autowired
-	private NewsMsgParser newsMsgParser;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -42,7 +38,7 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	public String processLinkMsg(String token, LinkMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("MMTChat Link message replay.");
+		replyMsg.setContent("打开链接会不会中毒？怕怕");
 		//save send log
 		msgHelper.saveSendTextMsg(replyMsg);
 		return textMsgParser.toXML(replyMsg);
@@ -50,21 +46,20 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 
 	@Override
 	public String processLocationMsg(String token, LocationMessage msg) {
-		//receive location message, reply a music message
-		MusicMessage replyMsg = new MusicMessage();
+		//receive location message
+		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setMusicUrl("MMTChat nusic URL");
-		replyMsg.setHqMusicUrl("MMTChat HQ music URL");
+		replyMsg.setContent("嗯哼？你的行踪已经被我知道了。");
 		//save log
-		msgHelper.saveSendMusicMsg(replyMsg);
-		return musicMsgParser.toXML(replyMsg);
+		msgHelper.saveSendTextMsg(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
 	public String processTextMsg(String mmt_token, TextMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("You said: " + msg.getContent());
+		replyMsg.setContent("你好，我是智能机器人。");
 		//save log
 		YiXinConfig cfg = YiXin.getConfig(mmt_token);
 		replyMsg.setCust_id(cfg.getCust_id());
@@ -86,34 +81,32 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	public String processVideoMsg(String mmt_token, VideoMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("You send me a video, thanks!");
+		replyMsg.setContent("嘿嘿，我是近视眼，看不清楚呢。");
 		//save log
 		msgHelper.saveSendTextMsg(replyMsg);
 		return textMsgParser.toXML(replyMsg);
 	}
 
 	@Override
-	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
-		NewsMessage replyMsg = new NewsMessage();
+	public String processAudioMsg(String mmt_token, AudioMessage msg) {
+		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setArticleCount(2);
+		replyMsg.setContent("嗯哼，你在说什么，我的听力还没有全部发育哟^");
 		
-		Article a1 = new Article();
-		a1.setTitle("MMTChat New 1");
-		a1.setDescription("DESC A1");
-		a1.setPicUrl("pic.taobao.com/aaas/asdf.jpg");
-		a1.setUrl("http://www.baidu.com");
-		
-		Article a2 = new Article();
-		a2.setTitle("MMTChat New 2");
-		a2.setDescription("DESC A2");
-		a2.setPicUrl("pic2.taobao.com/aaas/asdf222.jpg");
-		a2.setUrl("http://www.yousas.com");
-		Article[] articles = {a1,a2};
-		replyMsg.setArticles(articles);
 		//save log
-		msgHelper.saveSendNewsMsg(replyMsg);
-		return newsMsgParser.toXML(replyMsg);
+		msgHelper.saveSendTextMsg(replyMsg);
+		return textMsgParser.toXML(replyMsg);
+	}
+
+	@Override
+	public String processMusicMsg(String mmt_token, MusicMessage msg) {
+		TextMessage replyMsg = new TextMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setContent("嗯哼，歌儿真好听哟。");
+		
+		//save log
+		msgHelper.saveSendTextMsg(replyMsg);
+		return textMsgParser.toXML(replyMsg);
 	}
 
 }

@@ -1,32 +1,44 @@
 package lemon.yixin.bean.message;
 
-import lemon.shared.xstream.annotations.XStreamCDATA;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
  * media message<br>
- * such as: image, voice, video
+ * such as: audio, video
  * @author lemon
  * @version 1.0
  *
  */
 public class MediaMessage extends YiXinMessage {
-	/** MediaId */
-	@XStreamAlias("MediaId")
-	@XStreamCDATA
-	protected String mediaId;
+	protected String url;
+	protected String name;
+	protected String mimeType;
 	
-	public MediaMessage(String msgType) {
+	public MediaMessage(String msgType, String mimeType) {
 		super(msgType);
+		this.mimeType = mimeType;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 	
-	public String getMediaId() {
-		return mediaId;
-	}
-
-	public void setMediaId(String mediaId) {
-		this.mediaId = mediaId;
-	}
-
 }

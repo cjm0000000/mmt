@@ -42,12 +42,10 @@ public class YXXMLConvert {
 		txt.setContent("hello,weixin, I am \"lemon\".");
 		txt.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(txt);
-		logger.debug(msg);
-		logger.debug(txt.getContent());
 		TextMessage txt2 = (TextMessage) xStream.fromXML(msg);
-		logger.debug(txt2.getContent());
-		assertTrue("Text message convert succesfully.",
-				"hello,weixin, I am \"lemon\".".equals(txt2.getContent()));
+
+		assertEquals(txt.getContent(), txt2.getContent());
+		assertEquals(txt.getToUserName(), txt2.getToUserName());
 	}
 
 	@Test
@@ -60,12 +58,9 @@ public class YXXMLConvert {
 		img.setPicUrl("http://www.baidu.com/sadsaf");
 		img.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(img);
-		logger.debug(msg);
-		logger.debug(img.getPicUrl());
 		ImageMessage img2 = (ImageMessage) xStream.fromXML(msg);
-		logger.debug(img2.getPicUrl());
-		assertTrue("Image message convert succesfully.",
-				"http://www.baidu.com/sadsaf".equals(img2.getPicUrl()));
+		
+		assertEquals(img.getPicUrl(), img2.getPicUrl());
 	}
 	
 	@Test
@@ -78,20 +73,12 @@ public class YXXMLConvert {
 		msg.setLocation_X(23.134521);
 		msg.setLocation_Y(113.358803);
 		msg.setScale(20);
-		msg.setLabel("I am here.<xml>\"\"</xml>");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		logger.debug(str);
-		logger.debug(msg.getLabel());
 		LocationMessage msg2 = (LocationMessage) xStream.fromXML(str);
-		logger.debug(msg2.getLabel());
 
-		assertTrue("Location X message convert faild.",
-				msg.getLocation_X() == msg2.getLocation_X());
-		assertTrue("Location Y message convert faild.",
-				msg.getLocation_Y() == msg2.getLocation_Y());
-		assertTrue("Location Label message convert faild.",
-				"I am here.<xml>\"\"</xml>".equals(msg2.getLabel()));
+		assertTrue(msg.getLocation_X()==msg2.getLocation_X());
+		assertTrue(msg.getLocation_Y()==msg2.getLocation_Y());
 	}
 	
 	@Test
@@ -106,17 +93,11 @@ public class YXXMLConvert {
 		msg.setUrl("http://www.163.com/s/a/d/f/a");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		logger.debug(str);
-		logger.debug(msg.getTitle());
 		LinkMessage msg2 = (LinkMessage) xStream.fromXML(str);
-		logger.debug(msg2.getTitle());
 		
-		assertTrue("Link Title message convert faild.",
-				"Link \"TEST\" Title".equals(msg2.getTitle()));
-		assertTrue("Link DESC message convert faild.",
-				"Link DESC".equals(msg2.getDescription()));
-		assertTrue("Link URL message convert faild.",
-				"http://www.163.com/s/a/d/f/a".equals(msg2.getUrl()));
+		assertEquals(msg.getTitle(), msg2.getTitle());
+		assertEquals(msg.getDescription(), msg2.getDescription());
+		assertEquals(msg.getUrl(), msg2.getUrl());
 	}
 	
 	@Test
@@ -130,15 +111,10 @@ public class YXXMLConvert {
 		msg.setEventKey("0dfsafkqwnriksdk");
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		logger.debug(str);
-		logger.debug(msg.getEventType());
 		EventMessage msg2 = (EventMessage) xStream.fromXML(str);
-		logger.debug(msg2.getEventType());
 		
-		assertTrue("EVENT TYPE message convert faild.",
-				EventType.SUBSCRIBE.equals(msg2.getEventType()));
-		assertTrue("EVENT KEYS message convert faild.",
-				"0dfsafkqwnriksdk".equals(msg2.getEventKey()));
+		assertEquals(msg.getEventKey(), msg2.getEventKey());
+		assertEquals(msg.getEventType(), msg2.getEventType());
 	}
 	
 	@Test
@@ -148,19 +124,19 @@ public class YXXMLConvert {
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
 		msg.setCreateTime(new Date().getTime());
-		msg.setMusicUrl("http://music.baidu.com/a/a/d.mp3");
-		msg.setHqMusicUrl("HQmusic  ss s");
 		msg.setMsgId(1024102410241024L);
+		msg.setUrl("http://www.baidu.com");
+		msg.setName("Music");
+		msg.setMimeType("audio/aac");
+		msg.setDesc("descdesc");
 		String str = xStream.toXML(msg);
 		logger.debug(str);
-		logger.debug(msg.getMusicUrl());
 		MusicMessage msg2 = (MusicMessage) xStream.fromXML(str);
-		logger.debug(msg2.getMusicUrl());
 		
-		assertTrue("MUSIC URL message convert faild.",
-				"http://music.baidu.com/a/a/d.mp3".equals(msg2.getMusicUrl()));
-		assertTrue("MUSIC HqMusicUrl message convert faild.",
-				"HQmusic  ss s".equals(msg2.getHqMusicUrl()));
+		assertEquals(msg.getUrl(), msg2.getUrl());
+		assertEquals(msg.getName(), msg2.getName());
+		assertEquals(msg.getMimeType(), msg2.getMimeType());
+		assertEquals(msg.getDesc(), msg2.getDesc());
 	}
 	
 	@Test
@@ -189,13 +165,9 @@ public class YXXMLConvert {
 		msg.setArticles(articles);
 		msg.setMsgId(1024102410241024L);
 		String str = xStream.toXML(msg);
-		logger.debug(str);
-		logger.debug(msg.getArticleCount());
 		NewsMessage msg2 = (NewsMessage) xStream.fromXML(str);
-		logger.debug(msg2.getArticleCount());
 		
-		assertTrue("News ArticleCount message convert faild.",
-				msg.getArticleCount() == msg2.getArticleCount());
+		assertEquals(msg.getArticleCount(), msg2.getArticleCount());
 	}
 
 }

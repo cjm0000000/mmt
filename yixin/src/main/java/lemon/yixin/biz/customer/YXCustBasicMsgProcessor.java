@@ -60,10 +60,14 @@ public abstract class YXCustBasicMsgProcessor implements YXCustMsgProcessor {
 			//save video message
 			wxMsgHelper.saveRecvVideoMsg((VideoMessage) msg);
 			return processVideoMsg(mmt_token, (VideoMessage) msg);
-		}else if(msg instanceof VoiceMessage){
+		}else if(msg instanceof AudioMessage){
 			//save voice message
-			wxMsgHelper.saveRecvVoiceMsg((VoiceMessage) msg);
-			return processVoiceMsg(mmt_token, (VoiceMessage) msg);
+			wxMsgHelper.saveRecvVoiceMsg((AudioMessage) msg);
+			return processAudioMsg(mmt_token, (AudioMessage) msg);
+		}else if(msg instanceof MusicMessage){
+			//save music message
+			wxMsgHelper.saveRecvMusicMsg((MusicMessage) msg);
+			return processMusicMsg(mmt_token, (MusicMessage) msg);
 		}
 		return null;
 	}
@@ -143,7 +147,15 @@ public abstract class YXCustBasicMsgProcessor implements YXCustMsgProcessor {
 	 * @param msg
 	 * @return
 	 */
-	public abstract String processVoiceMsg(String mmt_token, VoiceMessage msg);
+	public abstract String processAudioMsg(String mmt_token, AudioMessage msg);
+	
+	/**
+	 * process music message
+	 * @param mmt_token
+	 * @param msg
+	 * @return
+	 */
+	public abstract String processMusicMsg(String mmt_token, MusicMessage msg);
 	
 	/**
 	 * process subscribe event<BR>

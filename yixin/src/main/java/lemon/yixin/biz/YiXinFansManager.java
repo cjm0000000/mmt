@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * manage WeiXin fans
+ * manage YiXin fans
  * @author lemon
  * @version 1.0
  *

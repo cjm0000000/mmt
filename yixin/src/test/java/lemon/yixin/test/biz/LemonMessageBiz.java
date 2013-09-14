@@ -19,7 +19,9 @@ public class LemonMessageBiz extends YXCustBasicMsgProcessor {
 	@Autowired
 	private VideoMsgParser videoMsgParser;
 	@Autowired
-	private VoiceMsgParser voiceMsgParser;
+	private AudioMsgParser audioMsgParser;
+	@Autowired
+	private MusicMsgParser musicMsgParser;
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
 		TextMessage replyMsg = new TextMessage();
@@ -64,19 +66,29 @@ public class LemonMessageBiz extends YXCustBasicMsgProcessor {
 	public String processVideoMsg(String mmt_token, VideoMessage msg) {
 		VideoMessage replyMsg = new VideoMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setMediaId(msg.getMediaId());
-		replyMsg.setThumbMediaId(msg.getThumbMediaId());
+		replyMsg.setUrl(msg.getUrl());
+		replyMsg.setName(msg.getName());
 		return videoMsgParser.toXML(replyMsg);
 	}
 
 	@Override
-	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
-		VoiceMessage replyMsg = new VoiceMessage();
+	public String processAudioMsg(String mmt_token, AudioMessage msg) {
+		AudioMessage replyMsg = new AudioMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setFormat(msg.getFormat());
-		replyMsg.setMediaId(msg.getMediaId());
-		replyMsg.setRecognition(msg.getRecognition());
-		return voiceMsgParser.toXML(replyMsg);
+		replyMsg.setUrl(msg.getUrl());
+		replyMsg.setName(msg.getName());
+		return audioMsgParser.toXML(replyMsg);
+	}
+
+	@Override
+	public String processMusicMsg(String mmt_token, MusicMessage msg) {
+		MusicMessage replyMsg = new MusicMessage();
+		buildReplyMsg(msg, replyMsg);
+		replyMsg.setUrl(msg.getUrl());
+		replyMsg.setName(msg.getName());
+		replyMsg.setDesc(msg.getDesc());
+		replyMsg.setMimeType(msg.getMimeType());
+		return musicMsgParser.toXML(replyMsg);
 	}
 
 }

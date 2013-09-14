@@ -66,19 +66,27 @@ public interface YXRecvMsgDetailMapper {
 	@Insert("INSERT INTO yixin_recvmsg_link(detail_id,title,description,url) SELECT #{id}, #{title}, #{description},#{url}")
 	void saveLinkMsgDetail(LinkMessage msg);
 	/**
-	 *save voice message detail
+	 *save audio message detail
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO yixin_recvmsg_voice(detail_id,mediaId,format,recognition) SELECT #{id}, #{mediaId}, #{format},#{recognition}")
-	void saveVoiceMsgDetail(VoiceMessage msg);
+	@Insert("INSERT INTO yixin_recvmsg_audio(detail_id,url,name,mimeType) SELECT #{id}, #{url}, #{name},#{mimeType}")
+	void saveAudioMsgDetail(AudioMessage msg);
 	/**
 	 * save video message detail
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO yixin_recvmsg_video(detail_id,mediaId,thumbMediaId) SELECT #{id}, #{mediaId}, #{thumbMediaId}")
-	void saveVideoMessageDetail(VideoMessage msg);
+	@Insert("INSERT INTO yixin_recvmsg_video(detail_id,url,name,mimeType) SELECT #{id}, #{url}, #{name},#{mimeType}")
+	void saveVideoMsgDetail(VideoMessage msg);
+	
+	/**
+	 * save music message detail
+	 * 
+	 * @param msg
+	 */
+	@Insert("INSERT INTO yixin_recvmsg_music(detail_id,url,name,mimeType,`desc`) SELECT #{id},#{url},#{name},#{mimeType},#{desc}")
+	void saveMusicMsgDetail(MusicMessage msg);
 	
 	/**
 	 * get text message

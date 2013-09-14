@@ -8,7 +8,7 @@ import lemon.yixin.dao.YXRecvMsgDetailMapper;
 import lemon.yixin.dao.YXSendMsgDetailMapper;
 
 /**
- * WeiXin message helper
+ * YiXin message helper
  * @author lemon
  * @version 1.0
  *
@@ -30,7 +30,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin event message
+	 * save received YiXin event message
 	 * @param msg
 	 */
 	public void saveRecvEventMsg(EventMessage msg){
@@ -39,7 +39,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin image message
+	 * save received YiXin image message
 	 * @param msg
 	 */
 	public void saveRecvImageMsg(ImageMessage msg){
@@ -48,7 +48,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin link message
+	 * save received YiXin link message
 	 * @param msg
 	 */
 	public void saveRecvLinkMsg(LinkMessage msg){
@@ -57,7 +57,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin location message
+	 * save received YiXin location message
 	 * @param msg
 	 */
 	public void saveRecvLocationMsg(LocationMessage msg){
@@ -66,7 +66,16 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin text message
+	 * save received YiXin location message
+	 * @param msg
+	 */
+	public void saveRecvMusicMsg(MusicMessage msg){
+		saveRecvMsg(msg);
+		recvMsgMapper.saveMusicMsgDetail(msg);
+	}
+	
+	/**
+	 * save received YiXin text message
 	 * @param msg
 	 */
 	public void saveRecvTextMsg(TextMessage msg){
@@ -75,25 +84,25 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save received WeiXin video message
+	 * save received YiXin video message
 	 * @param msg
 	 */
 	public void saveRecvVideoMsg(VideoMessage msg){
 		saveRecvMsg(msg);
-		recvMsgMapper.saveVideoMessageDetail(msg);
+		recvMsgMapper.saveVideoMsgDetail(msg);
 	}
 	
 	/**
-	 * save received WeiXin voice message
+	 * save received YiXin voice message
 	 * @param msg
 	 */
-	public void saveRecvVoiceMsg(VoiceMessage msg){
+	public void saveRecvVoiceMsg(AudioMessage msg){
 		saveRecvMsg(msg);
-		recvMsgMapper.saveVoiceMsgDetail(msg);
+		recvMsgMapper.saveAudioMsgDetail(msg);
 	}
 	
 	/**
-	 * save send WeiXin music message
+	 * save send YiXin music message
 	 * @param msg
 	 */
 	public void saveSendMusicMsg(MusicMessage msg){
@@ -102,7 +111,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save send WeiXin music message
+	 * save send YiXin music message
 	 * @param msg
 	 */
 	public void saveSendNewsMsg(NewsMessage msg){
@@ -115,7 +124,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save send WeiXin text message
+	 * save send YiXin text message
 	 * @param msg
 	 */
 	public void saveSendTextMsg(TextMessage msg){
@@ -124,7 +133,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save WeiXin common receive message 
+	 * save YiXin common receive message 
 	 * @param msg
 	 */
 	private void saveRecvMsg(YiXinMessage msg){
@@ -132,7 +141,7 @@ public final class YiXinMsgHelper {
 	}
 	
 	/**
-	 * save WeiXin common receive message 
+	 * save YiXin common receive message 
 	 * @param msg
 	 */
 	private void saveSendMsg(YiXinMessage msg){

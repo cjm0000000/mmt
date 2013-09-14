@@ -6,6 +6,7 @@ import lemon.yixin.biz.parser.*;
 import lemon.yixin.dao.YXSendMsgDetailMapper;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -35,6 +36,8 @@ public class SendMsgDetailTest {
 	}
 	
 	@Test
+	@Ignore
+	//FIXME 需要生产环境测试下发送的音乐消息的格式
 	public void testSaveMusicMsg(){
 		String msg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377754486787</CreateTime><MsgType><![CDATA[music]]></MsgType><MusicUrl><![CDATA[http://music.baidu.com/a/a/d.mp3]]></MusicUrl><HQMusicUrl><![CDATA[HQmusic  ss s]]></HQMusicUrl></xml>";
 		MusicMessage msgObj = acx.getBean(MusicMsgParser.class).toMsg(msg);

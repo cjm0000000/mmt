@@ -102,7 +102,7 @@ public abstract class WXMsgParser implements MsgParser {
 		InputStream is = null;
 		try {
 			try {
-				is = new ByteArrayInputStream(msg.getBytes());
+				is = new ByteArrayInputStream(msg.getBytes(WeiXin.LOCAL_CHARSET));
 				Document doc = new SAXBuilder().build(is);
 				Element e = doc.getRootElement().getChild("MsgType");
 				return e.getValue();
