@@ -1,0 +1,59 @@
+<div class="col-md-9" role="main">
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">
+			  	<button type="button" class="btn btn-success btn-md" >
+				  <span class="glyphicon glyphicon-plus-sign"></span> 添 加
+				</button>
+				<button type="button" class="btn btn-info btn-md" >
+				  <span class="glyphicon glyphicon-edit"></span> 编 辑
+				</button>
+				<button type="button" class="btn btn-danger btn-md" >
+				  <span class="glyphicon glyphicon-trash"></span> 删 除
+				</button>
+
+			  </div>
+			
+			  <!-- Table -->
+			  <table class="table">
+		          <thead>
+		            <tr>
+		              <th>#</th>
+		              <th>First Name</th>
+		              <th>Last Name</th>
+		              <th>Username</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		            <tr>
+		              <td>1</td>
+		              <td>Mark</td>
+		              <td>Otto</td>
+		              <td>@mdo</td>
+		            </tr>
+		            <tr>
+		              <td>2</td>
+		              <td>Jacob</td>
+		              <td>Thornton</td>
+		              <td>@fat</td>
+		            </tr>
+		            <tr>
+		              <td>3</td>
+		              <td>Larry</td>
+		              <td>the Bird</td>
+		              <td>@twitter</td>
+		            </tr>
+		          </tbody>
+		        </table>
+		        <!--分页-->
+		        <ul class="pagination" style="float:right;">
+				  <li><a href="#">&laquo;</a></li>
+				  <li><a href="#">1</a></li>
+				  <li><a href="#">2</a></li>
+				  <li><a href="#">3</a></li>
+				  <li><a href="#">4</a></li>
+				  <li><a href="#">5</a></li>
+				  <li><a href="#">&raquo;</a></li>
+				</ul>
+			</div>
+		</div>
