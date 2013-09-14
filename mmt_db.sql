@@ -452,7 +452,6 @@ CREATE TABLE `yixin_recvmsg_event` (
 CREATE TABLE `yixin_recvmsg_image` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
   `picUrl` varchar(100) DEFAULT NULL COMMENT '图片链接',
-  `mediaId` char(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信图片消息接收表';
 

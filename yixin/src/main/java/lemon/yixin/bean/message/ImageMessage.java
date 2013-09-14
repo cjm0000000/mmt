@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
-public class ImageMessage extends MediaMessage {
+public class ImageMessage extends YiXinMessage {
 	/** PicUrl */
 	@XStreamAlias("PicUrl")
 	@XStreamCDATA

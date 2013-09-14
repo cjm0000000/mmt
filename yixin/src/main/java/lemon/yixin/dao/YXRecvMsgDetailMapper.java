@@ -39,7 +39,7 @@ public interface YXRecvMsgDetailMapper {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO yixin_recvmsg_image(detail_id,picUrl,mediaId) SELECT #{id}, #{picUrl}, #{mediaId}")
+	@Insert("INSERT INTO yixin_recvmsg_image(detail_id,picUrl) SELECT #{id}, #{picUrl}")
 	void saveImageMsgDetail(ImageMessage msg);
 
 	/**
