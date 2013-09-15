@@ -43,7 +43,7 @@ public class LoginAction extends MMTAction {
 	 * verify user login
 	 * @param user_name
 	 * @param password
-	 * @param session
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value="/login")
@@ -58,14 +58,12 @@ public class LoginAction extends MMTAction {
 			//用户不存在
 			msg = "用户名不存在。";
 			logger.debug(msg);
-			password = null;
 			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
 		if(null == encryptKeyItem){
 			msg = "您的密钥没有设置，请联系管理员。";
-			password = null;
 			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		//验证用户名和密码
@@ -75,10 +73,11 @@ public class LoginAction extends MMTAction {
 				user == null ? 0 : user.getRole_id(), user != null);
 		if(user != null){
 			request.getSession().setAttribute(TOKEN, user);
+			//TODO 修改主页menu
+			request.getSession().setAttribute("index-menu-id", "2");
 			return new ModelAndView("redirect:/"+VIEW_HOME_PAGE,"user",user);
 		}else{
 			msg = "用户名和密码不匹配。";
-			password = null;
 			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 		}
 		

@@ -16,8 +16,8 @@
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="../bootstrap/assets/js/html5shiv.js"></script>
-      <script src="../bootstrap/assets/js/respond.min.js"></script>
+      <script src="../../bootstrap/assets/js/html5shiv.js"></script>
+      <script src="../../bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
 
@@ -34,14 +34,14 @@
 
 	  ### Main模板
 	  #include("system/main.vm")
-		
+
     </div> <!-- /container -->
 	### 底部模板
 	#include("footer.vm")
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../bootstrap/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="../../bootstrap/assets/js/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </body>
 </html>

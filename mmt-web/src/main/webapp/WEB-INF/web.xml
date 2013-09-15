@@ -57,7 +57,7 @@
 		<url-pattern>/cgi-bin/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>mmtweb/index.html</welcome-file>
+		<welcome-file></welcome-file>
 	</welcome-file-list>
 
 </web-app>

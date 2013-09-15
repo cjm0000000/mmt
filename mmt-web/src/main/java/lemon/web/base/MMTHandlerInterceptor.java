@@ -9,6 +9,7 @@ import lemon.web.system.bean.User;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,13 +30,15 @@ public class MMTHandlerInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		//对于主页和登录页面不做处理
-		if(handler instanceof LoginAction || handler instanceof HomeAction)
+		HandlerMethod hm = (HandlerMethod) handler;
+		
+		if(hm.getBean() instanceof LoginAction || hm.getBean() instanceof HomeAction)
 			return true;
-		User user = (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute(MMTAction.TOKEN);
 		//跳到登录页面
 		if(null == user){
 			logger.debug("用户SESSION失效");
-			response.sendRedirect("/index");
+			response.sendRedirect(request.getContextPath()+"/index");
 			return false;
 		}
 		return true;

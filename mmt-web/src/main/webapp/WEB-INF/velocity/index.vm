@@ -47,7 +47,7 @@
 	                #if($user_token.role_id == 1)
 	                <li class="divider"></li>
 	                <li class="dropdown-header">管理员入口</li>
-	                <li><a href="cgi-bin/system">系统管理</a></li>
+	                <li><a href="cgi-bin/system/1">系统管理</a></li>
 	                #end
 	              </ul>
 	            </li>

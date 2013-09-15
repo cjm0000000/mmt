@@ -19,25 +19,13 @@ public class HomeAction extends MMTAction {
 	@Autowired
 	private UserMapper userMapper;
 	
-	
 	/**
 	 * show home page
-	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value="index")
 	public ModelAndView index(){
 		return new ModelAndView(VIEW_HOME_PAGE,"",null);
-	}
-	
-	/**
-	 * show home page
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value="system")
-	public ModelAndView systemIndex(){
-		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE,"",null);
 	}
 	
 }

@@ -19,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class UserConfigMapperTest {
 	private AbstractApplicationContext acx;
 	private UserConfigMapper userConfigMapper;
-	private final int user_id = 1;
+	private final int user_id = 11;
 	
 	@Before
 	public void init(){
