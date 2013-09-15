@@ -95,10 +95,10 @@ public class MenuMapperTest {
 		Menu m2 = addMenu("3", m1.getMenu_id());
 		Menu m3 = addMenu("3", m1.getMenu_id());
 		roleMapper.setRoleAuthority(role1.getRole_id(), new int[]{m1.getMenu_id(),m2.getMenu_id(),m3.getMenu_id()});
-		List<Menu> l1 = menuMapper.getMenuListByRole(role1.getRole_id());
+		List<Menu> l1 = menuMapper.getMenuListByRole(role1.getRole_id(),"2");
 		assertNotNull(l1);
 		assertEquals(3, l1.size());
-		List<Menu> l2 = menuMapper.getMenuListByRole(role2.getRole_id());
+		List<Menu> l2 = menuMapper.getMenuListByRole(role2.getRole_id(),"3");
 		assertNotNull(l2);
 		assertEquals(0, l2.size());
 	}

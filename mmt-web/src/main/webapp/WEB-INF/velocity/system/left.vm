@@ -2,8 +2,11 @@
 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="list-group">
 		#foreach($menu in $index.left_nav_list)
-			<a href="$menu.menuurl" class="list-group-item"><span class="$menu.menuico"></span> $menu.menu_name</a>
+			#if($index.CUSTOMIZATION_HOME == $menu.menu_id)
+				<a href="$menu.menuurl" class="list-group-item active"><span class="$menu.menuico"></span> $menu.menu_name</a>
+			#else
+				<a href="$menu.menuurl" class="list-group-item"><span class="$menu.menuico"></span> $menu.menu_name</a>
+			#end
 		#end
-		<a href="#" class="list-group-item active"><span class="glyphicon glyphicon-list"></span> 测试[带Active符号]</a>
 	</div>
 </div><!--/span-->

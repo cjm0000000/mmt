@@ -73,8 +73,11 @@ public class LoginAction extends MMTAction {
 				user == null ? 0 : user.getRole_id(), user != null);
 		if(user != null){
 			request.getSession().setAttribute(TOKEN, user);
-			//TODO 修改主页menu
-			request.getSession().setAttribute("index-menu-id", "2");
+			//加载用户定制化信息
+			//加载主页
+			UserConfig indexConfig = userConfigMapper.getItem(user.getUser_id(), USER_CUSTOMIZATION_HOME);
+			if(indexConfig != null)
+				request.getSession().setAttribute(USER_CUSTOMIZATION_HOME, indexConfig.getValue());
 			return new ModelAndView("redirect:/"+VIEW_HOME_PAGE,"user",user);
 		}else{
 			msg = "用户名和密码不匹配。";

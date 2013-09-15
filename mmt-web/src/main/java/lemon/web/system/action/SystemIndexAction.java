@@ -36,8 +36,13 @@ public class SystemIndexAction extends MMTAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("system/{nav_menu_id}")
-	public ModelAndView index(@PathVariable int nav_menu_id, HttpSession session) {
+	@RequestMapping("system/{cust_home_menu}")
+	public ModelAndView index(@PathVariable int cust_home_menu, HttpSession session) {
+		Menu activeMenu = menuMapper.getMenu(cust_home_menu);
+		if(null == activeMenu || !"3".equals(activeMenu.getMenulevcod())){
+			//FIXME Spring Exception处理，参考github 例子
+			throw new RuntimeException();
+		}
 		User user = (User) session.getAttribute(TOKEN);
 		//获取站点名称
 		List<Menu> root_list = menuMapper.getMenuListByLevel("1");
@@ -47,13 +52,17 @@ public class SystemIndexAction extends MMTAction {
 		}
 		Menu root = root_list.get(0);
 		//获取导航菜单
-		List<Menu> nav_list = menuMapper.getMenuListByLevel("2");
+		List<Menu> nav_list = menuMapper.getMenuListByRole(user.getRole_id(), "2");
 		//获取左侧导航菜单
-		List<Menu> left_nav_list = menuMapper.getMenuListByLevel("3");
+		int activeNav = activeMenu.getSupmenucode();
+		List<Menu> left_nav_list = menuMapper.getLeafMenuListByRole(user.getRole_id(), activeNav);
+		//传给模板
 		Map<String, Object> index = new HashMap<>();
 		index.put("nav_list", nav_list);
 		index.put("left_nav_list", left_nav_list);
 		index.put("site_name", root.getMenu_name());
+		index.put(USER_CUSTOMIZATION_HOME, cust_home_menu);
+		index.put("active-nav", activeNav);
 		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "index", index);
 	}
 }

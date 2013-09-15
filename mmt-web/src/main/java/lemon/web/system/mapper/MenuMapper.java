@@ -5,6 +5,7 @@ import java.util.List;
 import lemon.web.system.bean.Menu;
 
 import org.apache.ibatis.annotations.Lang;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
@@ -58,12 +59,14 @@ public interface MenuMapper {
 	List<Menu> getMenuList();
 	
 	/**
-	 * get menu list by role id
+	 * get menu list by role id and level
 	 * @param role_id
+	 * @param level
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	List<Menu> getMenuListByRole(int role_id);
+	List<Menu> getMenuListByRole(@Param("role_id") int role_id,
+			@Param("level") String level);
 
 	/**
 	 * get menu list by menu level
@@ -72,4 +75,14 @@ public interface MenuMapper {
 	 */
 	@Lang(RawLanguageDriver.class)
 	List<Menu> getMenuListByLevel(String level);
+	
+	/**
+	 * get leaf menu list by role id
+	 * @param role_id
+	 * @param supmenucode
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	List<Menu> getLeafMenuListByRole(@Param("role_id") int role_id,
+			@Param("supmenucode") int supmenucode);
 }
