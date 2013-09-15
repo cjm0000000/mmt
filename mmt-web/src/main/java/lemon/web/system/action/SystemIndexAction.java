@@ -1,7 +1,9 @@
 package lemon.web.system.action;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,17 +32,28 @@ public class SystemIndexAction extends MMTAction {
 
 	/**
 	 * show system home page
-	 * 
+	 * @param nav_menu_id
+	 * @param session
 	 * @return
 	 */
-	@RequestMapping("system/{menu_id}")
-	public ModelAndView index(@PathVariable int menu_id, HttpSession session) {
+	@RequestMapping("system/{nav_menu_id}")
+	public ModelAndView index(@PathVariable int nav_menu_id, HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
+		//获取站点名称
+		List<Menu> root_list = menuMapper.getMenuListByLevel("1");
+		if(root_list.size() == 0){
+			//FIXME Spring Exception处理，参考github 例子
+			throw new RuntimeException();
+		}
+		Menu root = root_list.get(0);
 		//获取导航菜单
 		List<Menu> nav_list = menuMapper.getMenuListByLevel("2");
-		for (Menu menu : nav_list) {
-			System.out.println(menu.getMenu_name());
-		}
-		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "nav_list", nav_list);
+		//获取左侧导航菜单
+		List<Menu> left_nav_list = menuMapper.getMenuListByLevel("3");
+		Map<String, Object> index = new HashMap<>();
+		index.put("nav_list", nav_list);
+		index.put("left_nav_list", left_nav_list);
+		index.put("site_name", root.getMenu_name());
+		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "index", index);
 	}
 }

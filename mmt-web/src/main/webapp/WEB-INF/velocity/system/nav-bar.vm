@@ -1,27 +1,26 @@
-<!-- Static navbar -->
-      <div class="navbar navbar-default">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+### 后台导航模板
+<div class="navbar navbar-default">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">MMT系统管理</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-          	#foreach( $menu in $nav_list)
-			    #if($menu.menu_id == ${index-menu-id})
-			    	<li class="active"><a href="#"><span class="$menu.iconCls"></span> $menu.menu_name</a></li>
-			    #else
-			    	<li><a href="#"><span class="$menu.iconCls"></span> $menu.menu_name</a></li>
-			    #end
+		</button>
+		<span class="navbar-brand" ><span class="glyphicon glyphicon-home"></span> $index.site_name</span>
+	</div>
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			#foreach( $menu in $index.nav_list)
+				#if($menu.menu_id == ${index-menu-id})
+					<li class="active"><a href="#"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
+				#else
+					<li><a href="#"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
+				#end
 			#end
-            <li><a href="../.."><span class="glyphicon glyphicon-home"></span> 返回首页</a></li>
-            
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> 注 销</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+			<li><a href="../.."><span class="glyphicon glyphicon-home"></span> 返回首页</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> 注 销</a></li>
+		</ul>
+	</div><!--/.nav-collapse -->
+</div>

@@ -15,7 +15,6 @@ public class Menu {
 	private String menuurl;
 	private String menuico;
 	private int sort;
-	private String iconCls;
 	private String authority;
 	
 	public int getMenu_id() {
@@ -59,12 +58,6 @@ public class Menu {
 	}
 	public void setSort(int sort) {
 		this.sort = sort;
-	}
-	public String getIconCls() {
-		return iconCls;
-	}
-	public void setIconCls(String iconCls) {
-		this.iconCls = iconCls;
 	}
 	public String getAuthority() {
 		return authority;

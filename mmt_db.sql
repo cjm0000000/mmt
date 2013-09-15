@@ -82,7 +82,6 @@ CREATE TABLE `system_menu` (
   `menuurl` varchar(100) DEFAULT NULL COMMENT '菜单链接',
   `menuico` varchar(60) DEFAULT NULL COMMENT '菜单风格',
   `sort` decimal(4,0) DEFAULT '0' COMMENT '排序号',
-  `iconCls` varchar(20) DEFAULT '' COMMENT '功能样式',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单表';
 

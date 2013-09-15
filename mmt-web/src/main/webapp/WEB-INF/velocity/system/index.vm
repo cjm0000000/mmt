@@ -24,13 +24,13 @@
   <body>
     <div class="container">
 	  ### 顶部导航模板
-      #include("system/nav-bar.vm")
+      #parse("system/nav-bar.vm")
       
       ### 面包屑导航模板
       #include("system/breadcrumb-nav.vm")
       
       ### 左侧菜单模板
-      #include("system/left.vm")
+      #parse("system/left.vm")
 
 	  ### Main模板
 	  #include("system/main.vm")

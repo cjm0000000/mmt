@@ -70,7 +70,6 @@ public class MenuMapperTest {
 		menu.setMenulevcod("");
 		menu.setSupmenucode(10);
 		menu.setMenuico("");
-		menu.setIconCls(null);
 		menuMapper.editMenu(menu);
 		menu  = menuMapper.getMenu(menu.getMenu_id());
 		assertEquals(10, menu.getSupmenucode());
