@@ -30,7 +30,10 @@ public class MMTHandlerInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		//对于主页和登录页面不做处理
-		HandlerMethod hm = (HandlerMethod) handler;
+		HandlerMethod hm = null;
+		if(handler instanceof HandlerMethod)
+			hm = (HandlerMethod) handler;
+		if(null == hm) return false;
 		
 		if(hm.getBean() instanceof LoginAction || hm.getBean() instanceof HomeAction)
 			return true;

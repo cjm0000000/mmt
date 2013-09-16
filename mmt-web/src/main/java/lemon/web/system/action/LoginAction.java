@@ -2,6 +2,7 @@ package lemon.web.system.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import lemon.shared.entity.Status;
 import lemon.shared.util.SecureUtil;
@@ -13,10 +14,9 @@ import lemon.web.system.bean.UserConfig;
 import lemon.web.system.mapper.UserConfigMapper;
 import lemon.web.system.mapper.UserMapper;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +31,6 @@ public class LoginAction extends MMTAction {
 	/** 用户存放密钥的KEY */
 	private static final String ENCRYPY_KEY = "EncryptKey";
 	
-	private static Log logger = LogFactory.getLog(LoginAction.class);
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
@@ -47,43 +46,38 @@ public class LoginAction extends MMTAction {
 	 * @return
 	 */
 	@RequestMapping(value="/login")
-	public ModelAndView login(String user_name,String password,HttpServletRequest request){
-		if(null == user_name){
-			return new ModelAndView(VIEW_LOGIN_PAGE,"",null);
+	public ModelAndView login(@Valid User u,BindingResult result,
+			HttpServletRequest request) {
+		//FIXME 用户名自动填充，验证顺序是否可以调整；另外验证失败，好像程序还会继续向下执行
+		if(result.hasErrors()){
+			return info(result.getFieldError().getDefaultMessage());
 		}
-		Integer user_id = userMapper.getUserIdByName(user_name);
-		//提示信息
-		String msg = null;
+		Integer user_id = userMapper.getUserIdByName(u.getUser_name());
 		if(user_id == null){
 			//用户不存在
-			msg = "用户名不存在。";
-			logger.debug(msg);
-			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
+			return info("用户名不存在。");
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
 		if(null == encryptKeyItem){
-			msg = "您的密钥没有设置，请联系管理员。";
-			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
+			return info("您的密钥没有设置，请联系管理员。");
 		}
 		//验证用户名和密码
-		User user = userMapper.checkLogin(user_name,SecureUtil.aesEncrypt(password, encryptKeyItem.getValue()));
+		User user = userMapper.checkLogin(u.getUser_name(),SecureUtil.aesEncrypt(u.getPassword(), encryptKeyItem.getValue()));
 		//保存日志
-		saveLoginLog(request.getRemoteAddr(), user_id, user_name,
-				user == null ? 0 : user.getRole_id(), user != null);
-		if(user != null){
-			request.getSession().setAttribute(TOKEN, user);
-			//加载用户定制化信息
-			//加载主页
-			UserConfig indexConfig = userConfigMapper.getItem(user.getUser_id(), USER_CUSTOMIZATION_HOME);
-			if(indexConfig != null)
-				request.getSession().setAttribute(USER_CUSTOMIZATION_HOME, indexConfig.getValue());
-			return new ModelAndView("redirect:/"+VIEW_HOME_PAGE,"user",user);
-		}else{
-			msg = "用户名和密码不匹配。";
-			return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
+		saveLoginLog(request.getRemoteAddr(), user_id, u.getUser_name(),user == null ? 0 : user.getRole_id(), user != null);
+		//没有查到用户
+		if(null == user){
+			return info("用户名和密码不匹配。");
 		}
-		
+		//登录成功，数据初始化
+		request.getSession().setAttribute(TOKEN, user);
+		//加载用户定制化信息
+		//加载主页
+		UserConfig indexConfig = userConfigMapper.getItem(user.getUser_id(), USER_CUSTOMIZATION_HOME);
+		if(indexConfig != null)
+			request.getSession().setAttribute(USER_CUSTOMIZATION_HOME, indexConfig.getValue());
+		return new ModelAndView("redirect:/"+VIEW_HOME_PAGE,"user",user);
 	}
 	
 	/**
@@ -118,6 +112,15 @@ public class LoginAction extends MMTAction {
 		else
 			log.setLoginstatus(Status.UNAVAILABLE);
 		systemLogManager.saveLoginLog(log);
+	}
+	
+	/**
+	 * 返回提示信息
+	 * @param msg
+	 * @return
+	 */
+	private ModelAndView info(String msg){
+		return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
 	}
 	
 }

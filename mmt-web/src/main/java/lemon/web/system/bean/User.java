@@ -1,5 +1,8 @@
 package lemon.web.system.bean;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lemon.shared.entity.Status;
 
 
@@ -12,7 +15,10 @@ import lemon.shared.entity.Status;
  */
 public class User {
 	private int user_id;
+	@NotEmpty(message="密码不能为空")
 	private String password;
+	@NotEmpty(message="用户名不能为空")
+	@Length(max = 30, min = 3, message = "用户名长度必须在 3 - 30 位之间")
 	private String user_name;
 	private String idcard;
 	private String mphone;

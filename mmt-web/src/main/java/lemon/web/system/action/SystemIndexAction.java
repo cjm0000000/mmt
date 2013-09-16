@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import lemon.web.base.MMTAction;
+import lemon.web.base.MMTException;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.MenuMapper;
@@ -40,15 +41,13 @@ public class SystemIndexAction extends MMTAction {
 	public ModelAndView index(@PathVariable int cust_home_menu, HttpSession session) {
 		Menu activeMenu = menuMapper.getMenu(cust_home_menu);
 		if(null == activeMenu || !"3".equals(activeMenu.getMenulevcod())){
-			//FIXME Spring Exception处理，参考github 例子
-			throw new RuntimeException();
+			throw new MMTException("您无权访问。");
 		}
 		User user = (User) session.getAttribute(TOKEN);
 		//获取站点名称
 		List<Menu> root_list = menuMapper.getMenuListByLevel("1");
 		if(root_list.size() == 0){
-			//FIXME Spring Exception处理，参考github 例子
-			throw new RuntimeException();
+			throw new MMTException("读取系统数据失败。");
 		}
 		Menu root = root_list.get(0);
 		//获取导航菜单
