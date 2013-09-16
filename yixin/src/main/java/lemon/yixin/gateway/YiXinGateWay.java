@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  *
  */
-@Service("yixinxGW")
+@Service("yixinGW")
 public class YiXinGateWay implements Filter {
 	private static Log logger = LogFactory.getLog(YiXinGateWay.class);
 	@Resource(name="yiXinAPI")
