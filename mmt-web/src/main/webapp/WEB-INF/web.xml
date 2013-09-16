@@ -50,7 +50,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MMTDispatcher</servlet-name>
-		<url-pattern>/cgi-bin/*</url-pattern>
+		<url-pattern>/webservices/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MMTDispatcher</servlet-name>
