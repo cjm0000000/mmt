@@ -11,6 +11,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>lemon.web.global.MMTListener</listener-class>
+	</listener>
 	<!-- 微信网关配置 -->
 	<filter>
 		<filter-name>microChatGW</filter-name>

@@ -1,6 +1,4 @@
-package lemon.web;
-
-import lemon.web.base.MMTException;
+package lemon.web.global;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

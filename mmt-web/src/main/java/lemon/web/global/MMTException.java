@@ -1,4 +1,4 @@
-package lemon.web.base;
+package lemon.web.global;
 
 /**
  * MMTException<br>
