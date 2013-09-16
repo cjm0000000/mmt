@@ -138,7 +138,7 @@ public class MessageTest {
 	}
 	@Test
 	public void locationMsgTest(){
-		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[???????????????????????26? ????: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
+		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[浙江省杭州市: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(), "Lemon Location message replay.");
