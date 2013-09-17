@@ -61,6 +61,22 @@ public interface MenuMapper {
 			@Param("superUrl") String superUrl);
 	
 	/**
+	 * get second menu by menu URL
+	 * @param menuurl
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	Menu getSecondLevelMenuByUrl(String menuurl);
+	
+	/**
+	 * get default child
+	 * @param supmenucode
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	Menu getDefaultChild(int supmenucode);
+	
+	/**
 	 * get all menu list
 	 * 
 	 * @return

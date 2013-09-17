@@ -116,12 +116,31 @@ public class MenuMapperTest {
 	}
 	
 	@Test
+	@Ignore
 	public void getLeafMenuByUrl(){
 		String url = "menu";
 		String superUrl = "system";
 		Menu menu = menuMapper.getLeafMenuByUrl(url, superUrl);
 		assertNotNull(menu);
 		assertEquals(7, menu.getMenu_id());
+	}
+	
+	@Test
+	@Ignore
+	public void getSecondLevelMenuByUrl(){
+		String url = "system";
+		Menu menu = menuMapper.getSecondLevelMenuByUrl(url);
+		assertNotNull(menu);
+		assertEquals(2, menu.getMenu_id());
+	}
+	
+	@Test
+	@Ignore
+	public void getDefaultChild(){
+		int menu_id = 2;
+		Menu menu = menuMapper.getDefaultChild(menu_id);
+		assertNotNull(menu);
+		assertEquals(5, menu.getMenu_id());
 	}
 	
 	private Menu addMenu(String lev, int parent_id){

@@ -46,6 +46,19 @@
        				WHERE B.menuurl=#{superUrl} 
        					AND A.supmenucode=B.menu_id)
 	</select>
+	<select id="getSecondLevelMenuByUrl" parameterType="string" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.menulevcod='2'
+			AND A.menuurl=#{menuurl}
+	</select>
+	<select id="getDefaultChild" parameterType="int" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.supmenucode=#{supmenucode}
+		ORDER BY A.sort
+		LIMIT 1
+	</select>
 	<select id="getMenuList" resultType="lemon.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A 
