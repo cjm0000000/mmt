@@ -63,6 +63,8 @@ public class SystemIndexAction extends MMTAction {
 		Map<String, Menu> breadNavMap = new HashMap<>();
 		breadNavMap.put("second", secondMenu);
 		breadNavMap.put("third", activeMenu);
+		//获取Main页面数据
+		//FIXME 获取Main页面数据;Spring Security整合
 		//传给模板
 		Map<String, Object> index = new HashMap<>();
 		index.put("nav_list", nav_list);
