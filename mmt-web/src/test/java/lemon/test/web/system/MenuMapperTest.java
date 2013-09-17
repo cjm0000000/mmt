@@ -34,20 +34,20 @@ public class MenuMapperTest {
 		roleMapper = acx.getBean(RoleMapper.class);
 		assertNotNull(menuMapper);
 		assertNotNull(roleMapper);
-		List<Menu> list = menuMapper.getMenuList();
-		for (Menu menu : list) {
-			if(menu.getMenu_id() != 1)
-				menuMapper.deleteMenu(menu.getMenu_id());
-		}
+//		List<Menu> list = menuMapper.getMenuList();
+//		for (Menu menu : list) {
+//			if(menu.getMenu_id() != 1)
+//				menuMapper.deleteMenu(menu.getMenu_id());
+//		}
 	}
 	
 	@After
 	public void destory(){
-		List<Menu> list = menuMapper.getMenuList();
-		for (Menu menu : list) {
-			if(menu.getMenu_id() != 1)
-				menuMapper.deleteMenu(menu.getMenu_id());
-		}
+//		List<Menu> list = menuMapper.getMenuList();
+//		for (Menu menu : list) {
+//			if(menu.getMenu_id() != 1)
+//				menuMapper.deleteMenu(menu.getMenu_id());
+//		}
 		acx.close();
 	}
 	
@@ -113,6 +113,15 @@ public class MenuMapperTest {
 		assertEquals(1, l2.size());
 		List<Menu> l3 = menuMapper.getMenuListByLevel("3");
 		assertEquals(2, l3.size());
+	}
+	
+	@Test
+	public void getLeafMenuByUrl(){
+		String url = "menu";
+		String superUrl = "system";
+		Menu menu = menuMapper.getLeafMenuByUrl(url, superUrl);
+		assertNotNull(menu);
+		assertEquals(7, menu.getMenu_id());
 	}
 	
 	private Menu addMenu(String lev, int parent_id){

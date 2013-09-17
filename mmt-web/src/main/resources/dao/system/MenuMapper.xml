@@ -37,6 +37,15 @@
 			FROM system_menu A
 		WHERE A.menu_id=#{menu_id}
 	</select>
+	<select id="getLeafMenuByUrl" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.menuurl=#{url}
+       		AND EXISTS(SELECT 1 FROM 
+       					system_menu B 
+       				WHERE B.menuurl=#{superUrl} 
+       					AND A.supmenucode=B.menu_id)
+	</select>
 	<select id="getMenuList" resultType="lemon.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A 

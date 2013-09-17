@@ -51,6 +51,16 @@ public interface MenuMapper {
 	Menu getMenu(int menu_id);
 	
 	/**
+	 * get third menu by menu URL and super menu URL
+	 * @param url
+	 * @param superUrl
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	Menu getLeafMenuByUrl(@Param("url") String url,
+			@Param("superUrl") String superUrl);
+	
+	/**
 	 * get all menu list
 	 * 
 	 * @return
