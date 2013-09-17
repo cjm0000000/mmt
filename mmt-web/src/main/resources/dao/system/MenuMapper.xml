@@ -37,53 +37,15 @@
 			FROM system_menu A
 		WHERE A.menu_id=#{menu_id}
 	</select>
-	<select id="getLeafMenuByUrl" resultType="lemon.web.system.bean.Menu">
-		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
-			FROM system_menu A
-		WHERE A.menuurl=#{url}
-       		AND EXISTS(SELECT 1 FROM 
-       					system_menu B 
-       				WHERE B.menuurl=#{superUrl} 
-       					AND A.supmenucode=B.menu_id)
-	</select>
-	<select id="getSecondLevelMenuByUrl" parameterType="string" resultType="lemon.web.system.bean.Menu">
-		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
-			FROM system_menu A
-		WHERE A.menulevcod='2'
-			AND A.menuurl=#{menuurl}
-	</select>
-	<select id="getDefaultChild" parameterType="int" resultType="lemon.web.system.bean.Menu">
-		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
-			FROM system_menu A
-		WHERE A.supmenucode=#{supmenucode}
-		ORDER BY A.sort
-		LIMIT 1
-	</select>
 	<select id="getMenuList" resultType="lemon.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A 
 		ORDER BY A.menulevcod,A.sort
-	</select>
-	<select id="getMenuListByRole" resultType="lemon.web.system.bean.Menu">
-		SELECT B.menu_id,B.menu_name,B.menulevcod,B.supmenucode,B.menuurl,B.menuico
-			FROM system_role_menu A,system_menu B
-		WHERE A.menu_id=B.menu_id
-			AND A.role_id=#{role_id}
-			AND B.menulevcod=#{level}
-		ORDER BY B.menulevcod,B.sort
 	</select>
 	<select id="getMenuListByLevel" parameterType="string" resultType="lemon.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.menulevcod=#{level}
 		ORDER BY A.menulevcod,A.sort
-	</select>
-	<select id="getLeafMenuListByRole" resultType="lemon.web.system.bean.Menu">
-		SELECT B.menu_id,B.menu_name,B.menulevcod,B.supmenucode,B.menuurl,B.menuico
-			FROM system_role_menu A,system_menu B
-		WHERE A.menu_id=B.menu_id
-			AND A.role_id=#{role_id}
-			AND B.supmenucode=#{supmenucode}
-		ORDER BY B.menulevcod,B.sort
 	</select>
 </mapper>

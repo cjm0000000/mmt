@@ -12,9 +12,9 @@
 		<ul class="nav navbar-nav">
 			#foreach( $menu in $index.nav_list)
 				#if($menu.menu_id == $index.active-nav)
-					<li class="active"><a href="$menu.menu_id"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
+					<li class="active"><a href="../../$menu.menuurl"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
 				#else
-					<li><a href="$menu.menu_id"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
+					<li><a href="../../$menu.menuurl"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
 				#end
 			#end
 			<li><a href="#{getContextPath}"><span class="glyphicon glyphicon-home"></span> 返回首页</a></li>

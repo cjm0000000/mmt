@@ -88,23 +88,6 @@ public class MenuMapperTest {
 	
 	@Test
 	@Ignore
-	public void getMenuListByRole(){
-		Role role1 = addRole();
-		Role role2 = addRole();
-		Menu m1 = addMenu("2", 1);
-		Menu m2 = addMenu("3", m1.getMenu_id());
-		Menu m3 = addMenu("3", m1.getMenu_id());
-		roleMapper.setRoleAuthority(role1.getRole_id(), new int[]{m1.getMenu_id(),m2.getMenu_id(),m3.getMenu_id()});
-		List<Menu> l1 = menuMapper.getMenuListByRole(role1.getRole_id(),"2");
-		assertNotNull(l1);
-		assertEquals(3, l1.size());
-		List<Menu> l2 = menuMapper.getMenuListByRole(role2.getRole_id(),"3");
-		assertNotNull(l2);
-		assertEquals(0, l2.size());
-	}
-	
-	@Test
-	@Ignore
 	public void getMenuListByLevel(){
 		Menu m1 = addMenu("2", 1);
 		addMenu("3", m1.getMenu_id());
@@ -113,34 +96,6 @@ public class MenuMapperTest {
 		assertEquals(1, l2.size());
 		List<Menu> l3 = menuMapper.getMenuListByLevel("3");
 		assertEquals(2, l3.size());
-	}
-	
-	@Test
-	@Ignore
-	public void getLeafMenuByUrl(){
-		String url = "menu";
-		String superUrl = "system";
-		Menu menu = menuMapper.getLeafMenuByUrl(url, superUrl);
-		assertNotNull(menu);
-		assertEquals(7, menu.getMenu_id());
-	}
-	
-	@Test
-	@Ignore
-	public void getSecondLevelMenuByUrl(){
-		String url = "system";
-		Menu menu = menuMapper.getSecondLevelMenuByUrl(url);
-		assertNotNull(menu);
-		assertEquals(2, menu.getMenu_id());
-	}
-	
-	@Test
-	@Ignore
-	public void getDefaultChild(){
-		int menu_id = 2;
-		Menu menu = menuMapper.getDefaultChild(menu_id);
-		assertNotNull(menu);
-		assertEquals(5, menu.getMenu_id());
 	}
 	
 	private Menu addMenu(String lev, int parent_id){

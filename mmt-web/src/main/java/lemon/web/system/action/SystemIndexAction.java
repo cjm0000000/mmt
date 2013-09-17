@@ -8,10 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import lemon.web.base.MMTAction;
-import lemon.web.global.MMTException;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
-import lemon.web.system.mapper.MenuMapper;
+import lemon.web.system.mapper.RoleMenuMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,41 +26,93 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
+@RequestMapping("/subsystem")
 public class SystemIndexAction extends MMTAction {
 	@Autowired
-	private MenuMapper menuMapper;
+	private RoleMenuMapper roleMenuMapper;
 
 	/**
-	 * show system home page
-	 * @param nav_menu_id
+	 * show subsystem home page
+	 * @param second
+	 * @param third
+	 * @param view
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("system/{cust_home_menu}")
-	public ModelAndView index(@PathVariable int cust_home_menu, HttpSession session) {
-		Menu activeMenu = menuMapper.getMenu(cust_home_menu);
-		if(null == activeMenu || !"3".equals(activeMenu.getMenulevcod())){
-			throw new MMTException("您无权访问。");
-		}
+	@RequestMapping("{second}/{third}/{view}")
+	public ModelAndView index(@PathVariable String second,
+			@PathVariable String third, @PathVariable String view,
+			HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
+		Menu activeMenu = roleMenuMapper.getLeafMenuByUrl(third, second, user.getRole_id());
+		if(null == activeMenu || !"3".equals(activeMenu.getMenulevcod()))
+			sendNotFountError();
 		//获取站点名称
-		List<Menu> root_list = menuMapper.getMenuListByLevel("1");
+		List<Menu> root_list = roleMenuMapper.getMenuListByRole(user.getRole_id(), "1");
 		if(root_list.size() == 0){
-			throw new MMTException("读取系统数据失败。");
+			sendNotFountError();
 		}
 		Menu root = root_list.get(0);
 		//获取导航菜单
-		List<Menu> nav_list = menuMapper.getMenuListByRole(user.getRole_id(), "2");
+		List<Menu> nav_list = roleMenuMapper.getMenuListByRole(user.getRole_id(), "2");
 		//获取左侧导航菜单
 		int activeNav = activeMenu.getSupmenucode();
-		List<Menu> left_nav_list = menuMapper.getLeafMenuListByRole(user.getRole_id(), activeNav);
+		List<Menu> left_nav_list = roleMenuMapper.getLeafMenuListByRole(user.getRole_id(), activeNav);
+		//获取面包削导航
+		//FIXME 设置面包削导航
+		
 		//传给模板
 		Map<String, Object> index = new HashMap<>();
 		index.put("nav_list", nav_list);
 		index.put("left_nav_list", left_nav_list);
 		index.put("site_name", root.getMenu_name());
-		index.put(USER_CUSTOMIZATION_HOME, cust_home_menu);
+		index.put(USER_CUSTOMIZATION_HOME, activeMenu.getMenu_id());
 		index.put("active-nav", activeNav);
 		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "index", index);
+	}
+	
+	/**
+	 * show subsystem home page
+	 * @param second
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("{second}")
+	public String index(@PathVariable String second, HttpSession session) {
+		if(null == second || "".equals(second))
+			sendNotFountError();
+		User user = (User) session.getAttribute(TOKEN);
+		//查询二级目录，如果不存在，跳转到错误页面
+		Menu superMenu = roleMenuMapper.getSecondLevelMenuByUrl(second, user.getRole_id());
+		if(null == superMenu)
+			sendNotFountError();
+		//查询三级目录，如果不存在，跳转到错误页面
+		Menu activeMenu = roleMenuMapper.getDefaultChild(superMenu.getMenu_id(), user.getRole_id());
+		if(null == activeMenu)
+			sendNotFountError();
+		//跳转到视图
+		String view = "redirect:" + superMenu.getMenuurl() + "/"
+				+ activeMenu.getMenuurl() + "/" + DEFAULT_VIEW;
+		return view;
+	}
+	
+	/**
+	 * show subsystem home page
+	 * @param second
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("{second}/{third}")
+	public String index(@PathVariable String second,@PathVariable String third, HttpSession session) {
+		if (null == second || null == third || "".equals(second)
+				|| "".equals(third))
+			sendNotFountError();
+		User user = (User) session.getAttribute(TOKEN);
+		Menu activeMenu = roleMenuMapper.getLeafMenuByUrl(third, second, user.getUser_id());
+		if(null == activeMenu)
+			sendNotFountError();
+		//跳转到视图
+		String view = "redirect:" + third + "/" + DEFAULT_VIEW;
+		return view;
 	}
 }

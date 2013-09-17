@@ -1,5 +1,7 @@
 package lemon.web.base;
 
+import lemon.web.global.MMTException;
+
 /**
  * MMT base action
  * @author lemon
@@ -18,7 +20,16 @@ public class MMTAction {
 	//FIXME 封装Action：分页，错误信息，提示信息，跳转路径等
 	/** 存放用户Session */
 	public static final String TOKEN = "user_token";
-	
+	/** 用户定制的首页 */
 	public static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
+	/** 默认视图 */
+	public static final String DEFAULT_VIEW = "list";
 	//FIXME 设置好角色，显示菜单，配置权限等
+	
+	/**
+	 * 资源不存在，转发到错误页面
+	 */
+	protected void sendNotFountError(){
+		throw new MMTException("您访问的资源不存在。");
+	}
 }
