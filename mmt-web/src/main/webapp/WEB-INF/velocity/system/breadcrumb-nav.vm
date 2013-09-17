@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-	<li><a href="../.."><span class="glyphicon glyphicon-home"></span> 首 页</a></li>
+	<li><a href="#{getContextPath}"><span class="glyphicon glyphicon-home"></span> 首 页</a></li>
 	<li><a href="#"><span class="glyphicon glyphicon-cog"></span> 系统设置</a></li>
 	<li class="active"><span class="glyphicon glyphicon-list"></span> 菜单管理</li>
 </ol>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="MMT Smart Robot">
     <meta name="author" content="green120@126.com">
-    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="shortcut icon" href="#{getContextPath}images/favicon.png">
 
     <title>MMT Smart Robot</title>
 
@@ -17,8 +17,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="bootstrap/assets/js/html5shiv.js"></script>
-      <script src="bootstrap/assets/js/respond.min.js"></script>
+      <script src="#{getContextPath}bootstrap/assets/js/html5shiv.js"></script>
+      <script src="#{getContextPath}bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
 
@@ -31,11 +31,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#getContextPath()">MMT Smart Robot</a>
+          <a class="navbar-brand" href="#getContextPath">MMT Smart Robot</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index">首 页</a></li>
             <li><a href="#contact">联系我们</a></li>
             #if($user_token)
             	<li class="dropdown">
@@ -46,15 +45,15 @@
 	                #if($user_token.role_id == 1)
 	                <li class="divider"></li>
 	                <li class="dropdown-header">管理员入口</li>
-	                <li><a href="webservices/system/$CUSTOMIZATION_HOME">系统管理</a></li>
+	                <li><a href="#{getContextPath}webservices/system/$CUSTOMIZATION_HOME">系统管理</a></li>
 	                #end
 	              </ul>
 	            </li>
-            	<li><a href="webservices/logout">登 出</a></li>
+            	<li><a href="#{getContextPath}webservices/logout">登 出</a></li>
             #end
           </ul>
 		#if(!$user_token)
-			<form method="post" action="webservices/login" class="navbar-form navbar-right">
+			<form method="post" action="#{getContextPath}webservices/login" class="navbar-form navbar-right">
 	            <div class="form-group">
 	              <input type="text" name="user_name" placeholder="用户名" class="form-control">
 	            </div>
@@ -106,7 +105,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="bootstrap/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="#{getContextPath}bootstrap/assets/js/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </body>
 </html>
