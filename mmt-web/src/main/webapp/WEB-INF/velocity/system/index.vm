@@ -27,7 +27,7 @@
       #parse("system/nav-bar.vm")
       
       ### 面包屑导航模板
-      #include("system/breadcrumb-nav.vm")
+      #parse("system/breadcrumb-nav.vm")
       
       ### 左侧菜单模板
       #parse("system/left.vm")

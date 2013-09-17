@@ -59,8 +59,10 @@ public class SystemIndexAction extends MMTAction {
 		int activeNav = activeMenu.getSupmenucode();
 		List<Menu> left_nav_list = roleMenuMapper.getLeafMenuListByRole(user.getRole_id(), activeNav);
 		//获取面包削导航
-		//FIXME 设置面包削导航
-		
+		Menu secondMenu = roleMenuMapper.getSecondLevelMenuByUrl(second, user.getRole_id());
+		Map<String, Menu> breadNavMap = new HashMap<>();
+		breadNavMap.put("second", secondMenu);
+		breadNavMap.put("third", activeMenu);
 		//传给模板
 		Map<String, Object> index = new HashMap<>();
 		index.put("nav_list", nav_list);
@@ -68,6 +70,7 @@ public class SystemIndexAction extends MMTAction {
 		index.put("site_name", root.getMenu_name());
 		index.put(USER_CUSTOMIZATION_HOME, activeMenu.getMenu_id());
 		index.put("active-nav", activeNav);
+		index.put("breadcrumb-nav", breadNavMap);
 		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "index", index);
 	}
 	
