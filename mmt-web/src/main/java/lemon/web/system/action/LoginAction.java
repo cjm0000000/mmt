@@ -1,5 +1,8 @@
 package lemon.web.system.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -48,19 +51,18 @@ public class LoginAction extends MMTAction {
 	@RequestMapping(value="/login")
 	public ModelAndView login(@Valid User u,BindingResult result,
 			HttpServletRequest request) {
-		//FIXME 用户名自动填充，验证顺序是否可以调整；另外验证失败，好像程序还会继续向下执行
 		if(result.hasErrors()){
-			return info(result.getFieldError().getDefaultMessage());
+			return info(result.getFieldError().getDefaultMessage(),u.getUser_name());
 		}
 		Integer user_id = userMapper.getUserIdByName(u.getUser_name());
 		if(user_id == null){
 			//用户不存在
-			return info("用户名不存在。");
+			return info("用户名不存在。",u.getUser_name());
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
 		if(null == encryptKeyItem){
-			return info("您的密钥没有设置，请联系管理员。");
+			return info("您的密钥没有设置，请联系管理员。",u.getUser_name());
 		}
 		//验证用户名和密码
 		User user = userMapper.checkLogin(u.getUser_name(),SecureUtil.aesEncrypt(u.getPassword(), encryptKeyItem.getValue()));
@@ -68,7 +70,7 @@ public class LoginAction extends MMTAction {
 		saveLoginLog(request.getRemoteAddr(), user_id, u.getUser_name(),user == null ? 0 : user.getRole_id(), user != null);
 		//没有查到用户
 		if(null == user){
-			return info("用户名和密码不匹配。");
+			return info("用户名和密码不匹配。",u.getUser_name());
 		}
 		//登录成功，数据初始化
 		request.getSession().setAttribute(TOKEN, user);
@@ -116,11 +118,15 @@ public class LoginAction extends MMTAction {
 	
 	/**
 	 * 返回提示信息
-	 * @param msg
+	 * @param tip		提示信息
+	 * @param user_name 给表单填充用户名
 	 * @return
 	 */
-	private ModelAndView info(String msg){
-		return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msg);
+	private ModelAndView info(String tip, String user_name){
+		Map<String, String> msgMap = new HashMap<>();
+		msgMap.put("user_name", user_name);
+		msgMap.put("tip", tip);
+		return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msgMap);
 	}
 	
 }
