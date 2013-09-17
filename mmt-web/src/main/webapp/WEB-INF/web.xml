@@ -40,6 +40,15 @@
 		<filter-name>yixinGW</filter-name>
 		<url-pattern>/echat/*</url-pattern>
 	</filter-mapping>
+	<!-- Spring Security 配置 -->
+	<filter>  
+        <filter-name>springSecurityFilterChain</filter-name>  
+    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>springSecurityFilterChain</filter-name>  
+        <url-pattern>/webservices/*</url-pattern>  
+    </filter-mapping>
 	<!-- Spring MVC 配置 -->
 	<servlet>
 		<servlet-name>MMTDispatcher</servlet-name>
@@ -59,16 +68,6 @@
 		<servlet-name>MMTDispatcher</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
-	<!-- Spring Security 配置 -->
-	<!-- FIX BUG FROM : http://blog.csdn.net/yuanzhuohang/article/details/7233752 -->
-	<filter>  
-        <filter-name>springSecurityFilterChain</filter-name>  
-    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>springSecurityFilterChain</filter-name>  
-        <url-pattern>/webservices/*</url-pattern>  
-    </filter-mapping>
 	<welcome-file-list>
 		<welcome-file>jump.htm</welcome-file>
 	</welcome-file-list>
