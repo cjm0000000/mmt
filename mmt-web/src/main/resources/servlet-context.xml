@@ -3,18 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
   http://www.springframework.org/schema/context
   http://www.springframework.org/schema/context/spring-context-3.2.xsd
   http://www.springframework.org/schema/mvc
-  http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd ">
+  http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+  http://www.springframework.org/schema/security
+  http://www.springframework.org/schema/security/spring-security-3.1.xsd ">
   	<mvc:annotation-driven />
+  	<!-- Spring 拦截器配置 -->
 	<mvc:interceptors>
 		<bean class="lemon.web.base.MMTHandlerInterceptor"/>
 	</mvc:interceptors>
 	<context:component-scan base-package="lemon.web" />
+	<!-- Velocity 配置 -->
 	<bean id="velocityConfigurer"
 		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="resourceLoaderPath" value="WEB-INF/velocity/" />
@@ -26,6 +31,7 @@
 			</props>
 		</property>
 	</bean>
+	<!-- VIEW 配置 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
 		<property name="suffix" value=".vm" />
@@ -33,4 +39,7 @@
 		<property name="exposeSessionAttributes" value="true" />
 		<property name="requestContextAttribute" value="context" />
 	</bean>
+	<!-- Spring security 配置 -->
+	<security:global-method-security
+	jsr250-annotations="enabled" secured-annotations="enabled" />
 </beans>
