@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import lemon.web.system.bean.Menu;
-import lemon.web.system.bean.Role;
 import lemon.web.system.mapper.RoleMenuMapper;
 
 import org.junit.After;
