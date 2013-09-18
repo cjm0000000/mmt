@@ -33,7 +33,7 @@
       #parse("system/left-nav.vm")
 
 	  ### Main模板
-	  #include("system/main.vm")
+	  #parse("system/${page.main_view}.vm")
 
     </div> <!-- /container -->
 	### 底部模板

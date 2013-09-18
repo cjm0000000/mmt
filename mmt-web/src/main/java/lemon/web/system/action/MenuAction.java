@@ -38,8 +38,8 @@ public class MenuAction extends AdminNavAction {
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
-		String main = "";
-		resultMap.put("main", main);
+		String main = "menu_list";
+		resultMap.put("main_view", main);
 		ModelAndView  mv = new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "page", resultMap);
 		return mv;
 	}

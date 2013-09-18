@@ -11,10 +11,10 @@
   http://www.springframework.org/schema/mvc
   http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd ">
   	<mvc:annotation-driven />
-  	<!-- Spring 拦截器配置 -->
+  	<!-- Spring 拦截器配置 
 	<mvc:interceptors>
 		<bean class="lemon.web.base.MMTHandlerInterceptor"/>
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 	<context:component-scan base-package="lemon.web" />
 	<!-- Velocity 配置 -->
 	<bean id="velocityConfigurer"

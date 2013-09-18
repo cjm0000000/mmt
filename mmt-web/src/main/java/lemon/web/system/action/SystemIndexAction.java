@@ -11,42 +11,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-//FIXME 撤销这个类,采用业务具体实现的类
 /**
- * System configure index
+ * System index, for redirect
  * 
  * @author lemon
  * @version 1.0
  * 
  */
 @Controller
-@RequestMapping("/system")
 public class SystemIndexAction extends MMTAction {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	
 	/**
-	 * show subsystem home page
+	 * show system home page
 	 * @param second
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("{second}")
+	@RequestMapping("system/{second}")
 	public String index(@PathVariable String second, HttpSession session) {
 		if(null == second || "".equals(second))
 			sendNotFoundError();
 		User user = (User) session.getAttribute(TOKEN);
-		//查询二级目录，如果不存在，跳转到错误页面
-		Menu superMenu = roleMenuMapper.getSecondLevelMenuByUrl(second, user.getRole_id());
-		if(null == superMenu)
-			sendNotFoundError();
-		//查询三级目录，如果不存在，跳转到错误页面
-		Menu activeMenu = roleMenuMapper.getDefaultChild(superMenu.getMenu_id(), user.getRole_id());
+		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), "system/"+second);
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
-		String view = "redirect:"
-				+ activeMenu.getMenuurl() + "/" + DEFAULT_VIEW;
+		String view = "redirect:../" + activeMenu.getMenuurl() + "/"
+				+ DEFAULT_VIEW;
+		return view;
+	}
+	
+	/**
+	 * show system home page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("system")
+	public String index(HttpSession session) {
+		User user = (User) session.getAttribute(TOKEN);
+		//获取二级目录
+		Menu secondMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), "system");
+		if(null == secondMenu)
+			sendNotFoundError();
+		//获取三级目录
+		Menu activeMenu = roleMenuMapper.getDefaultChild(secondMenu.getMenu_id(), user.getRole_id());
+		if(null == activeMenu)
+			sendNotFoundError();
+		//跳转到视图
+		String view = "redirect:../" + activeMenu.getMenuurl() + "/"
+				+ DEFAULT_VIEW;
 		return view;
 	}
 
