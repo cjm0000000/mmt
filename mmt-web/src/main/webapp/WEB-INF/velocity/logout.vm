@@ -67,13 +67,15 @@
     <div class="container">
 	#if($msg)
 		<div class="alert alert-success fade in">
-	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	        <h4>$msg</h4>
-	        <p><a href="#{getContextPath}">MMT Smart Robot 首页</></p>
-	      </div>
+	        <h3>$msg</h3>
+	        <p><a href="#{getContextPath}">MMT Smart Robot 首页</a></p>
+	    </div>
 	#end
     </div> <!-- /container -->
-
+    <br/>
+    <br/>
+    <br/>
+	#include("footer.vm")
 
    <!-- Bootstrap core JavaScript
     ================================================== -->

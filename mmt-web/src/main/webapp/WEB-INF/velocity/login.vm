@@ -80,7 +80,9 @@
       </form>
 
     </div> <!-- /container -->
-
+    
+    <br/><br/><br/><br/><br/>
+	#include("footer.vm")
 
    <!-- Bootstrap core JavaScript
     ================================================== -->
