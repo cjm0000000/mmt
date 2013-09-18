@@ -1,3 +1,40 @@
 <div class="col-md-9" role="main">
-	菜单管理首页
-</div>
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">
+			  	<button type="button" class="btn btn-success btn-md" >
+				  <span class="glyphicon glyphicon-plus-sign"></span> 添 加
+				</button>
+				<button type="button" disabled class="btn btn-info btn-md" >
+				  <span class="glyphicon glyphicon-edit"></span> 编 辑
+				</button>
+				<button type="button" disabled class="btn btn-danger btn-md" >
+				  <span class="glyphicon glyphicon-trash"></span> 删 除
+				</button>
+
+			  </div>
+			
+			  <!-- Table -->
+			  <table class="table">
+		          <thead>
+		            <tr>
+		              <th>#</th>
+		              <th>菜单名称</th>
+		              <th>菜单链接</th>
+		              <th>菜单样式</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		            #foreach($menu in $page.menuList)
+		            	<tr>
+		              <td>$velocityCount</td>
+		              <td>$menu.menu_name</td>
+		              <td>$menu.menuurl</td>
+		              <td>$menu.menuico</td>
+		            </tr>
+		            #end
+		          </tbody>
+		        </table>
+		       
+			</div>
+		</div>

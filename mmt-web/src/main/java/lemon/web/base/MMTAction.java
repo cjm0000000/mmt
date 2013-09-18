@@ -20,13 +20,13 @@ public class MMTAction {
 	/** 登出页面视图 */
 	protected static final String VIEW_LOGOUT_PAGE = "/logout";
 	/** 存放用户Session */
-	public static final String TOKEN = "user_token";
+	protected static final String TOKEN = "user_token";
 	/** 用户定制的首页 */
-	public static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
+	protected static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
 	/** 默认视图 */
-	public static final String DEFAULT_VIEW = "list";
+	protected static final String DEFAULT_VIEW = "list";
 	/** 无权限视图 */
-	public static final String VIEW_FORBIDDEN = "forbidden";
+	protected static final String VIEW_FORBIDDEN = "forbidden";
 	
 	/**
 	 * 资源不存在，转发到错误页面

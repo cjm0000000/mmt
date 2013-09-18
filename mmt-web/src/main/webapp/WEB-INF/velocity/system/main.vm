@@ -19,30 +19,20 @@
 		          <thead>
 		            <tr>
 		              <th>#</th>
-		              <th>First Name</th>
-		              <th>Last Name</th>
-		              <th>Username</th>
+		              <th>菜单名称</th>
+		              <th>菜单链接</th>
+		              <th>菜单样式</th>
 		            </tr>
 		          </thead>
 		          <tbody>
-		            <tr>
-		              <td>1</td>
-		              <td>Mark</td>
-		              <td>Otto</td>
-		              <td>@mdo</td>
+		            #foreach($menu in $page.menuList)
+		            	<tr>
+		              <td>$velocityCount</td>
+		              <td>$menu.menu_name</td>
+		              <td>$menu.menuurl</td>
+		              <td>$menu.menuico</td>
 		            </tr>
-		            <tr>
-		              <td>2</td>
-		              <td>Jacob</td>
-		              <td>Thornton</td>
-		              <td>@fat</td>
-		            </tr>
-		            <tr>
-		              <td>3</td>
-		              <td>Larry</td>
-		              <td>the Bird</td>
-		              <td>@twitter</td>
-		            </tr>
+		            #end
 		          </tbody>
 		        </table>
 		        <!--分页-->

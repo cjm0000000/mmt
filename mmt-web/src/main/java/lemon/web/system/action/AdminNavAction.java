@@ -17,6 +17,12 @@ import lemon.web.system.mapper.RoleMenuMapper;
  *
  */
 public abstract class AdminNavAction extends MMTAction {
+	/** 新增内容视图 */
+	protected static final String VIEW_ADD = "add";
+	/** 编辑内容视图 */
+	protected static final String VIEW_EDIT = "edit";
+	/** 删除内容视图 */
+	protected static final String VIEW_DELETE = "edit";
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	
@@ -41,6 +47,18 @@ public abstract class AdminNavAction extends MMTAction {
 		page.put("active-nav", thirdMenu);
 		page.put("breadcrumb-nav", getBreadCrumbNavBar(role_id, thirdMenu));
 		return page;
+	}
+	
+	/**
+	 * 获取Main视图名称
+	 * @param operation 当前操作名称
+	 * @return
+	 */
+	protected String getMainViewName(String operation) {
+		String[] temp = getMenuURL().split("/");
+		if (temp.length != 2)
+			return null;
+		return temp[1] + "_" + operation;
 	}
 	
 	/**

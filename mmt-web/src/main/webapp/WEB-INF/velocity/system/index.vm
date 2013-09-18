@@ -33,9 +33,10 @@
       #parse("system/left-nav.vm")
 
 	  ### Main模板
-	  #parse("system/${page.main_view}.vm")
+	  #parse("system/${page.mainViewName}.vm")
 
     </div> <!-- /container -->
+    <br/><br/><br/>
 	### 底部模板
 	#include("footer.vm")
     <!-- Bootstrap core JavaScript
