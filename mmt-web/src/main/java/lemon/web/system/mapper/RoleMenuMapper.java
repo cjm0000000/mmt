@@ -84,4 +84,13 @@ public interface RoleMenuMapper {
 	@Select("SELECT B.menu_id,B.menu_name,B.menulevcod,B.supmenucode,B.menuurl,B.menuico FROM system_role_menu A,system_menu B WHERE A.menu_id=B.menu_id AND A.role_id=#{role_id} AND B.supmenucode=#{supmenucode} ORDER BY B.menulevcod,B.sort")
 	List<Menu> getLeafMenuListByRole(@Param("role_id") int role_id,
 			@Param("supmenucode") int supmenucode);
+	
+	/**
+	 * get all menu list by role id
+	 * @param role_id
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	@Select("SELECT B.menu_id,B.menu_name,B.menulevcod,B.supmenucode,B.menuurl,B.menuico FROM system_role_menu A,system_menu B WHERE A.menu_id=B.menu_id AND A.role_id=#{role_id} ORDER BY B.menulevcod,B.sort")
+	List<Menu> getAllMenuListByRole(int role_id);
 }

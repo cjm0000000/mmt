@@ -15,11 +15,17 @@
 	<logger name="org.springframework">
 		<level value="INFO" />
 	</logger>
+	<logger name="org.springframework.security">
+		<level value="DEBUG" />
+	</logger>
 	<logger name="org.mybatis">
 		<level value="INFO" />
 	</logger>
 	<logger name="com.mchange.v2">
 		<level value="INFO" />
+	</logger>
+	<logger name="org.apache.velocity">
+		<level name="INFO"/>
 	</logger>
 	<root>
 		<priority value="DEBUG" />

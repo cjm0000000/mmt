@@ -14,6 +14,10 @@
 	<listener>
 		<listener-class>lemon.web.global.MMTListener</listener-class>
 	</listener>
+	<!--  获取Spring Security session的生命周期-->  
+    <listener>  
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>  
+    </listener>
 	<!-- 微信网关配置 -->
 	<filter>
 		<filter-name>microChatGW</filter-name>

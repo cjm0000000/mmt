@@ -9,16 +9,38 @@
         http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         
 	<global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
-	<http pattern="/webservices/login" security="none" />
-	<http auto-config='true'>
-		<form-login login-page="/webservices/login" username-parameter="user_name" password-parameter="password"/>
-		<intercept-url pattern="/webservices/*" access="ROLE_USER" />
+	<http pattern="/webservices/login*" security="none" />
+	<http pattern="/webservices/logout*" security="none" />
+	<http pattern="/webservices/forbidden" security="none" />
+	<http use-expressions="true" auto-config="true" access-denied-page="/webservices/forbidden">
+		<form-login 
+			always-use-default-target="true"
+			default-target-url="/index"
+			login-page="/webservices/login"
+			username-parameter="user_name" 
+			password-parameter="password"
+			/>
+		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID"/>
+		<!-- 实现免登陆验证 -->  
+        <remember-me />  
+        <session-management invalid-session-url="/timeout.jsp">  
+            <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />  
+        </session-management>  
+        <custom-filter ref="mmtSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
     </http>
-    <authentication-manager>
-      <authentication-provider>
-        <user-service>
-          <user name="zlm" password="pass" authorities="ROLE_USER" />
-        </user-service>
-      </authentication-provider>
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="mmtUserDetailsService">
+            <!-- 用户密码加密 just like 899312{gaobing} to md5 
+            <password-encoder ref="MyPasswordEncode">
+                <salt-source user-property="username" />
+            </password-encoder>-->
+        </authentication-provider>
     </authentication-manager>
+    <!-- 配置过滤器 -->  
+    <beans:bean id="mmtSecurityFilter" class="lemon.web.security.MMTSecurityFilter">  
+        <!-- 用户拥有的权限 -->  
+        <beans:property name="authenticationManager" ref="authenticationManager" />  
+        <!-- 用户是否拥有所请求资源的权限 -->  
+        <beans:property name="accessDecisionManager" ref="mmtAccessDecisionManager" />  
+    </beans:bean>
 </beans:beans>
