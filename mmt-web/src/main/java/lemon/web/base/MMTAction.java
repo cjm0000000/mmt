@@ -24,6 +24,8 @@ public class MMTAction {
 	public static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
 	/** 默认视图 */
 	public static final String DEFAULT_VIEW = "list";
+	/** 无权限视图 */
+	public static final String VIEW_FORBIDDEN = "forbidden";
 	//FIXME 设置好角色，显示菜单，配置权限等
 	
 	/**

@@ -94,6 +94,17 @@ public class LoginAction extends MMTAction {
 	}
 	
 	/**
+	 * Forbidden
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/forbidden")
+	public String forbidden(HttpSession session){
+		session.removeAttribute(TOKEN);
+		return VIEW_FORBIDDEN;
+	}
+	
+	/**
 	 * save login log
 	 * @param ip
 	 * @param user_id
