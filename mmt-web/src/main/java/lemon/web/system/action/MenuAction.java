@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-//FIXME 撤销这个类,采用业务具体实现的类
+//FIXME MENUAction 还没实现
 /**
  * System configure index
  * 
@@ -26,8 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-@RequestMapping("/system/menu")
-public class SystemIndexAction extends MMTAction {
+@RequestMapping("/system")
+public class MenuAction extends MMTAction {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 
@@ -64,7 +64,6 @@ public class SystemIndexAction extends MMTAction {
 		breadNavMap.put("second", secondMenu);
 		breadNavMap.put("third", activeMenu);
 		//获取Main页面数据
-		//FIXME 获取Main页面数据;Spring Security整合
 		//传给模板
 		Map<String, Object> index = new HashMap<>();
 		index.put("nav_list", nav_list);

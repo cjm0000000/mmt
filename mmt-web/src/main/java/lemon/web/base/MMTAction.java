@@ -1,5 +1,7 @@
 package lemon.web.base;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import lemon.web.global.MMTException;
 
 /**
@@ -8,7 +10,7 @@ import lemon.web.global.MMTException;
  * @version 1.0
  *
  */
-public class MMTAction {
+public abstract class MMTAction {
 	/** 首页视图 */
 	protected static final String VIEW_HOME_PAGE = "index";
 	/** 系统首页视图 */
@@ -25,6 +27,7 @@ public class MMTAction {
 	public static final String DEFAULT_VIEW = "list";
 	/** 无权限视图 */
 	public static final String VIEW_FORBIDDEN = "forbidden";
+	
 	/**
 	 * 资源不存在，转发到错误页面
 	 */
@@ -38,5 +41,14 @@ public class MMTAction {
 	 */
 	protected void sendError(String error){
 		throw new MMTException(error);
+	}
+	
+	/**
+	 * 发送提示信息
+	 * @param msg
+	 * @return
+	 */
+	protected ModelAndView sendMsg(String msg){
+		return new ModelAndView("msg","msg",msg);
 	}
 }
