@@ -30,7 +30,7 @@
       #parse("system/breadcrumb-nav.vm")
       
       ### 左侧菜单模板
-      #parse("system/left.vm")
+      #parse("system/left-nav.vm")
 
 	  ### Main模板
 	  #include("system/main.vm")

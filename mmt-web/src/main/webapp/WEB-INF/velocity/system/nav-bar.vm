@@ -10,7 +10,7 @@
 	</div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			#foreach( $menu in $index.nav_list)
+			#foreach( $menu in $page.top-nav)
 				#if($menu.menu_id == $index.active-nav)
 					<li class="active"><a href="../../$menu.menuurl"><span class="$menu.menuico"></span> $menu.menu_name</a></li>
 				#else
