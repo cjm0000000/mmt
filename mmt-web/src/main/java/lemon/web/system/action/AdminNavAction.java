@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Menu;
@@ -17,27 +16,31 @@ import lemon.web.system.mapper.RoleMenuMapper;
  * @version 1.0
  *
  */
-public class AdminNavAction extends MMTAction {
+public abstract class AdminNavAction extends MMTAction {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	
 	/**
-	 * 获取带导航数据的视图<br>
-	 * @param role_id
-	 * @param thirdMenu
+	 * 获取菜单URL
 	 * @return
 	 */
-	protected ModelAndView buildNav(int role_id, Menu thirdMenu) {
-		// FIXME buildNav的数据处理；传menu_id的方法改成传thirdMenu对象
+	protected abstract String getMenuURL();
+	
+	/**
+	 * 获取带导航数据的视图
+	 * @param role_id
+	 * @param menuurl
+	 * @return
+	 */
+	protected Map<String, Object> buildNav(int role_id) {
+		Menu thirdMenu = getActiveMenu(role_id, getMenuURL());
 		Map<String, Object> page = new HashMap<>();
-		page.put("nav_list", getTopNavBar(role_id));
-		page.put("left_nav_list",
-				getLeftNavBar(role_id, thirdMenu.getSupmenucode()));
+		page.put("top-nav", getTopNavBar(role_id));
+		page.put("left-nav", getLeftNavBar(role_id, thirdMenu.getSupmenucode()));
 		page.put("site_name", getSiteName(role_id));
 		page.put("active-nav", thirdMenu);
-		page.put("breadcrumb-nav",
-				getBreadCrumbNavBar(role_id, thirdMenu.getMenu_id()));
-		return null;
+		page.put("breadcrumb-nav", getBreadCrumbNavBar(role_id, thirdMenu));
+		return page;
 	}
 	
 	/**
@@ -65,8 +68,7 @@ public class AdminNavAction extends MMTAction {
 	 * @param menu_id
 	 * @return
 	 */
-	private Map<String, Menu> getBreadCrumbNavBar(int role_id, int menu_id){
-		Menu thirdMenu = roleMenuMapper.getMenuByRoleAndId(role_id, menu_id);
+	private Map<String, Menu> getBreadCrumbNavBar(int role_id, Menu thirdMenu){
 		Menu secondMenu = roleMenuMapper.getMenuByRoleAndId(role_id, thirdMenu.getSupmenucode());
 		Map<String, Menu> breadNavMap = new HashMap<>(4);
 		breadNavMap.put("second", secondMenu);
@@ -84,6 +86,16 @@ public class AdminNavAction extends MMTAction {
 		if (root_list.size() == 0)
 			sendNotFoundError();
 		return root_list.get(0).getMenu_name();
+	}
+	
+	/**
+	 * 根据角色和URL获取当前选中的菜单
+	 * @param role_id
+	 * @param url
+	 * @return
+	 */
+	private Menu getActiveMenu(int role_id, String url){
+		return roleMenuMapper.getMenuByRoleAndUrl(role_id, url);
 	}
 	
 }

@@ -10,7 +10,7 @@ import lemon.web.global.MMTException;
  * @version 1.0
  *
  */
-public abstract class MMTAction {
+public class MMTAction {
 	/** 首页视图 */
 	protected static final String VIEW_HOME_PAGE = "index";
 	/** 系统首页视图 */

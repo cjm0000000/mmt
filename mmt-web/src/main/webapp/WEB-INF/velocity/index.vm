@@ -45,7 +45,7 @@
 	                #if($user_token.role_id == 1)
 	                <li class="divider"></li>
 	                <li class="dropdown-header">管理员入口</li>
-	                <li><a href="#{getContextPath}webservices/subsystem/$CUSTOMIZATION_HOME">系统管理</a></li>
+	                <li><a href="#{getContextPath}webservices/$CUSTOMIZATION_HOME">系统管理</a></li>
 	                #end
 	              </ul>
 	            </li>
