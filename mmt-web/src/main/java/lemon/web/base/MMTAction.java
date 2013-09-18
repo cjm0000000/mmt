@@ -32,6 +32,14 @@ public class MMTAction {
 	 * 资源不存在，转发到错误页面
 	 */
 	protected void sendNotFoundError(){
-		throw new MMTException("您访问的资源不存在。");
+		sendError("您访问的资源不存在。");
+	}
+	
+	/**
+	 * 发送错误消息
+	 * @param error
+	 */
+	protected void sendError(String error){
+		throw new MMTException(error);
 	}
 }
