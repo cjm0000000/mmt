@@ -1,8 +1,4 @@
 ### 获取容器根目录
 #macro(getContextPath)
-	#set($root = $context.webApplicationContext.servletContext.contextPath)
-	#if($root.lastIndexOf('/') == 0)
-		#set($root = $root + '/')
-	#end
-	$root
+	#set($root = $context.webApplicationContext.servletContext.contextPath)#if($root.lastIndexOf('/') == 0)#set($root = $root + '/')#end$root##
 #end
