@@ -12,7 +12,7 @@
 	<http pattern="/webservices/login*" security="none" />
 	<http pattern="/webservices/logout*" security="none" />
 	<http pattern="/webservices/forbidden" security="none" />
-	<http use-expressions="true" auto-config="true" access-denied-page="/webservices/forbidden">
+	<http use-expressions="true" auto-config="true">
 		<form-login 
 			always-use-default-target="true"
 			default-target-url="/index"
@@ -23,7 +23,7 @@
 		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID"/>
 		<!-- 实现免登陆验证 -->  
         <remember-me />  
-        <session-management invalid-session-url="/timeout.jsp">  
+        <session-management invalid-session-url="/">  
             <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />  
         </session-management>  
         <custom-filter ref="mmtSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>

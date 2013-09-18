@@ -39,6 +39,7 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 			throws IllegalArgumentException {
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();  
 		logger.debug("requestUrl is : " + requestUrl);  
+		//FIXME URL需要处理下，匹配context内的绝对URL
         if(resourceMap == null) {  
             loadResourceDefine();  
         }  
