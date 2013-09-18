@@ -31,7 +31,7 @@ public class MMTAction {
 	/**
 	 * 资源不存在，转发到错误页面
 	 */
-	protected void sendNotFountError(){
+	protected void sendNotFoundError(){
 		throw new MMTException("您访问的资源不存在。");
 	}
 }

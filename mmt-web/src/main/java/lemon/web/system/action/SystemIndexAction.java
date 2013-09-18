@@ -46,11 +46,11 @@ public class SystemIndexAction extends MMTAction {
 		User user = (User) session.getAttribute(TOKEN);
 		Menu activeMenu = roleMenuMapper.getLeafMenuByUrl(third, second, user.getRole_id());
 		if(null == activeMenu || !"3".equals(activeMenu.getMenulevcod()))
-			sendNotFountError();
+			sendNotFoundError();
 		//获取站点名称
 		List<Menu> root_list = roleMenuMapper.getMenuListByRole(user.getRole_id(), "1");
 		if(root_list.size() == 0){
-			sendNotFountError();
+			sendNotFoundError();
 		}
 		Menu root = root_list.get(0);
 		//获取导航菜单
@@ -85,16 +85,16 @@ public class SystemIndexAction extends MMTAction {
 	@RequestMapping("{second}")
 	public String index(@PathVariable String second, HttpSession session) {
 		if(null == second || "".equals(second))
-			sendNotFountError();
+			sendNotFoundError();
 		User user = (User) session.getAttribute(TOKEN);
 		//查询二级目录，如果不存在，跳转到错误页面
 		Menu superMenu = roleMenuMapper.getSecondLevelMenuByUrl(second, user.getRole_id());
 		if(null == superMenu)
-			sendNotFountError();
+			sendNotFoundError();
 		//查询三级目录，如果不存在，跳转到错误页面
 		Menu activeMenu = roleMenuMapper.getDefaultChild(superMenu.getMenu_id(), user.getRole_id());
 		if(null == activeMenu)
-			sendNotFountError();
+			sendNotFoundError();
 		//跳转到视图
 		String view = "redirect:" + superMenu.getMenuurl() + "/"
 				+ activeMenu.getMenuurl() + "/" + DEFAULT_VIEW;
@@ -111,11 +111,11 @@ public class SystemIndexAction extends MMTAction {
 	public String index(@PathVariable String second,@PathVariable String third, HttpSession session) {
 		if (null == second || null == third || "".equals(second)
 				|| "".equals(third))
-			sendNotFountError();
+			sendNotFoundError();
 		User user = (User) session.getAttribute(TOKEN);
 		Menu activeMenu = roleMenuMapper.getLeafMenuByUrl(third, second, user.getUser_id());
 		if(null == activeMenu)
-			sendNotFountError();
+			sendNotFoundError();
 		//跳转到视图
 		String view = "redirect:" + third + "/" + DEFAULT_VIEW;
 		return view;
