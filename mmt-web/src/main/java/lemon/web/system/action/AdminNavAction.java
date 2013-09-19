@@ -24,6 +24,8 @@ public abstract class AdminNavAction extends MMTAction {
 	protected static final String VIEW_EDIT = "edit";
 	/** 删除内容视图 */
 	protected static final String VIEW_DELETE = "edit";
+	/** 默认每页数量 */
+	protected static final int PAGESIZE = 10;
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	@Autowired
