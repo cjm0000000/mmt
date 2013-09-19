@@ -3,9 +3,9 @@
 	<div class="list-group">
 		#foreach($menu in $page.left-nav)
 			#if($page.breadcrumb-nav.third.menu_id == $menu.menu_id)
-				<a href="../$menu.menuurl" class="list-group-item active"><span class="$menu.menuico"></span> $menu.menu_name</a>
+				<a href="#{getContextPath}webservices/$menu.menuurl/list" class="list-group-item active"><span class="$menu.menuico"></span> $menu.menu_name</a>
 			#else
-				<a href="../$menu.menuurl" class="list-group-item"><span class="$menu.menuico"></span> $menu.menu_name</a>
+				<a href="#{getContextPath}webservices/$menu.menuurl/list" class="list-group-item"><span class="$menu.menuico"></span> $menu.menu_name</a>
 			#end
 		#end
 	</div>
