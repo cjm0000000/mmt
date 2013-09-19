@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Menu;
+import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMenuMapper;
 
 /**
@@ -25,6 +26,8 @@ public abstract class AdminNavAction extends MMTAction {
 	protected static final String VIEW_DELETE = "edit";
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
+	@Autowired
+	private MenuMapper menuMapper;
 	
 	/**
 	 * 获取菜单URL
@@ -40,6 +43,8 @@ public abstract class AdminNavAction extends MMTAction {
 	 */
 	protected Map<String, Object> buildNav(int role_id) {
 		Menu thirdMenu = getActiveMenu(role_id, getMenuURL());
+		if(null == thirdMenu)
+			sendNotFoundError();
 		Map<String, Object> page = new HashMap<>();
 		page.put("top-nav", getTopNavBar(role_id));
 		page.put("left-nav", getLeftNavBar(role_id, thirdMenu.getSupmenucode()));

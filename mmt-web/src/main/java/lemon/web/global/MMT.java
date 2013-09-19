@@ -8,6 +8,8 @@ package lemon.web.global;
  */
 public final class MMT {
 	static String  contextRoot;
+	/** Spring MVC 过滤器根路径 */
+	public static final String FILTER_ROOT = "/webservices/";
 	
 	static void setContextRoot(String root){
 		contextRoot = root;
