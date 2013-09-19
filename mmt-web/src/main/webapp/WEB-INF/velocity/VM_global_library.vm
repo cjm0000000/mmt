@@ -6,3 +6,43 @@
 #end
 $root##
 #end
+
+### 生成底部分页条, 最多显示五页，每次最多翻5页，适合RESTful类型的URL翻页
+### $currentPage 当前页码
+### $pageSize 每页记录数
+### $totalCount 总记录数 
+#macro(createPagination $currentPage $pageSize $totalCount)
+	### 计算总页数
+	#set($pages = $totalCount/$pageSize)
+	#if($totalCount/$pageSize != 0)
+		#set($pages = $pages + 1)
+	#end
+	#if($currentPage > $pages)
+		#stop
+	#end
+	### 生成当前显示的页数    6
+	### 起始页 6
+	### 结束页10
+	#set($start = ($currentPage - 1)/5 * 5 + 1)
+	#set($end = $start+4)
+	#if($end > $pages)
+		#set($end = $pages)
+	#end
+	### 输出模板
+	<ul class="pagination" style="float:right;">
+	#if($start > 1)
+		#set($preNo = $currentPage - 5)
+		<li><a href="$preNo">&laquo;</a></li>
+	#end
+	#foreach($pageNo in [$start..$end])
+		<li><a href="$pageNo">$pageNo</a></li>
+	#end
+	#if($end < $pages)
+		#set($afterNo = $currentPage + 5)
+		#if($afterNo > $pages)
+			#set($afterNo = $pages)
+		#end
+		<li><a href="$afterNo">&raquo;</a></li>
+	#end
+	</ul>
+#end
