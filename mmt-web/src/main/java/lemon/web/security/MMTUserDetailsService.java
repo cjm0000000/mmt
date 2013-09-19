@@ -34,6 +34,7 @@ public class MMTUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
+		//FIXME MMTUserDetailsService没有起作用
 		if(username == null)
 			throw new MMTException("用户名不能为空。", new NullPointerException());
 		User user = userMapper.getUserById(userMapper.getUserIdByName(username));
