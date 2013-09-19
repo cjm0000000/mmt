@@ -99,4 +99,12 @@ public interface RoleMapper {
 	@Lang(RawLanguageDriver.class)
 	void setReloadFlag(int menu_id);
 	
+	/**
+	 * get role list by authority
+	 * @param authority
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	List<Role> getRoleListByAuthority(int authority);
+	
 }

@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lemon.web.global.MMT;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
+import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMapper;
-import lemon.web.system.mapper.RoleMenuMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,10 +30,10 @@ import org.springframework.stereotype.Service;
 @Service("mmtSecurityMetadataSource")
 public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 	@Autowired
-	private RoleMenuMapper roleMenuMapper;
-	@Autowired
 	private RoleMapper roleMapper;
-	private volatile Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	@Autowired
+	private MenuMapper menuMapper;
+	private Map<String, Collection<ConfigAttribute>> resourceMap = null;
 	private static Log logger = LogFactory.getLog(MMTSecurityMetadataSource.class);
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
@@ -60,19 +61,21 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 	/**
 	 * 加载所有资源与权限的关系 
 	 */
-	private void loadResourceDefine() {
+	private synchronized void loadResourceDefine() {
 		if (resourceMap == null) {
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
-			List<Role> roleList = roleMapper.getRoleList(0, 0);
-			for (Role role : roleList) {
-				List<Menu> resources = roleMenuMapper.getAllMenuListByRole(role.getRole_id());
-				for (Menu resource : resources) {
-					Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-					// 以权限名封装为Spring的security Object
-					ConfigAttribute configAttribute = new SecurityConfig(role.getRole_name());
-					configAttributes.add(configAttribute);
-					resourceMap.put(resource.getMenuurl(), configAttributes);
+			List<Menu> resources = menuMapper.getMenuList();
+			for (Menu resource : resources) {
+				if("1".equals(resource.getMenulevcod())) continue;
+				//获取可以访问这个资源的角色
+				List<Role> roleList = roleMapper.getRoleListByAuthority(resource.getMenu_id());
+				if(null == roleList || roleList.size() == 0) continue;
+				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
+				for (Role role : roleList) {
+					configAttributes.add(new SecurityConfig(role.getRole_name()));
 				}
+				//授权信息存入内存
+				resourceMap.put(MMT.FILTER_ROOT + resource.getMenuurl(), configAttributes);
 			}
 		}
 

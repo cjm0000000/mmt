@@ -84,4 +84,12 @@
 				WHERE A.role_id=B.role_id 
 					AND b.menu_id=#{menu_id})
 	</update>
+	<select id="getRoleListByAuthority" parameterType="int" resultType="lemon.web.system.bean.Role">
+		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort,A.reloadable
+			FROM system_role A, system_role_menu B
+		WHERE A.role_id=B.role_id
+          AND B.menu_id=#{authority}
+          AND A.`status`='AVAILABLE' 
+		ORDER BY A.sort
+	</select>
 </mapper>
