@@ -1,4 +1,4 @@
-package lemon.web.system.action;
+package lemon.web.base;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMenuMapper;
