@@ -39,6 +39,7 @@ public final class UserAction extends AdminNavAction {
 	/**
 	 * 分页显示用户列表
 	 * @param page
+	 * @param user_name
 	 * @param session
 	 * @return
 	 */
@@ -54,7 +55,8 @@ public final class UserAction extends AdminNavAction {
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
-		List<User> userList = userMapper.getUserList(page, PAGESIZE, user_name);
+		List<User> userList = userMapper.getUserList((page - 1) * PAGESIZE,
+				PAGESIZE, user_name);
 		int userCnt = userMapper.getUserCnt(user_name);
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("userList", userList);
