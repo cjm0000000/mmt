@@ -1,0 +1,49 @@
+<div class="col-md-9" role="main">
+	<div class="panel panel-default">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<button type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
+			</button>
+			<button type="button" disabled class="btn btn-info btn-md" >
+				<span class="glyphicon glyphicon-edit"></span> 编 辑
+			</button>
+			<button type="button" disabled class="btn btn-danger btn-md" >
+				<span class="glyphicon glyphicon-trash"></span> 删 除
+			</button>
+		</div>
+			
+		### 数据表
+		<table class="table">
+			<thead>
+				<tr>
+					<th><input type="checkbox" title="全选" onclick="checkThis(this);"/></th>
+					<th>角色名</th>
+		            <th>描述</th>
+				</tr>
+			</thead>
+			<tbody>
+			#foreach($role in $page.roleList)
+				<tr>
+		    		<td><input type="checkbox" value="$role.role_id" name="role_id"/></td>
+		       		<td>$role.role_name</td>
+		  			<td>$role.role_desc</td>
+		   		</tr>
+			#end
+			</tbody>
+		</table>
+		### 分页栏
+		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
+	</div>
+</div>
+<script type="text/javascript">
+function checkThis(controller){
+	var ids = document.getElementsByName('user_id');
+	for(var i=0 ; i < ids.length ; i++){
+		if(controller.checked)
+			ids[i].checked = true;
+		else
+			ids[i].checked = false;
+	}
+}
+</script>

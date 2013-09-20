@@ -10,7 +10,7 @@
 			 LIMIT #{start},#{limit}
 		</if>
 	</select>
-	<select id="getRsCnt" resultType="int" parameterType="int">
+	<select id="getRsCnt" resultType="int">
 		SELECT count(1) cnt 
 			FROM system_role A 
 		WHERE A.`status`='AVAILABLE'
