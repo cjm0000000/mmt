@@ -65,7 +65,7 @@ public abstract class AdminNavAction extends MMTAction {
 		String[] temp = getMenuURL().split("/");
 		if (temp.length != 2)
 			return null;
-		return temp[1] + "_" + operation;
+		return temp[0] + "/" + temp[1] + "_" + operation;
 	}
 	
 	/**

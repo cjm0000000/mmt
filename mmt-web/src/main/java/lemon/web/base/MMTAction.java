@@ -13,8 +13,8 @@ import lemon.web.global.MMTException;
 public class MMTAction {
 	/** 首页视图 */
 	protected static final String VIEW_HOME_PAGE = "index";
-	/** 系统首页视图 */
-	protected static final String VIEW_SYSTEM_HOME_PAGE = "system/index";
+	/** 后台管理首页视图 */
+	protected static final String VIEW_MANAGE_HOME_PAGE = "manage/index";
 	/** 登录页面视图 */
 	protected static final String VIEW_LOGIN_PAGE = "/login";
 	/** 登出页面视图 */

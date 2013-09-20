@@ -63,7 +63,7 @@ public final class UserAction extends AdminNavAction {
 		resultMap.put("userCnt", userCnt);
 		resultMap.put("currentPage", page);
 		resultMap.put("PAGESIZE", PAGESIZE);
-		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "page", resultMap);
+		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
 	}
 	
 	/**

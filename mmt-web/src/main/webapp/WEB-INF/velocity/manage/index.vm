@@ -24,16 +24,16 @@
   <body>
     <div class="container">
 	  ### 顶部导航模板
-      #parse("system/nav-bar.vm")
+      #parse("manage/nav-bar.vm")
       
       ### 面包屑导航模板
-      #parse("system/breadcrumb-nav.vm")
+      #parse("manage/breadcrumb-nav.vm")
       
       ### 左侧菜单模板
-      #parse("system/left-nav.vm")
+      #parse("manage/left-nav.vm")
 
 	  ### Main模板
-	  #parse("system/${page.mainViewName}.vm")
+	  #parse("manage/${page.mainViewName}.vm")
 
     </div> <!-- /container -->
     <br/><br/><br/>

@@ -46,7 +46,7 @@ public final class MenuAction extends AdminNavAction {
 		List<Menu> menuList = menuMapper.getMenuList();
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("menuList", menuList);
-		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "page", resultMap);
+		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
 	}
 	
 	/**

@@ -63,7 +63,7 @@ public final class RoleAction extends AdminNavAction {
 		resultMap.put("rsCnt", rsCnt);
 		resultMap.put("currentPage", page);
 		resultMap.put("PAGESIZE", PAGESIZE);
-		return new ModelAndView(VIEW_SYSTEM_HOME_PAGE, "page", resultMap);
+		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
 	}
 	
 	/**
