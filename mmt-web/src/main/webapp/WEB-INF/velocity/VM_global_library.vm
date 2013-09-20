@@ -31,14 +31,14 @@ $root##
 	### 输出模板
 	<ul class="pagination" style="float:right;">
 	#if($start > 1)
-		#set($preNo = $currentPage - 5)
+		#set($preNo = $start - 1)
 		<li><a href="$preNo">&laquo;</a></li>
 	#end
 	#foreach($pageNo in [$start..$end])
 		<li><a href="$pageNo">$pageNo</a></li>
 	#end
 	#if($end < $pages)
-		#set($afterNo = $currentPage + 5)
+		#set($afterNo = $end + 1)
 		#if($afterNo > $pages)
 			#set($afterNo = $pages)
 		#end
