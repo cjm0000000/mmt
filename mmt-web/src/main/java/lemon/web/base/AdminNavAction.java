@@ -17,12 +17,8 @@ import lemon.web.system.mapper.RoleMenuMapper;
  *
  */
 public abstract class AdminNavAction extends MMTAction {
-	/** 新增内容视图 */
-	protected static final String VIEW_ADD = "add";
-	/** 编辑内容视图 */
-	protected static final String VIEW_EDIT = "edit";
-	/** 删除内容视图 */
-	protected static final String VIEW_DELETE = "edit";
+	/** 添加或者编辑内容的视图 */
+	protected static final String VIEW_ADD_EDIT = "add_edit";
 	/** 默认每页数量 */
 	protected static final int PAGESIZE = 10;
 	@Autowired
