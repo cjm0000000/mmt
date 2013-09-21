@@ -1,4 +1,4 @@
-package lemon.web.system.action;
+package lemon.web;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,29 +12,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 /**
- * System index, for redirect
+ * Manage index page, for redirect
  * 
  * @author lemon
  * @version 1.0
  * 
  */
 @Controller
-public class SystemIndexAction extends MMTAction {
+public class ManageIndexAction extends MMTAction {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	
 	/**
-	 * show system home page
+	 * show manager home page
+	 * @param first
 	 * @param second
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("system/{second}")
-	public String index(@PathVariable String second, HttpSession session) {
+	@RequestMapping("{first}/{second}")
+	public String index(@PathVariable String first,
+			@PathVariable String second, HttpSession session) {
 		if(null == second || "".equals(second))
 			sendNotFoundError();
 		User user = (User) session.getAttribute(TOKEN);
-		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), "system/"+second);
+		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(),
+				first + "/" + second);
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
@@ -44,15 +47,16 @@ public class SystemIndexAction extends MMTAction {
 	}
 	
 	/**
-	 * show system home page
+	 * show manage home page
+	 * @param menu_L2 二级菜单
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("system")
-	public String index(HttpSession session) {
+	@RequestMapping("{menu_L2}")
+	public String index(@PathVariable String menu_L2, HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
 		//获取二级目录
-		Menu secondMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), "system");
+		Menu secondMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), menu_L2);
 		if(null == secondMenu)
 			sendNotFoundError();
 		//获取三级目录
