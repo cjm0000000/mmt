@@ -3,6 +3,7 @@ package lemon.web;
 import javax.servlet.http.HttpSession;
 
 import lemon.web.base.MMTAction;
+import lemon.web.global.MMT;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMenuMapper;
@@ -41,8 +42,8 @@ public class ManageIndexAction extends MMTAction {
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
-		String view = "redirect:../" + activeMenu.getMenuurl() + "/"
-				+ DEFAULT_VIEW;
+		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl()
+				+ "/" + DEFAULT_VIEW;
 		return view;
 	}
 	
@@ -64,9 +65,17 @@ public class ManageIndexAction extends MMTAction {
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
-		String view = "redirect:../" + activeMenu.getMenuurl() + "/"
-				+ DEFAULT_VIEW;
+		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl()
+				+ "/" + DEFAULT_VIEW;
 		return view;
+	}
+	
+	/**
+	 * 获取Manage根路径
+	 * @return
+	 */
+	private String getManageRoot(){
+		return MMT.FILTER_ROOT;
 	}
 
 }
