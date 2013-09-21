@@ -128,7 +128,7 @@ CREATE TABLE `mmt_biz_l1` (
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='第一层业务处理库，严格匹配KEY'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='第一层业务处理库，严格匹配KEY';
 
 #
 # 第二层业务处理库，模糊匹配KEY
@@ -139,7 +139,7 @@ CREATE TABLE `mmt_biz_l2` (
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='第二层业务处理库，模糊匹配KEY'
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='第二层业务处理库，模糊匹配KEY';
 
 #
 # 通用业务处理库，模糊匹配KEY
@@ -149,7 +149,7 @@ CREATE TABLE `mmt_biz_l3` (
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='通用业务处理库，模糊匹配KEY'
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='通用业务处理库，模糊匹配KEY';
 
 ########################### For WeiXin #####################
 #
