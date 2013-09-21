@@ -92,7 +92,7 @@ public class CustomerTest {
 	}
 	
 	private List<Customer> list(){
-		return custMapper.activeCustomerList();
+		return custMapper.getCustomerList(0, 10);
 	}
 
 }

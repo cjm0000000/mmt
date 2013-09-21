@@ -30,11 +30,14 @@ public interface CustomerMapper {
 	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.cust_id=#{cust_id}")
 	Customer getCustomer(int cust_id);
 	/**
-	 * Get all active customer
+	 * Get customer list
+	 * @param start
+	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.status='AVAILABLE'")
-	List<Customer> activeCustomerList();
+	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.status='AVAILABLE' LIMIT #{start},#{limit}")
+	List<Customer> getCustomerList(@Param("start") int start,
+			@Param("limit") int limit);
 	/**
 	 * Add Customer
 	 * @param cust
