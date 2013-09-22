@@ -1,5 +1,6 @@
 package lemon.web.crm.yxapi;
 
+import lemon.shared.biz.MMTRobot;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.bean.message.*;
@@ -23,6 +24,8 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	private YiXinMsgHelper msgHelper;
 	@Autowired
 	private TextMsgParser textMsgParser;
+	@Autowired
+	private MMTRobot mmtRobot;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -59,11 +62,17 @@ public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
 	public String processTextMsg(String mmt_token, TextMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("你好，我是智能机器人。");
-		//save log
 		YiXinConfig cfg = YiXin.getConfig(mmt_token);
+		//生成回复消息
+		String reply = mmtRobot.reply(cfg.getCust_id(), msg.getContent());
+		if(null == reply)
+			reply = getWelcome(cfg);
+		replyMsg.setContent(reply);
+		
+		//save log
 		replyMsg.setCust_id(cfg.getCust_id());
 		msgHelper.saveSendTextMsg(replyMsg);
+		
 		return textMsgParser.toXML(replyMsg);
 	}
 

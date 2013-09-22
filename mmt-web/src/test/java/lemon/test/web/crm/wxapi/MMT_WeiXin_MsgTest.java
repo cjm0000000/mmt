@@ -103,7 +103,7 @@ public class MMT_WeiXin_MsgTest {
 		String txtMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1377241649729</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[hello,weixin, I am lemon.]]></Content></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
-		assertEquals(msg.getContent(), "You said: hello,weixin, I am lemon.");
+		assertEquals(msg.getContent(), "Welcome to Subscribe Lemon Test.");
 	}
 	@Test
 	public void subscribeTest(){

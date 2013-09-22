@@ -99,7 +99,7 @@ public class MMT_YiXin_MsgTest {
 		String txtMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379128652</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>。。。</Content></xml>";
 		String result = api.processMsg(MMT_TOKEN, txtMsg);
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
-		assertEquals(msg.getContent(), "你好，我是智能机器人。");
+		assertEquals(msg.getContent(), "Welcome to Subscribe Lemon Test.");
 	}
 	@Test
 	public void subscribeTest(){

@@ -208,6 +208,15 @@ public abstract class YXCustBasicMsgProcessor implements YXCustMsgProcessor {
 	}
 	
 	/**
+	 * get welcome message
+	 * @param cfg
+	 * @return
+	 */
+	protected String getWelcome(YiXinConfig cfg){
+		return cfg.getSubscribe_msg();
+	}
+	
+	/**
 	 * save log before do subscribe
 	 * @param mmt_token
 	 * @param msg

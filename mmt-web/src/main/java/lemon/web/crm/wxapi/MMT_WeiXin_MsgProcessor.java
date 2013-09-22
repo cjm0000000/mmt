@@ -3,6 +3,7 @@ package lemon.web.crm.wxapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lemon.shared.biz.MMTRobot;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.Article;
@@ -37,6 +38,8 @@ public class MMT_WeiXin_MsgProcessor extends WXCustBasicMsgProcessor {
 	private MusicMsgParser musicMsgParser;
 	@Autowired
 	private NewsMsgParser newsMsgParser;
+	@Autowired
+	private MMTRobot mmtRobot;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -74,11 +77,18 @@ public class MMT_WeiXin_MsgProcessor extends WXCustBasicMsgProcessor {
 	public String processTextMsg(String mmt_token, TextMessage msg) {
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent("You said: " + msg.getContent());
-		//save log
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
+		
+		//生成回复消息
+		String reply = mmtRobot.reply(cfg.getCust_id(), msg.getContent());
+		if(null == reply)
+			reply = getWelcome(cfg);
+		replyMsg.setContent(reply);
+		
+		//save log
 		replyMsg.setCust_id(cfg.getCust_id());
 		msgHelper.saveSendTextMsg(replyMsg);
+		
 		return textMsgParser.toXML(replyMsg);
 	}
 
