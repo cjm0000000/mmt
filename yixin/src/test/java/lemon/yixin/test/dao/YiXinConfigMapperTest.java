@@ -63,6 +63,7 @@ public class YiXinConfigMapperTest {
 		cfg.setToken("Junit Test Token");
 		cfg.setYx_account("Junit Test YiXin Account");
 		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");
+		cfg.setWelcome_msg("业务咨询请按1");
 		cfg.setApi_url("ASDLADLKJFWQ");
 		cfg.setAppid("APPID");
 		cfg.setSecret("secret");

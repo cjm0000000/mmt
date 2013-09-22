@@ -201,7 +201,7 @@ public abstract class WXCustBasicMsgProcessor implements WXCustMsgProcessor {
 	 * @return
 	 */
 	protected String getWelcome(WeiXinConfig cfg){
-		return cfg.getSubscribe_msg();
+		return cfg.getWelcome_msg();
 	}
 	
 	/**

@@ -19,6 +19,8 @@ public class WeiXinConfig {
 	private String biz_class;
 	/** 用户订阅时推送的消息 */
 	private String subscribe_msg;
+	/** 欢迎信息 */
+	private String welcome_msg;
 	/** 客户在微信的第三方用户唯一凭证 */
 	private String appid;
 	/** 客户在微信的第三方用户唯一凭证密钥 */
@@ -62,6 +64,12 @@ public class WeiXinConfig {
 	public void setSubscribe_msg(String subscribe_msg) {
 		this.subscribe_msg = subscribe_msg;
 	}
+	public String getWelcome_msg() {
+		return welcome_msg;
+	}
+	public void setWelcome_msg(String welcome_msg) {
+		this.welcome_msg = welcome_msg;
+	}
 	public String getAppid() {
 		return appid;
 	}
@@ -94,6 +102,8 @@ public class WeiXinConfig {
 		sb.append(biz_class);
 		sb.append(",subscribe_msg=");
 		sb.append(subscribe_msg);
+		sb.append(",welcome_msg=");
+		sb.append(welcome_msg);
 		return sb.toString();
 	}
 }

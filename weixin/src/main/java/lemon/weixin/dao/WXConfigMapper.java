@@ -23,19 +23,19 @@ public interface WXConfigMapper {
 	 * @param cust_id
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.appid, A.secret, A.api_url FROM weixin_config A WHERE A.cust_id=#{cust_id}")
+	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.welcome_msg, A.appid, A.secret, A.api_url FROM weixin_config A WHERE A.cust_id=#{cust_id}")
 	public WeiXinConfig get(int cust_id);
 	/**
 	 * Get all active configures
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.appid, A.secret, A.api_url FROM weixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND S.service='WEIXIN'")
+	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.welcome_msg, A.appid, A.secret, A.api_url FROM weixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND S.service='WEIXIN'")
 	public List<WeiXinConfig> availableList();
 	/**
 	 * Add WeiXin configure
 	 * @param config
 	 */
-	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,biz_class,appid,secret,api_url) SELECT #{cust_id},#{wx_account},#{token},#{subscribe_msg},#{biz_class},#{appid},#{secret},#{api_url}")
+	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,welcome_msg,biz_class,appid,secret,api_url) SELECT #{cust_id},#{wx_account},#{token},#{subscribe_msg},#{welcome_msg},#{biz_class},#{appid},#{secret},#{api_url}")
 	public void save(WeiXinConfig config);
 	
 	/**
@@ -49,6 +49,6 @@ public interface WXConfigMapper {
 	 * update WeiXin configure
 	 * @param config
 	 */
-	@Update("UPDATE weixin_config A SET A.wx_account=#{wx_account},A.token=#{token},A.subscribe_msg=#{subscribe_msg} WHERE A.cust_id=#{cust_id}")
+	@Update("UPDATE weixin_config A SET A.wx_account=#{wx_account},A.token=#{token},A.subscribe_msg=#{subscribe_msg},A.welcome_msg=#{welcome_msg} WHERE A.cust_id=#{cust_id}")
 	public void update(WeiXinConfig config);
 }

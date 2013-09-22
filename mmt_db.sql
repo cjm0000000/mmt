@@ -159,14 +159,15 @@ CREATE TABLE `weixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `wx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '微信接入TOKEN',
-  `subscribe_msg` text COMMENT '订阅事件需要发送的消息',
+  `subscribe_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '订阅事件需要发送的消息',
+  `welcome_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '欢迎信息',
   `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
   `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
   `secret` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证密钥',
   `api_url` char(40) NOT NULL DEFAULT '' COMMENT '客户微信API的URL(UNIQUE)',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
 
 #
 # 微信粉丝表
@@ -381,14 +382,15 @@ CREATE TABLE `yixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `yx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '易信号',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '易信接入TOKEN',
-  `subscribe_msg` text COMMENT '订阅事件需要发送的消息',
+  `subscribe_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '订阅事件需要发送的消息',
+  `welcome_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '欢迎信息',
   `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
   `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
   `secret` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证密钥',
   `api_url` char(40) NOT NULL DEFAULT '' COMMENT '客户易信API的URL(UNIQUE)',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信配置信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信配置信息表'
 
 #
 # 易信粉丝表

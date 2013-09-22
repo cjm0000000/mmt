@@ -33,10 +33,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MMT_YiXin_MsgTest {
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
+	private final String Welcome_msg = "Welcome to Subscribe Lemon Test.";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private final String bizClass = "lemon.web.crm.yxapi.MMT_YiXin_MsgProcessor";
-	private final int cust_id = 200;
+	private final int cust_id = 201;
 	private YiXinMsgHelper msgHelper;
 	private ApplicationContext acx;
 	private CustomerMapper customerMapper;
@@ -79,6 +80,7 @@ public class MMT_YiXin_MsgTest {
 			cfg.setSecret("");
 			cfg.setBiz_class(bizClass);
 			cfg.setSubscribe_msg(Subscribe_msg);
+			cfg.setWelcome_msg(Welcome_msg);
 			wxConfigMapper.save(cfg);
 			assertNotEquals(cfg.getCust_id(), 0);
 		}
