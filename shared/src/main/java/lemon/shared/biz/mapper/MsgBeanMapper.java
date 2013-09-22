@@ -1,5 +1,6 @@
 package lemon.shared.biz.mapper;
 
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -8,6 +9,7 @@ import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 import lemon.shared.biz.bean.MsgBean;
+import lemon.shared.biz.mapper.sqlprovider.MsgBeanSQLProvider;
 
 /**
  * MsgBeanMapper Repository
@@ -24,9 +26,8 @@ public interface MsgBeanMapper {
 	 * @param msg
 	 * @param level
 	 */
-	//TODO 动态语句
-	@Select("INSERT INTO mmt_biz_l${level}(cust_id,`key`,value) SELECT #{msg.cust_id},#{msg.key},#{msg.value}")
-	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+	@InsertProvider(type = MsgBeanSQLProvider.class, method = "addMsgSQL")
+	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "msg.id")
 	void addMsg(@Param("msg") MsgBean msg, @Param("level") String level);
 
 	/**

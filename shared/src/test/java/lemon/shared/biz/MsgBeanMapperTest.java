@@ -7,6 +7,7 @@ import lemon.shared.biz.mapper.MsgBeanMapper;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,18 +34,21 @@ public class MsgBeanMapperTest {
 	}
 	
 	@Test
+	@Ignore
 	public void getL1Msg(){
 		MsgBean mb = msgBeanMapper.getL1Msg(1, "1");
 		assertNotNull(mb);
 	}
 	
 	@Test
+	@Ignore
 	public void getL2Msg(){
 		MsgBean mb = msgBeanMapper.getL2Msg(1, "%a%");
 		assertNotNull(mb);
 	}
 	
 	@Test
+	@Ignore
 	public void getL3Msg(){
 		MsgBean mb = msgBeanMapper.getL3Msg("%a%");
 		assertNotNull(mb);
@@ -56,6 +60,6 @@ public class MsgBeanMapperTest {
 		mb.setCust_id(1);
 		mb.setKey("key");
 		mb.setValue("vava");
-		msgBeanMapper.addMsg(mb, "1");
+		msgBeanMapper.addMsg(mb, "2");
 	}
 }
