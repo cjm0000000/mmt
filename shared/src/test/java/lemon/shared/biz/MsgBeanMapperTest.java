@@ -43,7 +43,7 @@ public class MsgBeanMapperTest {
 	@Test
 	@Ignore
 	public void getL2Msg(){
-		MsgBean mb = msgBeanMapper.getL2Msg(1, "%a%");
+		MsgBean mb = msgBeanMapper.getL2Msg(1, "key");
 		assertNotNull(mb);
 	}
 	
@@ -55,6 +55,7 @@ public class MsgBeanMapperTest {
 	}
 	
 	@Test
+	@Ignore
 	public void addMsg(){
 		MsgBean mb = new MsgBean();
 		mb.setCust_id(1);

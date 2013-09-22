@@ -50,8 +50,7 @@ public interface MsgBeanMapper {
 	 * @param key
 	 * @return
 	 */
-	//TODO LIKE BIND 用注解实现
-	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key` LIKE #{key} ORDER BY A.`key` LIMIT 1")
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
 	MsgBean getL2Msg(@Param("cust_id") int cust_id, @Param("key") String key);
 
@@ -63,8 +62,7 @@ public interface MsgBeanMapper {
 	 * @param key
 	 * @return
 	 */
-	//TODO LIKE BIND 用注解实现
-	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key` LIKE #{key} ORDER BY A.`key` LIMIT 1")
+	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
 	MsgBean getL3Msg(@Param("key") String key);
 }

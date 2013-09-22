@@ -19,7 +19,6 @@ public class MsgBeanSQLProvider {
 	 * @return
 	 */
 	public String addMsgSQL(final Map<String, Object> paramMap) {
-		System.out.println(paramMap);
 		final String level = (String) paramMap.get("level");
 		if (level == null)
 			throw new NullPointerException("消息库找不到。");
