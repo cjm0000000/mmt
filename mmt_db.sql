@@ -151,6 +151,14 @@ CREATE TABLE `mmt_biz_l3` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='通用业务处理库，模糊匹配KEY';
 
+#
+# 天气预报地区表
+#
+CREATE TABLE `mmt_city` (
+  `citycode` char(9) NOT NULL COMMENT '地区代码',
+  `city_name` char(10) NOT NULL DEFAULT '' COMMENT '地区名称',
+  PRIMARY KEY (`citycode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='天气预报地区表';
 ########################### For WeiXin #####################
 #
 # 微信配置表
