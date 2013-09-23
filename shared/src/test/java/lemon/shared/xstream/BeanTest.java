@@ -12,7 +12,7 @@ public class BeanTest {
 	private XStream xStream;
 	@Before
 	public void init() {
-		xStream = XStreamHelper.createXstream();
+		xStream = XStreamHelper.createXMLXStream();
 	}
 	
 	@Test

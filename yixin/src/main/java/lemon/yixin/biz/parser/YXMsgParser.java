@@ -32,7 +32,7 @@ import lemon.yixin.biz.customer.YXCustMsgProcessor;
 public abstract class YXMsgParser implements MsgParser {
 	public static final String PREFIX = "YX_";
 	private static Log logger = LogFactory.getLog(YXMsgParser.class);
-	protected XStream xStream = XStreamHelper.createXstream();
+	protected XStream xStream = XStreamHelper.createXMLXStream();
 	
 	/**
 	 * Get message parser

@@ -38,11 +38,11 @@ public final class XStreamHelper {
 	}
 
 	/**
-	 * Get XStream instance
+	 * Get XStream XML parser
 	 * 
 	 * @return
 	 */
-	public static XStream createXstream() {
+	public static XStream createXMLXStream() {
 		return new XStream(new XppDriver() {
 			@Override
 			public HierarchicalStreamWriter createWriter(Writer out) {

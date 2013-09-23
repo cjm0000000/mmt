@@ -38,7 +38,7 @@ public class WXXMLConvert {
 	
 	@Before
 	public void init() {
-		xStream = XStreamHelper.createXstream();
+		xStream = XStreamHelper.createXMLXStream();
 	}
 
 	@Test

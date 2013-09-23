@@ -32,7 +32,7 @@ import lemon.weixin.biz.customer.WXCustMsgProcessor;
 public abstract class WXMsgParser implements MsgParser {
 	public static final String PREFIX = "WX_";
 	private static Log logger = LogFactory.getLog(WXMsgParser.class);
-	protected XStream xStream = XStreamHelper.createXstream();
+	protected XStream xStream = XStreamHelper.createXMLXStream();
 	
 	/**
 	 * Get message parser
