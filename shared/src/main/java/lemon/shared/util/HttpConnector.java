@@ -104,7 +104,7 @@ public class HttpConnector {
 		try {
 			con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod(method);
-			con.setConnectTimeout(3000);
+			con.setConnectTimeout(5000);
 			if (method.equals(POST)) {
 				con.setDoOutput(true);
 				// send message
