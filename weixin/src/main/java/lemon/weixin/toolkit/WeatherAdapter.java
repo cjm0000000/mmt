@@ -48,35 +48,35 @@ public class WeatherAdapter {
 		art1.setUrl("");
 		art1.setPicUrl("");
 		//TODO 详情需要弄个模板
-		art1.setDescription(days[0]);
+		art1.setDescription(days[0]+"    " + wi.getWeek()+"  "+wi.getTemp1() +"  "+wi.getWeather1());
 		
 		Article art2 = new Article();
-		art2.setTitle("天气——" + wi.getCity());
+		art2.setTitle(days[1]);
 		art2.setUrl("");
 		art2.setPicUrl("");
 		//TODO 详情需要弄个模板
-		art2.setDescription(days[1]);
+		art2.setDescription(days[1]+"    " +wi.getTemp2() +"  "+wi.getWeather2());
 		
 		Article art3 = new Article();
-		art3.setTitle("天气——" + wi.getCity());
+		art3.setTitle(days[2]);
 		art3.setUrl("");
 		art3.setPicUrl("");
 		//TODO 详情需要弄个模板
-		art3.setDescription(days[2]);
+		art3.setDescription(days[2]+"    " + wi.getTemp3() +"  "+wi.getWeather3());
 		
 		Article art4 = new Article();
-		art4.setTitle("天气——" + wi.getCity());
+		art4.setTitle(days[3]);
 		art4.setUrl("");
 		art4.setPicUrl("");
 		//TODO 详情需要弄个模板
-		art4.setDescription(days[3]);
+		art4.setDescription(days[3]+"    " + wi.getTemp4() +"  "+wi.getWeather4());
 		
 		Article art5 = new Article();
-		art5.setTitle("天气——" + wi.getCity());
+		art5.setTitle(days[4]);
 		art5.setUrl("");
 		art5.setPicUrl("");
 		//TODO 详情需要弄个模板
-		art5.setDescription(days[4]);
+		art5.setDescription(days[4]+"    " + wi.getTemp5() +"  "+wi.getWeather5());
 		
 		Article[] articles = { art1, art2, art3, art4, art5 };
 		
