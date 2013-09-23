@@ -10,12 +10,15 @@ import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.ImageMessage;
 import lemon.weixin.bean.message.LinkMessage;
 import lemon.weixin.bean.message.LocationMessage;
+import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.bean.message.VideoMessage;
 import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.bean.message.WeiXinMessage;
 import lemon.weixin.biz.WeiXinMsgHelper;
+import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.toolkit.WeatherAdapter;
 
 /**
  * 简单的微信消息机器人
@@ -31,7 +34,11 @@ public class SimpleWeiXinMsgProcessor extends WXCustBasicMsgProcessor {
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
+	private NewsMsgParser newsMsgParser;
+	@Autowired
 	private MMTRobot mmtRobot;
+	@Autowired
+	private WeatherAdapter weatherAdapter;
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -46,7 +53,14 @@ public class SimpleWeiXinMsgProcessor extends WXCustBasicMsgProcessor {
 	@Override
 	public String processLocationMsg(String token, LocationMessage msg) {
 		//FIXME 对于地理位置消息，暂时先发送天气消息，以后可以考虑图文发送美食，天气等消息
-		return sendTextMessage(msg, "亲，我暂时无法识别地理位置信息哦，您可以给我发文字消息。");
+		NewsMessage replyMsg = new NewsMessage();
+		buildReplyMsg(msg, replyMsg);
+		//查询天气信息
+		String cityName = msg.getLabel().split("市")[0];
+		weatherAdapter.generateWeatherReport(cityName, replyMsg);
+		// save log
+		msgHelper.saveSendNewsMsg(replyMsg);
+		return newsMsgParser.toXML(replyMsg);
 	}
 
 	@Override

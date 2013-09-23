@@ -41,7 +41,7 @@ public final class Weather {
 	 * @return
 	 */
 	public WeatherInfo searchWeather(String cityName){
-		City city = cityMapper.get(cityName);
+		City city = cityMapper.get(analyzeCityName(cityName));
 		if(city == null)
 			return null;
 		String weatherUrl = SEARCH_WEATHER_URL.replaceAll("#cityid#", city.getCitycode());
@@ -160,5 +160,26 @@ public final class Weather {
 		city.setCitycode(citycode);
 		city.setProvince(province);
 		return city;
+	}
+	
+	/**
+	 * 分析城市名称
+	 * @param cityName
+	 * @return
+	 */
+	//TODO 添加更加智能的城市名称分析
+	private String analyzeCityName(String cityName){
+		cityName = cityName.replaceAll("省", "");
+		cityName = cityName.replaceAll("市", "");
+		cityName = cityName.replaceAll("自治区", "");
+		return cityName;
+	}
+	
+	public static void main(String[] args){
+		String s = "浙江杭州市";
+		s = s.replaceAll("省", "");
+		s = s.replaceAll("市", "");
+		s = s.replaceAll("自治区", "");
+		System.out.println(s);
 	}
 }

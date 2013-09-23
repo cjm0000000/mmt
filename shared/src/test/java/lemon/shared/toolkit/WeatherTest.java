@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
+import lemon.shared.entity.City;
 import lemon.shared.entity.WeatherInfo;
 import lemon.shared.mapper.CityMapper;
 
@@ -46,5 +47,15 @@ public class WeatherTest {
 		String city = "杭州";
 		WeatherInfo result = weather.searchWeather(city);
 		System.out.println(result);
+	}
+	
+	@Test
+	@Ignore
+	public void addCity(){
+		City c = new City();
+		c.setCity_name("AAS");
+		c.setCitycode("asdq");
+		c.setProvince("B");
+		cityMapper.add(c);
 	}
 }
