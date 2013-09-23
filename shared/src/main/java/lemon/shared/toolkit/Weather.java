@@ -5,9 +5,13 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thoughtworks.xstream.XStream;
+
 import lemon.shared.entity.City;
+import lemon.shared.entity.WeatherInfo;
 import lemon.shared.mapper.CityMapper;
 import lemon.shared.util.HttpConnector;
+import lemon.shared.xstream.XStreamHelper;
 
 /**
  * 天气查询API<br>
@@ -36,13 +40,15 @@ public final class Weather {
 	 * @param cityName
 	 * @return
 	 */
-	public String searchWeather(String cityName){
+	public WeatherInfo searchWeather(String cityName){
 		City city = cityMapper.get(cityName);
 		if(city == null)
 			return null;
 		String weatherUrl = SEARCH_WEATHER_URL.replaceAll("#cityid#", city.getCitycode());
-		//FIXME 最终返回的是JSON，需要返回Weather对象
-		return HttpConnector.get(weatherUrl);
+		
+		XStream xStream = XStreamHelper.createJSONXStream();
+		xStream.processAnnotations(WeatherInfo.class);
+		return (WeatherInfo) xStream.fromXML(HttpConnector.get(weatherUrl));
 	}
 
 	public void initCity() throws IOException {

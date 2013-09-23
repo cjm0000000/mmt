@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 
@@ -25,6 +26,16 @@ public final class XStreamHelper {
 	private static final String PREFIX_CDATA = "<![CDATA[";
 	/** CDATA suffix */
 	private static final String SUFFIX_CDATA = "]]>";
+	
+	/**
+	 * Get XStream JSON parser
+	 * @return
+	 */
+	public static XStream createJSONXStream(){
+		XStream xStream = new XStream(new JettisonMappedXmlDriver());
+		xStream.setMode(XStream.NO_REFERENCES);
+		return xStream;
+	}
 
 	/**
 	 * Get XStream instance
