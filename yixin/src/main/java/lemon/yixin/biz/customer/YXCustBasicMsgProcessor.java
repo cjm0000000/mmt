@@ -213,7 +213,7 @@ public abstract class YXCustBasicMsgProcessor implements YXCustMsgProcessor {
 	 * @return
 	 */
 	protected String getWelcome(YiXinConfig cfg){
-		return cfg.getSubscribe_msg();
+		return cfg.getWelcome_msg();
 	}
 	
 	/**

@@ -16,8 +16,9 @@ import lemon.yixin.biz.YiXinMsgHelper;
 import lemon.yixin.biz.parser.TextMsgParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class SimpleYiXinMsgProcessor extends YXCustBasicMsgProcessor {
 	@Autowired
 	private YiXinMsgHelper msgHelper;
