@@ -15,6 +15,7 @@ import lemon.weixin.bean.message.TextMessage;
 import lemon.weixin.bean.message.VideoMessage;
 import lemon.weixin.bean.message.VoiceMessage;
 import lemon.weixin.bean.message.WeiXinMessage;
+import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.WeiXinMsgHelper;
 import lemon.weixin.biz.parser.NewsMsgParser;
 import lemon.weixin.biz.parser.TextMsgParser;
@@ -52,13 +53,14 @@ public class SimpleWeiXinMsgProcessor extends WXCustBasicMsgProcessor {
 
 	@Override
 	public String processLocationMsg(String token, LocationMessage msg) {
-		//FIXME 对于地理位置消息，暂时先发送天气消息，以后可以考虑图文发送美食，天气等消息
-		//FIXME 直接用VM模板生成XML
+		//TODO 对于地理位置消息，暂时先发送天气消息，以后可以考虑图文发送美食，天气等消息
 		NewsMessage replyMsg = new NewsMessage();
 		buildReplyMsg(msg, replyMsg);
 		//查询天气信息
 		String cityName = msg.getLabel().split("市")[0];
-		weatherAdapter.generateWeatherReport(cityName, replyMsg);
+		replyMsg = weatherAdapter.generateWeatherReport(cityName, replyMsg);
+		if(replyMsg == null)
+			throw new WeiXinException("地理位置消息处理失败。");
 		// save log
 		msgHelper.saveSendNewsMsg(replyMsg);
 		return newsMsgParser.toXML(replyMsg);

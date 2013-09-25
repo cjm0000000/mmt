@@ -7,36 +7,36 @@
   <Articles>
     <item>
       <Title><![CDATA[
-      	未来$!msg.articleCount天天气——$wi.city<br>
+      	未来$!msg.articleCount天天气——$wi.city \n
       	$days[0]    $wi.week  $wi.temp1  $wi.weather1  
       ]]></Title>
       <Description>$days[0]    $wi.week  $wi.temp1  $wi.weather1</Description>
-      <PicUrl></PicUrl>
-      <Url></Url>
+      <PicUrl>http://m.weather.com.cn/img/b${wi.img1}.gif</PicUrl>
+      <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>
     </item>
     <item>
       <Title>$days[1]  $wi.temp2  $wi.weather2</Title>
       <Description>$days[1]  $wi.temp2  $wi.weather2</Description>
-      <PicUrl></PicUrl>
-      <Url></Url>
+      <PicUrl>http://m.weather.com.cn/img/c${wi.img3}.gif</PicUrl>
+      <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>
     </item>
     <item>
       <Title>$days[2]  $wi.temp3  $wi.weather3</Title>
       <Description>$days[2]  $wi.temp3  $wi.weather3</Description>
-      <PicUrl></PicUrl>
-      <Url></Url>
+      <PicUrl>http://m.weather.com.cn/img/c${wi.img5}.gif</PicUrl>
+      <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>
     </item>
     <item>
       <Title>$days[3]  $wi.temp4  $wi.weather4</Title>
       <Description>$days[3]  $wi.temp4  $wi.weather4</Description>
-      <PicUrl></PicUrl>
-      <Url></Url>
+      <PicUrl>http://m.weather.com.cn/img/c${wi.img7}.gif</PicUrl>
+      <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>
     </item>
     <item>
       <Title>$days[4]  $wi.temp5  $wi.weather5</Title>
       <Description>$days[4]  $wi.temp5  $wi.weather5</Description>
-      <PicUrl></PicUrl>
-      <Url></Url>
+      <PicUrl>http://m.weather.com.cn/img/c${wi.img9}.gif</PicUrl>
+      <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>
     </item>
   </Articles>
 </xml>
