@@ -272,7 +272,7 @@ CREATE TABLE `weixin_recvmsg_event` (
 #
 CREATE TABLE `weixin_recvmsg_image` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `picUrl` varchar(100) DEFAULT NULL COMMENT '图片链接',
+  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片链接',
   `mediaId` char(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信图片消息接收表';
