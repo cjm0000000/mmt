@@ -63,7 +63,6 @@ public class WeatherAdapter {
 		StringWriter writer = new StringWriter();
 
 		Velocity.mergeTemplate("lemon/weixin/toolkit/weather.xml", WeiXin.LOCAL_CHARSET, context, writer);
-		System.out.println(writer.toString());
 		return parser.toMsg(writer.toString());
 	}
 	

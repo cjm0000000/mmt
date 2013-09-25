@@ -1,6 +1,7 @@
 package lemon.weixin.bean.message;
 
 import lemon.shared.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -13,6 +14,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * 
  */
 @XStreamAlias("item")
+@XStreamProcessCDATA
 public class Article {
 	/** Title */
 	@XStreamAlias("Title")

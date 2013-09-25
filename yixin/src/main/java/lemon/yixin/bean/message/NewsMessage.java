@@ -1,5 +1,7 @@
 package lemon.yixin.bean.message;
 
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -10,6 +12,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 
  */
 @XStreamAlias("xml")
+@XStreamProcessCDATA
 public class NewsMessage extends YiXinMessage {
 	/** ArticleCount(图文消息个数，限制为10条以内) */
 	@XStreamAlias("ArticleCount")

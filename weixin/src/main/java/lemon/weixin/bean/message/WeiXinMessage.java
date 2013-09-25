@@ -2,6 +2,7 @@ package lemon.weixin.bean.message;
 
 import lemon.shared.common.Message;
 import lemon.shared.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -13,6 +14,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @version 1.0
  * 
  */
+@XStreamProcessCDATA
 public class WeiXinMessage implements Message {
 	/** ToUserName */
 	@XStreamAlias("ToUserName")

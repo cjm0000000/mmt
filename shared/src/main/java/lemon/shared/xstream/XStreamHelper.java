@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 
 import lemon.shared.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -54,7 +55,10 @@ public final class XStreamHelper {
 							@SuppressWarnings("rawtypes") Class clazz) {
 						super.startNode(name, clazz);
 						//业务处理，对于用XStreamCDATA标记的Field，需要加上CDATA标签
-						if(!name.equals("xml")){
+						@SuppressWarnings("unchecked")
+						XStreamProcessCDATA xStreamProcessCDATA = (XStreamProcessCDATA) clazz.getAnnotation(XStreamProcessCDATA.class);
+						if(xStreamProcessCDATA == null){
+						//if(!name.equals("xml")){
 							cdata = needCDATA(targetClass, name);
 						}else{
 							targetClass = clazz;

@@ -1,5 +1,7 @@
 package lemon.yixin.bean.message;
 
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
+
 /**
  * media message<br>
  * such as: audio, video
@@ -7,6 +9,7 @@ package lemon.yixin.bean.message;
  * @version 1.0
  *
  */
+@XStreamProcessCDATA
 public class MediaMessage extends YiXinMessage {
 	protected String url;
 	protected String name;

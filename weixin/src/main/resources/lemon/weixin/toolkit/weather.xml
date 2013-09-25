@@ -6,10 +6,10 @@
   <ArticleCount>$!msg.articleCount</ArticleCount>
   <Articles>
     <item>
-      <Title><![CDATA[
-      	未来$!msg.articleCount天天气——$wi.city \n
+      <Title>
+      	未来$!msg.articleCount天天气——$wi.city 
       	$days[0]    $wi.week  $wi.temp1  $wi.weather1  
-      ]]></Title>
+      </Title>
       <Description>$days[0]    $wi.week  $wi.temp1  $wi.weather1</Description>
       <PicUrl>http://m.weather.com.cn/img/b${wi.img1}.gif</PicUrl>
       <Url>http://www.weather.com.cn/weather/${wi.cityid}.shtml</Url>

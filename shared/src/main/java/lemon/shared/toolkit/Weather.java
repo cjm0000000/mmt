@@ -172,14 +172,9 @@ public final class Weather {
 		cityName = cityName.replaceAll("省", "");
 		cityName = cityName.replaceAll("市", "");
 		cityName = cityName.replaceAll("自治区", "");
+		if(cityName.startsWith("中国"))
+			cityName = cityName.substring(2);
 		return cityName;
 	}
 	
-	public static void main(String[] args){
-		String s = "浙江杭州市";
-		s = s.replaceAll("省", "");
-		s = s.replaceAll("市", "");
-		s = s.replaceAll("自治区", "");
-		System.out.println(s);
-	}
 }

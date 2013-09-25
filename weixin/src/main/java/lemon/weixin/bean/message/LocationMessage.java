@@ -1,6 +1,7 @@
 package lemon.weixin.bean.message;
 
 import lemon.shared.xstream.annotations.XStreamCDATA;
+import lemon.shared.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -11,6 +12,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xml")
+@XStreamProcessCDATA
 public class LocationMessage extends WeiXinMessage {
 	/** Location_X */
 	@XStreamAlias("Location_X")
