@@ -42,6 +42,8 @@ public class WeatherTest {
 		weather.initCity();
 	}
 	
+	//FIXME 获取城市名称   http://maps.google.com/maps/api/geocode/json?latlng=23.149207,113.256196&language=zh-CN&sensor=true
+	
 	@Test
 	public void searchWeather(){
 		String city = "杭州";
