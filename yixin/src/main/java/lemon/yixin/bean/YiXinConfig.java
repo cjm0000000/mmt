@@ -1,12 +1,14 @@
 package lemon.yixin.bean;
 
+import lemon.shared.common.MMTConfig;
+
 /**
  * Customer's configures of YiXin
  * @author lemon
  * @version 1.0
  *
  */
-public class YiXinConfig {
+public class YiXinConfig implements MMTConfig {
 	/** MMT客户编号 */
 	private int cust_id;
 	/** 客户在易信接口填写的TOKEN */

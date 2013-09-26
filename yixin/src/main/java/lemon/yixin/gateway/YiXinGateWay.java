@@ -172,20 +172,14 @@ public class YiXinGateWay implements Filter {
 	 * @param mmt_token	MMT system's token
 	 * @param resp
 	 * @param msg
-	 * @throws IOException
 	 */
-	private void processMessage(String mmt_token, HttpServletResponse resp, String msg)
-			throws IOException {
-		PrintWriter out = null;
-		try {
-			resp.setCharacterEncoding(LOCAL_CHARSET);
-			out = resp.getWriter();
-			logger.debug(msg);
+	private void processMessage(String mmt_token, HttpServletResponse resp, String msg){
+		resp.setCharacterEncoding(LOCAL_CHARSET);
+		try(PrintWriter out = resp.getWriter()) {
 			out.println(yxAPI.processMsg(mmt_token, msg));
 			out.flush();
-		} finally {
-			if (null != out)
-				out.close();
+		} catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 	

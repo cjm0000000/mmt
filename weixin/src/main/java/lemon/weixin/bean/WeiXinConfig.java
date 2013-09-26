@@ -1,12 +1,14 @@
 package lemon.weixin.bean;
 
+import lemon.shared.common.MMTConfig;
+
 /**
  * Customer's configures of WeiXin
  * @author lemon
  * @version 1.0
  *
  */
-public class WeiXinConfig {
+public class WeiXinConfig implements MMTConfig {
 	/** MMT客户编号 */
 	private int cust_id;
 	/** 客户在微信接口填写的TOKEN */
