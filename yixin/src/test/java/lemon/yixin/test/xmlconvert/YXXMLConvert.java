@@ -1,7 +1,5 @@
 package lemon.yixin.test.xmlconvert;
 
-import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
@@ -38,7 +36,7 @@ public class YXXMLConvert {
 		TextMessage txt = new TextMessage();
 		txt.setToUserName("weixin");
 		txt.setFromUserName("lemon");
-		txt.setCreateTime(new Date().getTime());
+		txt.setCreateTime((int) (System.currentTimeMillis()/1000));
 		txt.setContent("hello,weixin, I am \"lemon\".");
 		txt.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(txt);
@@ -54,7 +52,7 @@ public class YXXMLConvert {
 		ImageMessage img = new ImageMessage();
 		img.setToUserName("weixin");
 		img.setFromUserName("lemon");
-		img.setCreateTime(new Date().getTime());
+		img.setCreateTime((int) (System.currentTimeMillis()/1000));
 		img.setPicUrl("http://www.baidu.com/sadsaf");
 		img.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(img);
@@ -69,7 +67,7 @@ public class YXXMLConvert {
 		LocationMessage msg = new LocationMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
-		msg.setCreateTime(new Date().getTime());
+		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		msg.setLocation_X(23.134521);
 		msg.setLocation_Y(113.358803);
 		msg.setScale(20);
@@ -87,7 +85,7 @@ public class YXXMLConvert {
 		LinkMessage msg = new LinkMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
-		msg.setCreateTime(new Date().getTime());
+		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		msg.setTitle("Link \"TEST\" Title");
 		msg.setDescription("Link DESC");
 		msg.setUrl("http://www.163.com/s/a/d/f/a");
@@ -106,7 +104,7 @@ public class YXXMLConvert {
 		EventMessage msg = new EventMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
-		msg.setCreateTime(new Date().getTime());
+		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		msg.setEventType(EventType.SUBSCRIBE);
 		msg.setEventKey("0dfsafkqwnriksdk");
 		msg.setMsgId(1024102410241024L);
@@ -123,7 +121,7 @@ public class YXXMLConvert {
 		MusicMessage msg = new MusicMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
-		msg.setCreateTime(new Date().getTime());
+		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		msg.setMsgId(1024102410241024L);
 		msg.setUrl("http://www.baidu.com");
 		msg.setName("Music");
@@ -145,7 +143,7 @@ public class YXXMLConvert {
 		NewsMessage msg = new NewsMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
-		msg.setCreateTime(new Date().getTime());
+		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		msg.setArticleCount(2);
 		
 		Article a1 = new Article();

@@ -203,7 +203,7 @@ public abstract class YXCustBasicMsgProcessor implements YXCustMsgProcessor {
 	protected void buildReplyMsg(YiXinMessage recvMsg, YiXinMessage replyMsg){
 		replyMsg.setToUserName(recvMsg.getFromUserName());
 		replyMsg.setFromUserName(recvMsg.getToUserName());
-		replyMsg.setCreateTime(System.currentTimeMillis());
+		replyMsg.setCreateTime((int) (System.currentTimeMillis()/1000));
 		replyMsg.setMsgId(null);
 	}
 	

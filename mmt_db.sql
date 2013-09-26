@@ -473,7 +473,7 @@ CREATE TABLE `yixin_recvmsg_detail` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者易信ID',
   `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者易信ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '易信创建时间',
+  `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '易信创建时间',
   `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
   `msgId` bigint(20) DEFAULT NULL COMMENT '信息ID',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '接收时间',
@@ -572,7 +572,7 @@ CREATE TABLE `yixin_sendmsg_detail` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者易信ID',
   `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者易信ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
   PRIMARY KEY (`id`)

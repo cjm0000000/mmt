@@ -26,7 +26,7 @@ public class YiXinMessage implements Message {
 	protected String fromUserName;
 	/** CreateTime */
 	@XStreamAlias("CreateTime")
-	protected long createTime;
+	protected int createTime;
 	/** MsgType */
 	@XStreamAlias("MsgType")
 	@XStreamCDATA
@@ -61,11 +61,11 @@ public class YiXinMessage implements Message {
 		this.toUserName = toUserName;
 	}
 
-	public long getCreateTime() {
+	public int getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(long createTime) {
+	public void setCreateTime(int createTime) {
 		this.createTime = createTime;
 	}
 
