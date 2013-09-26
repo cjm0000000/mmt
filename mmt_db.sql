@@ -475,7 +475,7 @@ CREATE TABLE `yixin_recvmsg_detail` (
   `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者易信ID',
   `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '易信创建时间',
   `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `msgId` bigint(20) NOT NULL DEFAULT 0 COMMENT '信息ID',
+  `msgId` bigint(20) DEFAULT NULL COMMENT '信息ID',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '接收时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='易信消息接收汇总表';

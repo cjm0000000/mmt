@@ -7,8 +7,6 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.entity.Customer;
 import lemon.shared.entity.Status;
 import lemon.shared.mapper.CustomerMapper;
-import lemon.shared.request.bean.ReturnCode;
-import lemon.shared.xstream.XStreamHelper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
@@ -22,8 +20,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
 public class WeiXinAPITest {
@@ -99,16 +95,10 @@ public class WeiXinAPITest {
 	}
 	
 	@Test
+	@Ignore
 	public void getAcessToken(){
 		String ss = api.getAcessToken(MMT_TOKEN);
 		System.out.println(ss);
 	}
 	
-	public static void main(String[] args){
-		XStream xs = XStreamHelper.createJSONXStream();
-		String json = "{\"lemon.shared.request.bean.ReturnCode\":{\"errcode\":123,\"errmsg\":\"msg\"}}";
-		ReturnCode.class.getName();
-		ReturnCode rc = (ReturnCode) xs.fromXML(json);
-		System.out.println(xs.toXML(rc));
-	}
 }
