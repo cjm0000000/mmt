@@ -31,4 +31,27 @@ public interface MmtAPI {
 	 * @return access token
 	 */
 	String getAcessToken(String mmt_token);
+	
+	/**
+	 * Third part create menus
+	 * @param mmt_token
+	 * @param menuJson
+	 * @return
+	 */
+	String createMenus(String mmt_token, String menuJson);
+	
+	
+	/**
+	 * Third part get menus from WeiXin server
+	 * @param mmt_token
+	 * @return
+	 */
+	String getMenus(String mmt_token);
+	
+	/**
+	 * Third part delete menus
+	 * @param mmt_token
+	 * @return
+	 */
+	String deleteMenus(String mmt_token);
 }

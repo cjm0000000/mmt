@@ -11,13 +11,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.api.MmtAPI;
+import lemon.shared.api.AbstractMmtAPI;
 import lemon.shared.common.MsgParser;
-import lemon.shared.request.bean.ReturnCode;
-import lemon.shared.request.bean.Token;
-import lemon.shared.util.HttpConnector;
 import lemon.shared.util.SecureUtil;
-import lemon.shared.xstream.XStreamHelper;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.bean.log.MsgLog;
@@ -33,7 +29,7 @@ import lemon.yixin.dao.YXLogManager;
  * 
  */
 @Service("yiXinAPI")
-public class YiXinAPI implements MmtAPI {
+public class YiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(YiXinAPI.class);
 	@Autowired
 	private YXLogManager yxLogManager;
@@ -85,31 +81,45 @@ public class YiXinAPI implements MmtAPI {
 		return rMsg;
 	}
 	
-	/**
-	 *  @param url the request URL, such as: <BR>
-	 * 		https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
-	 * 		you can get appid and appsecret from {@link lemon.weixin.bean.WeiXinConfig WeiXinConfig}
-	 */
 	@Override
-	public String getAcessToken(String mmt_token) {
-		String url = YiXin.getCommonUrl();
+	public String createMenus(String mmt_token, String menuJson) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getMenus(String mmt_token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteMenus(String mmt_token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCommonUrl() {
+		return YiXin.getCommonUrl();
+	}
+
+	@Override
+	public Map<String, Object> getAccessTokenRequestParams(String mmt_token) {
 		YiXinConfig cfg = YiXin.getConfig(mmt_token);
-		
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
 		params.put("grant_type", "client_credential");
 		params.put("appid", cfg.getAppid());
 		params.put("secret", cfg.getSecret());
-		String result = HttpConnector.get(url, params);
-		if(result.startsWith("{\"errcode\"")){
-			ReturnCode rCode = (ReturnCode) XStreamHelper.createJSONXStream()
-					.fromXML(addRoot(ReturnCode.class, result));
-			throw new YiXinException(rCode.getErrmsg());
-		}
-		Token token = (Token) XStreamHelper.createJSONXStream().fromXML(addRoot(Token.class, result));
-		return token.getAccess_token();
+		return params;
 	}
 
+	@Override
+	public void sendError(String errorMsg) {
+		throw new YiXinException(errorMsg);
+	}
+	
 	/**
 	 * save access log
 	 * @param log
@@ -136,20 +146,6 @@ public class YiXinAPI implements MmtAPI {
 	private void saveSendMessageLog(int cust_id, String msg){
 		MsgLog log = MsgLog.createSendLog(cust_id, msg);
 		yxLogManager.saveMessageLog(log);
-	}
-	
-	/**
-	 * 为JSON字符串加根节点
-	 * @param clazz
-	 * @param json
-	 * @return
-	 */
-	private String addRoot(Class<?> clazz, String json){
-		StringBuilder sb = new StringBuilder();
-		sb.append("{").append("\"");
-		sb.append(clazz.getName()).append("\"").append(":");
-		sb.append(json).append("}");
-		return sb.toString();
 	}
 
 }
