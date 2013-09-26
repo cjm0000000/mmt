@@ -84,6 +84,21 @@ public class HttpConnector {
 		}
 		return null;
 	}
+	
+	/**
+	 * 获取消息
+	 * @param url
+	 * @param params
+	 * @return
+	 */
+	public static String get(String url, Map<String, Object> params) {
+		try {
+			return connect(url, GET, null, params);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * connect to the URL and send a message

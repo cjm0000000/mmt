@@ -4,36 +4,85 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.util.SecureUtil;
+import lemon.shared.entity.Customer;
+import lemon.shared.entity.Status;
+import lemon.shared.mapper.CustomerMapper;
+import lemon.shared.request.bean.ReturnCode;
+import lemon.shared.xstream.XStreamHelper;
+import lemon.weixin.WeiXin;
+import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.SiteAccessLog;
+import lemon.weixin.dao.WXConfigMapper;
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
 public class WeiXinAPITest {
 	private MmtAPI api;
-	private AbstractApplicationContext acx;
+	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
+	private final String Welcome_msg = "Welcome";
+	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
+	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
+	private final String bizClass = "lemon.weixin.biz.customer.SimpleWeiXinMsgProcessor";
+	private final int cust_id = 100;
+	private ApplicationContext acx;
+	private CustomerMapper customerMapper;
+	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = (MmtAPI) acx.getBean(MmtAPI.class);
+		api = acx.getBean(WeiXinAPI.class);
+		customerMapper = acx.getBean(CustomerMapper.class);
+		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
+		assertNotNull(customerMapper);
+		assertNotNull(wxConfigMapper);
+		
+		Customer cust = customerMapper.getCustomer(cust_id);
+		if(cust == null){
+			cust = new Customer();
+			cust.setCust_id(cust_id);
+			cust.setCust_name("Test");
+			cust.setMemo("");
+			cust.setStatus(Status.AVAILABLE);
+			customerMapper.addCustomer(cust);
+			assertNotEquals(cust.getCust_id(), 0);
+		}
+		
+		//add WeiXin configure
+		WeiXinConfig cfg = wxConfigMapper.get(cust_id);
+		if(null == cfg){
+			cfg = new WeiXinConfig();
+			cfg.setCust_id(cust_id);
+			cfg.setToken(TOKEN);
+			cfg.setApi_url(MMT_TOKEN);
+			cfg.setWx_account("lemon_test");
+			cfg.setAppid("");
+			cfg.setSecret("");
+			cfg.setBiz_class(bizClass);
+			cfg.setSubscribe_msg(Subscribe_msg);
+			cfg.setWelcome_msg(Welcome_msg);
+			wxConfigMapper.save(cfg);
+			assertNotEquals(cfg.getCust_id(), 0);
+		}
+		WeiXin.init();
+		WeiXin.setConfig(cfg);
 	}
-	@After
-	public void destory(){
-		acx.close();
-	}
+	
 	@Test
-	public void testSignature() {
+	@Ignore
+	public void verifySignature() {
 		Map<String, Object> paramMap = new HashMap<>();
 
 		SiteAccessLog log = new SiteAccessLog();
@@ -50,10 +99,16 @@ public class WeiXinAPITest {
 	}
 	
 	@Test
-	public void testHSA1(){
-		String str = "b";
-		String result = "e9d71f5ee7c92d6dc9e92ffdad17b8bd49418f98";
-		String afterHSA1 = SecureUtil.sha1(str);
-		assertTrue(afterHSA1.equals(result));
+	public void getAcessToken(){
+		String ss = api.getAcessToken(MMT_TOKEN);
+		System.out.println(ss);
+	}
+	
+	public static void main(String[] args){
+		XStream xs = XStreamHelper.createJSONXStream();
+		String json = "{\"lemon.shared.request.bean.ReturnCode\":{\"errcode\":123,\"errmsg\":\"msg\"}}";
+		ReturnCode.class.getName();
+		ReturnCode rc = (ReturnCode) xs.fromXML(json);
+		System.out.println(xs.toXML(rc));
 	}
 }

@@ -2,6 +2,7 @@ package lemon.weixin.biz;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.common.MsgParser;
+import lemon.shared.request.bean.ReturnCode;
+import lemon.shared.request.bean.Token;
+import lemon.shared.util.HttpConnector;
 import lemon.shared.util.SecureUtil;
+import lemon.shared.xstream.XStreamHelper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.log.MsgLog;
@@ -89,7 +94,19 @@ public class WeiXinAPI implements MmtAPI {
 	public String getAcessToken(String mmt_token) {
 		String url = WeiXin.getCommonUrl();
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
-		return WeiXin.getMsg(url, "client_credential",cfg.getAppid(),cfg.getSecret());
+		// 请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put("grant_type", "client_credential");
+		params.put("appid", cfg.getAppid());
+		params.put("secret", cfg.getSecret());
+		String result = HttpConnector.get(url, params);
+		if(result.startsWith("{\"errcode\"")){
+			ReturnCode rCode = (ReturnCode) XStreamHelper.createJSONXStream()
+					.fromXML(addRoot(ReturnCode.class, result));
+			throw new WeiXinException(rCode.getErrmsg());
+		}
+		Token token = (Token) XStreamHelper.createJSONXStream().fromXML(addRoot(Token.class, result));
+		return token.getAccess_token();
 	}
 
 	/**
@@ -118,6 +135,20 @@ public class WeiXinAPI implements MmtAPI {
 	private void saveSendMessageLog(int cust_id, String msg){
 		MsgLog log = MsgLog.createSendLog(cust_id, msg);
 		wxLogManager.saveMessageLog(log);
+	}
+	
+	/**
+	 * 为JSON字符串加根节点
+	 * @param clazz
+	 * @param json
+	 * @return
+	 */
+	private String addRoot(Class<?> clazz, String json){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{").append("\"");
+		sb.append(clazz.getName()).append("\"").append(":");
+		sb.append(json).append("}");
+		return sb.toString();
 	}
 
 }
