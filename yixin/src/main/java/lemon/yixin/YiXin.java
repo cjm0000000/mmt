@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.biz.YiXinException;
-import lemon.yixin.gateway.YiXinMessager;
 
 /**
  * YiXin configures
@@ -36,15 +35,12 @@ public class YiXin {
 	 * 清空Map
 	 */
 	public synchronized static void init() {
-		if (configs == null)
+		if (configs == null){
 			configs = new ConcurrentHashMap<>();
+			loadYiXinProperties();
+		}
 		else
 			configs.clear();
-		try {
-			loadYiXinProperties();
-		} catch (IOException e) {
-			throw new YiXinException("Load YiXin properties faild. "+ e.getCause());
-		}
 	}
 
 	/**
@@ -70,41 +66,6 @@ public class YiXin {
 	public static void destory(){
 		if(null != configs)
 			configs.clear();
-	}
-	
-	/**
-	 * POST a message to the URL, and receive a message<BR>
-	 * default timeout is 5 seconds.
-	 * @param url
-	 * @param msg
-	 * @param params
-	 * @return
-	 */
-	public static String postMsg(String url, String msg, Object... params){
-		String replyMsg = null;
-		try {
-			replyMsg = YiXinMessager.send(url, "POST", msg, params);
-		} catch (IOException e) {
-			throw new YiXinException("POST message faild: " + e.getCause());
-		}
-		return replyMsg;
-	}
-	
-	/**
-	 * Get a message from the URL<BR>
-	 * default timeout is 5 seconds.
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public static String getMsg(String url, Object... params){
-		String replyMsg = null;
-		try {
-			replyMsg = YiXinMessager.send(url, "GET", null, params);
-		} catch (IOException e) {
-			throw new YiXinException("Get message faild: " + e.getCause());
-		}
-		return replyMsg;
 	}
 	
 	/**
@@ -139,19 +100,20 @@ public class YiXin {
 		return menuURL_DELETE;
 	}
 	
-	private static void loadYiXinProperties() throws IOException{
-		InputStream in = null;
-		try{
-			in = YiXin.class.getClassLoader().getResourceAsStream("yixin.properties");
+	/**
+	 * 加载易信配置信息
+	 */
+	private static void loadYiXinProperties() {
+		try (InputStream in = YiXin.class.getClassLoader().getResourceAsStream(
+				"yixin.properties")) {
 			Properties p = new Properties();
 			p.load(in);
 			commonUrl = p.getProperty("common-url");
 			menuURL_CREATE = p.getProperty("menu-create-url");
 			menuURL_SEARCH = p.getProperty("menu-search-url");
 			menuURL_DELETE = p.getProperty("menu-delete-url");
-		}finally{
-			if(null != in)
-				in.close();
+		} catch (IOException e) {
+			throw new YiXinException("Load YiXin properties faild: " + e.getCause());
 		}
 	}
 }
