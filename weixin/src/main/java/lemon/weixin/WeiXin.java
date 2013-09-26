@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.biz.WeiXinException;
-import lemon.weixin.gateway.MicroChatMessager;
 
 /**
  * WeiXin configures
@@ -36,15 +35,12 @@ public class WeiXin {
 	 * 清空Map
 	 */
 	public synchronized static void init() {
-		if (configs == null)
+		if (configs == null){
 			configs = new ConcurrentHashMap<>();
+			loadWeiXinProperties();
+		}
 		else
 			configs.clear();
-		try {
-			loadWeiXinProperties();
-		} catch (IOException e) {
-			throw new WeiXinException("Load weixin properties faild. "+ e.getCause());
-		}
 	}
 
 	/**
@@ -70,41 +66,6 @@ public class WeiXin {
 	public static void destory(){
 		if(null != configs)
 			configs.clear();
-	}
-	
-	/**
-	 * POST a message to the URL, and receive a message<BR>
-	 * default timeout is 5 seconds.
-	 * @param url
-	 * @param msg
-	 * @param params
-	 * @return
-	 */
-	public static String postMsg(String url, String msg, Object... params){
-		String replyMsg = null;
-		try {
-			replyMsg = MicroChatMessager.send(url, "POST", msg, params);
-		} catch (IOException e) {
-			throw new WeiXinException("POST message faild: " + e.getCause());
-		}
-		return replyMsg;
-	}
-	
-	/**
-	 * Get a message from the URL<BR>
-	 * default timeout is 5 seconds.
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public static String getMsg(String url, Object... params){
-		String replyMsg = null;
-		try {
-			replyMsg = MicroChatMessager.send(url, "GET", null, params);
-		} catch (IOException e) {
-			throw new WeiXinException("Get message faild: " + e.getCause());
-		}
-		return replyMsg;
 	}
 	
 	/**
@@ -139,19 +100,20 @@ public class WeiXin {
 		return menuURL_DELETE;
 	}
 	
-	private static void loadWeiXinProperties() throws IOException{
-		InputStream in = null;
-		try{
-			in = WeiXin.class.getClassLoader().getResourceAsStream("weixin.properties");
+	/**
+	 * load WeiXin's configures
+	 */
+	private static void loadWeiXinProperties() {
+		try (InputStream in = WeiXin.class.getClassLoader()
+				.getResourceAsStream("weixin.properties")) {
 			Properties p = new Properties();
 			p.load(in);
 			commonUrl = p.getProperty("common-url");
 			menuURL_CREATE = p.getProperty("menu-create-url");
 			menuURL_SEARCH = p.getProperty("menu-search-url");
 			menuURL_DELETE = p.getProperty("menu-delete-url");
-		}finally{
-			if(null != in)
-				in.close();
+		} catch (IOException e) {
+			throw new WeiXinException("Load weixin properties faild: "+ e.getCause());
 		}
 	}
 }

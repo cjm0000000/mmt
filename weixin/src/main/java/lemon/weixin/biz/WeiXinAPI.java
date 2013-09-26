@@ -86,8 +86,8 @@ public class WeiXinAPI implements MmtAPI {
 	}
 	
 	/**
-	 *  @param url the request URL, such as: <BR>
-	 * 		https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+	 *  @param mmt_token the customer's token <BR>
+	 * 		e.g. URL=https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 	 * 		you can get appid and appsecret from {@link lemon.weixin.bean.WeiXinConfig WeiXinConfig}
 	 */
 	@Override
