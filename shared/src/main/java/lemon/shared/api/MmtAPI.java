@@ -1,6 +1,6 @@
 package lemon.shared.api;
 
-import java.util.Map;
+import lemon.shared.access.SiteAccess;
 
 /**
  * MMT message API
@@ -12,10 +12,10 @@ import java.util.Map;
 public interface MmtAPI {
 	/**
 	 * verify the signature
-	 * @param params
+	 * @param sa
 	 * @return if signature is valid return true, else return false.
 	 */
-	boolean verifySignature(Map<String, Object> params);
+	boolean verifySignature(SiteAccess sa);
 	
 	/**
 	 * process message and return a result

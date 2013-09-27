@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import lemon.shared.xstream.XStreamHelper;
+import lemon.shared.toolkit.xstream.XStreamHelper;
 import lemon.yixin.bean.message.*;
 
 import com.thoughtworks.xstream.XStream;

@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.entity.Customer;
+import lemon.shared.customer.bean.Customer;
+import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
-import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.MusicMessage;

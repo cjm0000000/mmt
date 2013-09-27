@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import lemon.shared.entity.Customer;
-import lemon.shared.mapper.CustomerMapper;
+import lemon.shared.customer.bean.Customer;
+import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 

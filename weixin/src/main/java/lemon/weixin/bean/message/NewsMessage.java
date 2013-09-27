@@ -1,6 +1,6 @@
 package lemon.weixin.bean.message;
 
-import lemon.shared.xstream.annotations.XStreamProcessCDATA;
+import lemon.shared.toolkit.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

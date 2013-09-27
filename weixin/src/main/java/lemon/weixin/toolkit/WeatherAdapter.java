@@ -16,8 +16,8 @@ import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.entity.WeatherInfo;
-import lemon.shared.toolkit.Weather;
+import lemon.shared.toolkit.weather.Weather;
+import lemon.shared.toolkit.weather.bean.WeatherInfo;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.biz.WeiXinException;

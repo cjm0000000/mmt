@@ -2,7 +2,7 @@ package lemon.yixin.biz.parser;
 
 import org.springframework.stereotype.Service;
 
-import lemon.shared.common.Message;
+import lemon.shared.api.Message;
 import lemon.yixin.bean.message.MsgType;
 import lemon.yixin.bean.message.MusicMessage;
 

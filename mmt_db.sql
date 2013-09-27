@@ -200,7 +200,7 @@ CREATE TABLE `weixin_log_msg` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `msgType` varchar(8) NOT NULL DEFAULT '' COMMENT '消息类型',
-  `msg` text NOT NULL COMMENT '消息内容',
+  `msg` varchar(2048) NOT NULL DEFAULT '' COMMENT '消息内容',
   `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=509 DEFAULT CHARSET=utf8 COMMENT='微信消息日志';

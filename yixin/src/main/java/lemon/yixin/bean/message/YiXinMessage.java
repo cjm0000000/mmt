@@ -1,8 +1,8 @@
 package lemon.yixin.bean.message;
 
-import lemon.shared.common.Message;
-import lemon.shared.xstream.annotations.XStreamCDATA;
-import lemon.shared.xstream.annotations.XStreamProcessCDATA;
+import lemon.shared.api.Message;
+import lemon.shared.toolkit.xstream.annotations.XStreamCDATA;
+import lemon.shared.toolkit.xstream.annotations.XStreamProcessCDATA;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

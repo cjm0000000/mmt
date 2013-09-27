@@ -4,9 +4,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
-import lemon.shared.entity.City;
-import lemon.shared.entity.WeatherInfo;
-import lemon.shared.mapper.CityMapper;
+import lemon.shared.toolkit.weather.Weather;
+import lemon.shared.toolkit.weather.bean.City;
+import lemon.shared.toolkit.weather.bean.WeatherInfo;
+import lemon.shared.toolkit.weather.mapper.CityMapper;
 
 import org.junit.After;
 import org.junit.Before;

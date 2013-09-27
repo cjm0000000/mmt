@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import lemon.shared.xstream.XStreamHelper;
+import lemon.shared.toolkit.xstream.XStreamHelper;
 import lemon.weixin.MessageFactory;
 import lemon.weixin.bean.message.Article;
 import lemon.weixin.bean.message.EventMessage;

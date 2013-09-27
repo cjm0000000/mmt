@@ -2,7 +2,7 @@ package lemon.weixin.biz.parser;
 
 import org.springframework.stereotype.Service;
 
-import lemon.shared.common.Message;
+import lemon.shared.api.Message;
 import lemon.weixin.bean.message.EventMessage;
 import lemon.weixin.bean.message.MsgType;
 

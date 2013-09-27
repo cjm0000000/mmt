@@ -1,6 +1,6 @@
 package lemon.shared.xstream;
 
-import lemon.shared.xstream.XStreamHelper;
+import lemon.shared.toolkit.xstream.XStreamHelper;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

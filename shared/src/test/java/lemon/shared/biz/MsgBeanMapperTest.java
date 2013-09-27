@@ -2,8 +2,8 @@ package lemon.shared.biz;
 
 import static org.junit.Assert.assertNotNull;
 
-import lemon.shared.biz.bean.MsgBean;
-import lemon.shared.biz.mapper.MsgBeanMapper;
+import lemon.shared.message.bean.MsgBean;
+import lemon.shared.message.mapper.MsgBeanMapper;
 
 import org.junit.After;
 import org.junit.Before;

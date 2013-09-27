@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import lemon.shared.common.MMTConfig;
+import lemon.shared.access.SiteAccess;
+import lemon.shared.api.MmtAPI;
+import lemon.shared.api.simple.MMTConfig;
 
 /**
  * MMT 通用过滤器
@@ -24,12 +26,19 @@ import lemon.shared.common.MMTConfig;
 //FIXME 完成这个接口
 public abstract class MMTGateWay implements Filter {
 	private static Log logger = LogFactory.getLog(MMTGateWay.class);
+	
 	/**
 	 * 获取App配置信息
 	 * @param mmt_token
 	 * @return
 	 */
 	public abstract MMTConfig getConfig(String mmt_token);
+	
+	/**
+	 * 获取API实现
+	 * @return
+	 */
+	public abstract MmtAPI getMMTAPI();
 	
 	/**
 	 * 处理文字信息
@@ -43,9 +52,35 @@ public abstract class MMTGateWay implements Filter {
 	 * @param cfg
 	 * @param req
 	 * @param resp
+	 * @throws IOException 
 	 */
-	public abstract void access(MMTConfig cfg, HttpServletRequest req,
-			HttpServletResponse resp);
+	public void access(MMTConfig cfg, HttpServletRequest req,
+			HttpServletResponse resp) throws IOException {
+		// 微信加密签名
+		String signature = req.getParameter("signature");
+		// 时间戳
+		String timestamp = req.getParameter("timestamp");
+		// 随机数
+		String nonce = req.getParameter("nonce");
+		// 随机字符串
+		String echostr = req.getParameter("echostr");
+
+		// 参数装箱
+		SiteAccess sa = new SiteAccess();
+		sa.setEchostr(echostr);
+		sa.setNonce(nonce);
+		sa.setSignature(signature);
+		sa.setTimestamp(timestamp);
+		sa.setCust_id(cfg.getCust_id());
+		sa.setToken(cfg.getToken());
+
+		// 验证签名
+		if (getMMTAPI().verifySignature(sa)) {
+			resp.getWriter().print(echostr);
+			return;
+		}
+		resp.getWriter().print("Failure.");
+	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -78,6 +113,5 @@ public abstract class MMTGateWay implements Filter {
 			path = path + "/";
 		return path.substring(path.lastIndexOf("/")).substring(1);
 	}
-
 
 }

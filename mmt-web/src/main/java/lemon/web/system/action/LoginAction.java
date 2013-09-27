@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import lemon.shared.entity.Status;
-import lemon.shared.util.SecureUtil;
+import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.log.mapper.SystemLogManager;

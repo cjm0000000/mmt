@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.Filter;
@@ -22,10 +20,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lemon.shared.access.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.dao.WXConfigMapper;
 
 import org.apache.commons.logging.Log;
@@ -108,20 +106,16 @@ public class MicroChatGateWay implements Filter {
 		logger.debug("echostr="+echostr);
 		
 		//参数装箱
-		Map<String, Object> paramMap = new HashMap<>();
-		
-		SiteAccessLog log = new SiteAccessLog();
-		log.setEchostr(echostr);
-		log.setNonce(nonce);
-		log.setSignature(signature);
-		log.setTimestamp(timestamp);
-		log.setCust_id(config.getCust_id());
-		log.setToken(config.getToken());
-		
-		paramMap.put("SiteAccess", log);
+		SiteAccess sa = new SiteAccess();
+		sa.setEchostr(echostr);
+		sa.setNonce(nonce);
+		sa.setSignature(signature);
+		sa.setTimestamp(timestamp);
+		sa.setCust_id(config.getCust_id());
+		sa.setToken(config.getToken());
 		
 		//验证签名
-		if(wxAPI.verifySignature(paramMap)){
+		if(wxAPI.verifySignature(sa)){
 			resp.getWriter().print(echostr);
 			return;
 		}

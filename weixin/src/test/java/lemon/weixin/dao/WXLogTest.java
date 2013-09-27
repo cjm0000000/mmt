@@ -3,8 +3,8 @@ package lemon.weixin.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
+import lemon.shared.access.SiteAccess;
 import lemon.weixin.bean.log.MsgLog;
-import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.bean.log.SubscribeLog;
 import lemon.weixin.bean.log.UnSubscribeLog;
 import lemon.weixin.dao.WXLogManager;
@@ -45,7 +45,7 @@ public class WXLogTest {
 		logger.info("begin...");
 		for (int i = 0; i < 10; i++) {
 			SecureRandom rnd = new SecureRandom();
-			SiteAccessLog log = new SiteAccessLog();
+			SiteAccess log = new SiteAccess();
 			log.setSignature("signature123213123123123");
 			log.setTimestamp(new Date().getTime() + "");
 			log.setNonce(rnd.nextInt(10000) + "");

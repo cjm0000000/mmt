@@ -1,6 +1,6 @@
 package lemon.yixin.biz.customer;
 
-import lemon.shared.biz.MMTRobot;
+import lemon.shared.api.simple.MMTRobot;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.bean.message.AudioMessage;

@@ -1,11 +1,8 @@
 package lemon.yixin.test.biz;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import lemon.shared.access.SiteAccess;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.util.SecureUtil;
-import lemon.yixin.bean.log.SiteAccessLog;
+import lemon.shared.toolkit.secure.SecureUtil;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -34,18 +31,15 @@ public class YiXinAPITest {
 	}
 	@Test
 	public void testSignature() {
-		Map<String, Object> paramMap = new HashMap<>();
+		SiteAccess sa = new SiteAccess();
+		sa.setEchostr("5921940693384818207");
+		sa.setNonce("1378809259");
+		sa.setSignature("d864452f69eccd3bc25c4ab94a1723cbba282ff6");
+		sa.setTimestamp("1377955356");
+		sa.setCust_id(1);
+		sa.setToken("QEQdsqo");
 
-		SiteAccessLog log = new SiteAccessLog();
-		log.setEchostr("5921940693384818207");
-		log.setNonce("1378809259");
-		log.setSignature("d864452f69eccd3bc25c4ab94a1723cbba282ff6");
-		log.setTimestamp("1377955356");
-		log.setCust_id(1);
-		log.setToken("QEQdsqo");
-		paramMap.put("SiteAccess", log);
-
-		boolean result = api.verifySignature(paramMap);
+		boolean result = api.verifySignature(sa);
 		assertTrue(result);
 	}
 	

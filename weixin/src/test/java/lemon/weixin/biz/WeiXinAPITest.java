@@ -1,15 +1,12 @@
 package lemon.weixin.biz;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import lemon.shared.access.SiteAccess;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.entity.Customer;
+import lemon.shared.customer.bean.Customer;
+import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
-import lemon.shared.mapper.CustomerMapper;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.dao.WXConfigMapper;
 import static org.junit.Assert.*;
 
@@ -79,18 +76,15 @@ public class WeiXinAPITest {
 	@Test
 	@Ignore
 	public void verifySignature() {
-		Map<String, Object> paramMap = new HashMap<>();
-
-		SiteAccessLog log = new SiteAccessLog();
+		SiteAccess log = new SiteAccess();
 		log.setEchostr("5921940693384818207");
 		log.setNonce("1378809259");
 		log.setSignature("d864452f69eccd3bc25c4ab94a1723cbba282ff6");
 		log.setTimestamp("1377955356");
 		log.setCust_id(1);
 		log.setToken("QEQdsqo");
-		paramMap.put("SiteAccess", log);
 
-		boolean result = api.verifySignature(paramMap);
+		boolean result = api.verifySignature(log);
 		assertTrue(result);
 	}
 	

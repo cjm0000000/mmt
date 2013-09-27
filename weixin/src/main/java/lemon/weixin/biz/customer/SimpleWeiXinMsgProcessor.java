@@ -3,7 +3,7 @@ package lemon.weixin.biz.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.biz.MMTRobot;
+import lemon.shared.api.simple.MMTRobot;
 import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
 import lemon.weixin.bean.message.EventMessage;

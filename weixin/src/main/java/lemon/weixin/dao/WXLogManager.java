@@ -2,8 +2,8 @@ package lemon.weixin.dao;
 
 import java.util.List;
 
+import lemon.shared.access.SiteAccess;
 import lemon.weixin.bean.log.MsgLog;
-import lemon.weixin.bean.log.SiteAccessLog;
 import lemon.weixin.bean.log.SubscribeLog;
 import lemon.weixin.bean.log.UnSubscribeLog;
 
@@ -28,7 +28,7 @@ public interface WXLogManager {
 	 */
 	@Insert("INSERT INTO weixin_log_siteaccess(cust_id,signature,timestamp,nonce,echostr,token) SELECT #{cust_id},#{signature},#{timestamp},#{nonce},#{echostr},#{token}")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-	void saveSiteAccessLog(SiteAccessLog log);
+	void saveSiteAccessLog(SiteAccess log);
 
 	/**
 	 * save message log
@@ -60,7 +60,7 @@ public interface WXLogManager {
 	 * @return
 	 */
 	// TODO query for site access log
-	List<SiteAccessLog> listSiteAccessLogs(int cust_id);
+	List<SiteAccess> listSiteAccessLogs(int cust_id);
 
 	/**
 	 * query for message log

@@ -1,6 +1,6 @@
 package lemon.yixin.bean.message;
 
-import lemon.shared.xstream.annotations.XStreamProcessCDATA;
+import lemon.shared.toolkit.xstream.annotations.XStreamProcessCDATA;
 
 /**
  * media message<br>

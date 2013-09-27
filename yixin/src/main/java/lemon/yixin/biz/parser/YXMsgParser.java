@@ -14,9 +14,9 @@ import org.jdom2.input.SAXBuilder;
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.MMTContext;
-import lemon.shared.common.Message;
-import lemon.shared.common.MsgParser;
-import lemon.shared.xstream.XStreamHelper;
+import lemon.shared.api.Message;
+import lemon.shared.api.MsgParser;
+import lemon.shared.toolkit.xstream.XStreamHelper;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.bean.message.YiXinMessage;

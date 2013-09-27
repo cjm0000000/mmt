@@ -1,9 +1,6 @@
 package lemon.yixin.biz;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -11,13 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.api.AbstractMmtAPI;
-import lemon.shared.common.MsgParser;
-import lemon.shared.util.SecureUtil;
+import lemon.shared.access.SiteAccess;
+import lemon.shared.api.MsgParser;
+import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
 import lemon.yixin.bean.log.MsgLog;
-import lemon.yixin.bean.log.SiteAccessLog;
 import lemon.yixin.biz.parser.YXMsgParser;
 import lemon.yixin.dao.YXLogManager;
 
@@ -34,31 +30,6 @@ public class YiXinAPI extends AbstractMmtAPI {
 	@Autowired
 	private YXLogManager yxLogManager;
 	private MsgParser parser;
-
-	@Override
-	public boolean verifySignature(Map<String, Object> params) {
-		SiteAccessLog log = (SiteAccessLog) params.get("SiteAccess");
-		if (null == log || log.getSignature() == null)
-			return false;
-		// save log
-		saveAccessLog(log);
-		// nonce,token,timestamp dictionary sort
-		List<String> list = new ArrayList<>();
-		list.add(log.getNonce());
-		list.add(log.getToken());
-		list.add(log.getTimestamp());
-		Collections.sort(list);
-		StringBuilder sb = new StringBuilder();
-		for (String str : list) {
-			sb.append(str);
-		}
-		// sha1 for signature
-		String sha1str = SecureUtil.sha1(sb.toString());
-		logger.debug("After SHA1:" + sha1str);
-		// compare
-		logger.debug("signature:" + log.getSignature());
-		return sha1str.equalsIgnoreCase(log.getSignature());
-	}
 
 	@Override
 	public String processMsg(String token, String msg) {
@@ -124,7 +95,8 @@ public class YiXinAPI extends AbstractMmtAPI {
 	 * save access log
 	 * @param log
 	 */
-	private void saveAccessLog(SiteAccessLog log) {
+	@Override
+	public final void saveAccessLog(SiteAccess log) {
 		yxLogManager.saveSiteAccessLog(log);
 	}
 	

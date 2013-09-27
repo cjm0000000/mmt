@@ -3,6 +3,7 @@ package lemon.yixin.test.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
+import lemon.shared.access.SiteAccess;
 import lemon.yixin.bean.log.*;
 import lemon.yixin.dao.YXLogManager;
 
@@ -42,7 +43,7 @@ public class YXLogTest {
 		logger.info("begin...");
 		for (int i = 0; i < 10; i++) {
 			SecureRandom rnd = new SecureRandom();
-			SiteAccessLog log = new SiteAccessLog();
+			SiteAccess log = new SiteAccess();
 			log.setSignature("signature123213123123123");
 			log.setTimestamp(new Date().getTime() + "");
 			log.setNonce(rnd.nextInt(10000) + "");
