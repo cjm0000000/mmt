@@ -59,7 +59,7 @@ public class YiXin {
 	/**
 	 * 销毁Map
 	 */
-	public static void destory(){
+	public synchronized static void destory(){
 		if(null != configs)
 			configs.clear();
 	}
