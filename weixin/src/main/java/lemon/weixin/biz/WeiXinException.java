@@ -1,12 +1,14 @@
 package lemon.weixin.biz;
 
+import lemon.shared.MmtException;
+
 /**
  * WeiXinException
  * @author lemon
  * @version 1.0
  *
  */
-public class WeiXinException extends RuntimeException {
+public class WeiXinException extends MmtException {
 	static final long serialVersionUID = 1662900257135756746L;
 
 	/**

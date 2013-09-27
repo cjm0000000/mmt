@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import lemon.shared.MmtException;
 import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import static lemon.shared.entity.MMTCharset.*;
@@ -49,8 +50,6 @@ public abstract class MMTGateWay implements Filter {
 	 * @return
 	 */
 	protected abstract String getTargetCharset();
-	
-	
 
 	@Override
 	public final void doFilter(ServletRequest request, ServletResponse response,
@@ -66,6 +65,7 @@ public abstract class MMTGateWay implements Filter {
 			logger.error("the URL["+mmt_token+"] have no matcher.");
 			return;
 		}
+		//是否处理消息
 		boolean processMsg = req.getMethod().equals("POST");
 		if(processMsg)
 			processMsg(cfg, req, resp);
@@ -113,8 +113,8 @@ public abstract class MMTGateWay implements Filter {
 	 * @param path
 	 * @return
 	 */
-	private String getMMTToken(String path){
-		if(path.lastIndexOf("/") == 0)
+	private String getMMTToken(String path) {
+		if (path.lastIndexOf("/") == 0)
 			path = path + "/";
 		return path.substring(path.lastIndexOf("/")).substring(1);
 	}
@@ -126,10 +126,8 @@ public abstract class MMTGateWay implements Filter {
 	 * @return
 	 * @throws IOException
 	 */
-	private String getMessage(HttpServletRequest req) throws IOException {
-		InputStream is = null;
-		try {
-			is = req.getInputStream();
+	private String getMessage(HttpServletRequest req) {
+		try (InputStream is = req.getInputStream()) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			StringBuilder sb = new StringBuilder();
 			String line;
@@ -137,9 +135,9 @@ public abstract class MMTGateWay implements Filter {
 				sb.append(line);
 			return new String(sb.toString().getBytes(LOCAL_CHARSET),
 					getTargetCharset());
-		} finally {
-			if (null != is)
-				is.close();
+		} catch (IOException e) {
+			throw new MmtException("Cant't get message from InputStream. ",
+					e.getCause());
 		}
 	}
 	
@@ -154,11 +152,10 @@ public abstract class MMTGateWay implements Filter {
 		response.setCharacterEncoding(LOCAL_CHARSET);
 		try (PrintWriter out = response.getWriter()) {
 			String msg = getMessage(request);
-			logger.debug(msg);
 			out.println(getMMTAPI().processMsg(cfg.getToken(), msg));
 			out.flush();
 		} catch (IOException e) {
-
+			throw new MmtException("Process message failed. ", e.getCause());
 		}
 	}
 

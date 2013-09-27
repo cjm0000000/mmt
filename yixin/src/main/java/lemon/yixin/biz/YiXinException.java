@@ -1,12 +1,14 @@
 package lemon.yixin.biz;
 
+import lemon.shared.MmtException;
+
 /**
  * YiXinException
  * @author lemon
  * @version 1.0
  *
  */
-public class YiXinException extends RuntimeException {
+public class YiXinException extends MmtException {
 	static final long serialVersionUID = 1662900257135756746L;
 
 	/**
