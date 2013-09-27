@@ -152,7 +152,7 @@ public abstract class MMTGateWay implements Filter {
 		response.setCharacterEncoding(LOCAL_CHARSET);
 		try (PrintWriter out = response.getWriter()) {
 			String msg = getMessage(request);
-			out.println(getMMTAPI().processMsg(cfg.getToken(), msg));
+			out.println(getMMTAPI().processMsg(cfg.getApi_url(), msg));
 			out.flush();
 		} catch (IOException e) {
 			throw new MmtException("Process message failed. ", e.getCause());
