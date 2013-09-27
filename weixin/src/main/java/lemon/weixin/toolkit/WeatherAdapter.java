@@ -16,9 +16,9 @@ import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lemon.shared.entity.MMTCharset;
 import lemon.shared.toolkit.weather.Weather;
 import lemon.shared.toolkit.weather.bean.WeatherInfo;
-import lemon.weixin.WeiXin;
 import lemon.weixin.bean.message.NewsMessage;
 import lemon.weixin.biz.WeiXinException;
 import lemon.weixin.biz.parser.NewsMsgParser;
@@ -62,7 +62,7 @@ public class WeatherAdapter {
 		context.put("msg", msg);
 		StringWriter writer = new StringWriter();
 
-		Velocity.mergeTemplate("lemon/weixin/toolkit/weather.xml", WeiXin.LOCAL_CHARSET, context, writer);
+		Velocity.mergeTemplate("lemon/weixin/toolkit/weather.xml", MMTCharset.LOCAL_CHARSET, context, writer);
 		return parser.toMsg(writer.toString());
 	}
 	

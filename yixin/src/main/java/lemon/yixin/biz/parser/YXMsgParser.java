@@ -16,6 +16,7 @@ import com.thoughtworks.xstream.XStream;
 import lemon.shared.MMTContext;
 import lemon.shared.api.Message;
 import lemon.shared.api.MsgParser;
+import lemon.shared.entity.MMTCharset;
 import lemon.shared.toolkit.xstream.XStreamHelper;
 import lemon.yixin.YiXin;
 import lemon.yixin.bean.YiXinConfig;
@@ -102,7 +103,7 @@ public abstract class YXMsgParser implements MsgParser {
 		InputStream is = null;
 		try {
 			try {
-				is = new ByteArrayInputStream(msg.getBytes(YiXin.LOCAL_CHARSET));
+				is = new ByteArrayInputStream(msg.getBytes(MMTCharset.LOCAL_CHARSET));
 				Document doc = new SAXBuilder().build(is);
 				Element e = doc.getRootElement().getChild("MsgType");
 				return e.getValue();

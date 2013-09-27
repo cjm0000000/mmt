@@ -3,7 +3,7 @@ package lemon.weixin.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import lemon.shared.access.SiteAccess;
+import lemon.shared.access.bean.SiteAccess;
 import lemon.weixin.bean.log.MsgLog;
 import lemon.weixin.bean.log.SubscribeLog;
 import lemon.weixin.bean.log.UnSubscribeLog;

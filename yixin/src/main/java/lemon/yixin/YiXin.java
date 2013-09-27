@@ -17,10 +17,6 @@ import lemon.yixin.biz.YiXinException;
  * 
  */
 public class YiXin {
-	/** This is local encoding */
-	public static final String LOCAL_CHARSET = "UTF-8";
-	/** This is remote encoding */
-	public static final String TARGET_CHARSET = "UTF-8";
 	private static ConcurrentMap<String, YiXinConfig> configs;
 	/** 通用接口URL */
 	private static String commonUrl;

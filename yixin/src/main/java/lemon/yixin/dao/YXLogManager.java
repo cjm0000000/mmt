@@ -2,7 +2,7 @@ package lemon.yixin.dao;
 
 import java.util.List;
 
-import lemon.shared.access.SiteAccess;
+import lemon.shared.access.bean.SiteAccess;
 import lemon.yixin.bean.log.MsgLog;
 import lemon.yixin.bean.log.SubscribeLog;
 import lemon.yixin.bean.log.UnSubscribeLog;

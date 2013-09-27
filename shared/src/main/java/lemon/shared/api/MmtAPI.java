@@ -1,6 +1,6 @@
 package lemon.shared.api;
 
-import lemon.shared.access.SiteAccess;
+import lemon.shared.access.bean.SiteAccess;
 
 /**
  * MMT message API

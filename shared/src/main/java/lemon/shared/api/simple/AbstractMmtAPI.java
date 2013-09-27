@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import lemon.shared.access.SiteAccess;
+import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.request.bean.Token;

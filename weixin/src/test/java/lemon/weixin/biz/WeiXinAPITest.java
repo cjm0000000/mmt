@@ -1,6 +1,6 @@
 package lemon.weixin.biz;
 
-import lemon.shared.access.SiteAccess;
+import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
