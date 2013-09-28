@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  *
  */
-@Service("microChatGW")
-public final class MicroChatGateWay extends MMTGateWay {
-	private static Log logger = LogFactory.getLog(MicroChatGateWay.class);
+@Service("weixinGW")
+public final class WeiXinGateWay extends MMTGateWay {
+	private static Log logger = LogFactory.getLog(WeiXinGateWay.class);
 	@Resource(name="weiXinAPI")
 	private MmtAPI wxAPI;
 	@Autowired
