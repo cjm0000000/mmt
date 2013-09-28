@@ -78,12 +78,6 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 				resourceMap.put(MMT.FILTER_ROOT + resource.getMenuurl(), configAttributes);
 			}
 		}
-
-//		Set<Entry<String, Collection<ConfigAttribute>>> resourceSet = resourceMap
-//				.entrySet();
-//		Iterator<Entry<String, Collection<ConfigAttribute>>> iterator = resourceSet
-//				.iterator();
-
 	}
 
 }
