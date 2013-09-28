@@ -28,11 +28,11 @@
 			<tbody>
 			#foreach($user in $page.userList)
 				<tr>
-		    		<td><input type="checkbox" value="$user.user_id" name="user_id"/></td>
-		       		<td>$user.user_name</td>
-		  			<td>$user.xm</td>
-		     		<td>$user.idcard</td>
-		  			<td>$user.mphone</td>
+		    		<td><input type="checkbox" value="$!user.user_id" name="user_id"/></td>
+		       		<td>$!user.username</td>
+		  			<td>$!user.xm</td>
+		     		<td>$!user.idcard</td>
+		  			<td>$!user.mphone</td>
 		         	<td>
 		        	#if($user.islock == 'UNAVAILABLE')
 		       			<span class="btn-success">正常</span>

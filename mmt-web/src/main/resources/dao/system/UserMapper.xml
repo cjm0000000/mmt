@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lemon.web.system.mapper.UserMapper">
 	<insert id="addUser" parameterType="lemon.web.system.bean.User" useGeneratedKeys="true" keyProperty="user_id">
-		INSERT INTO system_user(password,user_name,idcard,mphone,bz,xm,islock,status) 
-			SELECT #{password},#{user_name},#{idcard},#{mphone},#{bz},#{xm},'UNAVAILABLE','AVAILABLE'
+		INSERT INTO system_user(password,username,idcard,mphone,bz,xm,islock,status) 
+			SELECT #{password},#{username},#{idcard},#{mphone},#{bz},#{xm},'UNAVAILABLE','AVAILABLE'
 	</insert>
 	<insert id="addUserRole" >
 		INSERT INTO system_user_role(user_id,role_id,cust_id) 
@@ -12,10 +12,10 @@
 	<select id="getUserIdByName" parameterType="string" resultType="int">
 		SELECT A.user_id 
 			FROM system_user A 
-		WHERE A.user_name=#{user_name}
+		WHERE A.username=#{username}
 	</select>
 	<select id="getUserById" parameterType="int" resultType="lemon.web.system.bean.User">
-		SELECT A.user_id,A.user_name,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
 			FROM system_user A 
@@ -26,14 +26,14 @@
 			AND A.`status`='AVAILABLE'
 	</select>
 	<select id="checkLogin" resultType="lemon.web.system.bean.User">
-		SELECT A.user_id,A.user_name,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
 			FROM system_user A, system_user_role B, system_role C, customer D
 		WHERE A.user_id=B.user_id 
 			AND B.role_id=C.role_id
 			AND B.cust_id=D.cust_id
-			AND A.user_name=#{user_name} 
+			AND A.username=#{username} 
 			AND A.`password`=#{password} 
 			AND A.`status`='AVAILABLE' 
 			AND A.islock='UNAVAILABLE'
@@ -47,8 +47,8 @@
 		</foreach>
 	</update>
 	<select id="getUserList" resultType="lemon.web.system.bean.User">
-		<bind name="_user_name" value="(user_name == null ? '' : user_name) + '%'" />
-		SELECT A.user_id,A.user_name,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+		<bind name="_username" value="(username == null ? '' : username) + '%'" />
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
 			FROM system_user A 
@@ -56,21 +56,21 @@
            		LEFT JOIN system_role C ON B.role_id=C.role_id
            		LEFT JOIN customer D ON B.cust_id=D.cust_id
 		WHERE A.`status`='AVAILABLE' 
-		<if test="user_name != null and user_name != ''">
-			AND A.user_name LIKE #{_user_name}
+		<if test="username != null and username != ''">
+			AND A.username LIKE #{_username}
 		</if>
-			ORDER BY A.user_name
+			ORDER BY A.username
 		<if test="limit!=0">
 			LIMIT #{start},#{limit}
 		</if>
 	</select>
 	<select id="getUserCnt" resultType="int">
-		<bind name="_user_name" value="(user_name == null ? '' : user_name) + '%'" />
+		<bind name="_username" value="(username == null ? '' : username) + '%'" />
 		SELECT COUNT(A.user_id) 
 			FROM system_user A 
 		WHERE A.`status`='AVAILABLE'
-		<if test="user_name != null and user_name != ''">
-			AND A.user_name LIKE #{_user_name}
+		<if test="username != null and username != ''">
+			AND A.username LIKE #{_username}
 		</if>
 	</select>
 	<update id="updateUserRole">

@@ -51,7 +51,7 @@ public class UserMapperTest {
 		assertNotEquals(0, cust.getCust_id());
 		userMapper.addUserRole(user.getUser_id(), role.getRole_id(), cust.getCust_id());
 		//test check login
-		User u3 = userMapper.checkLogin(user.getUser_name(), user.getPassword());
+		User u3 = userMapper.checkLogin(user.getUsername(), user.getPassword());
 		assertNotNull(u3);
 		assertEquals(role.getRole_name(), u3.getRole_name());
 		assertEquals(cust.getCust_name(), u3.getCust_name());
@@ -69,7 +69,7 @@ public class UserMapperTest {
 	public void getUserIdByName(){
 		User u1 = addUser();
 		assertNotNull(u1);
-		int user_id = userMapper.getUserIdByName(u1.getUser_name());
+		int user_id = userMapper.getUserIdByName(u1.getUsername());
 		assertEquals(user_id, u1.getUser_id());
 	}
 	
@@ -108,7 +108,7 @@ public class UserMapperTest {
 		user.setIdcard("330111190012123333");
 		user.setMphone("18805718888");
 		user.setStatus(Status.AVAILABLE);
-		user.setUser_name(new Object().toString());
+		user.setUsername(new Object().toString());
 		user.setXm("xm");
 		userMapper.addUser(user);
 		return user;

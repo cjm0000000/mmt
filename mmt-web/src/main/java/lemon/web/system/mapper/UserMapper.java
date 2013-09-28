@@ -38,11 +38,11 @@ public interface UserMapper {
 	/**
 	 * Get user id by user name.<BR>
 	 * If user not exists, return null
-	 * @param user_name
+	 * @param username
 	 * @return user_id
 	 */
 	@Lang(RawLanguageDriver.class)
-	Integer getUserIdByName(String user_name);
+	Integer getUserIdByName(String username);
 	
 	/**
 	 * get user by id
@@ -55,12 +55,12 @@ public interface UserMapper {
 
 	/**
 	 * verify user name and password
-	 * @param user_name
+	 * @param username
 	 * @param password
 	 * @return {@link lemon.web.system.bean.User User}
 	 */
 	@Lang(RawLanguageDriver.class)
-	User checkLogin(@Param("user_name") String user_name,
+	User checkLogin(@Param("username") String user_name,
 			@Param("password") String password);
 
 	/**
@@ -77,14 +77,14 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<User> getUserList(@Param("start") int page, @Param("limit") int limit,
-			@Param("user_name") String user_name);
+			@Param("username") String user_name);
 	
 	/**
 	 * get user count
 	 * @param user_name
 	 * @return
 	 */
-	int getUserCnt(@Param("user_name") String user_name);
+	int getUserCnt(@Param("username") String user_name);
 	
 	/**
 	 * update user role and customer

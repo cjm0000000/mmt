@@ -38,7 +38,7 @@
             <li><a href="#contact">联系我们</a></li>
             #if($user_token)
             	<li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">$user_token.user_name<b class="caret"></b></a>
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">$!user_token.username<b class="caret"></b></a>
 	              <ul class="dropdown-menu">
 	                <li><a href="#">账户设置</a></li>
 	                <li><a href="#">我的服务</a></li>
@@ -55,7 +55,7 @@
 		#if(!$user_token)
 			<form method="post" action="#{getContextPath}webservices/login" class="navbar-form navbar-right">
 	            <div class="form-group">
-	              <input type="text" name="user_name" placeholder="用户名" class="form-control">
+	              <input type="text" name="username" placeholder="用户名" class="form-control">
 	            </div>
 	            <div class="form-group">
 	              <input type="password" name="password" placeholder="密 码" class="form-control">

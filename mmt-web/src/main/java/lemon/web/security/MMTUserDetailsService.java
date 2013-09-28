@@ -35,6 +35,7 @@ public class MMTUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		//FIXME MMTUserDetailsService没有起作用
+		System.out.println("进入MMTUserDetailsService");
 		if(username == null)
 			throw new MMTException("用户名不能为空。", new NullPointerException());
 		User user = userMapper.getUserById(userMapper.getUserIdByName(username));
@@ -51,7 +52,7 @@ public class MMTUserDetailsService implements UserDetailsService {
         boolean accountNonLocked = user.getIslock().equals(Status.UNAVAILABLE);
         
 		return new org.springframework.security.core.userdetails.User(
-				user.getUser_name(), user.getPassword(), enables,
+				user.getUsername(), user.getPassword(), enables,
 				accountNonExpired, credentialsNonExpired, accountNonLocked,
 				authSet);
 	}

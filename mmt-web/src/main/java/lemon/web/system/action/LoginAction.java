@@ -52,25 +52,25 @@ public class LoginAction extends MMTAction {
 	public ModelAndView login(@Valid User u,BindingResult result,
 			HttpServletRequest request) {
 		if(result.hasErrors()){
-			return info(result.getFieldError().getDefaultMessage(),u.getUser_name());
+			return info(result.getFieldError().getDefaultMessage(),u.getUsername());
 		}
-		Integer user_id = userMapper.getUserIdByName(u.getUser_name());
+		Integer user_id = userMapper.getUserIdByName(u.getUsername());
 		if(user_id == null){
 			//用户不存在
-			return info("用户名不存在。",u.getUser_name());
+			return info("用户名不存在。",u.getUsername());
 		}
 		//获取encryptKey
 		UserConfig encryptKeyItem =  userConfigMapper.getItem(user_id,ENCRYPY_KEY);
 		if(null == encryptKeyItem){
-			return info("您的密钥没有设置，请联系管理员。",u.getUser_name());
+			return info("您的密钥没有设置，请联系管理员。",u.getUsername());
 		}
 		//验证用户名和密码
-		User user = userMapper.checkLogin(u.getUser_name(),SecureUtil.aesEncrypt(u.getPassword(), encryptKeyItem.getValue()));
+		User user = userMapper.checkLogin(u.getUsername(),SecureUtil.aesEncrypt(u.getPassword(), encryptKeyItem.getValue()));
 		//保存日志
-		saveLoginLog(request.getRemoteAddr(), user_id, u.getUser_name(),user == null ? 0 : user.getRole_id(), user != null);
+		saveLoginLog(request.getRemoteAddr(), user_id, u.getUsername(),user == null ? 0 : user.getRole_id(), user != null);
 		//没有查到用户
 		if(null == user){
-			return info("用户名和密码不匹配。",u.getUser_name());
+			return info("用户名和密码不匹配。",u.getUsername());
 		}
 		//登录成功，数据初始化
 		request.getSession().setAttribute(TOKEN, user);
