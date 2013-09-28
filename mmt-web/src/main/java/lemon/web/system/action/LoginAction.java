@@ -135,7 +135,7 @@ public class LoginAction extends MMTAction {
 	 */
 	private ModelAndView info(String tip, String user_name){
 		Map<String, String> msgMap = new HashMap<>();
-		msgMap.put("user_name", user_name);
+		msgMap.put("username", user_name);
 		msgMap.put("tip", tip);
 		return new ModelAndView(VIEW_LOGIN_PAGE,"msg",msgMap);
 	}
