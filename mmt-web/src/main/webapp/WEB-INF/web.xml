@@ -20,7 +20,7 @@
     </listener>
 	<!-- 微信网关配置 -->
 	<filter>
-		<filter-name>microChatGW</filter-name>
+		<filter-name>weixinGW</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
@@ -28,8 +28,8 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>microChatGW</filter-name>
-		<url-pattern>/microchat/*</url-pattern>
+		<filter-name>weixinGW</filter-name>
+		<url-pattern>/weichat/*</url-pattern>
 	</filter-mapping>
 	<!-- 易信网关配置 -->
 	<filter>
