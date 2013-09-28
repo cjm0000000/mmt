@@ -20,9 +20,9 @@ public class MMTAction {
 	/** 登出页面视图 */
 	protected static final String VIEW_LOGOUT_PAGE = "/logout";
 	/** 存放用户Session */
-	protected static final String TOKEN = "user_token";
+	public static final String TOKEN = "user_token";
 	/** 用户定制的首页 */
-	protected static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
+	public static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
 	/** 默认视图 */
 	protected static final String DEFAULT_VIEW = "list";
 	/** 无权限视图 */

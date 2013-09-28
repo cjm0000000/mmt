@@ -11,36 +11,51 @@
 	<global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 	<http pattern="/webservices/login*" security="none" />
 	<http pattern="/webservices/logout*" security="none" />
-	<http pattern="/webservices/forbidden" security="none" />
-	<http use-expressions="true" auto-config="true">
-		<form-login 
-			always-use-default-target="true"
-			default-target-url="/index"
-			login-page="/webservices/login"
-			username-parameter="user_name" 
-			password-parameter="password"
-			/>
-		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID"/>
-		<!-- 实现免登陆验证 -->  
-        <remember-me />  
-        <session-management invalid-session-url="/">  
-            <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />  
-        </session-management>  
-        <custom-filter ref="mmtSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
-    </http>
+	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID" />
+		<!-- 实现免登陆验证 -->
+		<remember-me />
+		<session-management invalid-session-url="/">
+			<concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />
+		</session-management>
+		<custom-filter ref="mmtAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="mmtSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+	</http>
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="mmtUserDetailsService">
-            <!-- 用户密码加密 just like 899312{gaobing} to md5 
-            <password-encoder ref="MyPasswordEncode">
-                <salt-source user-property="username" />
-            </password-encoder>-->
-        </authentication-provider>
+        <authentication-provider user-service-ref="mmtUserDetailsService" />
     </authentication-manager>
-    <!-- 配置过滤器 -->  
+    <!-- 登录验证器 -->  
+    <beans:bean id="mmtAuthenticationFilter"
+		class="lemon.web.security.MMTAuthenticationFilter">
+		<!-- 处理登录的action -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<!-- 验证成功后的处理 -->
+		<beans:property name="authenticationSuccessHandler"
+			ref="loginLogAuthenticationSuccessHandler" />
+		<!-- 验证失败后的处理 -->
+		<beans:property name="authenticationFailureHandler"
+			ref="simpleUrlAuthenticationFailureHandler" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+	<beans:bean id="loginLogAuthenticationSuccessHandler"  
+        class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">  
+        <beans:property name="defaultTargetUrl" value="/index" />  
+    </beans:bean>  
+    <beans:bean id="simpleUrlAuthenticationFailureHandler"  
+        class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">  
+        <!-- 可以配置相应的跳转方式。属性forwardToDestination为true采用forward false为sendRedirect -->  
+        <beans:property name="defaultFailureUrl" value="/webservices/login" />  
+    </beans:bean>
+    <!-- 权限过滤器 -->  
     <beans:bean id="mmtSecurityFilter" class="lemon.web.security.MMTSecurityFilter">  
         <!-- 用户拥有的权限 -->  
         <beans:property name="authenticationManager" ref="authenticationManager" />  
         <!-- 用户是否拥有所请求资源的权限 -->  
         <beans:property name="accessDecisionManager" ref="mmtAccessDecisionManager" />  
     </beans:bean>
+    <!-- 未登录的切入点 -->
+    <beans:bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/webservices/login" />
+</beans:bean> 
 </beans:beans>
