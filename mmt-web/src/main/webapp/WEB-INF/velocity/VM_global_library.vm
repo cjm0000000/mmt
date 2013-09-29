@@ -14,7 +14,7 @@ $root##
 #macro(createPagination $currentPage $pageSize $totalCount)
 	### 计算总页数
 	#set($pages = $totalCount/$pageSize)
-	#if($totalCount/$pageSize != 0)
+	#if($totalCount%$pageSize != 0)
 		#set($pages = $pages + 1)
 	#end
 	#if($currentPage > $pages)
@@ -33,9 +33,15 @@ $root##
 	#if($start > 1)
 		#set($preNo = $start - 1)
 		<li><a href="$preNo">&laquo;</a></li>
+	#else
+		<li class="disabled"><a href="#">&laquo;</a></li>
 	#end
 	#foreach($pageNo in [$start..$end])
-		<li><a href="$pageNo">$pageNo</a></li>
+		#if($currentPage == $pageNo)
+			<li class="active"><a href="#">$pageNo <span class="sr-only">(current)</span></a></li>
+		#else
+			<li><a href="$pageNo">$pageNo</a></li>
+		#end
 	#end
 	#if($end < $pages)
 		#set($afterNo = $end + 1)
@@ -43,6 +49,8 @@ $root##
 			#set($afterNo = $pages)
 		#end
 		<li><a href="$afterNo">&raquo;</a></li>
+	#else
+		<li class="disabled"><a href="#">&raquo;</a></li>
 	#end
 	</ul>
 #end
