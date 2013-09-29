@@ -22,7 +22,7 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="page-container">
 	  ### 顶部导航模板
       #parse("manage/nav-bar.vm")
       
