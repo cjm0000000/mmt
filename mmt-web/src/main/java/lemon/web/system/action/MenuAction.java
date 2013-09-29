@@ -1,5 +1,6 @@
 package lemon.web.system.action;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public final class MenuAction extends AdminNavAction {
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
-		List<Menu> menuList = menuMapper.getMenuList();
+		List<Menu> menuList = obtainMenuTree();
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("menuList", menuList);
 		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
@@ -98,6 +99,31 @@ public final class MenuAction extends AdminNavAction {
 	@Override
 	protected String getMenuURL() {
 		return "system/menu";
+	}
+	
+	/**
+	 * 生成菜单树
+	 * @return
+	 */
+	private List<Menu> obtainMenuTree(){
+		//获取二级菜单
+		List<Menu> l2_list = menuMapper.getMenuListByLevel("2");
+		//三级菜单
+		List<Menu> l3_list = null;
+		//结果
+		List<Menu> result = new ArrayList<>();
+		for (Menu parent : l2_list) {
+			result.add(parent);
+			l3_list = menuMapper.getMenuListByParent(parent.getMenu_id());
+			if(l3_list == null || l3_list.size() == 0)
+				continue;
+			for (Menu l3 : l3_list) {
+				result.add(l3);
+			}
+		}
+		l2_list.clear();
+		l3_list.clear();
+		return result;
 	}
 
 }

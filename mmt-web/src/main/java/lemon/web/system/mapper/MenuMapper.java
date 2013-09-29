@@ -65,4 +65,12 @@ public interface MenuMapper {
 	@Lang(RawLanguageDriver.class)
 	List<Menu> getMenuListByLevel(String level);
 	
+	/**
+	 * get menu list by parent menu
+	 * @param parent_id
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	List<Menu> getMenuListByParent(int parent_id);
+	
 }

@@ -46,6 +46,12 @@
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.menulevcod=#{level}
-		ORDER BY A.menulevcod,A.sort
+		ORDER BY A.sort
+	</select>
+	<select id="getMenuListByParent" parameterType="int" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.supmenucode=#{parent_id}
+		ORDER BY A.sort
 	</select>
 </mapper>

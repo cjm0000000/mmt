@@ -1,40 +1,48 @@
 <div class="col-md-9" role="main">
-			<div class="panel panel-default">
-			  <!-- Default panel contents -->
-			  <div class="panel-heading">
-			  	<button type="button" class="btn btn-success btn-md" >
-				  <span class="glyphicon glyphicon-plus-sign"></span> 添 加
-				</button>
-				<button type="button" disabled class="btn btn-info btn-md" >
-				  <span class="glyphicon glyphicon-edit"></span> 编 辑
-				</button>
-				<button type="button" disabled class="btn btn-danger btn-md" >
-				  <span class="glyphicon glyphicon-trash"></span> 删 除
-				</button>
-
-			  </div>
-			
-			  <!-- Table -->
-			  <table class="table">
-		          <thead>
-		            <tr>
-		              <th>#</th>
-		              <th>菜单名称</th>
-		              <th>菜单链接</th>
-		              <th>菜单样式</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		            #foreach($menu in $page.menuList)
-		            	<tr>
-		              <td>$velocityCount</td>
-		              <td>$menu.menu_name</td>
-		              <td>$menu.menuurl</td>
-		              <td>$menu.menuico</td>
-		            </tr>
-		            #end
-		          </tbody>
-		        </table>
-		       
-			</div>
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			<button type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
+			</button>
+			<button id="menu-update" type="button" disabled="true" class="btn btn-info btn-md" >
+				<span class="glyphicon glyphicon-edit"></span> 编 辑
+			</button>
+			<button id="menu-delete" type="button" disabled="true" class="btn btn-danger btn-md" >
+				<span class="glyphicon glyphicon-trash"></span> 删 除
+			</button>
 		</div>
+				
+		<!-- Table -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
+			        <th width="35%">菜单名称</th>
+					<th width="20%">菜单链接</th>
+			     	<th width="30%">菜单样式</th>
+			     	<th width="10%">排序号</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($menu in $page.menuList)
+				<tr>
+					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
+			  		<td>
+			  			#if($menu.menulevcod == '3')
+			  				&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span>
+			  			#else
+			  				<span class="glyphicon glyphicon-folder-open"></span>
+			  			#end
+			  			$!menu.menu_name
+			  		</td>
+			  		<td>$menu.menuurl</td>
+			   		<td>$menu.menuico</td>
+			   		<td>$menu.sort</td>
+			 	</tr>
+				#end
+			</tbody>
+		</table>
+	</div>
+</div>
+<script src="#{getContextPath}js/mmt.js"></script>
