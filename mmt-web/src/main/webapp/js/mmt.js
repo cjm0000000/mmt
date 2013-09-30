@@ -29,13 +29,19 @@ function btnListener(field, btnEdit, btnDel){
 			count++;
 	});
 	if(count === 0){
-		btnEdit.attr('disabled', true);
-		btnDel.attr('disabled', true);
+		if(btnEdit)
+			btnEdit.attr('disabled', true);
+		if(btnDel)
+			btnDel.attr('disabled', true);
 	}else if(count === 1){
-		btnDel.attr('disabled', false);
-		btnEdit.attr('disabled', false);
+		if(btnDel)
+			btnDel.attr('disabled', false);
+		if(btnEdit)
+			btnEdit.attr('disabled', false);
 	}else{
-		btnDel.attr('disabled', false);
-		btnEdit.attr('disabled', true);
+		if(btnDel)
+			btnDel.attr('disabled', false);
+		if(btnEdit)
+			btnEdit.attr('disabled', true);
 	}
 }
