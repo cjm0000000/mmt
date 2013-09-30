@@ -1,6 +1,7 @@
 package lemon.web.system.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,13 +88,21 @@ public final class MenuAction extends AdminNavAction {
 	
 	/**
 	 * 显示添加或者编辑菜单的页面
-	 * @param session
+	 * @param menu_id
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public String addOrEditPage(HttpSession session) {
-		//TODO 显示添加或者编辑菜单的页面
-		return getAddEditView();
+	public ModelAndView addOrEditPage(int menu_id) {
+		// 查询上级菜单
+		List<Menu> pmList = menuMapper.getParentMenuList();
+		// 查询当前菜单
+		Menu menu = null;
+		if (menu_id != 0)
+			menu = menuMapper.getMenu(menu_id);
+		Map<String, Object> result = new HashMap<>();
+		result.put("pmList", pmList);
+		result.put("menu", menu);
+		return new ModelAndView(getAddEditView(), "result", result);
 	}
 
 	@Override

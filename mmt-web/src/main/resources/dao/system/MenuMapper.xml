@@ -54,4 +54,10 @@
 		WHERE A.supmenucode=#{parent_id}
 		ORDER BY A.sort
 	</select>
+	<select id="getParentMenuList" resultType="lemon.web.system.bean.Menu">
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
+			FROM system_menu A
+		WHERE A.menulevcod IN ('1','2')
+		ORDER BY A.menulevcod, A.sort
+	</select>
 </mapper>

@@ -38,8 +38,7 @@ function loadPage(target, url){
 			url = url + "?menu_id=0";
 		else if(opType === 'menu-update'){
 			var menu_id = getSelectedValues('menu_id');
-			alert(menu_id);
-			url = url + "?menu_id=0";
+			url = url + "?menu_id="+menu_id;
 		}else return;
 		$('body').modalmanager('loading');
 

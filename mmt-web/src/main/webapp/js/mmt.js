@@ -51,10 +51,11 @@ function btnListener(field, btnEdit, btnDel){
  * @param fieldName
  */
 function getSelectedValues(fieldName){
-	var ids = $('input[name='+fieldName+'][checked]');
-	var retCode = "";
-	$.each(ids, function(key,val){
-		retCode += val +',';
+	var ids = $('input[name='+fieldName+']');
+	var retCode = [];
+	$.each(ids,function(key,val){
+		if(val.checked)
+			retCode.push(val.value);
 	});
-	return retCode;
+	return retCode.join(",");
 }
