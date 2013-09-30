@@ -65,7 +65,7 @@ public abstract class AdminNavAction extends MMTAction {
 	 * @return
 	 */
 	protected String getAddEditView(){
-		return obtainView() + "-" + VIEW_ADD_EDIT;
+		return "manage/" + obtainView() + "-" + VIEW_ADD_EDIT;
 	}
 	
 	/**
