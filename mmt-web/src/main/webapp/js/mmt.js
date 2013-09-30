@@ -45,3 +45,16 @@ function btnListener(field, btnEdit, btnDel){
 			btnEdit.attr('disabled', true);
 	}
 }
+
+/**
+ * 根据名称获取选中的值
+ * @param fieldName
+ */
+function getSelectedValues(fieldName){
+	var ids = $('input[name='+fieldName+'][checked]');
+	var retCode = "";
+	$.each(ids, function(key,val){
+		retCode += val +',';
+	});
+	return retCode;
+}

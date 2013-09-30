@@ -8,10 +8,10 @@
 			<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modal.js"></script>
 			<div class="ajax" style="position: relative; overflow: hidden">
             	<div class="text-left">
-		            <button data-toggle="modal" class="demo btn btn-success btn-md" >
+		            <button id="menu-add" data-toggle="modal" class="menu btn btn-success btn-md" >
 						<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 					</button>
-					<button id="menu-update" type="button" disabled="true" class="btn btn-info btn-md" >
+					<button id="menu-update" type="button" disabled="true" class="menu btn btn-info btn-md" >
 						<span class="glyphicon glyphicon-edit"></span> 编 辑
 					</button>
 					<button id="menu-delete" type="button" disabled="true" class="btn btn-danger btn-md" >
@@ -38,11 +38,9 @@
 					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
 			  		<td>
 			  			#if($menu.menulevcod == '3')
-			  				&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span>
-			  			#else
-			  				<span class="glyphicon glyphicon-folder-open"></span>
+			  				&nbsp;&nbsp;&nbsp;&nbsp;
 			  			#end
-			  			$!menu.menu_name
+			  			<span class="$!menu.menuico"></span> $!menu.menu_name
 			  		</td>
 			  		<td>$menu.menuurl</td>
 			   		<td>$menu.menuico</td>
@@ -53,64 +51,11 @@
 		</table>
 	</div>
 </div>
-<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<div id="menu-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
 <script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/manage/system/menu.js"></script>
 <script type="text/javascript">
-
-  $(function(){
-
-    $.fn.modal.defaults.spinner = $.fn.modalmanager.defaults.spinner = 
-      '<div class="loading-spinner" style="width: 300px; margin-left: -100px;">' +
-        '<div class="progress progress-striped active">' +
-          '<div class="progress-bar" style="width: 100%;"></div>' +
-        '</div>' +
-      '</div>';
-
-    $.fn.modalmanager.defaults.resize = true;
-
-    $('[data-source]').each(function(){
-      var thisa = $(this),
-        source = $(thisa.data('source'));
-
-      var text = [];
-      source.each(function(){
-        var s = $(this);
-        if ($s.attr('type') == 'text/javascript'){
-          text.push(s.html().replace(/(\n)*/, ''));
-        } else {
-          text.push(s.clone().wrap('<div>').parent().html());
-        }
-      });
-      
-      thisa.text(text.join('\n\n').replace(/\t/g, '    '));
-    });
-  });
-</script>
-
-<script>
-var modal = $('#ajax-modal');
- 
-$('.ajax .demo').on('click', function(){
-  // create the backdrop and wait for next modal to be triggered
-  $('body').modalmanager('loading');
- 
-  setTimeout(function(){
-     modal.load('#{getContextPath}webservices/system/menu/add-edit-page', '', function(){
-      modal.modal();
-    });
-  }, 1000);
-});
- 
-modal.on('click', '.update', function(){
-  modal.modal('loading');
-  setTimeout(function(){
-    modal
-      .modal('loading')
-      .find('.modal-body')
-        .prepend('<div class="alert alert-info fade in">' +
-          'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-        '</div>');
-  }, 1000);
-});
-
+var modal = $('#menu-ajax-modal');
+var url = "#{getContextPath}webservices/system/menu/add-edit-page";
+loadPage(modal, url);
 </script>
