@@ -1,5 +1,5 @@
-<div class="container" style="text-align:center;clear:both;">
-<footer>
-	<p>&copy; Lemon 2013</p>
-</footer>
+ <div id="footer">
+ 	<div class="container">
+        <p class="text-muted credit">Powered By Lemon &copy; 2013 <a target="_blank" href="https://github.com/cjm0000000/mmt">MMTChat</a></p>
+	</div>
 </div>

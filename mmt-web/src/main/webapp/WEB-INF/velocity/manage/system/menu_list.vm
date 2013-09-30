@@ -50,8 +50,6 @@
 
 
 <div id="responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
-	<script src="#{getContextPath}bootstrap/assets/js/jquery-1.10.2.min.js"></script>
-	<script src="#{getContextPath}bootstrap/js/bootstrap.min.js"></script>
 	<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modalmanager.js"></script>
 	<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modal.js"></script>
   <div class="modal-header">

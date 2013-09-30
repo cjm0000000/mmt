@@ -13,7 +13,7 @@
 	<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" href="#{getContextPath}bootstrap/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
-    
+    <link rel="stylesheet" href="#{getContextPath}bootstrap/css/sticky-footer-navbar.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="#{getContextPath}bootstrap/assets/js/html5shiv.js"></script>
@@ -22,7 +22,7 @@
   </head>
 
   <body>
-    <div class="page-container">
+    <div id="wrap" class="page-container">
 	  ### 顶部导航模板
       #parse("manage/nav-bar.vm")
       
@@ -31,18 +31,14 @@
       
       ### 左侧菜单模板
       #parse("manage/left-nav.vm")
-
+	  <!-- Bootstrap core JavaScript -->
+      <script src="#{getContextPath}bootstrap/assets/js/jquery-1.10.2.min.js"></script>
+      <script src="#{getContextPath}bootstrap/js/bootstrap.min.js"></script>
 	  ### Main模板
 	  #parse("manage/${page.mainViewName}.vm")
-
     </div> <!-- /container -->
-    <br/><br/><br/>
+    
 	### 底部模板
 	#include("footer.vm")
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="#{getContextPath}bootstrap/assets/js/jquery-1.10.2.min.js"></script>
-    <script src="#{getContextPath}bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
