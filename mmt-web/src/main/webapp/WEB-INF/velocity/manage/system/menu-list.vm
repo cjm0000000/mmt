@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/select/css/bootstrap-select.min.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			<button data-toggle="modal" href="#menu-add-edit-div" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
+			</button>
+			<button id="menu-update" type="button" disabled="true" class="btn btn-info btn-md" >
+				<span class="glyphicon glyphicon-edit"></span> 编 辑
+			</button>
+			<button id="menu-delete" type="button" disabled="true" class="btn btn-danger btn-md" >
+				<span class="glyphicon glyphicon-trash"></span> 删 除
+			</button>
+		</div>
+				
+		<!-- Table -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
+			        <th width="35%">菜单名称</th>
+					<th width="20%">菜单链接</th>
+			     	<th width="30%">菜单样式</th>
+			     	<th width="10%">排序号</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($menu in $page.menuList)
+				<tr>
+					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
+			  		<td>
+			  			#if($menu.menulevcod == '3')
+			  				&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span>
+			  			#else
+			  				<span class="glyphicon glyphicon-folder-open"></span>
+			  			#end
+			  			$!menu.menu_name
+			  		</td>
+			  		<td>$menu.menuurl</td>
+			   		<td>$menu.menuico</td>
+			   		<td>$menu.sort</td>
+			 	</tr>
+				#end
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div id="menu-add-edit-div" class="modal fade" tabindex="-1" data-width="500" style="display: none;">
+	<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modalmanager.js"></script>
+	<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modal.js"></script>
+	<script src="#{getContextPath}bootstrap/select/js/bootstrap-select.min.js"></script>
+  	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    	<h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> 添加菜单</h4>
+  	</div>
+  	<div class="modal-body">
+  		<p>
+		  <label>上级菜单</label>
+		  <select class="selectpicker" data-width="75%">
+		    <option>Mustard</option>
+		    <option>Ketchup</option>
+		    <option>Relish</option>
+		  </select>
+  		</p>
+		<p><input type="text" class="form-control" placeholder="菜单名称"></p>
+		<p><input type="text" class="form-control" placeholder="菜单链接"></p>
+		<p><input type="text" class="form-control" placeholder="菜单样式"></p>
+		<div class="input-group">
+		  <span class="input-group-addon">排序号</span>
+		  <input type="number" class="form-control" value=0 />
+		</div>
+  	</div>
+  	<div class="modal-footer">
+    	<button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
+    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
+  	</div>
+</div>
+<script>$('select').selectpicker();</script>
+<script src="#{getContextPath}js/mmt.js"></script>

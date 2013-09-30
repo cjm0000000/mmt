@@ -93,7 +93,7 @@ public final class MenuAction extends AdminNavAction {
 	@RequestMapping(value="add-edit-page")
 	public String addOrEditPage(HttpSession session) {
 		//TODO 显示添加或者编辑菜单的页面
-		return VIEW_ADD_EDIT;
+		return getAddEditView();
 	}
 
 	@Override

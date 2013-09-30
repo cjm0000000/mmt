@@ -18,7 +18,7 @@ import lemon.web.system.mapper.RoleMenuMapper;
  */
 public abstract class AdminNavAction extends MMTAction {
 	/** 添加或者编辑内容的视图 */
-	protected static final String VIEW_ADD_EDIT = "add_edit";
+	protected static final String VIEW_ADD_EDIT = "add-edit";
 	/** 默认每页数量 */
 	protected static final int PAGESIZE = 10;
 	@Autowired
@@ -57,12 +57,27 @@ public abstract class AdminNavAction extends MMTAction {
 	 * @return
 	 */
 	protected String getMainViewName(String operation) {
-		String[] temp = getMenuURL().split("/");
-		if (temp.length != 2)
-			return null;
-		return temp[0] + "/" + temp[1] + "_" + operation;
+		return obtainView() + "-" + operation;
 	}
 	
+	/**
+	 * 显示添加/编辑的视图
+	 * @return
+	 */
+	protected String getAddEditView(){
+		return obtainView() + "-" + VIEW_ADD_EDIT;
+	}
+	
+	/**
+	 * 解析视图
+	 * @return
+	 */
+	private String obtainView(){
+		String[] temp = getMenuURL().split("/");
+		if (temp.length != 2)
+			sendError("请求的资源无效！");
+		return temp[0] + "/" + temp[1];
+	}
 	/**
 	 * 获取顶部导航栏
 	 * @param role_id
