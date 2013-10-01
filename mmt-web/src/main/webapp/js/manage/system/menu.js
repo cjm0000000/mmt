@@ -34,16 +34,14 @@ function loadPage(target, url){
 	var $modal = target;
 	$('.ajax .menu').on('click', function(){
 		var opType = this.id;
-		if(opType === 'menu-add')
-			url = url + "?menu_id=0";
-		else if(opType === 'menu-update'){
-			var menu_id = getSelectedValues('menu_id');
-			url = url + "?menu_id="+menu_id;
-		}else return;
+		var menu_id = 0;
+		if(opType === 'menu-update'){
+			menu_id = getSelectedValues('menu_id');
+		}
 		$('body').modalmanager('loading');
 
 		setTimeout(function(){
-			$modal.load(url, '', function(){
+			$modal.load(url, {menu_id:menu_id}, function(){
 				$modal.modal();
 			});
 		}, 500);
