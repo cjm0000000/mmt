@@ -9,7 +9,6 @@
 				<label for="supmenucode" class="col-lg-3 control-label" style="padding:6px;">上级菜单</label>
 				<div class="col-lg-9">
 					<select class="selectpicker" id="supmenucode" name="supmenucode" data-width="100%">
-						<option value=0>请选择上级菜单</option>
 					#foreach($menu in $result.pmList)
 						<option value="$!menu.menu_id">$!menu.menu_name</option>
 					#end
@@ -49,5 +48,5 @@
 <script src="#{getContextPath}bootstrap/select/js/bootstrap-select.min.js"></script>
 <script>
 $('select').selectpicker();
-$('#supmenucode').val('$result.menu.supmenucode');
+$('.selectpicker').selectpicker('val', '$!result.menu.supmenucode');
 </script>
