@@ -76,7 +76,7 @@ public final class MenuAction extends AdminNavAction {
 	
 	/**
 	 * 删除菜单
-	 * @param ids
+	 * @param menu_id
 	 * @return
 	 */
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
