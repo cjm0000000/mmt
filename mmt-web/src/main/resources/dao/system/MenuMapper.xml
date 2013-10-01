@@ -6,7 +6,10 @@
 			SELECT #{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort}
 	</insert>
 	<delete id="deleteMenu" parameterType="int">
-		DELETE FROM system_menu WHERE menu_id=#{menu_id}
+		DELETE FROM system_menu WHERE menu_id IN
+		<foreach collection="array" item="menuIds" index="index" open="(" separator="," close=")">
+			#{menuIds}
+		</foreach>
 	</delete>
 	<update id="editMenu" parameterType="lemon.web.system.bean.Menu">
 		UPDATE system_menu A

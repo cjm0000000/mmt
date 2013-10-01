@@ -34,6 +34,7 @@ public final class MenuAction extends AdminNavAction {
 
 	/**
 	 * 显示菜单列表[无需分页]
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping("list")
@@ -55,7 +56,7 @@ public final class MenuAction extends AdminNavAction {
 	
 	/**
 	 * 保存菜单
-	 * @param session
+	 * @param menu
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST)
@@ -75,14 +76,15 @@ public final class MenuAction extends AdminNavAction {
 	
 	/**
 	 * 删除菜单
-	 * @param second
-	 * @param session
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
-	public String delete( HttpSession session) {
-		//TODO 删除菜单
-		return "";
+	@ResponseBody
+	public String delete(String menu_id) {
+		String[] ids = menu_id.split(",");
+		menuMapper.deleteMenu(ids);
+		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**

@@ -29,11 +29,11 @@ public interface MenuMapper {
 	void addMenu(Menu menu);
 	
 	/**
-	 * delete menu by id
-	 * @param menu_id
+	 * Batch delete menu by id
+	 * @param menuIds
 	 */
 	@Lang(RawLanguageDriver.class)
-	void deleteMenu(int menu_id);
+	void deleteMenu(String[] menuIds);
 	
 	/**
 	 * edit menu

@@ -70,3 +70,21 @@ function loadPage(target, url_showPage, url_save){
 	  }, 500);
 	});
 }
+
+/**
+ * 删除菜单
+ */
+function deleteMenu(){
+	var menu_id = getSelectedValues("menu_id");
+	$('body').modal('loading');
+	    $.post(url_delete,{
+			menu_id:menu_id
+	 	},
+		function(data){
+	 		$('.text-left')
+	        .prepend('<div class="alert alert-info fade in">' + data +
+	          '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+	        '</div>');
+	    });
+		setTimeout("document.location.reload()",500);
+}
