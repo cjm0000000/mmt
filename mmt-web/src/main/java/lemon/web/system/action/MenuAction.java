@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -53,14 +54,23 @@ public final class MenuAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 添加菜单
+	 * 保存菜单
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public String add(HttpSession session) {
-		//TODO 添加菜单
-		return "";
+	@RequestMapping(value = "save", method = RequestMethod.POST)
+	@ResponseBody
+	public String save(Menu menu) {
+		Menu supMenu = menuMapper.getMenu(menu.getSupmenucode());
+		if(supMenu == null)
+			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e4\u00b8\u008a\u00e7\u00ba\u00a7\u00e8\u008f\u009c\u00e5\u008d\u0095\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+		String lev = String.valueOf(Integer.parseInt(supMenu.getMenulevcod())+1);
+		menu.setMenulevcod(lev);
+		if(menu.getMenu_id() <= 0)
+			menuMapper.addMenu(menu);
+		else
+			menuMapper.editMenu(menu);
+		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**
@@ -72,17 +82,6 @@ public final class MenuAction extends AdminNavAction {
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String delete( HttpSession session) {
 		//TODO 删除菜单
-		return "";
-	}
-	
-	/**
-	 * 编辑菜单
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value="edit", method = RequestMethod.POST)
-	public String edit(HttpSession session) {
-		//TODO 编辑菜单
 		return "";
 	}
 	
@@ -99,6 +98,8 @@ public final class MenuAction extends AdminNavAction {
 		Menu menu = null;
 		if (menu_id != 0)
 			menu = menuMapper.getMenu(menu_id);
+		if(menu == null)
+			menu = new Menu();
 		Map<String, Object> result = new HashMap<>();
 		result.put("pmList", pmList);
 		result.put("menu", menu);

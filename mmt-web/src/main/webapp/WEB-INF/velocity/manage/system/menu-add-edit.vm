@@ -4,47 +4,48 @@
     <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> 添加菜单</h4>
 </div>
 <div class="modal-body">
-		<div class="well">
-			<div class="form-group row">
-				<label for="supmenucode" class="col-lg-3 control-label" style="padding:6px;">上级菜单</label>
-				<div class="col-lg-9">
-					<select class="selectpicker" id="supmenucode" name="supmenucode" data-width="100%">
-					#foreach($menu in $result.pmList)
-						<option value="$!menu.menu_id">$!menu.menu_name</option>
-					#end
-					</select>
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="menu_name" class="col-lg-3 control-label" style="padding:6px;">菜单名称</label>
-				<div class="col-lg-9">
-					<input type="text" class="form-control" id="menu_name" name="menu_name" value="$!result.menu.menu_name" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="menuurl" class="col-lg-3 control-label" style="padding:6px;">菜单链接</label>
-				<div class="col-lg-9">
-					<input type="text" class="form-control" id="menuurl" name="menuurl" value="$!result.menu.menuurl" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="menuico" class="col-lg-3 control-label" style="padding:6px;">菜单样式</label>
-				<div class="col-lg-9">
-					<input type="text" class="form-control" id="menuico" name="menuico" value="$!result.menu.menuico" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="sort" class="col-lg-3 control-label" style="padding:6px;">排序号</label>
-				<div class="col-lg-9">
-					<input type="number" class="form-control" id="sort" name="sort" value="$!result.menu.sort" />
-				</div>
+	<input type="hidden" id="menu_id" value="$!result.menu.menu_id" />
+	<div class="well">
+		<div class="form-group row">
+			<label for="supmenucode" class="col-lg-3 control-label" style="padding:6px;">上级菜单</label>
+			<div class="col-lg-9">
+				<select class="selectpicker" id="supmenucode" name="supmenucode" data-width="100%">
+				#foreach($menu in $result.pmList)
+					<option value="$!menu.menu_id">$!menu.menu_name</option>
+				#end
+				</select>
 			</div>
 		</div>
-  	</div>
-  	<div class="modal-footer">
-    	<button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
-    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
-  	</div>
+		<div class="form-group row">
+			<label for="menu_name" class="col-lg-3 control-label" style="padding:6px;">菜单名称</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="menu_name" name="menu_name" value="$!result.menu.menu_name" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="menuurl" class="col-lg-3 control-label" style="padding:6px;">菜单链接</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="menuurl" name="menuurl" value="$!result.menu.menuurl" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="menuico" class="col-lg-3 control-label" style="padding:6px;">菜单样式</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="menuico" name="menuico" value="$!result.menu.menuico" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="sort" class="col-lg-3 control-label" style="padding:6px;">排序号</label>
+			<div class="col-lg-9">
+				<input type="number" class="form-control" id="sort" name="sort" value="$!result.menu.sort" />
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
+    <button type="button" class="save btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
+</div>
 <script src="#{getContextPath}bootstrap/select/js/bootstrap-select.min.js"></script>
 <script>
 $('select').selectpicker();

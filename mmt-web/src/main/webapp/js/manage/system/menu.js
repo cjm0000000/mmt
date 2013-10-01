@@ -28,9 +28,10 @@ $(function() {
 /**
  * 加载页面
  * @param target
- * @param url
+ * @param url_showPage
+ * @param url_save
  */
-function loadPage(target, url){
+function loadPage(target, url_showPage, url_save){
 	var $modal = target;
 	$('.ajax .menu').on('click', function(){
 		var opType = this.id;
@@ -41,21 +42,31 @@ function loadPage(target, url){
 		$('body').modalmanager('loading');
 
 		setTimeout(function(){
-			$modal.load(url, {menu_id:menu_id}, function(){
+			$modal.load(url_showPage, {menu_id:menu_id}, function(){
 				$modal.modal();
 			});
 		}, 500);
 	});
-
-	$modal.on('click', '.update', function(){
+	//监听保存数据按钮
+	$modal.on('click', '.save', function(){
 	  $modal.modal('loading');
 	  setTimeout(function(){
-	    $modal
-	      .modal('loading')
-	      .find('.modal-body')
-	        .prepend('<div class="alert alert-info fade in">' +
-	          'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+	    $modal.modal('loading');
+	    $.post(url_save,{
+			menu_id:$('#menu_id').val(),
+			menu_name:$('#menu_name').val(),
+			supmenucode:$('#supmenucode').val(),
+			menuurl:$('#menuurl').val(),
+			menuico:$('#menuico').val(),
+			sort:$('#sort').val()
+	 	},
+		function(data){
+	 		$modal.find('.modal-body')
+	        .prepend('<div class="alert alert-info fade in">' + data +
+	          '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
 	        '</div>');
+	    });
+		setTimeout("document.location.reload()",500);
 	  }, 500);
 	});
 }
