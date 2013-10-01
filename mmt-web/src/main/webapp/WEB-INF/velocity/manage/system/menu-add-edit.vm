@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/select/css/bootstrap-select.min.css">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> 添加菜单</h4>
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> #if($result.menu.menu_id == 0)添加#else编辑#end菜单</h4>
 </div>
 <div class="modal-body">
 	<input type="hidden" id="menu_id" value="$!result.menu.menu_id" />
@@ -49,5 +49,7 @@
 <script src="#{getContextPath}bootstrap/select/js/bootstrap-select.min.js"></script>
 <script>
 $('select').selectpicker();
+#if($result.menu.supmenucode != 0)
 $('.selectpicker').selectpicker('val', '$!result.menu.supmenucode');
+#end
 </script>

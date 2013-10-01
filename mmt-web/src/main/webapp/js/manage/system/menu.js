@@ -31,7 +31,7 @@ $(function() {
  * @param url_showPage
  * @param url_save
  */
-function loadPage(target, url_showPage, url_save){
+function loadPage(target){
 	var $modal = target;
 	$('.ajax .menu').on('click', function(){
 		var opType = this.id;
