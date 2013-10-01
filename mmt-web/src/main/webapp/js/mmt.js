@@ -59,3 +59,42 @@ function getSelectedValues(fieldName){
 	});
 	return retCode.join(",");
 }
+
+/**
+ * 根据名称获取选中的值
+ * @param url	需要载入的URL
+ * @param params	参数
+ * @param target	宿主元素
+ */
+function loadPage(url, params, target){
+	_modal = target;
+	if(!_modal)
+		_modal = $('body');
+	$('body').modalmanager('loading');
+	setTimeout(function(){
+		_modal.load(url, params, function(){
+			if(target)
+				_modal.modal();
+		});
+	}, 500);
+}
+
+/**
+ * 根据名称获取选中的值
+ * @param url	需要载入的URL
+ * @param params	参数
+ * @param target	宿主元素
+ * @param tipsTarget	提示信息宿主元素
+ */
+function mmtPost(url, params, target, tipsTarget){
+	if(!target)
+		target = $('body');
+	target.modal('loading');
+	setTimeout(function(){
+		$.post(url, params,function(data){
+	 		tipsTarget.prepend('<div class="alert alert-info fade in">' + data +
+	          '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+	    });
+		setTimeout("document.location.reload()",500);
+	}, 500);
+}

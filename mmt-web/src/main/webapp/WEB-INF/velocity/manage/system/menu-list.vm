@@ -14,7 +14,7 @@
 					<button id="menu-update" type="button" disabled="true" class="menu btn btn-info btn-md" >
 						<span class="glyphicon glyphicon-edit"></span> 编 辑
 					</button>
-					<button id="menu-delete" type="button" disabled="true" onclick="deleteMenu();" class="btn btn-danger btn-md" >
+					<button id="menu-delete" type="button" disabled="true" class="btn btn-danger btn-md" >
 						<span class="glyphicon glyphicon-trash"></span> 删 除
 					</button>
             	</div>
@@ -55,9 +55,7 @@
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/manage/system/menu.js"></script>
 <script type="text/javascript">
-var modal = $('#menu-ajax-modal');
-var url_showPage = "#{getContextPath}webservices/system/menu/add-edit-page";
-var url_save = "#{getContextPath}webservices/system/menu/save";
-var url_delete = "#{getContextPath}webservices/system/menu/delete";
-loadPage(modal);
+var url_showPage 	= "#{getContextPath}webservices/system/menu/add-edit-page";
+var url_save 		= "#{getContextPath}webservices/system/menu/save";
+var url_delete 		= "#{getContextPath}webservices/system/menu/delete";
 </script>
