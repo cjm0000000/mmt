@@ -88,7 +88,9 @@ public class UserMapperTest {
 		User u1 = addUser();
 		User u2 = addUser();
 		User u3 = addUser();
-		int[] users = {u1.getUser_id(),u2.getUser_id(),u3.getUser_id()};
+		String[] users = {String.valueOf(u1.getUser_id()),
+					String.valueOf(u2.getUser_id()),
+					String.valueOf(u3.getUser_id())};
 		userMapper.deleteUser(users);
 	}
 	

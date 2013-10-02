@@ -57,7 +57,7 @@ public class MenuMapperTest {
 		Menu menu = addMenu("2",1);
 		assertNotNull(menu);
 		assertNotEquals(0, menu.getMenu_id());
-		menuMapper.deleteMenu(menu.getMenu_id());
+		menuMapper.deleteMenu(new String[]{"2"});
 		menu = menuMapper.getMenu(menu.getMenu_id());
 		assertNull(menu);
 	}
