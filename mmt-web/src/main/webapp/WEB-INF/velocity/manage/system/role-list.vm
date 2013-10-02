@@ -1,14 +1,18 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
 	<div class="panel panel-default">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<button type="button" class="btn btn-success btn-md" >
+			<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modalmanager.js"></script>
+			<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modal.js"></script>
+			<button id="role-add" type="button" class="role btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
-			<button type="button" disabled class="btn btn-info btn-md" >
+			<button id="role-update" type="button" disabled class="role btn btn-info btn-md" >
 				<span class="glyphicon glyphicon-edit"></span> 编 辑
 			</button>
-			<button type="button" disabled class="btn btn-danger btn-md" >
+			<button id="role-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
 		</div>
@@ -17,17 +21,19 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" title="全选" onclick="checkThis(this);"/></th>
+					<th><input type="checkbox" title="全选" onclick="checkList(this,'role_id');btnListener('role_id',$('#role-update'),$('#role-delete'));"/></th>
 					<th>角色名</th>
 		            <th>描述</th>
+		            <th>排序号</th>
 				</tr>
 			</thead>
 			<tbody>
 			#foreach($role in $page.roleList)
 				<tr>
-		    		<td><input type="checkbox" value="$role.role_id" name="role_id"/></td>
-		       		<td>$role.role_name</td>
-		  			<td>$role.role_desc</td>
+		    		<td><input type="checkbox" value="$!role.role_id" name="role_id" onclick="btnListener('role_id',$('#role-update'),$('#role-delete'));"/></td>
+		       		<td>$!role.role_name</td>
+		  			<td>$!role.role_desc</td>
+		  			<td>$!role.sort</td>
 		   		</tr>
 			#end
 			</tbody>
@@ -36,14 +42,12 @@
 		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
 	</div>
 </div>
+<div id="role-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
+<script src="#{getContextPath}js/manage/system/role.js"></script>
 <script type="text/javascript">
-function checkThis(controller){
-	var ids = document.getElementsByName('user_id');
-	for(var i=0 ; i < ids.length ; i++){
-		if(controller.checked)
-			ids[i].checked = true;
-		else
-			ids[i].checked = false;
-	}
-}
+var url_showPage 	= "#{getContextPath}webservices/system/role/add-edit-page";
+var url_save 		= "#{getContextPath}webservices/system/role/save";
+var url_delete 		= "#{getContextPath}webservices/system/role/delete";
 </script>

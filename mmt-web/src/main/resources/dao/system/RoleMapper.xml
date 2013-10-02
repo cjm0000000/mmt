@@ -23,9 +23,13 @@
 		UPDATE system_role A 
 			SET A.role_name=#{role_name}, 
 				A.role_desc=#{role_desc}, 
-				A.sort=#{sort}, 
-				A.`status`=#{status}, 
-				A.reloadable=#{reloadable} 
+				<if test="status != null">
+				A.`status`=#{status}
+				</if>
+				<if test="reloadable != null">
+				A.reloadable=#{reloadable}
+				</if>
+				A.sort=#{sort}
 			WHERE A.role_id=#{role_id}
 	</update>
 	<update id="batchDelete" parameterType="int">

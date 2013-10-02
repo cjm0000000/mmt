@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">#if($role.role_id == 0)<span class="glyphicon glyphicon-plus-sign"></span> 添加#else<span class="glyphicon glyphicon-edit"></span> 编辑#end角色</h4>
+</div>
+<div class="modal-pre-body" style="padding:10px;"></div>
+<div class="modal-body">
+	<input type="hidden" id="role_id" value="$!role.role_id" />
+	<div class="well">
+		<div class="form-group row">
+			<label for="role_name" class="col-lg-3 control-label" style="padding:6px;">角色名称</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="role_name" name="role_name" value="$!role.role_name" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="role_desc" class="col-lg-3 control-label" style="padding:6px;">角色说明</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="role_desc" name="role_desc" value="$!role.role_desc" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="sort" class="col-lg-3 control-label" style="padding:6px;">排序号</label>
+			<div class="col-lg-9">
+				<input type="number" class="form-control" id="sort" name="sort" value="$!role.sort" />
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
+    <button type="button" class="save btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
+</div>

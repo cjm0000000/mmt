@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -70,47 +72,49 @@ public final class RoleAction extends AdminNavAction {
 	
 	/**
 	 * 添加角色
-	 * @param session
+	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value="add", method = RequestMethod.POST)
-	public String add(HttpSession session) {
-		//TODO 添加角色
-		return "";
+	@RequestMapping(value="save", method = RequestMethod.POST)
+	@ResponseBody
+	public String save(Role role) {
+		if(role == null)
+			return "\u00ef\u00bb\u00bf\u00e4\u00bd\u00a0\u00e8\u00be\u0093\u00e5\u0085\u00a5\u00e7\u009a\u0084\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e6\u00ad\u00a3\u00e7\u00a1\u00ae\u00e3\u0080\u0082";
+		if(role.getRole_id() <= 0){
+			role.setReloadable(Status.AVAILABLE);
+			role.setStatus(Status.AVAILABLE);
+			roleMapper.addRole(role);
+		}else
+			roleMapper.update(role);
+		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 删除角色
-	 * @param second
-	 * @param session
+	 * @param role_id
 	 * @return
 	 */
 	@RequestMapping(value="delete", method = RequestMethod.POST)
-	public String delete(HttpSession session) {
-		//TODO 删除角色
-		return "";
-	}
-	
-	/**
-	 * 编辑角色
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value="edit", method = RequestMethod.POST)
-	public String edit(HttpSession session) {
-		//TODO 编辑角色
-		return "";
+	@ResponseBody
+	public String delete(String role_id) {
+		String[] ids = role_id.split(",");
+		roleMapper.batchDelete(ids);
+		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 显示添加或者编辑角色的页面
-	 * @param session
+	 * @param role_id
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public String addOrEditPage(HttpSession session) {
-		//TODO 显示添加或者编辑角色的页面
-		return VIEW_ADD_EDIT;
+	public ModelAndView addOrEditPage(int role_id) {
+		Role role = null;
+		if (role_id != 0)
+			role = roleMapper.getRole(role_id);
+		if (role == null)
+			role = new Role();
+		return new ModelAndView(getAddEditView(), "role", role);
 	}
 
 	@Override
