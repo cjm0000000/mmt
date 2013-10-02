@@ -53,6 +53,7 @@
 </div>
 <div id="menu-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
 <script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
 <script src="#{getContextPath}js/manage/system/menu.js"></script>
 <script type="text/javascript">
 var url_showPage 	= "#{getContextPath}webservices/system/menu/add-edit-page";

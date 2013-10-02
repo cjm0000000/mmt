@@ -1,9 +1,4 @@
 $(function() {
-	$.fn.modal.defaults.spinner = $.fn.modalmanager.defaults.spinner = '<div class="loading-spinner" style="width: 200px; margin-left: -100px;">'
-			+ '<div class="progress progress-striped active">'
-			+ '<div class="progress-bar" style="width: 100%;"></div>'
-			+ '</div>' + '</div>';
-
 	$modal = $('#menu-ajax-modal');
 	
 	//监听加载添加/编辑页面事件
@@ -26,7 +21,7 @@ $(function() {
 			menuico		: $('#menuico').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
+		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
 	});
 	
 	//监听删除事件
