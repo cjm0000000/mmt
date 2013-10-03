@@ -62,13 +62,17 @@ public class LoginAction extends MMTAction {
 			return info("您的密钥没有设置，请联系管理员。",u.getUsername());
 		}
 		//验证用户名和密码
-		User user = userMapper.checkLogin(u.getUsername(),SecureUtil.aesEncrypt(u.getPassword(), encryptKeyItem.getValue()));
+		User user = userMapper.checkLogin(
+				u.getUsername(),
+				SecureUtil.aesEncrypt(u.getPassword(),
+						encryptKeyItem.getValue()));
 		//保存日志
-		saveLoginLog(request.getRemoteAddr(), user_id, u.getUsername(),user == null ? 0 : user.getRole_id(), user != null);
+		saveLoginLog(request.getRemoteAddr(), user_id, u.getUsername(),user == null ? 0 : user.getRole_id(), (user != null && user.getIslock().equals(Status.UNAVAILABLE)));
 		//没有查到用户
-		if(null == user){
+		if(null == user)
 			return info("用户名和密码不匹配。",u.getUsername());
-		}
+		if(user.getIslock().equals(Status.AVAILABLE))
+			return info("您的帐户已被锁定，请联系系统管理员。",u.getUsername());
 		//登录成功，数据初始化
 		request.getSession().setAttribute(TOKEN, user);
 		//加载用户定制化信息

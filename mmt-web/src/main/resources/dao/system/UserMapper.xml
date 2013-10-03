@@ -36,7 +36,6 @@
 			AND A.username=#{username} 
 			AND A.`password`=#{password} 
 			AND A.`status`='AVAILABLE' 
-			AND A.islock='UNAVAILABLE'
 	</select>
 	<update id="deleteUser">
 		UPDATE system_user A
