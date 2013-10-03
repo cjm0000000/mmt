@@ -33,6 +33,19 @@ public abstract class AdminNavAction extends MMTAction {
 	protected abstract String getMenuURL();
 	
 	/**
+	 * 获取最后一页
+	 * @return
+	 */
+	protected int lastPage(int currentPage, int rsCnt) {
+		int page = rsCnt/PAGESIZE;
+		if(rsCnt % PAGESIZE != 0)
+			page ++;
+		if(page <= 0)
+			page = 1;
+		return page;
+	}
+	
+	/**
 	 * 获取带导航数据的视图
 	 * @param role_id
 	 * @param menuurl

@@ -113,6 +113,11 @@ public final class MenuAction extends AdminNavAction {
 		return "system/menu";
 	}
 	
+	@Override
+	protected int lastPage(int currentPage, int rsCnt) {
+		return 1;
+	}
+	
 	/**
 	 * 生成菜单树
 	 * @return

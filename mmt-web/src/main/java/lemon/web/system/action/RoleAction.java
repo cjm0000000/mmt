@@ -58,10 +58,10 @@ public final class RoleAction extends AdminNavAction {
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
-		List<Role> roleList = roleMapper.getRoleList((page - 1) * PAGESIZE,
-				PAGESIZE);
-		System.out.println("roleList sze;"+roleList.size());
+		List<Role> roleList = roleMapper.getRoleList((page - 1) * PAGESIZE, PAGESIZE);
 		int rsCnt = roleMapper.getRsCnt();
+		if (roleList.size() == 0 && page > 1)
+			return new ModelAndView("redirect:" + lastPage(page, rsCnt));
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("roleList", roleList);
 		resultMap.put("rsCnt", rsCnt);
