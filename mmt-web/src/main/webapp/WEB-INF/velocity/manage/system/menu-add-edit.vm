@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="#{getContextPath}bootstrap/select/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/select/css/bootstrap-select.min.css">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> #if($result.menu.menu_id == 0)添加#else编辑#end菜单</h4>
@@ -47,7 +47,7 @@
     <button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
     <button type="button" class="save btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
 </div>
-<script src="#{getContextPath}bootstrap/select/js/bootstrap-select.min.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/select/js/bootstrap-select.min.js"></script>
 <script>
 $('select').selectpicker();
 #if($result.menu.supmenucode != 0)

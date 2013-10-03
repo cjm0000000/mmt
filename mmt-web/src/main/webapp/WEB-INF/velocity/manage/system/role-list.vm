@@ -1,11 +1,9 @@
-<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal-bs3patch.css">
-<link rel="stylesheet" href="#{getContextPath}bootstrap/modal/css/bootstrap-modal.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
 	<div class="panel panel-default">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modalmanager.js"></script>
-			<script src="#{getContextPath}bootstrap/modal/js/bootstrap-modal.js"></script>
 			<button id="role-add" type="button" class="role btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
@@ -43,6 +41,8 @@
 	</div>
 </div>
 <div id="role-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/modal_tips_init.js"></script>
 <script src="#{getContextPath}js/manage/system/role.js"></script>
