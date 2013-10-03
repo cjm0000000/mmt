@@ -27,6 +27,8 @@ public class MMTAction {
 	protected static final String DEFAULT_VIEW = "list";
 	/** 无权限视图 */
 	protected static final String VIEW_FORBIDDEN = "forbidden";
+	/** 用户存放密钥的KEY */
+	protected static final String ENCRYPY_KEY = "EncryptKey";
 	
 	/**
 	 * 资源不存在，转发到错误页面

@@ -2,6 +2,8 @@ package lemon.web.system.bean;
 
 import java.util.Collection;
 
+import javax.validation.constraints.Digits;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +28,10 @@ public class User implements UserDetails {
 	@NotEmpty(message = "用户名不能为空")
 	@Length(max = 30, min = 3, message = "用户名长度必须在 3 - 30 位之间")
 	private String username;
+	@Length(max = 18, min = 0, message = "身份证号长度不能超过18位")
 	private String idcard;
+	@Length(min = 11, max = 11, message = "手机号码长度只能是11位")
+	@Digits(fraction = 11, integer = 11, message = "手机号码只能是11位数字")
 	private String mphone;
 	private Status islock;
 	private String bz;

@@ -67,7 +67,7 @@ public interface UserMapper {
 	 * batch update user's status to 'UNAVAILABLE'
 	 * @param userIds
 	 */
-	void deleteUser(int[] userIds);
+	void deleteUser(String[] userIds);
 
 	/**
 	 * get user list
@@ -95,4 +95,10 @@ public interface UserMapper {
 	@Lang(RawLanguageDriver.class)
 	void updateUserRole(@Param("user_id") int user_id,
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
+	
+	/**
+	 * update user
+	 * @param user
+	 */
+	void updateUser(User user);
 }

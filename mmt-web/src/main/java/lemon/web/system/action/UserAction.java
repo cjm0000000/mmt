@@ -1,19 +1,31 @@
 package lemon.web.system.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import lemon.shared.customer.bean.Customer;
+import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.entity.Status;
+import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
+import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
+import lemon.web.system.bean.UserConfig;
+import lemon.web.system.mapper.RoleMapper;
+import lemon.web.system.mapper.UserConfigMapper;
 import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -28,6 +40,12 @@ import org.springframework.web.servlet.ModelAndView;
 public final class UserAction extends AdminNavAction {
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserConfigMapper userConfigMapper;
+	@Autowired
+	private RoleMapper roleMapper;
+	@Autowired
+	private CustomerMapper customerMapper;
 
 	/**
 	 * 显示用户列表首页
@@ -60,6 +78,8 @@ public final class UserAction extends AdminNavAction {
 		List<User> userList = userMapper.getUserList((page - 1) * PAGESIZE,
 				PAGESIZE, user_name);
 		int userCnt = userMapper.getUserCnt(user_name);
+		if (userList.size() == 0 && page > 1)
+			return new ModelAndView("redirect:" + lastPage(page, userCnt));
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("userList", userList);
 		resultMap.put("userCnt", userCnt);
@@ -70,46 +90,74 @@ public final class UserAction extends AdminNavAction {
 	
 	/**
 	 * 添加用户
-	 * @param session
+	 * @param user
+	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value="add", method = RequestMethod.POST)
-	public String add(HttpSession session) {
-		//TODO 添加用户
-		return "";
+	@RequestMapping(value="save", method = RequestMethod.POST)
+	@ResponseBody
+	public String save(@Valid User user, BindingResult result) {
+		if(user == null)
+			return "\u00ef\u00bb\u00bf\u00e6\u00b7\u00bb\u00e5\u008a\u00a0\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u008c\u00e7\u0094\u00a8\u00e6\u0088\u00b7\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+		if(result.hasErrors()){
+			//TODO 1. 需要做validation；2. 中文编码问题
+			//return result.getFieldError().getDefaultMessage();
+		}
+		if(user.getUser_id() <= 0){
+			user.setStatus(Status.AVAILABLE);
+			//生成密钥
+			String secureKey = SecureUtil.generateSecretKey(128);
+			user.setPassword(SecureUtil.aesEncrypt(user.getPassword(), secureKey));
+			userMapper.addUser(user);
+			//保存密钥
+			UserConfig item = new UserConfig();
+			item.setKey(ENCRYPY_KEY);
+			item.setUser_id(user.getUser_id());
+			item.setValue(secureKey);
+			userConfigMapper.addItem(item);
+			//保存角色信息
+			userMapper.addUserRole(user.getUser_id(), user.getRole_id(),
+					user.getCust_id());
+		}else{
+			userMapper.updateUser(user);
+		}
+		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 删除用户
-	 * @param session
+	 * @param user_id
 	 * @return
 	 */
 	@RequestMapping(value="delete", method = RequestMethod.POST)
-	public String delete( HttpSession session) {
-		//TODO 删除用户
-		return "";
-	}
-	
-	/**
-	 * 编辑用户
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value="edit", method = RequestMethod.POST)
-	public String edit(HttpSession session) {
-		//TODO 编辑用户
-		return "";
+	@ResponseBody
+	public String delete(String user_id) {
+		if (user_id == null || "".equals(user_id))
+			return "\u00ef\u00bb\u00bf\u00e7\u0094\u00a8\u00e6\u0088\u00b7\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00ef\u00bc\u008c\u00e6\u0097\u00a0\u00e6\u00b3\u0095\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e3\u0080\u0082";
+		String[] userIds = user_id.split(",");
+		userMapper.deleteUser(userIds);
+		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 显示添加或者编辑用户的页面
-	 * @param session
+	 * @param user_id
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public String addOrEditPage(HttpSession session) {
-		//TODO 显示添加或者编辑用户的页面
-		return VIEW_ADD_EDIT;
+	public ModelAndView addOrEditPage(int user_id) {
+		User user = null;
+		if (user_id != 0)
+			user = userMapper.getUserById(user_id);
+		if (user == null)
+			user = new User();
+		List<Role> roleList = roleMapper.getRoleList(0, 0);
+		List<Customer> custList = customerMapper.getCustomerList(0, 10000);
+		Map<String, Object> result = new HashMap<>();
+		result.put("user", user);
+		result.put("roleList", roleList);
+		result.put("custList", custList);
+		return new ModelAndView(getAddEditView(), "result", result);
 	}
 
 	@Override

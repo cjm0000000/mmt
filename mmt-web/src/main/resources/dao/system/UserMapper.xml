@@ -3,7 +3,7 @@
 <mapper namespace="lemon.web.system.mapper.UserMapper">
 	<insert id="addUser" parameterType="lemon.web.system.bean.User" useGeneratedKeys="true" keyProperty="user_id">
 		INSERT INTO system_user(password,username,idcard,mphone,bz,xm,islock,status) 
-			SELECT #{password},#{username},#{idcard},#{mphone},#{bz},#{xm},'UNAVAILABLE','AVAILABLE'
+			SELECT #{password},#{username},#{idcard},#{mphone},#{bz},#{xm},#{islock},'AVAILABLE'
 	</insert>
 	<insert id="addUserRole" >
 		INSERT INTO system_user_role(user_id,role_id,cust_id) 
@@ -78,5 +78,32 @@
 			SET A.role_id=#{role_id},
 				A.cust_id=#{cust_id}
 		WHERE A.user_id=#{user_id}
+	</update>
+	<update id="updateUser" parameterType="lemon.web.system.bean.User">
+		UPDATE system_user A
+		<set>
+			<if test="username != null and username != '' ">
+				A.username=#{username},
+			</if>
+			<if test="idcard != null and idcard !='' ">
+				A.idcard=#{idcard},
+			</if>
+			<if test="islock != null and islock != '' ">
+				A.islock=#{islock},
+			</if>
+			<if test="status != null and status != '' ">
+				A.status=#{status},
+			</if>
+			<if test="mphone != null and mphone != '' ">
+				A.mphone=#{mphone},
+			</if>
+			<if test="bz != null and bz != '' ">
+				A.bz=#{bz},
+			</if>	
+			<if test="xm != null and xm != '' ">
+				A.xm=#{xm}
+			</if>
+		</set>
+			WHERE A.user_id=#{user_id}
 	</update>
 </mapper>

@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/select/css/bootstrap-select.min.css">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">#if($result.user.user_id == 0)<span class="glyphicon glyphicon-plus-sign"></span> 添加#else<span class="glyphicon glyphicon-edit"></span> 编辑#end用户</h4>
+</div>
+<div class="modal-pre-body" style="padding:10px;"></div>
+<div class="modal-body">
+	<input type="hidden" id="user_id" value="$!result.user.user_id" />
+	<div class="well">
+		<div class="form-group row">
+			<label for="role_id" class="col-lg-3 control-label" style="padding:6px;">客户</label>
+			<div class="col-lg-9">
+				<select class="selectpicker" id="cust_id" name="cust_id" data-width="100%">
+				#foreach($cust in $result.custList)
+					<option value="$!cust.cust_id">$!cust.cust_name</option>
+				#end
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="role_id" class="col-lg-3 control-label" style="padding:6px;">角色</label>
+			<div class="col-lg-9">
+				<select class="selectpicker" id="role_id" name="role_id" data-width="100%">
+				#foreach($role in $result.roleList)
+					<option value="$!role.role_id">$!role.role_name</option>
+				#end
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="username" class="col-lg-3 control-label" style="padding:6px;">用户名</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="username" name="username" value="$!result.user.username" />
+			</div>
+		</div>
+		#if($result.user.user_id == 0)
+		<div class="form-group row">
+			<label for="password" class="col-lg-3 control-label" style="padding:6px;">密 码</label>
+			<div class="col-lg-9">
+				<input type="password" class="form-control" id="password" name="password" />
+			</div>
+		</div>
+		#end
+		<div class="form-group row">
+			<label for="xm" class="col-lg-3 control-label" style="padding:6px;">姓名</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="xm" name="user_desc" value="$!result.user.xm" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="mphone" class="col-lg-3 control-label" style="padding:6px;">手机号码</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="mphone" name="mphone" value="$!result.user.mphone" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="idcard" class="col-lg-3 control-label" style="padding:6px;">身份证号</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="idcard" name="idcard" value="$!result.user.idcard" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="islock" class="col-lg-3 control-label" style="padding:6px;">登录状态</label>
+			<div class="switch col-lg-9">
+				#if($result.user.islock == 'AVAILABLE')
+				<input type="checkbox" id="islock" name="islock" checked>
+				#else
+				<input type="checkbox" id="islock" name="islock">
+				#end
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="bz" class="col-lg-3 control-label" style="padding:6px;">备注</label>
+			<div class="col-lg-9">
+				<input type="textarea" class="form-control" id="bz" name="bz" value="$!result.user.bz" />
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
+    <button type="button" class="save btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
+</div>
+<script src="#{getContextPath}bootstrap/plugins/select/js/bootstrap-select.min.js"></script>
+<script>
+$("#islock")
+	.wrap('<div class="make-switch" data-on-label="锁定" data-off-label="正常" data-on="danger" data-off="success" />')
+	.parent()
+	.bootstrapSwitch();
+$('select').selectpicker();
+#if($result.user.role_id != 0)
+$('.selectpicker').selectpicker('val', '$!result.user.role_id');
+#end
+</script>

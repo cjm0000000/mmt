@@ -1,14 +1,17 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/switch/css/bootstrap-switch.css">
 <div class="col-md-9" role="main">
 	<div class="panel panel-default">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<button type="button" class="btn btn-success btn-md" >
+			<button id="user-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
-			<button type="button" disabled class="btn btn-info btn-md" >
+			<button id="user-update" type="button" disabled class="btn btn-info btn-md" >
 				<span class="glyphicon glyphicon-edit"></span> 编 辑
 			</button>
-			<button type="button" disabled class="btn btn-danger btn-md" >
+			<button id="user-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
 		</div>
@@ -17,28 +20,30 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" title="全选" onclick="checkThis(this);"/></th>
+					<th><input type="checkbox" title="全选" onclick="checkList(this,'user_id');btnListener('user_id',$('#user-update'),$('#user-delete'));"/></th>
 					<th>用户名</th>
 		            <th>姓名</th>
 		            <th>身份证号</th>
 		            <th>手机</th>
-		            <th>状态</th>
+		            <th>登录状态</th>
 				</tr>
 			</thead>
 			<tbody>
 			#foreach($user in $page.userList)
 				<tr>
-		    		<td><input type="checkbox" value="$!user.user_id" name="user_id"/></td>
+		    		<td><input type="checkbox" value="$!user.user_id" name="user_id" onclick="btnListener('user_id',$('#user-update'),$('#user-delete'));"/></td>
 		       		<td>$!user.username</td>
 		  			<td>$!user.xm</td>
 		     		<td>$!user.idcard</td>
 		  			<td>$!user.mphone</td>
 		         	<td>
-		        	#if($user.islock == 'UNAVAILABLE')
-		       			<span class="btn-success">正常</span>
-		       		#else
-		       			<span class="btn-danger">锁定</span>
-		      		#end
+		         		<div class="label-toggle-switch make-switch switch-small" data-on-label="正常" data-off-label="锁定" data-on="success" data-off="danger">
+						#if($user.islock == 'UNAVAILABLE')
+							<input type="checkbox" value="$!user.user_id" checked/>
+						#else
+							<input type="checkbox" value="$!user.user_id"/>
+						#end
+						</div>
 		       		</td>
 		   		</tr>
 			#end
@@ -48,14 +53,15 @@
 		#createPagination($page.currentPage,$page.PAGESIZE,$page.userCnt)
 	</div>
 </div>
+<div id="user-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/switch/js/bootstrap-switch.min.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
+<script src="#{getContextPath}js/manage/system/user.js"></script>
 <script type="text/javascript">
-function checkThis(controller){
-	var ids = document.getElementsByName('user_id');
-	for(var i=0 ; i < ids.length ; i++){
-		if(controller.checked)
-			ids[i].checked = true;
-		else
-			ids[i].checked = false;
-	}
-}
+var url_showPage 	= "#{getContextPath}webservices/system/user/add-edit-page";
+var url_save 		= "#{getContextPath}webservices/system/user/save";
+var url_delete 		= "#{getContextPath}webservices/system/user/delete";
 </script>

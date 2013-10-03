@@ -31,9 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class LoginAction extends MMTAction {
-	/** 用户存放密钥的KEY */
-	private static final String ENCRYPY_KEY = "EncryptKey";
-	
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
