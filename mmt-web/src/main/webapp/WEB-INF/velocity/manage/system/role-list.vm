@@ -19,10 +19,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" title="全选" onclick="checkList(this,'role_id');btnListener('role_id',$('#role-update'),$('#role-delete'));"/></th>
-					<th>角色名</th>
-		            <th>描述</th>
-		            <th>排序号</th>
+					<th width="5%"><input type="checkbox" title="全选" onclick="checkList(this,'role_id');btnListener('role_id',$('#role-update'),$('#role-delete'));"/></th>
+					<th width="30%">角色名</th>
+		            <th width="45%">描述</th>
+		            <th width="10%">排序号</th>
+		            <th width="10%" style="text-align:center;">权限设置</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +33,11 @@
 		       		<td>$!role.role_name</td>
 		  			<td>$!role.role_desc</td>
 		  			<td>$!role.sort</td>
+		  			<td style="text-align:center;">
+		  				<button value="$!role.role_id" type="button" class="authority-list btn btn-info btn-sm" >
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+		  			</td>
 		   		</tr>
 			#end
 			</tbody>
@@ -47,6 +53,8 @@
 <script src="#{getContextPath}js/modal_tips_init.js"></script>
 <script src="#{getContextPath}js/manage/system/role.js"></script>
 <script type="text/javascript">
+var url_showAuthorityPage 	= "#{getContextPath}webservices/system/role/authority-list-page";
+var url_authoritySet= "#{getContextPath}webservices/system/role/set-authority";
 var url_showPage 	= "#{getContextPath}webservices/system/role/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/system/role/save";
 var url_delete 		= "#{getContextPath}webservices/system/role/delete";

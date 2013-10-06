@@ -28,4 +28,16 @@ $(function() {
 		var role_id = getSelectedValues("role_id");
 		mmtPost(url_delete, {role_id:role_id}, $('body'), $('.panel-heading'));
 	});
+	
+	//监听加载权限列表
+	$('.authority-list').on('click', function(){
+		var role_id = this.value;
+		loadPage(url_showAuthorityPage, {role_id:role_id}, $modal);
+	});
+	
+	//监听设置权限事件
+	$modal.on('click', '.authority-config', function(){
+		var menu_id = getSelectedValues("menu_id");
+		mmtPost(url_authoritySet, {menu_id:menu_id,role_id:this.value}, $modal.find('.modal-body'), $('.modal-authority-pre-body'));
+	});
 });

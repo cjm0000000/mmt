@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> 设置权限</h4>
+</div>
+<div class="modal-authority-pre-body" style="padding-left:10px;padding-right:10px;"></div>
+<div class="modal-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th><input type="checkbox" title="全选" onclick="checkList(this,'menu_id');"/></th>
+					<th>权 限</th>
+				</tr>
+			</thead>
+			<tbody>
+			#foreach($menu in $result.list)
+				<tr>
+					<td>
+						#if($menu.authority)
+							<input type="checkbox" value="$!menu.menu_id" name="menu_id" checked />
+						#else
+							<input type="checkbox" value="$!menu.menu_id" name="menu_id" />
+						#end
+					</td>
+			  		<td>
+			  			#if($menu.menulevcod == '3')
+			  				&nbsp;&nbsp;&nbsp;&nbsp;
+			  			#end
+			  			<span class="$!menu.menuico"></span> $!menu.menu_name
+			  		</td>
+			 	</tr>
+			#end
+			<tbody>
+		</table>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">关 闭</button>
+    <button type="button" class="authority-config btn btn-primary" value="$result.role_id"><span class="glyphicon glyphicon-ok"></span> 保 存</button>
+</div>

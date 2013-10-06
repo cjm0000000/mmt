@@ -77,7 +77,7 @@ public class RoleMapperTest {
 	@Ignore
 	public void testoleAuthority(){
 		Role role = addRole();
-		int[] menus = {1,2};
+		String[] menus = {"1","2"};
 		roleMapper.setRoleAuthority(role.getRole_id(),menus);
 		
 		roleMapper.deleteRoleAuthority(role.getRole_id());
@@ -87,7 +87,7 @@ public class RoleMapperTest {
 	@Ignore
 	public void testGetAuthority(){
 		Role role = addRole();
-		int[] menus = {1,2};
+		String[] menus = {"1","2"};
 		roleMapper.setRoleAuthority(role.getRole_id(),menus);
 		List<Menu> list = roleMapper.getAuthority(role.getRole_id());
 		assertNotEquals(0, list.size());

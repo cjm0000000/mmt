@@ -69,11 +69,11 @@
 		</foreach>
 	</insert>
 	<select id="getAuthority" parameterType="int" resultType="lemon.web.system.bean.Menu">
-		SELECT a.menu_id,a.menu_name,a.menulevcod,a.supmenucode,a.menuico,b.menu_id  authority
-        	from system_menu a        
-        		left join system_role_menu b on a.menu_id=b.menu_id and b.role_id=#{role_id}
-			where a.menu_id != 0
-		order by a.menulevcod,a.sort
+		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuico,B.menu_id  authority
+        	FROM system_menu A        
+        		LEFT JOIN system_role_menu B on A.menu_id = B.menu_id AND B.role_id=#{role_id}
+			WHERE A.menu_id != 0
+		ORDER BY A.menulevcod,A.sort
 	</select>
 	<update id="updateReload" parameterType="int">
 		UPDATE system_role A 

@@ -1,5 +1,7 @@
 package lemon.web.system.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
+import lemon.web.global.MMTException;
+import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMapper;
@@ -18,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+//FIXME 增加设置权限功能
 /**
  * 角色管理
  * 
@@ -90,6 +94,23 @@ public final class RoleAction extends AdminNavAction {
 	}
 	
 	/**
+	 * 设置权限
+	 * @param role_id
+	 * @param menu_id
+	 * @return
+	 */
+	@RequestMapping(value="set-authority", method = RequestMethod.POST)
+	@ResponseBody
+	public String setAuthority(int role_id, String menu_id){
+		if(role_id <= 0 || menu_id == null || "".equals(menu_id))
+			return "\u00ef\u00bb\u00bf\u00e6\u009d\u0083\u00e9\u0099\u0090\u00e8\u00ae\u00be\u00e7\u00bd\u00ae\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
+		String[] menus = menu_id.split(",");
+		roleMapper.deleteRoleAuthority(role_id);
+		roleMapper.setRoleAuthority(role_id, menus);
+		return "\u00ef\u00bb\u00bf\u00e6\u009d\u0083\u00e9\u0099\u0090\u00e8\u00ae\u00be\u00e7\u00bd\u00ae\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+	}
+	
+	/**
 	 * 删除角色
 	 * @param role_id
 	 * @return
@@ -116,10 +137,61 @@ public final class RoleAction extends AdminNavAction {
 			role = new Role();
 		return new ModelAndView(getAddEditView(), "role", role);
 	}
+	
+	/**
+	 * 显示角色权限列表
+	 * @param role_id
+	 * @return
+	 */
+	@RequestMapping(value="authority-list-page")
+	public ModelAndView authorityListPage(int role_id) {
+		if(role_id == 0)
+			throw new MMTException("角色不存在。");
+		List<Menu> list = roleMapper.getAuthority(role_id);
+		list = obtainAuthorityTree(list);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("role_id", role_id);
+		return new ModelAndView("manage/system/role-authority-list", "result", result);
+	}
 
 	@Override
 	protected String getMenuURL() {
 		return "system/role";
 	}
-
+	
+	/**
+	 * obtain authority tree original list
+	 * @param original
+	 * @return
+	 */
+	private List<Menu> obtainAuthorityTree(List<Menu> original){
+		if(original == null || original.size() == 0)
+			return null;
+		List<Menu> l2_list = new ArrayList<>(original.size());
+		List<Menu> l3_list = new ArrayList<>(original.size());
+		
+		for (Menu menu : original) {
+			if(menu.getMenulevcod().equals("2"))
+				l2_list.add(menu);
+			if(menu.getMenulevcod().equals("3"))
+				l3_list.add(menu);
+		}
+		
+		//结果集
+		List<Menu> result = new ArrayList<>();
+		for (Menu m2 : l2_list) {
+			//添加二级菜单
+			result.add(m2);
+			//添加三级菜单
+			for (Menu m3 : l3_list) {
+				if(m3.getSupmenucode() == m2.getMenu_id())
+					result.add(m3);
+			}
+		}
+		l2_list.clear();
+		l3_list.clear();
+		return result;
+	}
+	
 }

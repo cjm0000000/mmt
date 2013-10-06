@@ -77,7 +77,7 @@ public interface RoleMapper {
 	 * @param menu_ids
 	 */
 	void setRoleAuthority(@Param("role_id") int role_id,
-			@Param("list") int[] menu_ids);
+			@Param("list") String[] menu_ids);
 	
 	/**
 	 * set role's default authority

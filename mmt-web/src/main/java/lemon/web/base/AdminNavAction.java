@@ -58,7 +58,7 @@ public abstract class AdminNavAction extends MMTAction {
 		Map<String, Object> page = new HashMap<>();
 		page.put("top-nav", getTopNavBar(role_id));
 		page.put("left-nav", getLeftNavBar(role_id, thirdMenu.getSupmenucode()));
-		page.put("site_name", getSiteName(role_id));
+		page.put("site_name", getSiteName());
 		page.put("active-nav", thirdMenu);
 		page.put("breadcrumb-nav", getBreadCrumbNavBar(role_id, thirdMenu));
 		return page;
@@ -126,11 +126,10 @@ public abstract class AdminNavAction extends MMTAction {
 	
 	/**
 	 * 获取站点名称
-	 * @param role_id
 	 * @return
 	 */
-	private String getSiteName(int role_id) {
-		List<Menu> root_list = roleMenuMapper.getMenuListByRole(role_id, "1");
+	private String getSiteName() {
+		List<Menu> root_list = menuMapper.getMenuListByLevel("1");
 		if (root_list.size() == 0)
 			sendNotFoundError();
 		return root_list.get(0).getMenu_name();
