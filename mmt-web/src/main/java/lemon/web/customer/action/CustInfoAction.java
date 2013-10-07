@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @version 1.0
  * 
  */
+//FIXME 客户信息CRUD
 @Controller
 @RequestMapping("/customer/information")
 public final class CustInfoAction extends AdminNavAction {
