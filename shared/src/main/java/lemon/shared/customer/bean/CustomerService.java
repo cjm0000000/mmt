@@ -1,4 +1,4 @@
-package lemon.shared.customer;
+package lemon.shared.customer.bean;
 
 import lemon.shared.entity.ServiceType;
 import lemon.shared.entity.Status;

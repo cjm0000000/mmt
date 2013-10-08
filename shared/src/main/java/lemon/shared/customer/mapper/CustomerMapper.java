@@ -2,8 +2,8 @@ package lemon.shared.customer.mapper;
 
 import java.util.List;
 
-import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.bean.Customer;
+import lemon.shared.customer.bean.CustomerService;
 import lemon.shared.entity.ServiceType;
 
 import org.apache.ibatis.annotations.Insert;
@@ -59,7 +59,7 @@ public interface CustomerMapper {
 	 * Update customer
 	 * @param cust
 	 */
-	@Update("UPDATE customer C SET C.cust_name=#{cust_name}, C.memo=#{memo}, C.status=#{status} WHERE C.cust_id=#{cust_id}")
+	@Update("UPDATE customer C SET C.cust_name=#{cust_name}, C.memo=#{memo} WHERE C.cust_id=#{cust_id}")
 	int updateCustomer(Customer cust);
 	
 	/**
