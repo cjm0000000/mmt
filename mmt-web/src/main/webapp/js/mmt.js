@@ -18,13 +18,18 @@ function checkList(controller, field){
  * @param field
  * @param btnEdit
  * @param btnDel
+ * @param singleton
+ * @param singleton
  */
-function btnListener(field, btnEdit, btnDel){
+function btnListener(field, btnEdit, btnDel, singleton, current){
 	if(!btnEdit && !btnDel)
 		return;
 	var ids = $('input[name=' + field + ']');
 	var count = 0;
+	
 	$.each(ids,function(key,val){
+		if(singleton && current.checked && val != current)
+			val.checked = false;
 		if(val.checked)
 			count++;
 	});
