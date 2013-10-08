@@ -1,14 +1,16 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
 	<div class="panel panel-default">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<button type="button" class="btn btn-success btn-md" >
+			<button id="cust-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
-			<button type="button" disabled class="btn btn-info btn-md" >
+			<button id="cust-update" type="button" disabled class="btn btn-info btn-md" >
 				<span class="glyphicon glyphicon-edit"></span> 编 辑
 			</button>
-			<button type="button" disabled class="btn btn-danger btn-md" >
+			<button id="cust-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
 		</div>
@@ -17,7 +19,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" title="全选" onclick="checkThis(this);"/></th>
+					<th>#</th>
 					<th>客户名称</th>
 		            <th>说明</th>
 				</tr>
@@ -25,9 +27,9 @@
 			<tbody>
 			#foreach($cust in $page.custList)
 				<tr>
-		    		<td><input type="checkbox" value="$user.user_id" name="user_id"/></td>
-		       		<td>$cust.cust_name</td>
-		  			<td>$cust.memo</td>
+		    		<td><input type="checkbox" value="$!cust.cust_id" name="cust_id" onclick="btnListener(this.name, $('#cust-update'),$('#cust-delete'),true,this);"/></td>
+		       		<td>$!cust.cust_name</td>
+		  			<td>$!cust.memo</td>
 		   		</tr>
 			#end
 			</tbody>
@@ -36,14 +38,14 @@
 		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
 	</div>
 </div>
+<div id="cust-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
+<script src="#{getContextPath}js/manage/customer/information.js"></script>
 <script type="text/javascript">
-function checkThis(controller){
-	var ids = document.getElementsByName('user_id');
-	for(var i=0 ; i < ids.length ; i++){
-		if(controller.checked)
-			ids[i].checked = true;
-		else
-			ids[i].checked = false;
-	}
-}
+var url_showPage 	= "#{getContextPath}webservices/customer/information/add-edit-page";
+var url_save 		= "#{getContextPath}webservices/customer/information/save";
+var url_delete 		= "#{getContextPath}webservices/customer/information/delete";
 </script>

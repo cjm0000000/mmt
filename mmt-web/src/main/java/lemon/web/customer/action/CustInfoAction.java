@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -24,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
  * @version 1.0
  * 
  */
-//FIXME 客户信息CRUD
 @Controller
 @RequestMapping("/customer/information")
 public final class CustInfoAction extends AdminNavAction {
@@ -71,47 +72,59 @@ public final class CustInfoAction extends AdminNavAction {
 	
 
 	/**
-	 * 添加客户信息
+	 * 保存客户信息
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="add", method = RequestMethod.POST)
-	public String add(HttpSession session) {
-		//TODO 添加客户信息
-		return "";
+	@RequestMapping(value="save", method = RequestMethod.POST)
+	@ResponseBody
+	public String save(Customer cust) {
+		if(cust == null)
+			return "\u00ef\u00bb\u00bf\u00e6\u00b7\u00bb\u00e5\u008a\u00a0\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e5\u00ae\u00a2\u00e6\u0088\u00b7\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+		int result = 0;
+		if(cust.getCust_id() <= 0){
+			cust.setStatus(Status.AVAILABLE);
+			result = customerMapper.addCustomer(cust);
+		}else
+			result = customerMapper.updateCustomer(cust);
+		System.out.println(result);
+		//FIXME BUG: result需要参考标准SQL返回
+		if(1 == result)
+			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		else
+			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 删除客户信息
-	 * @param session
+	 * @param cust_id
 	 * @return
 	 */
 	@RequestMapping(value="delete", method = RequestMethod.POST)
-	public String delete( HttpSession session) {
-		//TODO 删除客户信息
-		return "";
-	}
-	
-	/**
-	 * 编辑客户信息
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value="edit", method = RequestMethod.POST)
-	public String edit(HttpSession session) {
-		//TODO 编辑客户信息
-		return "";
+	@ResponseBody
+	public String delete(int cust_id) {
+		if (cust_id <= 0)
+			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e5\u00ae\u00a2\u00e6\u0088\u00b7\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+		int result = customerMapper.delete(cust_id);
+		if (1 == result)
+			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		else
+			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
 	}
 	
 	/**
 	 * 显示添加或者编辑客户信息的页面
-	 * @param session
+	 * @param cust_id
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public String addOrEditPage(HttpSession session) {
-		//TODO 显示添加或者编辑客户信息的页面
-		return VIEW_ADD_EDIT;
+	public ModelAndView addOrEditPage(int cust_id) {
+		Customer cust = null;
+		if(cust_id > 0)
+			cust = customerMapper.getCustomer(cust_id);
+		if(null == cust)
+			cust = new Customer();
+		return new ModelAndView(getAddEditView(), "cust", cust);
 	}
 
 	@Override
