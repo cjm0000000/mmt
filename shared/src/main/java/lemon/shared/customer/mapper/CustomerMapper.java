@@ -53,14 +53,22 @@ public interface CustomerMapper {
 	 */
 	@Insert("INSERT INTO customer(cust_name,memo,status) SELECT #{cust_name},#{memo},#{status}")
 	@Options(useGeneratedKeys=true,keyProperty="cust_id",keyColumn="cust_id")
-	void addCustomer(Customer cust);
+	int addCustomer(Customer cust);
 	
 	/**
 	 * Update customer
 	 * @param cust
 	 */
-	@Update("UPDATE customer C SET C.memo=#{memo}, C.status=#{status} WHERE C.cust_id=#{cust_id}")
-	void updateCustomer(Customer cust);
+	@Update("UPDATE customer C SET C.cust_name=#{cust_name}, C.memo=#{memo}, C.status=#{status} WHERE C.cust_id=#{cust_id}")
+	int updateCustomer(Customer cust);
+	
+	/**
+	 * Delete customer
+	 * @param cust_id
+	 * @return
+	 */
+	@Update("UPDATE customer C SET  C.status='UNAVAILABLE' WHERE C.cust_id=#{cust_id}")
+	int delete(int cust_id); 
 	
 	/**
 	 * add customer service
@@ -68,7 +76,7 @@ public interface CustomerMapper {
 	 */
 	@Insert("INSERT INTO customer_service(cust_id,service,status,expire_time) SELECT #{cust_id},#{service},#{status},#{expire_time}")
 	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
-	void addService(CustomerService service);
+	int addService(CustomerService service);
 	
 	/**
 	 * get customer service by id
@@ -93,5 +101,5 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id}")
-	List<CustomerService> getServives(int cust_id);
+	List<CustomerService> getServices(int cust_id);
 }

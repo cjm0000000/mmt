@@ -62,9 +62,12 @@ public class CustomerTest {
 		CustomerService s3 = custMapper.getService(cust.getCust_id(), ServiceType.OTHER);
 		assertNull(s3);
 		
-		List<CustomerService> list = custMapper.getServives(cust.getCust_id());
+		List<CustomerService> list = custMapper.getServices(cust.getCust_id());
 		assertNotNull(list);
 		assertNotEquals(0, list.size());
+		
+		int result = custMapper.delete(cust.getCust_id());
+		assertEquals(1, result);
 	}
 	
 	private CustomerService addService(int cust_id){
@@ -73,7 +76,8 @@ public class CustomerTest {
 		service.setService(ServiceType.WEIXIN);
 		service.setExpire_time("0000-00-00 00:00");
 		service.setStatus(Status.AVAILABLE);
-		custMapper.addService(service);
+		int result = custMapper.addService(service);
+		assertEquals(1, result);
 		return service;
 	}
 	
@@ -82,13 +86,15 @@ public class CustomerTest {
 		cust.setCust_name("LEMON TEST CUSTOMER");
 		cust.setMemo("MEMO...");
 		cust.setStatus(Status.AVAILABLE);
-		custMapper.addCustomer(cust);
+		int result = custMapper.addCustomer(cust);
+		assertEquals(1, result);
 		return cust;
 	}
 	
 	private void updateCustomer(Customer cust,String memo){
 		cust.setMemo(memo);
-		custMapper.updateCustomer(cust);
+		int result = custMapper.updateCustomer(cust);
+		assertEquals(1, result);
 	}
 	
 	private List<Customer> list(){
