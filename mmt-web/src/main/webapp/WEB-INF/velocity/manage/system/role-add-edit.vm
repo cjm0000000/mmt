@@ -13,15 +13,15 @@
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="role_desc" class="col-lg-3 control-label" style="padding:6px;">角色说明</label>
-			<div class="col-lg-9">
-				<input type="text" class="form-control" id="role_desc" name="role_desc" value="$!role.role_desc" />
-			</div>
-		</div>
-		<div class="form-group row">
 			<label for="sort" class="col-lg-3 control-label" style="padding:6px;">排序号</label>
 			<div class="col-lg-9">
 				<input type="number" class="form-control" id="sort" name="sort" value="$!role.sort" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="role_desc" class="col-lg-3 control-label" style="padding:6px;">角色说明</label>
+			<div class="col-lg-9">
+				<textarea class="form-control" rows="4" id="role_desc" name="role_desc">$!role.role_desc</textarea>
 			</div>
 		</div>
 	</div>

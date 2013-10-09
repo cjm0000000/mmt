@@ -14,6 +14,7 @@ import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMapper;
+import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,18 +79,21 @@ public final class RoleAction extends AdminNavAction {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST)
+	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String save(Role role) {
 		if(role == null)
-			return "\u00ef\u00bb\u00bf\u00e4\u00bd\u00a0\u00e8\u00be\u0093\u00e5\u0085\u00a5\u00e7\u009a\u0084\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e6\u00ad\u00a3\u00e7\u00a1\u00ae\u00e3\u0080\u0082";
+			return BS3UI.danger("添加失败：角色信息不全。");
+		int result = 0;
 		if(role.getRole_id() <= 0){
 			role.setReloadable(Status.AVAILABLE);
 			role.setStatus(Status.AVAILABLE);
-			roleMapper.addRole(role);
+			result = roleMapper.addRole(role);
 		}else
-			roleMapper.update(role);
-		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+			result = roleMapper.update(role);
+		if(result == 0)
+			return BS3UI.danger("保存失败。");
+		return BS3UI.success("保存成功。");
 	}
 	
 	/**
@@ -98,15 +102,17 @@ public final class RoleAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value="set-authority", method = RequestMethod.POST)
+	@RequestMapping(value="set-authority", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String setAuthority(int role_id, String menu_id){
-		if(role_id <= 0 || menu_id == null || "".equals(menu_id))
-			return "\u00ef\u00bb\u00bf\u00e6\u009d\u0083\u00e9\u0099\u0090\u00e8\u00ae\u00be\u00e7\u00bd\u00ae\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
+		if (role_id <= 0 || menu_id == null || "".equals(menu_id))
+			return BS3UI.danger("权限设置失败。");
 		String[] menus = menu_id.split(",");
-		roleMapper.deleteRoleAuthority(role_id);
-		roleMapper.setRoleAuthority(role_id, menus);
-		return "\u00ef\u00bb\u00bf\u00e6\u009d\u0083\u00e9\u0099\u0090\u00e8\u00ae\u00be\u00e7\u00bd\u00ae\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		int result1 = roleMapper.deleteRoleAuthority(role_id);
+		int result2 = roleMapper.setRoleAuthority(role_id, menus);
+		if (result1 == 0 || result2 == 0)
+			return BS3UI.danger("权限设置失败。");
+		return BS3UI.success("权限设置成功。");
 	}
 	
 	/**
@@ -114,12 +120,14 @@ public final class RoleAction extends AdminNavAction {
 	 * @param role_id
 	 * @return
 	 */
-	@RequestMapping(value="delete", method = RequestMethod.POST)
+	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String delete(String role_id) {
 		String[] ids = role_id.split(",");
-		roleMapper.batchDelete(ids);
-		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		int result = roleMapper.batchDelete(ids);
+		if(result == 0)
+			return BS3UI.danger("删除失败。");
+		return BS3UI.success("删除成功。");
 	}
 	
 	/**

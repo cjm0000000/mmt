@@ -10,7 +10,7 @@ import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
-import lemon.web.ui.PageUI;
+import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,7 +82,7 @@ public final class CustInfoAction extends AdminNavAction {
 	@ResponseBody
 	public String save(Customer cust) {
 		if(cust == null)
-			return PageUI.warning("保存失败：信息不全。");
+			return BS3UI.warning("保存失败：信息不全。");
 		int result = 0;
 		if(cust.getCust_id() <= 0){
 			cust.setStatus(Status.AVAILABLE);
@@ -90,9 +90,9 @@ public final class CustInfoAction extends AdminNavAction {
 		}else
 			result = customerMapper.updateCustomer(cust);
 		if(result != 0)
-			return PageUI.success("保存成功。");
+			return BS3UI.success("保存成功。");
 		else
-			return PageUI.danger("保存失败。");
+			return BS3UI.danger("保存失败。");
 	}
 	
 	/**
@@ -104,12 +104,12 @@ public final class CustInfoAction extends AdminNavAction {
 	@ResponseBody
 	public String delete(int cust_id) {
 		if (cust_id <= 0)
-			return PageUI.success("删除失败： 客户不存在。");
+			return BS3UI.success("删除失败： 客户不存在。");
 		int result = customerMapper.delete(cust_id);
 		if (0 != result)
-			return PageUI.success("删除成功。");
+			return BS3UI.success("删除成功。");
 		else
-			return PageUI.danger("删除失败。");
+			return BS3UI.danger("删除失败。");
 	}
 	
 	/**

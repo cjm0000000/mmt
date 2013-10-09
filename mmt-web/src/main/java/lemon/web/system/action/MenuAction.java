@@ -11,6 +11,7 @@ import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.MenuMapper;
+import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,19 +60,23 @@ public final class MenuAction extends AdminNavAction {
 	 * @param menu
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String save(Menu menu) {
 		Menu supMenu = menuMapper.getMenu(menu.getSupmenucode());
 		if(supMenu == null)
-			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e4\u00b8\u008a\u00e7\u00ba\u00a7\u00e8\u008f\u009c\u00e5\u008d\u0095\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+			return BS3UI.danger("保存失败： 菜单信息不完整。");
 		String lev = String.valueOf(Integer.parseInt(supMenu.getMenulevcod())+1);
 		menu.setMenulevcod(lev);
+		int result = 0;
 		if(menu.getMenu_id() <= 0)
-			menuMapper.addMenu(menu);
+			result = menuMapper.addMenu(menu);
 		else
-			menuMapper.editMenu(menu);
-		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+			result = menuMapper.editMenu(menu);
+		if(result == 0)
+			return BS3UI.danger("保存失败。");
+		else
+			return BS3UI.success("保存成功。");
 	}
 	
 	/**
@@ -79,12 +84,15 @@ public final class MenuAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String delete(String menu_id) {
 		String[] ids = menu_id.split(",");
-		menuMapper.deleteMenu(ids);
-		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		int result = menuMapper.deleteMenu(ids);
+		if (result == 0)
+			return BS3UI.danger("保存失败。");
+		else
+			return BS3UI.success("保存成功。");
 	}
 	
 	/**

@@ -72,7 +72,7 @@
 		<div class="form-group row">
 			<label for="bz" class="col-lg-3 control-label" style="padding:6px;">备注</label>
 			<div class="col-lg-9">
-				<input type="textarea" class="form-control" id="bz" name="bz" value="$!result.user.bz" />
+				<textarea class="form-control" rows="3" id="bz" name="bz">$!result.user.bz</textarea>
 			</div>
 		</div>
 	</div>
