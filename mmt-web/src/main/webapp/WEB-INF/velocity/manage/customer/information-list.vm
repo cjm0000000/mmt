@@ -19,9 +19,10 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>#</th>
-					<th>客户名称</th>
-		            <th>说明</th>
+					<th width="5%">#</th>
+					<th width="30%">客户名称</th>
+		            <th width="50%">说明</th>
+		            <th width="15%" style="text-align:center;">服务开通情况</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,6 +31,15 @@
 		    		<td><input type="checkbox" value="$!cust.cust_id" name="cust_id" onclick="btnListener(this.name, $('#cust-update'),$('#cust-delete'),true,this);"/></td>
 		       		<td>$!cust.cust_name</td>
 		  			<td>$!cust.memo</td>
+		  			<td style="text-align:center;">
+						#foreach($service in $cust.services)
+							#if($service.service == 'WEIXIN')
+								<a href="#"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
+							#elseif($service.service == 'YIXIN')
+								<a href="#"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
+							#end
+						#end
+		  			</td>
 		   		</tr>
 			#end
 			</tbody>

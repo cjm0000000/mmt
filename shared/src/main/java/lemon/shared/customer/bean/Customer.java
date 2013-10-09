@@ -1,5 +1,7 @@
 package lemon.shared.customer.bean;
 
+import java.util.List;
+
 import lemon.shared.entity.Status;
 
 /**
@@ -13,6 +15,7 @@ public class Customer {
 	private String cust_name;
 	private String memo;
 	private Status status;
+	private List<CustomerService> services;
 
 	public int getCust_id() {
 		return cust_id;
@@ -44,6 +47,14 @@ public class Customer {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public List<CustomerService> getServices() {
+		return services;
+	}
+
+	public void setServices(List<CustomerService> services) {
+		this.services = services;
 	}
 	
 }

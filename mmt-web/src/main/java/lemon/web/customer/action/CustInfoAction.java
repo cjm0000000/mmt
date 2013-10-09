@@ -61,6 +61,7 @@ public final class CustInfoAction extends AdminNavAction {
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
 		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE);
+		obtainServices(custList);
 		int rsCnt = customerMapper.getCustCnt();
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("custList", custList);
@@ -129,6 +130,16 @@ public final class CustInfoAction extends AdminNavAction {
 	@Override
 	public String getMenuURL() {
 		return "customer/information";
+	}
+	
+	/**
+	 * 查询服务开通情况
+	 * @param list
+	 */
+	private void obtainServices(List<Customer> list){
+		for (Customer customer : list) {
+			customer.setServices(customerMapper.getServices(customer.getCust_id()));
+		}
 	}
 
 }
