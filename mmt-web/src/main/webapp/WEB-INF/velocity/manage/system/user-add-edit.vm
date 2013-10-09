@@ -10,7 +10,7 @@
 		<div class="form-group row">
 			<label for="role_id" class="col-lg-3 control-label" style="padding:6px;">客户</label>
 			<div class="col-lg-9">
-				<select class="selectpicker" id="cust_id" name="cust_id" data-width="100%">
+				<select class="selectpicker cust" id="cust_id" name="cust_id" data-width="100%">
 				#foreach($cust in $result.custList)
 					<option value="$!cust.cust_id">$!cust.cust_name</option>
 				#end
@@ -20,7 +20,7 @@
 		<div class="form-group row">
 			<label for="role_id" class="col-lg-3 control-label" style="padding:6px;">角色</label>
 			<div class="col-lg-9">
-				<select class="selectpicker" id="role_id" name="role_id" data-width="100%">
+				<select class="selectpicker role" id="role_id" name="role_id" data-width="100%">
 				#foreach($role in $result.roleList)
 					<option value="$!role.role_id">$!role.role_name</option>
 				#end
@@ -89,6 +89,9 @@ $("#islock")
 	.bootstrapSwitch();
 $('select').selectpicker();
 #if($result.user.role_id != 0)
-$('.selectpicker').selectpicker('val', '$!result.user.role_id');
+$('.selectpicker .role').selectpicker('val', '$!result.user.role_id');
+#end
+#if($result.user.cust_id != 0)
+$('.selectpicker .cust').selectpicker('val', '$!result.user.cust_id');
 #end
 </script>
