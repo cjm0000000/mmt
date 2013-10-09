@@ -9,9 +9,9 @@ package lemon.web.ui;
  */
 public class BS3UI {
 	private static final String SUCCESS = "alert alert-success";
-	private static final String INFO = "alert alert-info";
+	private static final String INFO 	= "alert alert-info";
 	private static final String WARNING = "alert alert-warning";
-	private static final String DANGER = "alert alert-danger";
+	private static final String DANGER 	= "alert alert-danger";
 
 	/**
 	 * 成功信息
