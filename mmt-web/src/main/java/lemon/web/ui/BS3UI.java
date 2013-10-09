@@ -1,13 +1,13 @@
 package lemon.web.ui;
 
 /**
- * Page UI toolkit
+ * Bootstrap 3 UI toolkit
  * 
  * @author lemon
  * @version 1.0
  * 
  */
-public class PageUI {
+public class BS3UI {
 	private static final String SUCCESS = "alert alert-success";
 	private static final String INFO = "alert alert-info";
 	private static final String WARNING = "alert alert-warning";
