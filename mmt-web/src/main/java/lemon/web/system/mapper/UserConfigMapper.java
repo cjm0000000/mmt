@@ -25,27 +25,30 @@ public interface UserConfigMapper {
 	/**
 	 * add user configure item
 	 * @param item
+	 * @return
 	 */
 	@Insert("INSERT INTO system_user_config(user_id,`key`,value) SELECT #{user_id},#{key},#{value}")
 	@Lang(RawLanguageDriver.class)
-	void addItem(UserConfig item);
+	int addItem(UserConfig item);
 	
 	/**
 	 * delete user configure item
 	 * @param user_id
 	 * @param key
+	 * @return
 	 */
 	@Delete("DELETE FROM system_user_config WHERE user_id=#{user_id} AND `key`=#{key}")
 	@Lang(RawLanguageDriver.class)
-	void deleteItem(@Param("user_id") int user_id, @Param("key") String key);
+	int deleteItem(@Param("user_id") int user_id, @Param("key") String key);
 	
 	/**
 	 * delete user configure items
 	 * @param user_id
+	 * @return
 	 */
 	@Delete("DELETE FROM system_user_config WHERE user_id=#{user_id}")
 	@Lang(RawLanguageDriver.class)
-	void deleteItems(@Param("user_id") int user_id);
+	int deleteItems(@Param("user_id") int user_id);
 	
 	/**
 	 * get user configure item

@@ -21,18 +21,20 @@ public interface UserMapper {
 	/**
 	 * add user
 	 * @param user
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void addUser(User user);
+	int addUser(User user);
 	
 	/**
 	 * add user's role
 	 * @param user_id
 	 * @param role_id
 	 * @param cust_id
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void addUserRole(@Param("user_id") int user_id,
+	int addUserRole(@Param("user_id") int user_id,
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
 	
 	/**
@@ -66,8 +68,9 @@ public interface UserMapper {
 	/**
 	 * batch update user's status to 'UNAVAILABLE'
 	 * @param userIds
+	 * @return
 	 */
-	void deleteUser(String[] userIds);
+	int deleteUser(String[] userIds);
 
 	/**
 	 * get user list
@@ -91,14 +94,16 @@ public interface UserMapper {
 	 * @param user_id
 	 * @param role_id
 	 * @param cust_id
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void updateUserRole(@Param("user_id") int user_id,
+	int updateUserRole(@Param("user_id") int user_id,
 			@Param("role_id") int role_id, @Param("cust_id") int cust_id);
 	
 	/**
 	 * update user
 	 * @param user
+	 * @return
 	 */
-	void updateUser(User user);
+	int updateUser(User user);
 }

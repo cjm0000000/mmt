@@ -22,24 +22,26 @@ public interface MenuMapper {
 	
 	/**
 	 * add menu
-	 * 
 	 * @param menu
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void addMenu(Menu menu);
+	int addMenu(Menu menu);
 	
 	/**
 	 * Batch delete menu by id
 	 * @param menuIds
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void deleteMenu(String[] menuIds);
+	int deleteMenu(String[] menuIds);
 	
 	/**
 	 * edit menu
 	 * @param menu
+	 * @return
 	 */
-	void editMenu(Menu menu);
+	int editMenu(Menu menu);
 	
 	/**
 	 * get menu by menu id

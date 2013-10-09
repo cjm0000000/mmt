@@ -35,21 +35,24 @@ public interface RoleMapper {
 	/**
 	 * add role
 	 * @param role
+	 * @return
 	 */
-	void addRole(Role role);
+	int addRole(Role role);
 	
 	
 	/**
 	 * update role
 	 * @param role
+	 * @return
 	 */
-	void update(Role role);
+	int update(Role role);
 	
 	/**
 	 * batch delete roles
-	 * @param roles
+	 * @param role_ids
+	 * @return
 	 */
-	void batchDelete(String[] role_ids);
+	int batchDelete(String[] role_ids);
 	
 	/**
 	 * get role by id
@@ -68,22 +71,25 @@ public interface RoleMapper {
 	/**
 	 * delete role's authority
 	 * @param role_id
+	 * @return
 	 */
-	void deleteRoleAuthority(int role_id);
+	int deleteRoleAuthority(int role_id);
 	
 	/**
 	 * set role's authority
 	 * @param role_id
 	 * @param menu_ids
+	 * @return
 	 */
-	void setRoleAuthority(@Param("role_id") int role_id,
+	int setRoleAuthority(@Param("role_id") int role_id,
 			@Param("list") String[] menu_ids);
 	
 	/**
 	 * set role's default authority
 	 * @param role_id
+	 * @return
 	 */
-	void setDefaultRoleAuthority(int role_id);
+	int setDefaultRoleAuthority(int role_id);
 	
 	/**
 	 * get authority list by role_id
@@ -95,9 +101,10 @@ public interface RoleMapper {
 	/**
 	 * set role's menu reload flag
 	 * @param menu_id
+	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	void setReloadFlag(int menu_id);
+	int setReloadFlag(int menu_id);
 	
 	/**
 	 * get role list by authority
