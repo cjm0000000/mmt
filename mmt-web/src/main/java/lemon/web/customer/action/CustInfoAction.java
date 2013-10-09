@@ -88,8 +88,7 @@ public final class CustInfoAction extends AdminNavAction {
 		}else
 			result = customerMapper.updateCustomer(cust);
 		System.out.println(result);
-		//FIXME BUG: result需要参考标准SQL返回
-		if(1 == result)
+		if(result != 0)
 			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 		else
 			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
@@ -106,7 +105,7 @@ public final class CustInfoAction extends AdminNavAction {
 		if (cust_id <= 0)
 			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e5\u00ae\u00a2\u00e6\u0088\u00b7\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
 		int result = customerMapper.delete(cust_id);
-		if (1 == result)
+		if (0 != result)
 			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
 		else
 			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";

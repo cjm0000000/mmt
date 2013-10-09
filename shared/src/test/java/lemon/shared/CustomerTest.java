@@ -37,11 +37,23 @@ public class CustomerTest {
 	}
 	
 	@Test
+	public void upd(){
+		//Test(String), 331(String), 25(Integer)
+		Customer cust = new Customer();
+		cust.setCust_name("Test");
+		cust.setMemo("331");
+		cust.setCust_id(25);
+		int result = custMapper.updateCustomer(cust);
+		System.out.println(result);
+	}
+	
+	@Test
 	public void testCustomerBusiness(){
 		Customer cust = addCustomer();
 		assertNotEquals(0, cust.getCust_id());
 		String memo = "A&*HIO(@(@H(F@()))@JDWJ()!Q@";
-		updateCustomer(cust, memo);
+		String name = "name1";
+		updateCustomer(cust, name, memo);
 		assertNotEquals(0, list().size());
 		cust = custMapper.getCustomer(cust.getCust_id());
 		CustomerService service = addService(cust.getCust_id());
@@ -91,9 +103,11 @@ public class CustomerTest {
 		return cust;
 	}
 	
-	private void updateCustomer(Customer cust,String memo){
+	private void updateCustomer(Customer cust,String name, String memo){
+		cust.setCust_name(name);
 		cust.setMemo(memo);
 		int result = custMapper.updateCustomer(cust);
+		System.out.println("UPD: "+result);
 		assertEquals(1, result);
 	}
 	
