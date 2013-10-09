@@ -10,6 +10,7 @@ import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
+import lemon.web.ui.PageUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,22 +78,21 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String save(Customer cust) {
 		if(cust == null)
-			return "\u00ef\u00bb\u00bf\u00e6\u00b7\u00bb\u00e5\u008a\u00a0\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e5\u00ae\u00a2\u00e6\u0088\u00b7\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+			return PageUI.warning("保存失败：信息不全。");
 		int result = 0;
 		if(cust.getCust_id() <= 0){
 			cust.setStatus(Status.AVAILABLE);
 			result = customerMapper.addCustomer(cust);
 		}else
 			result = customerMapper.updateCustomer(cust);
-		System.out.println(result);
 		if(result != 0)
-			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+			return PageUI.success("保存成功。");
 		else
-			return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
+			return PageUI.danger("保存失败。");
 	}
 	
 	/**
@@ -100,16 +100,16 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param cust_id
 	 * @return
 	 */
-	@RequestMapping(value="delete", method = RequestMethod.POST)
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String delete(int cust_id) {
 		if (cust_id <= 0)
-			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u009a\u00e5\u00ae\u00a2\u00e6\u0088\u00b7\u00e4\u00bf\u00a1\u00e6\u0081\u00af\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+			return PageUI.success("删除失败： 客户不存在。");
 		int result = customerMapper.delete(cust_id);
 		if (0 != result)
-			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+			return PageUI.success("删除成功。");
 		else
-			return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00e3\u0080\u0082";
+			return PageUI.danger("删除失败。");
 	}
 	
 	/**

@@ -15,7 +15,7 @@
 		<div class="form-group row">
 			<label for="memo" class="col-lg-3 control-label" style="padding:6px;">客户说明</label>
 			<div class="col-lg-9">
-				<textarea class="form-control" rows="4" id="memo" name="memo" value="$!cust.memo"></textarea>
+				<textarea class="form-control" rows="4" id="memo" name="memo">$!cust.memo</textarea>
 			</div>
 		</div>
 	</div>

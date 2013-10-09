@@ -97,8 +97,7 @@ function mmtPost(url, params, target, tipsTarget){
 	target.modal('loading');
 	setTimeout(function(){
 		$.post(url, params,function(data){
-	 		tipsTarget.prepend('<div class="alert alert-info fade in">' + data +
-	          '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+	 		tipsTarget.prepend(data);
 	    });
 		setTimeout("document.location.reload()",500);
 	}, 500);
