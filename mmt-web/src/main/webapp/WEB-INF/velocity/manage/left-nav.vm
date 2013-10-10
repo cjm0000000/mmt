@@ -1,5 +1,5 @@
 ### 左侧菜单栏模板
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+<div class="col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="list-group">
 		#foreach($menu in $page.left-nav)
 			#if($page.breadcrumb-nav.third.menu_id == $menu.menu_id)
