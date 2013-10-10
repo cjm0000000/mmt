@@ -6,11 +6,14 @@ import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.bean.CustomerService;
 import lemon.shared.entity.ServiceType;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,6 +31,7 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.cust_id=#{cust_id}")
+	@Lang(RawLanguageDriver.class)
 	Customer getCustomer(int cust_id);
 	
 	/**
@@ -37,14 +41,15 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.status='AVAILABLE' LIMIT #{start},#{limit}")
-	List<Customer> getCustomerList(@Param("start") int start,
-			@Param("limit") int limit);
+	@Lang(RawLanguageDriver.class)
+	List<Customer> getCustomerList(@Param("start") int start, @Param("limit") int limit);
 	
 	/**
 	 * Get customer count
 	 * @return
 	 */
 	@Select("SELECT COUNT(1) FROM customer C WHERE C.status='AVAILABLE'")
+	@Lang(RawLanguageDriver.class)
 	int getCustCnt();
 	
 	/**
@@ -53,6 +58,7 @@ public interface CustomerMapper {
 	 */
 	@Insert("INSERT INTO customer(cust_name,memo,status) SELECT #{cust_name},#{memo},#{status}")
 	@Options(useGeneratedKeys=true,keyProperty="cust_id",keyColumn="cust_id")
+	@Lang(RawLanguageDriver.class)
 	int addCustomer(Customer cust);
 	
 	/**
@@ -60,6 +66,7 @@ public interface CustomerMapper {
 	 * @param cust
 	 */
 	@Update("UPDATE customer C SET C.cust_name=#{cust_name}, C.memo=#{memo} WHERE C.cust_id=#{cust_id}")
+	@Lang(RawLanguageDriver.class)
 	int updateCustomer(Customer cust);
 	
 	/**
@@ -68,6 +75,7 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Update("UPDATE customer C SET  C.status='UNAVAILABLE' WHERE C.cust_id=#{cust_id}")
+	@Lang(RawLanguageDriver.class)
 	int delete(int cust_id); 
 	
 	/**
@@ -76,6 +84,7 @@ public interface CustomerMapper {
 	 */
 	@Insert("INSERT INTO customer_service(cust_id,service,status,expire_time) SELECT #{cust_id},#{service},#{status},#{expire_time}")
 	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
+	@Lang(RawLanguageDriver.class)
 	int addService(CustomerService service);
 	
 	/**
@@ -84,6 +93,7 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.id=#{id}")
+	@Lang(RawLanguageDriver.class)
 	CustomerService getServiceById(int id);
 	
 	/**
@@ -93,6 +103,7 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id} AND A.service=#{service}")
+	@Lang(RawLanguageDriver.class)
 	CustomerService getService(@Param("cust_id")int cust_id, @Param("service")ServiceType service);
 	
 	/**
@@ -101,5 +112,16 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id}")
+	@Lang(RawLanguageDriver.class)
 	List<CustomerService> getServices(int cust_id);
+	
+	/**
+	 * delete customer's service by cust_id and service type
+	 * @param cust_id
+	 * @param service
+	 * @return
+	 */
+	@Delete("DELETE FROM customer_service WHERE cust_id=#{cust_id} AND service=#{service}")
+	@Lang(RawLanguageDriver.class)
+	int deleteService(@Param("cust_id")int cust_id, @Param("service")ServiceType service);
 }

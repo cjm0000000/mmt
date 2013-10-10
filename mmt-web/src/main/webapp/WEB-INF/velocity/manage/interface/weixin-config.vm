@@ -3,71 +3,80 @@
 	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<button id="cust-add" type="button" class="btn btn-success btn-md" >
+			<button type="button" class="wx-config btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-floppy-save"></span> 保存配置
 			</button>
 		</div>
+		### 获取数据
+		#set($service = $page.service)
+		#set($cfg = $page.cfg)
+		#set($cust = $page.cust)
 			
 		### 数据表单
 		<div class="panel-body">
 			<div class="input-group col-lg-12" style="padding:5px;">
-				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="已停用" data-on="success" data-off="danger" />
-					#if($result.user.islock == 'AVAILABLE')
-					<input type="checkbox" id="wxservice" name="wxservice" checked>
+				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
+					#if($service.service == 'WEIXIN')
+						<input type="checkbox" id="wxservice" name="wxservice" checked>
 					#else
-					<input type="checkbox" id="wxservice" name="wxservice">
+						<input type="checkbox" id="wxservice" name="wxservice">
 					#end
 				</div>
 			</div>
-			<div id="form-main" style="display:none;">
+			<div id="form-main" #if($service.service != 'WEIXIN') style="display:none;" #end >
+				#if($cfg)
+					<input type="hidden" id="cust_id" value="$!cfg.cust_id" />
+				#else
+					<input type="hidden" id="cust_id" value="0" />
+				#end
 				<div class="input-group col-lg-12" style="padding:5px;">
 					<span class="input-group-addon"><span class="label label-primary">微信号</span></span>
-					<input type="text" id="wxid" name="wxid" class="form-control" placeholder="您的微信帐号">
+					<input type="text" id="wx_account" name="wx_account" value="$!cfg.wx_account" class="form-control" placeholder="您的微信帐号">
 					<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
 				</div>
 				<div class="input-group col-lg-6" style="padding:5px;">
 					<span class="input-group-addon"><span class="label label-primary">订阅信息</span></span>
-					<textarea class="form-control" rows="3" name="subscribe_msg" id="subscribe_msg"></textarea>
+					<textarea class="form-control" rows="3" name="subscribe_msg" id="subscribe_msg">$!cfg.subscribe_msg</textarea>
 				</div>
 				<div class="input-group col-lg-6" style="padding:5px;">
 					<span class="input-group-addon"><span class="label label-primary">欢迎信息</span></span>
-					<textarea class="form-control" rows="3" name="subscribe_msg" id="subscribe_msg"></textarea>
+					<textarea class="form-control" rows="3" name="welcome_msg" id="welcome_msg">$!cfg.welcome_msg</textarea>
 				</div>
 				<div class="input-group col-lg-12" style="padding:5px;">
 					<span class="label label-primary">帐号类型</span>&nbsp;&nbsp;&nbsp;&nbsp;
 					<div id="service-no" class="label-toggle-switch make-switch" data-on-label="服务号" data-off-label="订阅号" data-on="warning" data-off="warning" />
-						#if($result.user.islock == 'AVAILABLE')
-						<input type="checkbox" id="service-switch" name="service-switch" checked>
+						#if($cfg.account_type != 'FW')
+							<input type="checkbox" id="service-switch" name="service-switch" >
 						#else
-						<input type="checkbox" id="service-switch" name="service-switch">
+							<input type="checkbox" id="service-switch" name="service-switch" checked>
 						#end
 					</div>
 				</div>
-				<div id="service-require" style="display:none;">
+				<div id="service-require" #if($cfg.account_type != 'FW')style="display:none;" #end>
 					<div class="input-group col-lg-6" style="padding:5px;">
 						<span class="input-group-addon"><span class="label label-primary">APPID</span></span>
-						<input type="text" class="form-control" name="appid" id="appid" placeholder="从微信公众平台获取的APPID">
+						<input type="text" class="form-control" name="appid" id="appid" value="$!cfg.appid" placeholder="从微信公众平台获取的APPID">
 						<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
 					</div>
 					<div class="input-group col-lg-6" style="padding:5px;">
 						<span class="input-group-addon"><span class="label label-primary">SECRET</span></span>
-						<input type="text" class="form-control" name="secret" id="secret" placeholder="从微信公众平台获取的SECRET">
+						<input type="text" class="form-control" name="secret" id="secret" value="$!cfg.secret" placeholder="从微信公众平台获取的SECRET">
 						<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
 					</div>
 				</div>
 				<div class="input-group col-lg-12" style="padding:5px;">
 					<span class="input-group-addon"><span class="label label-warning">接入地址</span></span>
-					<input type="text" class="form-control" name="api_url" id="api_url" readonly="true">
+					<input type="text" class="form-control" name="api_url" id="api_url" value="$!cfg.api_url" readonly="true">
 				</div>
 				<div class="input-group col-lg-12" style="padding:5px;">
 					<span class="input-group-addon"><span class="label label-warning">TOKEN</span></span>
-					<input type="text" class="form-control" name="token" id="token" readonly="true">
+					<input type="text" class="form-control" name="token" id="token" value="$!cfg.token" readonly="true">
 				</div>
 			</div>
 	  	</div>
 	  	### 底部按钮
 	  	<div class="panel-footer">
-	  		<button id="cust-add" type="button" class="btn btn-success btn-md" >
+	  		<button type="button" class="wx-config btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-floppy-save"></span> 保存配置
 			</button>
 	  	</div>
@@ -75,10 +84,11 @@
 </div>
 <script src="#{getContextPath}bootstrap/plugins/switch/js/bootstrap-switch.min.js"></script>
 <script src="#{getContextPath}js/mmt.js"></script>
-<script src="#{getContextPath}js/manage/customer/information.js"></script>
+<script src="#{getContextPath}js/manage/interface/weixinconfig.js"></script>
 <script type="text/javascript">
 $(".switch").bootstrapSwitch();
-var url_showPage 	= "#{getContextPath}webservices/customer/information/add-edit-page";
-var url_save 		= "#{getContextPath}webservices/customer/information/save";
-var url_delete 		= "#{getContextPath}webservices/customer/information/delete";
+var url_save = "#{getContextPath}webservices/interface/weixinconfig/save";
+#if($service.service != 'WEIXIN')
+	$(".wx-config").attr('disabled',true);
+#end
 </script>

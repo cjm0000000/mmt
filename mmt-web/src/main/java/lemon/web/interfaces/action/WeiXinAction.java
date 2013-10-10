@@ -9,10 +9,16 @@ import lemon.shared.customer.bean.CustomerService;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.ServiceType;
 import lemon.shared.entity.Status;
+import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
+import lemon.web.global.MMT;
+import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
+import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.ui.BS3UI;
+import lemon.weixin.WeiXin;
 import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.biz.customer.SimpleWeiXinMsgProcessor;
 import lemon.weixin.dao.WXConfigMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +42,8 @@ public final class WeiXinAction extends AdminNavAction {
 	private CustomerMapper customerMapper;
 	@Autowired
 	private WXConfigMapper weiXinConfigMapper;
+	@Autowired
+	private SystemConfigMapper systemConfigMapper;
 
 	/**
 	 * 跳转到配置信息页
@@ -49,49 +57,86 @@ public final class WeiXinAction extends AdminNavAction {
 	/**
 	 * 保存微信配置信息
 	 * @param session
+	 * @param cfg
+	 * @param apiStatus
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(Customer cust) {
-		if(cust == null)
+	public String save(HttpSession session, WeiXinConfig cfg, boolean apiStatus) {
+		if(cfg == null)
 			return BS3UI.warning("保存失败：信息不全。");
+		if(!apiStatus && cfg.getCust_id() <= 0)
+			return BS3UI.warning("非法访问。");
 		int result = 0;
-		if(cust.getCust_id() <= 0){
-			cust.setStatus(Status.AVAILABLE);
-			result = customerMapper.addCustomer(cust);
-		}else
-			result = customerMapper.updateCustomer(cust);
+		if(cfg.getCust_id() <= 0){
+			User user = (User) session.getAttribute(TOKEN);
+			if(user == null)
+				sendError("请先登录。");
+			cfg.setCust_id(user.getCust_id());
+			//判断api_url是否存在
+			String api_url = SecureUtil.sha1(cfg.getWx_account());
+			if(weiXinConfigMapper.checkConfig(api_url) > 0)
+				api_url = SecureUtil.sha1(cfg.getWx_account() + System.currentTimeMillis());
+			cfg.setToken(SecureUtil.md5(cfg.getWx_account()));
+			cfg.setApi_url(api_url);
+			cfg.setBiz_class(SimpleWeiXinMsgProcessor.class.getName());
+			CustomerService service = new CustomerService();
+			service.setCust_id(cfg.getCust_id());
+			service.setExpire_time("0000-00-00 00:00");
+			service.setService(ServiceType.WEIXIN);
+			service.setStatus(Status.AVAILABLE);
+			customerMapper.addService(service);
+			result = weiXinConfigMapper.save(cfg);
+		}else{
+			result = weiXinConfigMapper.update(cfg);
+			if(!apiStatus)
+				customerMapper.deleteService(cfg.getCust_id(), ServiceType.WEIXIN);
+		}
+		//更新接口配置
+		WeiXin.setConfig(weiXinConfigMapper.get(cfg.getCust_id()));
 		if(result != 0)
-			return BS3UI.success("保存成功。");
+			return BS3UI.success("微信接口配置成功。");
 		else
-			return BS3UI.danger("保存失败。");
+			return BS3UI.danger("微信接口配置失败。");
 	}
 	
 	/**
 	 * 显示微信配置信息
 	 * @param session
+	 * @param cust_id
 	 * @return
 	 */
 	@RequestMapping(value="show")
-	public ModelAndView showConfig(HttpSession session) {
+	public ModelAndView showConfig(HttpSession session, Integer cust_id) {
 		if (null == session)
 			sendError("您登录超时，请重新登录。");
 		User user = (User) session.getAttribute(TOKEN);
 		if (null == user)
 			sendError("您登录超时，请重新登录。");
+		if(user.getRole_id() != 1)
+			cust_id = user.getCust_id();
+		else{
+			if(null == cust_id || cust_id <= 0)
+				cust_id = user.getCust_id();
+		}
+		if(cust_id <= 0)
+			sendError("客户信息不存在。");
 		// 获取Main视图名称
 		String mainViewName = "interface/weixin-config";
 		// 获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		// 获取Main数据
-		Customer cust = customerMapper.getCustomer(user.getCust_id());
+		Customer cust = customerMapper.getCustomer(cust_id);
 		// 获取WeiXinConfig
-		WeiXinConfig cfg = weiXinConfigMapper.get(cust.getCust_id());
+		WeiXinConfig wxcfg = weiXinConfigMapper.get(cust_id);
 		// 获取CustomerService
-		CustomerService service = customerMapper.getService(cust.getCust_id(),
-				ServiceType.WEIXIN);
-		resultMap.put("cfg", cfg);
+		CustomerService service = customerMapper.getService(cust_id, ServiceType.WEIXIN);
+		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY);
+		if(wxcfg != null)
+			wxcfg.setApi_url(syscfg.getValue().trim() + MMT.getContextRoot() + "weixinGW/" + wxcfg.getApi_url());
+		resultMap.put("cfg", wxcfg);
+		resultMap.put("cust", cust);
 		resultMap.put("service", service);
 		resultMap.put("mainViewName", mainViewName);
 		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);

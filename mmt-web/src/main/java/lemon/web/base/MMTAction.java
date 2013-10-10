@@ -29,6 +29,8 @@ public class MMTAction {
 	protected static final String VIEW_FORBIDDEN = "forbidden";
 	/** 用户存放密钥的KEY */
 	protected static final String ENCRYPY_KEY = "EncryptKey";
+	/** 存放域名的KEY */
+	protected static final String DOMAIN_KEY = "DOMAIN";
 	
 	/**
 	 * 资源不存在，转发到错误页面

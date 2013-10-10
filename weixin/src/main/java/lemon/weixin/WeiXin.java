@@ -52,7 +52,7 @@ public class WeiXin {
 	 * 设置WeiXin通用配置
 	 * @param config
 	 */
-	public static void setConfig(WeiXinConfig config) {
+	public synchronized static void setConfig(WeiXinConfig config) {
 		configs.put(config.getApi_url(), config);
 	}
 	
