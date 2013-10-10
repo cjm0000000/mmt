@@ -169,6 +169,7 @@ CREATE TABLE `mmt_city` (
 CREATE TABLE `weixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `wx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
+  `account_type` varchar(2) NOT NULL DEFAULT 'DY' COMMENT '账户类型',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '微信接入TOKEN',
   `subscribe_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '订阅事件需要发送的消息',
   `welcome_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '欢迎信息',

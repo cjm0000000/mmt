@@ -7,6 +7,7 @@ import java.util.List;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
+import lemon.weixin.bean.AccountType;
 import lemon.weixin.bean.WeiXinConfig;
 
 import org.apache.commons.logging.Log;
@@ -67,6 +68,7 @@ public class WeiXinConfigMapperTest {
 		cfg.setAppid("APPID");
 		cfg.setSecret("secret");
 		cfg.setBiz_class("com.com.XXX");
+		cfg.setAccount_type(AccountType.DY);
 		configMapper.save(cfg);
 		List<WeiXinConfig> list = configMapper.availableList();
 		for (WeiXinConfig weiXinConfig : list) {

@@ -11,6 +11,8 @@ import lemon.shared.api.simple.MMTConfig;
 public class WeiXinConfig extends MMTConfig {
 	/** MMT客户微信号 */
 	private String wx_account;
+	/** 账户类别 */
+	private AccountType account_type;
 	/** 客户在微信的第三方用户唯一凭证 */
 	private String appid;
 	/** 客户在微信的第三方用户唯一凭证密钥 */
@@ -34,7 +36,13 @@ public class WeiXinConfig extends MMTConfig {
 	public void setSecret(String secret) {
 		this.secret = secret;
 	}
-
+	public AccountType getAccount_type() {
+		return account_type;
+	}
+	public void setAccount_type(AccountType account_type) {
+		this.account_type = account_type;
+	}
+	
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("cust_id=");
