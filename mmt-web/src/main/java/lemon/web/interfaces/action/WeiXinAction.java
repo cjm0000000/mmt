@@ -78,7 +78,7 @@ public final class WeiXinAction extends AdminNavAction {
 			String api_url = SecureUtil.sha1(cfg.getWx_account());
 			if(weiXinConfigMapper.checkConfig(api_url) > 0)
 				api_url = SecureUtil.sha1(cfg.getWx_account() + System.currentTimeMillis());
-			cfg.setToken(SecureUtil.md5(cfg.getWx_account()));
+			cfg.setToken(SecureUtil.md5(cfg.getWx_account() + System.currentTimeMillis()));
 			cfg.setApi_url(api_url);
 			cfg.setBiz_class(SimpleWeiXinMsgProcessor.class.getName());
 			CustomerService service = new CustomerService();
@@ -133,6 +133,8 @@ public final class WeiXinAction extends AdminNavAction {
 		// 获取CustomerService
 		CustomerService service = customerMapper.getService(cust_id, ServiceType.WEIXIN);
 		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY);
+		if(null == syscfg)
+			sendError("请先配置域名。");
 		if(wxcfg != null)
 			wxcfg.setApi_url(syscfg.getValue().trim() + MMT.getContextRoot() + "weixinGW/" + wxcfg.getApi_url());
 		resultMap.put("cfg", wxcfg);
