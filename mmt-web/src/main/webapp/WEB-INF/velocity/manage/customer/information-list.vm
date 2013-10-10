@@ -34,9 +34,9 @@
 		  			<td style="text-align:center;">
 						#foreach($service in $cust.services)
 							#if($service.service == 'WEIXIN')
-								<a href="#"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
+								<a href="#{getContextPath}webservices/interface/weixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
 							#elseif($service.service == 'YIXIN')
-								<a href="#"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
+								<a href="#{getContextPath}webservices/interface/yixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
 							#end
 						#end
 		  			</td>
