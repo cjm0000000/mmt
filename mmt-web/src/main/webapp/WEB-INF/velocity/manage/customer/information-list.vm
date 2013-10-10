@@ -34,9 +34,9 @@
 		  			<td style="text-align:center;">
 						#foreach($service in $cust.services)
 							#if($service.service == 'WEIXIN')
-								<a href="#{getContextPath}webservices/interface/weixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
+								<a data-toggle="tooltip" title="配置微信接口" href="#{getContextPath}webservices/interface/weixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
 							#elseif($service.service == 'YIXIN')
-								<a href="#{getContextPath}webservices/interface/yixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
+								<a data-toggle="tooltip" title="配置易信接口" href="#{getContextPath}webservices/interface/yixinconfig/show?cust_id=$!cust.cust_id"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
 							#end
 						#end
 		  			</td>
@@ -58,4 +58,5 @@
 var url_showPage 	= "#{getContextPath}webservices/customer/information/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/customer/information/save";
 var url_delete 		= "#{getContextPath}webservices/customer/information/delete";
+$('a').tooltip();
 </script>
