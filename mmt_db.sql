@@ -1,5 +1,15 @@
 ########################### For System #####################
 #
+# 系统配置表
+#
+CREATE TABLE `system_config` (
+  `key` varchar(128) NOT NULL DEFAULT '' COMMENT '配置名称',
+  `value` varchar(256) DEFAULT '' COMMENT '配置内容',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表'
+
+#
 # 登录日志表
 #
 CREATE TABLE `system_log_login` (
