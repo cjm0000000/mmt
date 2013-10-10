@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/switch/css/bootstrap-switch.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-info">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<button type="button" class="yx-config btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-floppy-save"></span> 保存配置
+			</button>
+		</div>
+		### 获取数据
+		#set($service = $page.service)
+		#set($cfg = $page.cfg)
+		#set($cust = $page.cust)
+			
+		### 数据表单
+		<div class="panel-body">
+			<div class="input-group col-lg-12" style="padding:5px;">
+				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
+					#if($service.service == 'YIXIN')
+						<input type="checkbox" id="yxservice" name="yxservice" checked>
+					#else
+						<input type="checkbox" id="yxservice" name="yxservice">
+					#end
+				</div>
+			</div>
+			<div id="form-main" #if($service.service != 'YIXIN') style="display:none;" #end >
+				#if($cfg)
+					<input type="hidden" id="cust_id" value="$!cfg.cust_id" />
+				#else
+					<input type="hidden" id="cust_id" value="0" />
+				#end
+				<div class="input-group col-lg-12" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-primary">易信号</span></span>
+					<input type="text" id="yx_account" name="yx_account" value="$!cfg.yx_account" class="form-control" placeholder="您的易信帐号">
+					<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
+				</div>
+				<div class="input-group col-lg-6" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-primary">订阅信息</span></span>
+					<textarea class="form-control" rows="3" name="subscribe_msg" id="subscribe_msg">$!cfg.subscribe_msg</textarea>
+				</div>
+				<div class="input-group col-lg-6" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-primary">欢迎信息</span></span>
+					<textarea class="form-control" rows="3" name="welcome_msg" id="welcome_msg">$!cfg.welcome_msg</textarea>
+				</div>
+				<div class="input-group col-lg-6" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-primary">APPID</span></span>
+					<input type="text" class="form-control" name="appid" id="appid" value="$!cfg.appid" placeholder="从易信公众平台获取的APPID">
+					<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
+				</div>
+				<div class="input-group col-lg-6" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-primary">SECRET</span></span>
+					<input type="text" class="form-control" name="secret" id="secret" value="$!cfg.secret" placeholder="从易信公众平台获取的SECRET">
+					<span class="input-group-addon" style="color:red;font-weight:bolder;">*</span>
+				</div>
+				<div class="input-group col-lg-12" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-warning">接入地址</span></span>
+					<input type="text" class="form-control" name="api_url" id="api_url" value="$!cfg.api_url" readonly="true">
+				</div>
+				<div class="input-group col-lg-12" style="padding:5px;">
+					<span class="input-group-addon"><span class="label label-warning">TOKEN</span></span>
+					<input type="text" class="form-control" name="token" id="token" value="$!cfg.token" readonly="true">
+				</div>
+			</div>
+	  	</div>
+	  	### 底部按钮
+	  	<div class="panel-footer">
+	  		<button type="button" class="yx-config btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-floppy-save"></span> 保存配置
+			</button>
+	  	</div>
+	</div>
+</div>
+<script src="#{getContextPath}bootstrap/plugins/switch/js/bootstrap-switch.min.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/manage/interface/yixinconfig.js"></script>
+<script type="text/javascript">
+$(".switch").bootstrapSwitch();
+var url_save = "#{getContextPath}webservices/interface/yixinconfig/save";
+#if($service.service != 'YIXIN')
+	$(".yx-config").attr('disabled',true);
+#end
+</script>

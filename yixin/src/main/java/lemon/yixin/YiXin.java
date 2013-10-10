@@ -52,7 +52,7 @@ public class YiXin {
 	 * 设置YiXin通用配置
 	 * @param config
 	 */
-	public static void setConfig(YiXinConfig config) {
+	public static synchronized void setConfig(YiXinConfig config) {
 		configs.put(config.getApi_url(), config);
 	}
 	

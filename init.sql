@@ -8,8 +8,8 @@ VALUES (1,'MMT消息服务平台','1',0,' ',' ',0),(2,'系统管理','2',1,'syst
 (7,'菜单管理','3',2,'system/menu','glyphicon glyphicon-list',3),
 (8,'微信自定义菜单','3',3,'interface/menu','glyphicon glyphicon-list',2),
 (9,'客户信息管理','3',4,'customer/information','glyphicon glyphicon-list',1),
-(10,'微信接口配置','3',3,'','',1),
-(11,'易信接口配置','3',3,'','',3),
+(10,'微信接口配置','3',3,'interface/weixinconfig','glyphicon glyphicon-list',1),
+(11,'易信接口配置','3',3,'interface/yixinconfig','glyphicon glyphicon-list',3),
 (12,'易信自定义菜单','3',3,'','',4);
 
 #角色初始化
