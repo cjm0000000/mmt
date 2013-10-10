@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
 		<!-- Default panel contents -->
 		<div class="panel-heading">
 			<div class="ajax" style="position: relative; overflow: hidden">
@@ -20,7 +20,7 @@
 		</div>
 				
 		<!-- Table -->
-		<table class="table">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
@@ -32,7 +32,11 @@
 			</thead>
 			<tbody>
 				#foreach($menu in $page.menuList)
-				<tr>
+				#if($menu.menulevcod == '2')
+					<tr class="success">
+				#else
+					<tr>
+				#end
 					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
 			  		<td>
 			  			#if($menu.menulevcod == '3')

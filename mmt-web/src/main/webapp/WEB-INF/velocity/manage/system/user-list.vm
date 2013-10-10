@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/switch/css/bootstrap-switch.css">
 <div class="col-md-9" role="main">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
 			<button id="user-add" type="button" class="btn btn-success btn-md" >
@@ -17,7 +17,7 @@
 		</div>
 			
 		### 数据表
-		<table class="table">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th><input type="checkbox" title="全选" onclick="checkList(this,'user_id');btnListener('user_id',$('#user-update'),$('#user-delete'));"/></th>

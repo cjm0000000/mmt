@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
 			<button id="cust-add" type="button" class="btn btn-success btn-md" >
@@ -16,7 +16,7 @@
 		</div>
 			
 		### 数据表
-		<table class="table">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th width="5%">#</th>

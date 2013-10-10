@@ -28,13 +28,21 @@
 			</thead>
 			<tbody>
 			#foreach($role in $page.roleList)
-				<tr>
+				#if($velocityCount%4==0)
+					<tr class="warning">
+				#end
+				#if($velocityCount%4==1)
+					<tr>
+				#end
+				#if($velocityCount%4==2)
+					<tr class="success">
+				#end
 		    		<td><input type="checkbox" value="$!role.role_id" name="role_id" onclick="btnListener('role_id',$('#role-update'),$('#role-delete'));"/></td>
 		       		<td>$!role.role_name</td>
 		  			<td>$!role.role_desc</td>
 		  			<td>$!role.sort</td>
 		  			<td style="text-align:center;">
-		  				<button value="$!role.role_id" type="button" class="authority-list btn btn-info btn-sm" >
+		  				<button data-toggle="tooltip" title="点击设置$!role.role_name权限" value="$!role.role_id" type="button" class="authority-list btn btn-info btn-xs" >
 							<span class="glyphicon glyphicon-edit"></span>
 						</button>
 		  			</td>
@@ -58,4 +66,5 @@ var url_authoritySet= "#{getContextPath}webservices/system/role/set-authority";
 var url_showPage 	= "#{getContextPath}webservices/system/role/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/system/role/save";
 var url_delete 		= "#{getContextPath}webservices/system/role/delete";
+$('.authority-list').tooltip();
 </script>
