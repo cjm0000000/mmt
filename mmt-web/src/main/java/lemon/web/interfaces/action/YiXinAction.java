@@ -82,17 +82,17 @@ public final class YiXinAction extends AdminNavAction {
 			cfg.setToken(SecureUtil.md5(cfg.getYx_account() + System.currentTimeMillis()));
 			cfg.setApi_url(api_url);
 			cfg.setBiz_class(SimpleYiXinMsgProcessor.class.getName());
-			CustomerService service = new CustomerService();
-			service.setCust_id(cfg.getCust_id());
-			service.setExpire_time("0000-00-00 00:00");
-			service.setService(ServiceType.YIXIN);
-			service.setStatus(Status.AVAILABLE);
-			customerMapper.addService(service);
+			//add service
+			result = addService(cfg.getCust_id(), "0000-00-00 00:00");
 			result = yxConfigMapper.save(cfg);
 		}else{
 			result = yxConfigMapper.update(cfg);
 			if(!apiStatus)
 				customerMapper.deleteService(cfg.getCust_id(), ServiceType.YIXIN);
+			else{
+				if(customerMapper.getService(cfg.getCust_id(), ServiceType.YIXIN) == null)
+					addService(cfg.getCust_id(), "0000-00-00 00:00");
+			}
 		}
 		//更新接口配置
 		YiXin.setConfig(yxConfigMapper.get(cfg.getCust_id()));
@@ -148,6 +148,21 @@ public final class YiXinAction extends AdminNavAction {
 	@Override
 	public String getMenuURL() {
 		return "interface/yixinconfig";
+	}
+	
+	/**
+	 * 添加服务
+	 * @param cust_id
+	 * @param expireTime
+	 * @return
+	 */
+	private int addService(int cust_id, String expireTime){
+		CustomerService service = new CustomerService();
+		service.setCust_id(cust_id);
+		service.setExpire_time(expireTime);
+		service.setService(ServiceType.YIXIN);
+		service.setStatus(Status.AVAILABLE);
+		return customerMapper.addService(service);
 	}
 
 }

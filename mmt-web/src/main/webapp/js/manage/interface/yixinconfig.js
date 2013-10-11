@@ -6,7 +6,6 @@ $(function() {
 	    	$(".yx-config").attr('disabled',false);
 	    }else{
 	    	$("#form-main").css('display','none');
-	    	$(".yx-config").attr('disabled',true);
 	    }
 	});
 	

@@ -6,7 +6,6 @@ $(function() {
 	    	$(".wx-config").attr('disabled',false);
 	    }else{
 	    	$("#form-main").css('display','none');
-	    	$(".wx-config").attr('disabled',true);
 	    }
 	});
 	

@@ -81,17 +81,16 @@ public final class WeiXinAction extends AdminNavAction {
 			cfg.setToken(SecureUtil.md5(cfg.getWx_account() + System.currentTimeMillis()));
 			cfg.setApi_url(api_url);
 			cfg.setBiz_class(SimpleWeiXinMsgProcessor.class.getName());
-			CustomerService service = new CustomerService();
-			service.setCust_id(cfg.getCust_id());
-			service.setExpire_time("0000-00-00 00:00");
-			service.setService(ServiceType.WEIXIN);
-			service.setStatus(Status.AVAILABLE);
-			customerMapper.addService(service);
+			result = addService(cfg.getCust_id(), "0000-00-00 00:00");
 			result = weiXinConfigMapper.save(cfg);
 		}else{
 			result = weiXinConfigMapper.update(cfg);
 			if(!apiStatus)
 				customerMapper.deleteService(cfg.getCust_id(), ServiceType.WEIXIN);
+			else{
+				if(customerMapper.getService(cfg.getCust_id(), ServiceType.WEIXIN) == null)
+					addService(cfg.getCust_id(), "0000-00-00 00:00");
+			}
 		}
 		//更新接口配置
 		WeiXin.setConfig(weiXinConfigMapper.get(cfg.getCust_id()));
@@ -147,6 +146,21 @@ public final class WeiXinAction extends AdminNavAction {
 	@Override
 	public String getMenuURL() {
 		return "interface/weixinconfig";
+	}
+	
+	/**
+	 * 添加服务
+	 * @param cust_id
+	 * @param expireTime
+	 * @return
+	 */
+	private int addService(int cust_id, String expireTime){
+		CustomerService service = new CustomerService();
+		service.setCust_id(cust_id);
+		service.setExpire_time(expireTime);
+		service.setService(ServiceType.WEIXIN);
+		service.setStatus(Status.AVAILABLE);
+		return customerMapper.addService(service);
 	}
 
 }
