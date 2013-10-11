@@ -1,6 +1,6 @@
 package lemon.shared.biz;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import lemon.shared.message.bean.MsgBean;
 import lemon.shared.message.mapper.MsgBeanMapper;
@@ -62,5 +62,24 @@ public class MsgBeanMapperTest {
 		mb.setKey("key");
 		mb.setValue("vava");
 		msgBeanMapper.addMsg(mb, "2");
+	}
+	
+	@Test
+	@Ignore
+	public void update(){
+		MsgBean mb1 = new MsgBean();
+		mb1.setCust_id(1);
+		mb1.setKey("key1");
+		mb1.setValue("vava1");
+		msgBeanMapper.addMsg(mb1, "1");
+		
+		mb1.setCust_id(2);
+		mb1.setKey("keyyyy");
+		mb1.setValue("VVVV");
+		msgBeanMapper.updateMsg(mb1, "1");
+		
+		MsgBean mb = msgBeanMapper.getL1Msg(1, "keyyyy");
+		assertEquals(mb.getValue(), mb1.getValue());
+		
 	}
 }

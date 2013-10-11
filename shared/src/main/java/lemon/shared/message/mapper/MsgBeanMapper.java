@@ -1,10 +1,13 @@
 package lemon.shared.message.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
@@ -25,10 +28,20 @@ public interface MsgBeanMapper {
 	 * 添加MsgBean
 	 * @param msg
 	 * @param level
+	 * @return
 	 */
 	@InsertProvider(type = MsgBeanSQLProvider.class, method = "addMsgSQL")
 	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "msg.id")
-	void addMsg(@Param("msg") MsgBean msg, @Param("level") String level);
+	int addMsg(@Param("msg") MsgBean msg, @Param("level") String level);
+	
+	/**
+	 * 更新MsgBean
+	 * @param msg
+	 * @param level
+	 * @return
+	 */
+	@UpdateProvider(type = MsgBeanSQLProvider.class, method = "updateMsgSQL")
+	int updateMsg(@Param("msg") MsgBean msg, @Param("level") String level);
 
 	/**
 	 * 根据KEY获取一级消息<br>
@@ -65,4 +78,39 @@ public interface MsgBeanMapper {
 	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
 	MsgBean getL3Msg(@Param("key") String key);
+	
+	/**
+	 * 获取一级消息列表
+	 * @param cust_id
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l1 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
+	@Lang(RawLanguageDriver.class)
+	List<MsgBean> getL1List(@Param("cust_id") int cust_id,
+			@Param("start") int start, @Param("limit") int limit);
+	
+	/**
+	 * 获取二级消息列表
+	 * @param cust_id
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
+	@Lang(RawLanguageDriver.class)
+	List<MsgBean> getL2List(@Param("cust_id") int cust_id,
+			@Param("start") int start, @Param("limit") int limit);
+	
+	/**
+	 * 获取三级消息列表
+	 * @param cust_id
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A LIMIT #{start},#{limit}")
+	@Lang(RawLanguageDriver.class)
+	List<MsgBean> getL3List(@Param("start") int start, @Param("limit") int limit);
 }
