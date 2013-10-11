@@ -1,9 +1,14 @@
 package lemon.web.message.action;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,23 +75,40 @@ public final class L1MessageAction extends AdminNavAction {
 
 	/**
 	 * 保存一级信息
+	 * @param session
 	 * @param json
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(String json) {
-		System.out.println(json);
+	public String save(HttpSession session, String json) {
+		User user = (User) session.getAttribute(TOKEN);
+		if(null == user)
+			sendError("请先登录。");
 		if(json == null)
 			return BS3UI.warning("保存失败： 信息格式不正确。");
-		int result = 0;
-		//TODO 解析JSON
-		List<MsgBean> msgList = null;
+		
+		//解析JSON,转Java集合
+		JSONArray jsonArray = JSONArray.fromObject(json);
+		@SuppressWarnings("unchecked")
+		Collection<MsgBean> msgList = JSONArray.toCollection(jsonArray, MsgBean.class);
+		
+		//去空去重复
+		Set<MsgBean> set = new HashSet<MsgBean>(msgList.size());
 		for (MsgBean msgBean : msgList) {
+			if (isBlank(msgBean))
+				continue;
+			set.add(msgBean);
+		}
+		
+		//数据入库
+		int result = 0;
+		for (MsgBean msgBean : set) {
+			msgBean.setCust_id(user.getCust_id());
 			if(msgBean.getId() <= 0)
-				msgBeanMapper.addMsg(msgBean, "1");
+				result = msgBeanMapper.addMsg(msgBean, "1");
 			else
-				msgBeanMapper.addMsg(msgBean, "1");
+				result = msgBeanMapper.addMsg(msgBean, "1");
 		}
 		if(result != 0)
 			return BS3UI.success("保存成功。");
@@ -98,5 +120,22 @@ public final class L1MessageAction extends AdminNavAction {
 	public String getMenuURL() {
 		return "message/level1";
 	}
+	
+	/**
+	 * 检测MsgBean为空
+	 * @param mb
+	 * @return
+	 */
+	private boolean isBlank(MsgBean mb) {
+		if (null == mb)
+			return true;
+		if (mb.getCust_id() == 0) {
+			if ("".equals(mb.getKey().trim())
+					|| "".equals(mb.getValue().trim()))
+				return true;
+		}
+		return false;
+	}
+	//FIXME 去掉XStream的JSON支持
 	
 }

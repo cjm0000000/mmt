@@ -9,7 +9,6 @@ $(function() {
 				value	: $('#value'+(key+1)).val()
 			});
 		});
-		alert(JSON.stringify(result));
 		$.post(url_save, {json:JSON.stringify(result)},function(data){
 			$(".panel-body").prepend(data);
 			setTimeout(function(){

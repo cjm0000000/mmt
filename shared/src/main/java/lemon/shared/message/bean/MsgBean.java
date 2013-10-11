@@ -37,4 +37,19 @@ public class MsgBean {
 		this.value = value;
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+		if(obj == null)
+			return false;
+		if(!(obj instanceof MsgBean))
+			return false;
+		MsgBean target = (MsgBean) obj;
+		return this.getKey() == target.getKey();
+	}
+	
+	@Override
+	public int hashCode(){
+		return this.getKey().hashCode();
+	}
+	
 }

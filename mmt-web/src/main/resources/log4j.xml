@@ -27,6 +27,9 @@
 	<logger name="org.apache.velocity">
 		<level value="INFO"/>
 	</logger>
+	<logger name="org.apache.commons.beanutils">
+		<level value="INFO"/>
+	</logger>
 	<logger name="org.hibernate.validator">
 		<level value="INFO"/>
 	</logger>
