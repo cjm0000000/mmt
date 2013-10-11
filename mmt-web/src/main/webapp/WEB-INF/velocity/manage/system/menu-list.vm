@@ -24,10 +24,9 @@
 			<thead>
 				<tr>
 					<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
-			        <th width="35%">菜单名称</th>
-					<th width="20%">菜单链接</th>
-			     	<th width="30%">菜单样式</th>
-			     	<th width="10%">排序号</th>
+			        <th width="45%">菜单名称</th>
+					<th width="40%">菜单链接</th>
+			     	<th width="10%" style="text-align:center;">排序号</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,8 +44,7 @@
 			  			<span class="$!menu.menuico"></span> $!menu.menu_name
 			  		</td>
 			  		<td>$menu.menuurl</td>
-			   		<td>$menu.menuico</td>
-			   		<td>$menu.sort</td>
+			   		<td style="text-align:center;">$menu.sort</td>
 			 	</tr>
 				#end
 			</tbody>
