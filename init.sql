@@ -1,16 +1,21 @@
 #菜单初始化
 INSERT INTO `system_menu` (`menu_id`,`menu_name`,`menulevcod`,`supmenucode`,`menuurl`,`menuico`,`sort`) 
-VALUES (1,'MMT消息服务平台','1',0,' ',' ',0),(2,'系统管理','2',1,'system','glyphicon glyphicon-cog',1),
-(3,'接口管理','2',1,'interface','glyphicon glyphicon-cog',2),
+VALUES (1,'MMT消息服务平台','1',0,' ',' ',0),
+(2,'系统管理','2',1,'system','glyphicon glyphicon-wrench',1),
+(3,'接口管理','2',1,'interface','glyphicon glyphicon-th',2),
 (4,'客户管理','2',1,'customer','glyphicon glyphicon-cog',3),
 (5,'用户管理','3',2,'system/user','glyphicon glyphicon-user',1),
-(6,'角色管理','3',2,'system/role','glyphicon glyphicon-cog',2),
+(6,'角色管理','3',2,'system/role','glyphicon glyphicon-lock',2),
 (7,'菜单管理','3',2,'system/menu','glyphicon glyphicon-list',3),
-(8,'微信自定义菜单','3',3,'interface/menu','glyphicon glyphicon-list',2),
-(9,'客户信息管理','3',4,'customer/information','glyphicon glyphicon-list',1),
-(10,'微信接口配置','3',3,'interface/weixinconfig','glyphicon glyphicon-list',1),
-(11,'易信接口配置','3',3,'interface/yixinconfig','glyphicon glyphicon-list',3),
-(12,'易信自定义菜单','3',3,'','',4);
+(8,'微信自定义菜单','3',3,'interface/menu','glyphicon glyphicon-th-list',2),
+(9,'客户信息管理','3',4,'customer/information','glyphicon glyphicon-user',1),
+(10,'微信接口配置','3',3,'interface/weixinconfig','glyphicon glyphicon-tag',1),
+(11,'易信接口配置','3',3,'interface/yixinconfig','glyphicon glyphicon-tag',3),
+(12,'易信自定义菜单','3',3,'','glyphicon glyphicon-th-list',4),
+(13,'一级响应信息','3',15,'','glyphicon glyphicon-leaf',5),
+(14,'二级响应信息','3',15,'','glyphicon glyphicon-leaf',6),
+(15,'消息库管理','2',1,'message','glyphicon glyphicon-tint',4);
+
 
 #角色初始化
 INSERT INTO `system_role` (`role_id`,`role_name`,`role_desc`,`status`,`sort`,`reloadable`) 
