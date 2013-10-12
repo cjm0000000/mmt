@@ -48,7 +48,6 @@ public final class L1MessageAction extends AdminNavAction {
 	
 	/**
 	 * 显示L1消息页面
-	 * @param cust_name
 	 * @param session
 	 * @return
 	 */
@@ -135,6 +134,4 @@ public final class L1MessageAction extends AdminNavAction {
 		}
 		return false;
 	}
-	//FIXME 去掉XStream的JSON支持
-	
 }
