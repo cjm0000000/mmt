@@ -14,15 +14,15 @@
 					<thead>
 						<tr>
 							<th>关键字</th>
-							<th>内容</th>
+							<th>内 容</th>
 						</tr>
 					</thread>
 					<tbody>
 						#foreach($msg in $list)
 							<tr>
 								<input type="hidden" name="record-id" id="id$velocityCount" value="$!msg.id" />
-								<td><input type="text" class="form-control" id="key$velocityCount" value="$!msg.key" placeholder="输入键$velocityCount"></td>
-								<td><input type="text" class="form-control" id="value$!velocityCount" value="$!msg.value" placeholder="输入值$velocityCount"></td>
+								<td style="vertical-align:middle;"><input type="text" class="form-control" id="key$velocityCount" value="$!msg.key" placeholder="关键字$velocityCount"></td>
+								<td><textarea class="form-control" id="value$!velocityCount" placeholder="内容$velocityCount">$!msg.value</textarea></td>
 							</tr>
 						#end
 					</tbody>
