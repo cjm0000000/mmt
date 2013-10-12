@@ -67,7 +67,6 @@ public final class L1MessageAction extends AdminNavAction {
 		if(l1_list.size() < 10)
 			for (int i = l1_list.size(); i < 10; i++) 
 				l1_list.add(null);
-		System.out.println(l1_list);
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("msgList", l1_list);
 		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
