@@ -97,22 +97,16 @@ public final class L1MessageAction extends AdminNavAction {
 		for (MsgBean msgBean : msgList) {
 			if (isBlank(msgBean))
 				continue;
-			if(msgBean.getId() == 0)
+			if(msgBean.getId() > 0)
 				set.add(msgBean);
 			else
 				temp.add(msgBean);
 		}
-		//FIXME hashCode可能不同
 		//FIXME 加入XSS过滤器
 		//FIXME 加入CSRF过滤器
-		for (MsgBean mb : temp) {
+		for (MsgBean mb : temp)
 			set.add(mb);
-		}
 		temp.clear();
-		for (MsgBean mb : set) {
-			System.out.println(mb.hashCode() + "  " + mb.getKey() + "   " + mb);
-		}
-		
 		//数据入库
 		int result = 0;
 		for (MsgBean msgBean : set) {
@@ -147,5 +141,19 @@ public final class L1MessageAction extends AdminNavAction {
 				return true;
 		}
 		return false;
+	}
+	
+	public static void main(String[] args){
+		Set<MsgBean> set = new HashSet<>();
+		MsgBean mb1 = new MsgBean();
+		mb1.setKey("key");
+		mb1.setValue("V");
+		MsgBean mb2 = new MsgBean();
+		mb2.setKey("key");
+		mb2.setValue("V");
+		mb2.setId(5);
+		set.add(mb1);
+		set.add(mb2);
+		System.out.println(set);
 	}
 }

@@ -44,7 +44,9 @@ public class MsgBean {
 		if(!(obj instanceof MsgBean))
 			return false;
 		MsgBean target = (MsgBean) obj;
-		return this.getKey() == target.getKey();
+		if (key == null)
+			return target.key == null;
+		return key.equals(target.key);
 	}
 	
 	@Override
@@ -52,4 +54,15 @@ public class MsgBean {
 		return this.getKey().hashCode();
 	}
 	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("id=").append(id);
+		sb.append(", cust_id=").append(cust_id);
+		sb.append(", key=").append(key);
+		sb.append(", value=").append(value);
+		sb.append("}");
+		return sb.toString();
+	}
 }
