@@ -80,6 +80,36 @@ public class MsgBeanMapperTest {
 		
 		MsgBean mb = msgBeanMapper.getL1Msg(1, "keyyyy");
 		assertEquals(mb.getValue(), mb1.getValue());
+	}
+	
+	@Test
+	@Ignore
+	public void delete(){
+		MsgBean mb1 = new MsgBean();
+		mb1.setCust_id(1);
+		mb1.setKey("key1");
+		mb1.setValue("vava1");
+		msgBeanMapper.addMsg(mb1, "3");
 		
+		MsgBean mb2 = new MsgBean();
+		mb2.setCust_id(1);
+		mb2.setKey("key12");
+		mb2.setValue("vava1");
+		msgBeanMapper.addMsg(mb2, "3");
+		msgBeanMapper.deleteMsg(mb1.getId()+","+mb2.getId(), "3");
+	}
+	
+	@Test
+	@Ignore
+	public void count(){
+		int l2_cnt = msgBeanMapper.getL2Count(1);
+		int l3_cnt = msgBeanMapper.getL3Count();
+		System.out.println(l2_cnt);
+		System.out.println(l3_cnt);
+	}
+	
+	@Test
+	public void get(){
+		msgBeanMapper.getMsg(1, "3");
 	}
 }

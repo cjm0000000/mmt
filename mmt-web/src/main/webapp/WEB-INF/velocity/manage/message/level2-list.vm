@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
+<style>
+.message-value{
+display:block;/*定义为块级；这个属相很重要，没有这个属性，很难实现单行宽度的效果*/
+	max-width:300px;/*要显示文字的宽度*/
+	float:left;/*左对齐*/
+	overflow:hidden; /*超出的部分隐藏起来。*/
+	white-space:nowrap;  
+    text-overflow:ellipsis;  
+    -o-text-overflow:ellipsis;  
+    -icab-text-overflow: ellipsis;  
+    -khtml-text-overflow: ellipsis;  
+    -moz-text-overflow: ellipsis;  
+    -webkit-text-overflow: ellipsis; 
+}
+</style>
+<div class="col-md-9" role="main">
+	<div class="panel panel-info">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<button id="level2-msg-add" type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
+			</button>
+			<button id="level2-msg-edit" type="button" disabled class="btn btn-info btn-md" >
+				<span class="glyphicon glyphicon-edit"></span> 编 辑
+			</button>
+			<button id="level2-msg-delete" type="button" disabled class="btn btn-danger btn-md" >
+				<span class="glyphicon glyphicon-trash"></span> 删 除
+			</button>
+		</div>
+			
+		### 数据表
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th width="5%"><input type="checkbox" title="全选" onclick="checkList(this,'id');btnListener('id', $('#level2-msg-edit'), $('#level2-msg-delete'));"/></th>
+					<th width="35%">关键字</th>
+		            <th width="60%">内容</th>
+				</tr>
+			</thead>
+			<tbody>
+			#foreach($msg in $page.msgList)
+				<tr>
+		    		<td><input type="checkbox" value="$!msg.id" name="id" onclick="btnListener('id',$('#level2-msg-edit'), $('#level2-msg-delete'));"/></td>
+		       		<td>$!msg.key</td>
+		  			<td>
+		  				<span class="message-value" data-toggle="popover" title="" data-content="$!msg.value" data-original-title="">$!msg.value</span>
+		  			</td>
+		   		</tr>
+			#end
+			</tbody>
+		</table>
+		### 分页栏
+		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
+	</div>
+</div>
+<div id="msg-level2-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
+<script src="#{getContextPath}js/manage/message/level2.js"></script>
+<script type="text/javascript">
+var url_showPage 	= "#{getContextPath}webservices/message/level2/add-edit-page";
+var url_save 		= "#{getContextPath}webservices/message/level2/save";
+var url_delete 		= "#{getContextPath}webservices/message/level2/delete";
+$('.message-value').popover({
+	trigger:'hover',
+	placement:'auto'
+});
+</script>
