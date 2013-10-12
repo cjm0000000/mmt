@@ -93,10 +93,24 @@ public final class L1MessageAction extends AdminNavAction {
 		
 		//去空去重复
 		Set<MsgBean> set = new HashSet<MsgBean>(msgList.size());
+		Set<MsgBean> temp = new HashSet<MsgBean>(msgList.size());
 		for (MsgBean msgBean : msgList) {
 			if (isBlank(msgBean))
 				continue;
-			set.add(msgBean);
+			if(msgBean.getId() == 0)
+				set.add(msgBean);
+			else
+				temp.add(msgBean);
+		}
+		//FIXME hashCode可能不同
+		//FIXME 加入XSS过滤器
+		//FIXME 加入CSRF过滤器
+		for (MsgBean mb : temp) {
+			set.add(mb);
+		}
+		temp.clear();
+		for (MsgBean mb : set) {
+			System.out.println(mb.hashCode() + "  " + mb.getKey() + "   " + mb);
 		}
 		
 		//数据入库
@@ -106,7 +120,7 @@ public final class L1MessageAction extends AdminNavAction {
 			if(msgBean.getId() <= 0)
 				result = msgBeanMapper.addMsg(msgBean, "1");
 			else
-				result = msgBeanMapper.addMsg(msgBean, "1");
+				result = msgBeanMapper.updateMsg(msgBean, "1");
 		}
 		if(result != 0)
 			return BS3UI.success("保存成功。");
