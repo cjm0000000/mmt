@@ -94,14 +94,14 @@ public final class UserAction extends AdminNavAction {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST)
+	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String save(@Valid User user, BindingResult result) {
 		if(user == null)
-			return "\u00ef\u00bb\u00bf\u00e6\u00b7\u00bb\u00e5\u008a\u00a0\u00e5\u00a4\u00b1\u00e8\u00b4\u00a5\u00ef\u00bc\u008c\u00e7\u0094\u00a8\u00e6\u0088\u00b7\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00e3\u0080\u0082";
+			return "参数不能为空。";
 		if(result.hasErrors()){
-			//TODO 1. 需要做validation；2. 中文编码问题
-			//return result.getFieldError().getDefaultMessage();
+			//TODO 1. 需要做validation；
+			return result.getFieldError().getDefaultMessage();
 		}
 		if(user.getUser_id() <= 0){
 			user.setStatus(Status.AVAILABLE);
