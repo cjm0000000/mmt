@@ -36,7 +36,7 @@ public class MsgBeanMapperTest {
 	@Test
 	@Ignore
 	public void getL1Msg(){
-		MsgBean mb = msgBeanMapper.getL1Msg(1, "1");
+		MsgBean mb = msgBeanMapper.getL1Msg(1, "q1");
 		assertNotNull(mb);
 	}
 	
@@ -61,7 +61,7 @@ public class MsgBeanMapperTest {
 		mb.setCust_id(1);
 		mb.setKey("key");
 		mb.setValue("vava");
-		msgBeanMapper.addMsg(mb, "2");
+		msgBeanMapper.addMsg(mb, 2);
 	}
 	
 	@Test
@@ -71,12 +71,12 @@ public class MsgBeanMapperTest {
 		mb1.setCust_id(1);
 		mb1.setKey("key1");
 		mb1.setValue("vava1");
-		msgBeanMapper.addMsg(mb1, "1");
+		msgBeanMapper.addMsg(mb1, 1);
 		
 		mb1.setCust_id(2);
 		mb1.setKey("keyyyy");
 		mb1.setValue("VVVV");
-		msgBeanMapper.updateMsg(mb1, "1");
+		msgBeanMapper.updateMsg(mb1, 1);
 		
 		MsgBean mb = msgBeanMapper.getL1Msg(1, "keyyyy");
 		assertEquals(mb.getValue(), mb1.getValue());
@@ -89,14 +89,14 @@ public class MsgBeanMapperTest {
 		mb1.setCust_id(1);
 		mb1.setKey("key1");
 		mb1.setValue("vava1");
-		msgBeanMapper.addMsg(mb1, "3");
+		msgBeanMapper.addMsg(mb1, 3);
 		
 		MsgBean mb2 = new MsgBean();
 		mb2.setCust_id(1);
 		mb2.setKey("key12");
 		mb2.setValue("vava1");
-		msgBeanMapper.addMsg(mb2, "3");
-		msgBeanMapper.deleteMsg(mb1.getId()+","+mb2.getId(), "3");
+		msgBeanMapper.addMsg(mb2, 3);
+		msgBeanMapper.deleteMsg(mb1.getId()+","+mb2.getId(), 3);
 	}
 	
 	@Test
@@ -110,6 +110,6 @@ public class MsgBeanMapperTest {
 	
 	@Test
 	public void get(){
-		msgBeanMapper.getMsg(1, "3");
+		msgBeanMapper.getMsg(1, 3);
 	}
 }

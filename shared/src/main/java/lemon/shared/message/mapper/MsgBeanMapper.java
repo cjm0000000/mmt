@@ -34,7 +34,7 @@ public interface MsgBeanMapper {
 	 */
 	@InsertProvider(type = MsgBeanSQLProvider.class, method = "addMsgSQL")
 	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "msg.id")
-	int addMsg(@Param("msg") MsgBean msg, @Param("level") String level);
+	int addMsg(@Param("msg") MsgBean msg, @Param("level") int level);
 	
 	/**
 	 * 获取MsgBean
@@ -43,7 +43,7 @@ public interface MsgBeanMapper {
 	 * @return
 	 */
 	@SelectProvider(type = MsgBeanSQLProvider.class, method = "getMsgSQL")
-	MsgBean getMsg(@Param("id") int id, @Param("level") String level);
+	MsgBean getMsg(@Param("id") int id, @Param("level") int level);
 	
 	/**
 	 * 更新MsgBean
@@ -52,7 +52,7 @@ public interface MsgBeanMapper {
 	 * @return
 	 */
 	@UpdateProvider(type = MsgBeanSQLProvider.class, method = "updateMsgSQL")
-	int updateMsg(@Param("msg") MsgBean msg, @Param("level") String level);
+	int updateMsg(@Param("msg") MsgBean msg, @Param("level") int level);
 	
 	/**
 	 * 删除MsgBean
@@ -61,7 +61,7 @@ public interface MsgBeanMapper {
 	 * @return
 	 */
 	@DeleteProvider(type = MsgBeanSQLProvider.class, method = "deleteMsgSQL")
-	int deleteMsg(@Param("id") String id, @Param("level") String level);
+	int deleteMsg(@Param("id") String id, @Param("level") int level);
 
 	/**
 	 * 根据KEY获取一级消息<br>
