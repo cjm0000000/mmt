@@ -3,14 +3,12 @@ package lemon.web.message.action;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lemon.shared.message.bean.MsgBean;
-import lemon.shared.message.mapper.MsgBeanMapper;
-import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 import lemon.web.ui.BS3UI;
 
@@ -32,43 +28,22 @@ import lemon.web.ui.BS3UI;
  */
 @Controller
 @RequestMapping("message/level1")
-public final class L1MessageAction extends AdminNavAction {
-	@Autowired
-	private MsgBeanMapper msgBeanMapper;
-	private static final int MAX_LEVEL1_SIZE = 10;
+public final class L1MessageAction extends MessageAction {
 
 	/**
 	 * 跳转到Level1页面
 	 * @return
 	 */
 	@RequestMapping("list")
-	public String show() {
+	@Override
+	public String index() {
 		return "redirect:show";
 	}
 	
-	/**
-	 * 显示L1消息页面
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("show")
-	public ModelAndView show(HttpSession session) {
-		//获取Main视图名称
-		String mainViewName = "message/level1";
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
-		//获取Main数据
-		List<MsgBean> l1_list = msgBeanMapper.getL1List(user.getCust_id(), 0, MAX_LEVEL1_SIZE);
-		if(l1_list.size() < 10)
-			for (int i = l1_list.size(); i < 10; i++) 
-				l1_list.add(null);
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("msgList", l1_list);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+	@RequestMapping(value="show")
+	@Override
+	public ModelAndView addOrEditPage(HttpSession session, Integer id) {
+		return showIndex(session, 1);
 	}
 
 	/**
@@ -85,36 +60,20 @@ public final class L1MessageAction extends AdminNavAction {
 			sendError("请先登录。");
 		if(json == null)
 			return BS3UI.warning("保存失败： 信息格式不正确。");
-		
-		//解析JSON,转Java集合
-		JSONArray jsonArray = JSONArray.fromObject(json);
-		@SuppressWarnings("unchecked")
-		Collection<MsgBean> msgList = JSONArray.toCollection(jsonArray, MsgBean.class);
-		
+		// 解析JSON,转Java集合
+		Collection<MsgBean> msgList = json2collection(json);
 		//去空去重复
-		Set<MsgBean> set = new HashSet<MsgBean>(msgList.size());
-		Set<MsgBean> temp = new HashSet<MsgBean>(msgList.size());
-		for (MsgBean msgBean : msgList) {
-			if (isBlank(msgBean))
-				continue;
-			if(msgBean.getId() > 0)
-				set.add(msgBean);
-			else
-				temp.add(msgBean);
-		}
-		//FIXME 加入XSS过滤器
-		//FIXME 加入CSRF过滤器
-		for (MsgBean mb : temp)
-			set.add(mb);
-		temp.clear();
+		Set<MsgBean> set = grep(msgList);
+		//清理
+		msgList.clear();
 		//数据入库
 		int result = 0;
 		for (MsgBean msgBean : set) {
 			msgBean.setCust_id(user.getCust_id());
 			if(msgBean.getId() <= 0)
-				result = msgBeanMapper.addMsg(msgBean, "1");
+				result = msgBeanMapper.addMsg(msgBean, getLevel());
 			else
-				result = msgBeanMapper.updateMsg(msgBean, "1");
+				result = msgBeanMapper.updateMsg(msgBean, getLevel());
 		}
 		if(result != 0)
 			return BS3UI.success("保存成功。");
@@ -122,9 +81,42 @@ public final class L1MessageAction extends AdminNavAction {
 			return BS3UI.danger("保存失败。");
 	}
 	
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String delete(String id) {
+		return "暂时不支持删除。";
+	}
+	
 	@Override
 	public String getMenuURL() {
 		return "message/level1";
+	}
+	
+	@Override
+	protected byte getLevel() {
+		return 1;
+	}
+
+	@Override
+	protected byte getPageSize() {
+		return 10;
+	}
+
+	@Override
+	protected String getMainViewName() {
+		return "message/level1";
+	}
+
+	@Override
+	protected int getResultCount(int cust_id) {
+		return 0;
+	}
+
+	@Override
+	protected void obtainResult(List<MsgBean> msgList) {
+		if(msgList.size() < 10)
+			for (int i = msgList.size(); i < 10; i++) 
+				msgList.add(null);
 	}
 	
 	/**
@@ -143,17 +135,38 @@ public final class L1MessageAction extends AdminNavAction {
 		return false;
 	}
 	
-	public static void main(String[] args){
-		Set<MsgBean> set = new HashSet<>();
-		MsgBean mb1 = new MsgBean();
-		mb1.setKey("key");
-		mb1.setValue("V");
-		MsgBean mb2 = new MsgBean();
-		mb2.setKey("key");
-		mb2.setValue("V");
-		mb2.setId(5);
-		set.add(mb1);
-		set.add(mb2);
-		System.out.println(set);
+	/**
+	 * JSON转Java集合
+	 * @param json
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private Collection<MsgBean> json2collection(String json) {
+		JSONArray jsonArray = JSONArray.fromObject(json);
+		return JSONArray.toCollection(jsonArray, MsgBean.class);
+	}
+	
+	/**
+	 * 过滤结果集<br>
+	 * 1. 去空
+	 * 2. 去重
+	 * @param msgList
+	 * @return
+	 */
+	private Set<MsgBean> grep(Collection<MsgBean> msgList){
+		Set<MsgBean> set 	= new HashSet<MsgBean>(msgList.size());
+		Set<MsgBean> temp 	= new HashSet<MsgBean>(msgList.size());
+		for (MsgBean msgBean : msgList) {
+			if (isBlank(msgBean))
+				continue;
+			if(msgBean.getId() > 0)
+				set.add(msgBean);
+			else
+				temp.add(msgBean);
+		}
+		for (MsgBean mb : temp)
+			set.add(mb);
+		temp.clear();
+		return set;
 	}
 }

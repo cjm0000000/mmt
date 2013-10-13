@@ -16,15 +16,15 @@ import lemon.web.system.bean.User;
 import lemon.web.ui.BS3UI;
 
 /**
- * 二级消息管理
+ * 三级消息管理
  * 
  * @author lemon
  * @version 1.0
  * 
  */
 @Controller
-@RequestMapping("message/level2")
-public final class L2MessageAction extends MessageAction {
+@RequestMapping("message/level3")
+public final class L3MessageAction extends MessageAction {
 
 	/**
 	 * 显示L2消息列表
@@ -38,7 +38,7 @@ public final class L2MessageAction extends MessageAction {
 	}
 
 	/**
-	 * 保存二级信息
+	 * 保存三级信息
 	 * @param session
 	 * @param json
 	 * @return
@@ -51,7 +51,7 @@ public final class L2MessageAction extends MessageAction {
 			sendError("请先登录。");
 		if(msg == null)
 			return BS3UI.warning("保存失败： 信息格式不正确。");
-		if(msgBeanMapper.getL2Msg(user.getCust_id(), msg.getKey()) != null && msg.getId() <= 0)
+		if(msgBeanMapper.getL3Msg(msg.getKey()) != null && msg.getId() <= 0)
 			return BS3UI.danger("保存失败: 关键字" + msg.getKey() + "已经存在。");
 		msg.setCust_id(user.getCust_id());
 		int result = 0;
@@ -68,12 +68,12 @@ public final class L2MessageAction extends MessageAction {
 	
 	@Override
 	public String getMenuURL() {
-		return "message/level2";
+		return "message/level3";
 	}
 
 	@Override
 	protected byte getLevel() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public final class L2MessageAction extends MessageAction {
 
 	@Override
 	protected int getResultCount(int cust_id) {
-		return msgBeanMapper.getL2Count(cust_id);
+		return msgBeanMapper.getL3Count();
 	}
 
 	@Override
