@@ -1,6 +1,8 @@
+#set($msg=$param.msg)
+$param.msg
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">#if($msg.id == 0)<span class="glyphicon glyphicon-plus-sign"></span> 添加#else<span class="glyphicon glyphicon-edit"></span> 编辑#end二级消息</h4>
+    <h4 class="modal-title">#if($msg.id == 0)<span class="glyphicon glyphicon-plus-sign"></span> #else <span class="glyphicon glyphicon-edit"></span> #end $!param.title消息</h4>
 </div>
 <div class="modal-pre-body" style="padding:10px;"></div>
 <div class="modal-body">

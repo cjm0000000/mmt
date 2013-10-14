@@ -1,5 +1,6 @@
 package lemon.web.message.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,7 +116,11 @@ public abstract class MessageAction extends AdminNavAction {
 			mb = msgBeanMapper.getMsg(id, getLevel());
 		if(null == mb)
 			mb = new MsgBean();
-		return new ModelAndView(getAddEditView(), "msg", mb);
+		String title = getAddEditTitle(id);
+		Map<String, Object>	param = new HashMap<>();
+		param.put("msg", mb);
+		param.put("title", title);
+		return new ModelAndView(getAddEditView(), "param", param);
 	}
 	
 	/**
@@ -153,8 +158,16 @@ public abstract class MessageAction extends AdminNavAction {
 		StringBuilder sb = new StringBuilder();
 		if(id > 0){
 			sb.append("编辑");
+			if(getLevel() == 2)
+				sb.append("二级");
+			else
+				sb.append("通用");
 		}else{
 			sb.append("添加");
+			if(getLevel() == 2)
+				sb.append("二级");
+			else
+				sb.append("通用");
 		}
 		return sb.toString();
 	}
