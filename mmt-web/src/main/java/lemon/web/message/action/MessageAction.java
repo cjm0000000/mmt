@@ -128,8 +128,8 @@ public abstract class MessageAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 删除客户信息
-	 * @param cust_id
+	 * 删除消息
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
@@ -142,6 +142,21 @@ public abstract class MessageAction extends AdminNavAction {
 			return BS3UI.success("删除成功。");
 		else
 			return BS3UI.danger("删除失败。");
+	}
+	
+	/**
+	 * 获取添加编辑页面的标题
+	 * @param id
+	 * @return
+	 */
+	private String getAddEditTitle(int id){
+		StringBuilder sb = new StringBuilder();
+		if(id > 0){
+			sb.append("编辑");
+		}else{
+			sb.append("添加");
+		}
+		return sb.toString();
 	}
 	//FIXME add  edit页面改成同一个
 }
