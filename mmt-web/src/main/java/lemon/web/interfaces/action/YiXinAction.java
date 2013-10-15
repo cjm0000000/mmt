@@ -58,7 +58,7 @@ public final class YiXinAction extends APIConfigAction {
 
 	@Override
 	protected String getFilterURL() {
-		return "yixinGW/";
+		return "echat/";
 	}
 
 	@Override

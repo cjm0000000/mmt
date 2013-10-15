@@ -59,7 +59,7 @@ public final class WeiXinAction extends APIConfigAction {
 
 	@Override
 	protected String getFilterURL() {
-		return "weixinGW/";
+		return "weichat/";
 	}
 
 	@Override
