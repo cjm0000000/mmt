@@ -19,13 +19,13 @@ display:block;/*定义为块级；这个属相很重要，没有这个属性，�
 	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<button id="level2-msg-add" type="button" class="btn btn-success btn-md" >
+			<button id="msg-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
-			<button id="level2-msg-edit" type="button" disabled class="btn btn-info btn-md" >
+			<button id="msg-edit" type="button" disabled class="btn btn-info btn-md" >
 				<span class="glyphicon glyphicon-edit"></span> 编 辑
 			</button>
-			<button id="level2-msg-delete" type="button" disabled class="btn btn-danger btn-md" >
+			<button id="msg-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
 		</div>
@@ -34,7 +34,7 @@ display:block;/*定义为块级；这个属相很重要，没有这个属性，�
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th width="5%"><input type="checkbox" title="全选" onclick="checkList(this,'id');btnListener('id', $('#level2-msg-edit'), $('#level2-msg-delete'));"/></th>
+					<th width="5%"><input type="checkbox" title="全选" onclick="checkList(this,'id');btnListener('id', $('#msg-edit'), $('#msg-delete'));"/></th>
 					<th width="35%">关键字</th>
 		            <th width="60%">内容</th>
 				</tr>
@@ -42,7 +42,7 @@ display:block;/*定义为块级；这个属相很重要，没有这个属性，�
 			<tbody>
 			#foreach($msg in $page.msgList)
 				<tr>
-		    		<td><input type="checkbox" value="$!msg.id" name="id" onclick="btnListener('id',$('#level2-msg-edit'), $('#level2-msg-delete'));"/></td>
+		    		<td><input type="checkbox" value="$!msg.id" name="id" onclick="btnListener('id',$('#msg-edit'), $('#msg-delete'));"/></td>
 		       		<td>$!msg.key</td>
 		  			<td>
 		  				<span class="message-value" data-toggle="popover" title="" data-content="$!msg.value" data-original-title="">$!msg.value</span>
@@ -55,12 +55,12 @@ display:block;/*定义为块级；这个属相很重要，没有这个属性，�
 		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
 	</div>
 </div>
-<div id="msg-level2-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<div id="msg-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/modal_tips_init.js"></script>
-<script src="#{getContextPath}js/manage/message/level2.js"></script>
+<script src="#{getContextPath}js/manage/message/msg.js"></script>
 <script type="text/javascript">
 var url_showPage 	= "#{getContextPath}webservices/message/level2/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/message/level2/save";

@@ -120,7 +120,7 @@ public abstract class MessageAction extends AdminNavAction {
 		Map<String, Object>	param = new HashMap<>();
 		param.put("msg", mb);
 		param.put("title", title);
-		return new ModelAndView(getAddEditView(), "param", param);
+		return new ModelAndView("manage/message/msg-add-edit", "param", param);
 	}
 	
 	/**

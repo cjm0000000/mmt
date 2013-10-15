@@ -1,13 +1,13 @@
 $(function() {
-	$modal = $('#msg-level2-ajax-modal');
+	$modal = $('#msg-ajax-modal');
 	
 	//监听加载添加页面事件
-	$('#level2-msg-add').on('click', function(){
+	$('#msg-add').on('click', function(){
 		loadPage(url_showPage, {id:0}, $modal);
 	});
 	
 	//监听加载编辑页面事件
-	$('#level2-msg-edit').on('click', function(){
+	$('#msg-edit').on('click', function(){
 		var id = getSelectedValues('id');
 		loadPage(url_showPage, {id : id}, $modal);
 	});
@@ -23,7 +23,7 @@ $(function() {
 	});
 	
 	//监听删除事件
-	$('#level2-msg-delete').on('click', function(){
+	$('#msg-delete').on('click', function(){
 		var id = getSelectedValues("id");
 		mmtPost(url_delete, {id : id}, $('body'), $('.panel-heading'));
 	});
