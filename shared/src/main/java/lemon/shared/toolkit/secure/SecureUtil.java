@@ -14,6 +14,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import lemon.shared.entity.MMTCharset;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,26 +42,20 @@ public final class SecureUtil {
 	public static String aesEncrypt(String content, String encryptKey) {
 		try {
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			kgen.init(128, new SecureRandom(encryptKey.getBytes()));
+			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			secureRandom.setSeed(encryptKey.getBytes());
+			kgen.init(128, secureRandom);
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-			byte[] byteContent = content.getBytes("utf-8");
+			byte[] byteContent = content.getBytes(MMTCharset.LOCAL_CHARSET);
 			cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
 			byte[] result = cipher.doFinal(byteContent);
 			return parseByte2HexStr(result); // 加密
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException
+				| InvalidKeyException | UnsupportedEncodingException
+				| IllegalBlockSizeException | BadPaddingException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -77,7 +73,9 @@ public final class SecureUtil {
 	public static String aesDecrypt(String hexString, String encryptKey) {
 		try {
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			kgen.init(128, new SecureRandom(encryptKey.getBytes()));
+			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			secureRandom.setSeed(encryptKey.getBytes());
+			kgen.init(128, secureRandom);
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
@@ -85,15 +83,9 @@ public final class SecureUtil {
 			cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
 			byte[] result = cipher.doFinal(toByteArray(hexString));
 			return new String(result); // 加密
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException
+				| InvalidKeyException | IllegalBlockSizeException
+				| BadPaddingException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -103,17 +95,16 @@ public final class SecureUtil {
      * @param buf
      * @return
      */
-    public static String parseByte2HexStr(byte buf[]) {
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < buf.length; i++) {
-                    String hex = Integer.toHexString(buf[i] & 0xFF);
-                    if (hex.length() == 1) {
-                            hex = '0' + hex;
-                    }
-                    sb.append(hex.toUpperCase());
-            }
-            return sb.toString();
-    }
+	public static String parseByte2HexStr(byte buf[]) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < buf.length; i++) {
+			String hex = Integer.toHexString(buf[i] & 0xFF);
+			if (hex.length() == 1)
+				hex = '0' + hex;
+			sb.append(hex.toUpperCase());
+		}
+		return sb.toString();
+	}
     
 	/**
 	 * SHA1
@@ -123,11 +114,10 @@ public final class SecureUtil {
 	 */
 	public static String sha1(String str) {
 		try {
-			byte[] digest = MessageDigest.getInstance("SHA1").digest(
-					str.getBytes());
+			byte[] digest = MessageDigest.getInstance("SHA1").digest( str.getBytes());
 			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			logger.error("ERROR:SHA1 faild! " + e.getMessage());
+			logger.error("ERROR:SHA1 faild: " + e.getMessage());
 		}
 		return null;
 	}
@@ -140,11 +130,10 @@ public final class SecureUtil {
 	 */
 	public static String md5(String str) {
 		try {
-			byte[] digest = MessageDigest.getInstance("MD5").digest(
-					str.getBytes());
+			byte[] digest = MessageDigest.getInstance("MD5").digest( str.getBytes());
 			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			logger.error("ERROR:SHA1 faild! " + e.getMessage());
+			logger.error("ERROR:MD5 faild: " + e.getMessage());
 		}
 		return null;
 	}
@@ -154,15 +143,14 @@ public final class SecureUtil {
      * @param length
      * @return
      */
-    public static String generateSecretKey(int length){
-    	SecureRandom rnd = new SecureRandom();
-    	StringBuilder sb = new StringBuilder();
-    	final int keyLen = S.length();
-    	for (int i = 0; i < length; i++) {
+	public static String generateSecretKey(int length) {
+		SecureRandom rnd = new SecureRandom();
+		StringBuilder sb = new StringBuilder();
+		final int keyLen = S.length();
+		for (int i = 0; i < length; i++)
 			sb.append(S.charAt(rnd.nextInt(keyLen)));
-		}
-    	return sb.toString();
-    }
+		return sb.toString();
+	}
 
 	/**
 	 * byte to hex
@@ -172,14 +160,12 @@ public final class SecureUtil {
 	private static String toHexString(byte[] digest) {
 		String str = "";
 		String tempStr = "";
-
 		for (int i = 0; i < digest.length; i++) {
 			tempStr = (Integer.toHexString(digest[i] & 0xff));
-			if (tempStr.length() == 1) {
+			if (tempStr.length() == 1)
 				str = str + "0" + tempStr;
-			} else {
+			else
 				str = str + tempStr;
-			}
 		}
 		return str.toLowerCase();
 	}
@@ -188,17 +174,18 @@ public final class SecureUtil {
      * @param hexStr
      * @return
      */
-    private static byte[] toByteArray(String hexStr) {
-            if (hexStr.length() < 1)
-                    return null;
-            byte[] result = new byte[hexStr.length()/2];
-            for (int i = 0;i< hexStr.length()/2; i++) {
-                    int high = Integer.parseInt(hexStr.substring(i*2, i*2+1), 16);
-                    int low = Integer.parseInt(hexStr.substring(i*2+1, i*2+2), 16);
-                    result[i] = (byte) (high * 16 + low);
-            }
-            return result;
-    }
+	private static byte[] toByteArray(String hexStr) {
+		if (hexStr.length() < 1)
+			return null;
+		byte[] result = new byte[hexStr.length() / 2];
+		for (int i = 0; i < hexStr.length() / 2; i++) {
+			int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
+			int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2),
+					16);
+			result[i] = (byte) (high * 16 + low);
+		}
+		return result;
+	}
 	
 	public static void main(String[] args){
         String content = "pass";
