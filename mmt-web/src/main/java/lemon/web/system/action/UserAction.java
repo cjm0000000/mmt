@@ -99,10 +99,8 @@ public final class UserAction extends AdminNavAction {
 	public String save(@Valid User user, BindingResult result) {
 		if(user == null)
 			return sendJSONError("参数不能为空。");
-		if(result.hasErrors()){
-			//TODO 1. 需要做validation；
+		if(result.hasErrors())
 			return sendJSONError(result.getFieldError().getDefaultMessage());
-		}
 		if(user.getUser_id() <= 0){
 			user.setStatus(Status.AVAILABLE);
 			//生成密钥
@@ -129,7 +127,7 @@ public final class UserAction extends AdminNavAction {
 	 * @param user_id
 	 * @return
 	 */
-	@RequestMapping(value="delete", method = RequestMethod.POST)
+	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String delete(String user_id) {
 		if (user_id == null || "".equals(user_id))

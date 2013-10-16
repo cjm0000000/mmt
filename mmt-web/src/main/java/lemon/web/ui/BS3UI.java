@@ -51,7 +51,7 @@ public class BS3UI {
 
 	private static String template(String type, String content) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div class=\"").append(type).append("\">");
+		sb.append("<div class=\"json-result ").append(type).append("\">");
 		sb.append(content);
 		sb.append("</div>");
 		return sb.toString();

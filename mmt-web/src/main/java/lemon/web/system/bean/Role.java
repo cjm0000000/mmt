@@ -1,5 +1,11 @@
 package lemon.web.system.bean;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lemon.shared.entity.Status;
 
 /**
@@ -10,9 +16,13 @@ import lemon.shared.entity.Status;
  */
 public class Role {
 	private int role_id;
+	@NotEmpty(message = "角色名称不能为空")
+	@Length(max = 30, min = 2, message = "角色名称长度必须在 2 - 30 位之间")
 	private String role_name;
 	private String role_desc;
 	private Status status;
+	@Max(value=9999,message="排序号不能超过9999.")
+	@Min(value=0,message="排序号不能小于0.")
 	private int sort;
 	private Status reloadable;
 	

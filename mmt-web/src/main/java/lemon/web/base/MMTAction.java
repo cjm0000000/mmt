@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lemon.web.global.JSONResult;
 import lemon.web.global.MMTException;
+import lemon.web.ui.BS3UI;
 
 /**
  * MMT base action
@@ -65,7 +66,7 @@ public class MMTAction {
 	 * @return
 	 */
 	protected String sendJSONMsg(String msg){
-		return prepareJSON(true, msg);
+		return prepareJSON(true, BS3UI.success(msg));
 	}
 	
 	/**
@@ -74,7 +75,7 @@ public class MMTAction {
 	 * @return
 	 */
 	protected String sendJSONError(String error){
-		return prepareJSON(false, error);
+		return prepareJSON(false, BS3UI.danger(error));
 	}
 	
 	private String prepareJSON(boolean success, String message){

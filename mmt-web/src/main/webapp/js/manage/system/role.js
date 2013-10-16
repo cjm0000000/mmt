@@ -20,11 +20,16 @@ $(function() {
 			role_desc	: $('#role_desc').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
+		mmtPost(url_save, params_save, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
 	$('#role-delete').on('click', function(){
+		$("#role-confirm-modal").modal();
+	});
+	
+	//确认删除
+	$("#role-confirm-modal").on('click', '.confirm-delete', function(){
 		var role_id = getSelectedValues("role_id");
 		mmtPost(url_delete, {role_id:role_id}, $('body'), $('.panel-heading'));
 	});

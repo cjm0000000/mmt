@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
@@ -14,10 +15,10 @@ import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMapper;
-import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,9 +82,11 @@ public final class RoleAction extends AdminNavAction {
 	 */
 	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(Role role) {
+	public String save(@Valid Role role, BindingResult br) {
 		if(role == null)
-			return BS3UI.danger("添加失败：角色信息不全。");
+			return sendJSONError("添加失败 ：  角色信息不全。");
+		if(br.hasErrors())
+			return sendJSONError(br.getFieldError().getDefaultMessage());
 		int result = 0;
 		if(role.getRole_id() <= 0){
 			role.setReloadable(Status.AVAILABLE);
@@ -92,8 +95,8 @@ public final class RoleAction extends AdminNavAction {
 		}else
 			result = roleMapper.update(role);
 		if(result == 0)
-			return BS3UI.danger("保存失败。");
-		return BS3UI.success("保存成功。");
+			return sendJSONError("角色信息保存失败。");
+		return sendJSONMsg("角色信息保存成功。");
 	}
 	
 	/**
@@ -106,13 +109,13 @@ public final class RoleAction extends AdminNavAction {
 	@ResponseBody
 	public String setAuthority(int role_id, String menu_id){
 		if (role_id <= 0 || menu_id == null || "".equals(menu_id))
-			return BS3UI.danger("权限设置失败。");
+			return sendJSONError("角色权限设置失败。");
 		String[] menus = menu_id.split(",");
 		int result1 = roleMapper.deleteRoleAuthority(role_id);
 		int result2 = roleMapper.setRoleAuthority(role_id, menus);
 		if (result1 == 0 || result2 == 0)
-			return BS3UI.danger("权限设置失败。");
-		return BS3UI.success("权限设置成功。");
+			return sendJSONError("角色权限设置失败。");
+		return sendJSONMsg("角色权限设置成功。");
 	}
 	
 	/**
@@ -126,8 +129,8 @@ public final class RoleAction extends AdminNavAction {
 		String[] ids = role_id.split(",");
 		int result = roleMapper.batchDelete(ids);
 		if(result == 0)
-			return BS3UI.danger("删除失败。");
-		return BS3UI.success("删除成功。");
+			return sendJSONError("角色信息删除失败。");
+		return sendJSONMsg("角色信息删除成功。");
 	}
 	
 	/**

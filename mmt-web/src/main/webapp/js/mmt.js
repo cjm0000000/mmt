@@ -94,20 +94,19 @@ function loadPage(url, params, target){
 function mmtPost(url, params, target, tipsTarget){
 	if(!target)
 		target = $('body');
-	if(!tipsTarget)
-		tipsTarget = target;
 	target.modal('loading');
 	setTimeout(function(){
 		$.post(url, params,function(data){
 			var result = eval("("+data+")");
 			if(result.success){
+				if(tipsTarget)
+					tipsTarget.prepend(result.msg);
 				setTimeout("document.location.reload()",500);
 			}else{
 				if($('.json-result'))
 					$('.json-result').remove();
 				target.modal('loading');
-				tipsTarget.prepend('<div class="json-result alert alert-danger fade in">' + result.msg +
-			          '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				target.prepend(result.msg);
 			}
 	    });
 		

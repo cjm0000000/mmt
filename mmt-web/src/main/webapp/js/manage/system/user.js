@@ -1,6 +1,5 @@
 $(function() {
 	$modal = $('#user-ajax-modal');
-	//$modal.css({'width','600px'});
 	//监听加载添加页面事件
 	$('#user-add').on('click', function(){
 		loadPage(url_showPage, {user_id:0}, $modal);
@@ -40,8 +39,13 @@ $(function() {
 	
 	//监听删除事件
 	$('#user-delete').on('click', function(){
+		$("#user-confirm-modal").modal();
+	});
+	
+	//确认删除
+	$("#user-confirm-modal").on('click', '.confirm-delete', function(){
 		var user_id = getSelectedValues("user_id");
-		mmtPost(url_delete, {user_id:user_id}, $('body'), $('.panel-heading'));
+		mmtPost(url_delete, {user_id:user_id}, $('.table'), $('.panel-heading'));
 	});
 	
 	//监听Switch按钮
