@@ -98,10 +98,10 @@ public final class UserAction extends AdminNavAction {
 	@ResponseBody
 	public String save(@Valid User user, BindingResult result) {
 		if(user == null)
-			return "参数不能为空。";
+			return sendJSONError("参数不能为空。");
 		if(result.hasErrors()){
 			//TODO 1. 需要做validation；
-			return result.getFieldError().getDefaultMessage();
+			return sendJSONError(result.getFieldError().getDefaultMessage());
 		}
 		if(user.getUser_id() <= 0){
 			user.setStatus(Status.AVAILABLE);
@@ -121,7 +121,7 @@ public final class UserAction extends AdminNavAction {
 		}else{
 			userMapper.updateUser(user);
 		}
-		return "\u00ef\u00bb\u00bf\u00e4\u00bf\u009d\u00e5\u00ad\u0098\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		return sendJSONMsg("用户信息保存成功。");
 	}
 	
 	/**
@@ -133,10 +133,10 @@ public final class UserAction extends AdminNavAction {
 	@ResponseBody
 	public String delete(String user_id) {
 		if (user_id == null || "".equals(user_id))
-			return "\u00ef\u00bb\u00bf\u00e7\u0094\u00a8\u00e6\u0088\u00b7\u00e4\u00b8\u008d\u00e5\u00ad\u0098\u00e5\u009c\u00a8\u00ef\u00bc\u008c\u00e6\u0097\u00a0\u00e6\u00b3\u0095\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e3\u0080\u0082";
+			return sendJSONError("删除失败： 用户不存在。 ");
 		String[] userIds = user_id.split(",");
 		userMapper.deleteUser(userIds);
-		return "\u00ef\u00bb\u00bf\u00e5\u0088\u00a0\u00e9\u0099\u00a4\u00e6\u0088\u0090\u00e5\u008a\u009f\u00e3\u0080\u0082";
+		return sendJSONMsg("用户删除成功。");
 	}
 	
 	/**

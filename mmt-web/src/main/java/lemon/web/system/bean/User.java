@@ -23,7 +23,6 @@ import lemon.shared.entity.Status;
 public class User implements UserDetails {
 	private static final long serialVersionUID = -2139877941379861819L;
 	private int user_id;
-	@NotEmpty(message = "密码不能为空")
 	private String password;
 	@NotEmpty(message = "用户名不能为空")
 	@Length(max = 30, min = 3, message = "用户名长度必须在 3 - 30 位之间")

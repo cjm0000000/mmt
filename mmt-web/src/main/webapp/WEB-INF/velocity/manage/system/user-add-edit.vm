@@ -3,7 +3,6 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title">#if($result.user.user_id == 0)<span class="glyphicon glyphicon-plus-sign"></span> 添加#else<span class="glyphicon glyphicon-edit"></span> 编辑#end用户</h4>
 </div>
-<div class="modal-pre-body" style="padding:10px;"></div>
 <div class="modal-body">
 	<input type="hidden" id="user_id" value="$!result.user.user_id" />
 	<div class="well">
@@ -38,6 +37,12 @@
 			<label for="password" class="col-lg-3 control-label" style="padding:6px;">密 码</label>
 			<div class="col-lg-9">
 				<input type="password" class="form-control" id="password" name="password" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="repassword" class="col-lg-3 control-label" style="padding:6px;">确认密码</label>
+			<div class="col-lg-9">
+				<input type="password" class="form-control" id="repassword" name="repassword" />
 			</div>
 		</div>
 		#end

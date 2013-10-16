@@ -1,6 +1,6 @@
 $(function() {
 	$modal = $('#user-ajax-modal');
-	
+	//$modal.css({'width','600px'});
 	//监听加载添加页面事件
 	$('#user-add').on('click', function(){
 		loadPage(url_showPage, {user_id:0}, $modal);
@@ -14,6 +14,15 @@ $(function() {
 	
 	//监听保存数据事件
 	$modal.on('click', '.save', function(){
+		if($('#password').val() !== $('#repassword').val()){
+			if($('.json-result'))
+				$('.json-result').remove();
+			$modal.find('.modal-body')
+	        .prepend('<div class="json-result alert alert-info fade in">' +
+	                '两次输入的密码不一致。<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+	              '</div>');
+			return;
+		}
 		var params_save = {
 			user_id		: $('#user_id').val(),
 			username	: $('#username').val(),
@@ -26,7 +35,7 @@ $(function() {
 			role_id		: $('#role_id').val(),
 			cust_id		: $('#cust_id').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
+		mmtPost(url_save, params_save, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
