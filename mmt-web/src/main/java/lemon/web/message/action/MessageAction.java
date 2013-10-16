@@ -171,5 +171,4 @@ public abstract class MessageAction extends AdminNavAction {
 		}
 		return sb.toString();
 	}
-	//FIXME add  edit页面改成同一个
 }

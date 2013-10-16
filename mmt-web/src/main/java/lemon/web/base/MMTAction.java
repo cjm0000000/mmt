@@ -1,7 +1,10 @@
 package lemon.web.base;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.web.servlet.ModelAndView;
 
+import lemon.web.global.JSONResult;
 import lemon.web.global.MMTException;
 
 /**
@@ -55,4 +58,28 @@ public class MMTAction {
 	protected ModelAndView sendMsg(String msg){
 		return new ModelAndView("msg","msg",msg);
 	}
+	
+	/**
+	 * 发送JSON提示消息
+	 * @param msg
+	 * @return
+	 */
+	protected String sendJSONMsg(String msg){
+		return prepareJSON(true, msg);
+	}
+	
+	/**
+	 * 发送JSON错误消息
+	 * @param error
+	 * @return
+	 */
+	protected String sendJSONError(String error){
+		return prepareJSON(false, error);
+	}
+	
+	private String prepareJSON(boolean success, String message){
+		JSONResult result = new JSONResult(success, message);
+		return JSONObject.fromObject(result).toString();
+	}
+	
 }
