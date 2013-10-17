@@ -11,6 +11,7 @@ $(function() {
 	
 	//监听保存数据事件
 	$(".yx-config").on('click', function(){
+		$('.yx-config').attr('disabled',true);
 		var params_save = {
 			apiStatus	: document.getElementById('yxservice').checked ? 'true' : 'false',
 			cust_id		: $('#cust_id').val(),

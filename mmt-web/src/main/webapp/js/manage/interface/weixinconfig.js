@@ -20,6 +20,7 @@ $(function() {
 	
 	//监听保存数据事件
 	$(".wx-config").on('click', function(){
+		$('.wx-config').attr('disabled',true);
 		var params_save = {
 			apiStatus	: document.getElementById('wxservice').checked ? 'true' : 'false',
 			cust_id		: $('#cust_id').val(),
