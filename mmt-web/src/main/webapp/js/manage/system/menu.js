@@ -21,7 +21,7 @@ $(function() {
 			menuico		: $('#menuico').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'));
+		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
@@ -34,5 +34,4 @@ $(function() {
 		var menu_id = getSelectedValues("menu_id");
 		mmtPost(url_delete, {menu_id:menu_id}, $('body'), $('.text-left'));
 	});
-	
 });

@@ -2,7 +2,6 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> 设置权限</h4>
 </div>
-<div class="modal-authority-pre-body" style="padding-left:10px;padding-right:10px;"></div>
 <div class="modal-body">
 	<table class="table">
 		<thead>

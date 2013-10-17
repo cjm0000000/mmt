@@ -34,7 +34,7 @@ $(function() {
 			role_id		: $('#role_id').val(),
 			cust_id		: $('#cust_id').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'));
+		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件

@@ -20,7 +20,7 @@ $(function() {
 			role_desc	: $('#role_desc').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'));
+		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
@@ -43,6 +43,6 @@ $(function() {
 	//监听设置权限事件
 	$modal.on('click', '.authority-config', function(){
 		var menu_id = getSelectedValues("menu_id");
-		mmtPost(url_authoritySet, {menu_id:menu_id,role_id:this.value}, $modal.find('.modal-body'), $('.modal-authority-pre-body'));
+		mmtPost(url_authoritySet, {menu_id:menu_id,role_id:this.value}, $modal, $modal.find('.modal-body'));
 	});
 });

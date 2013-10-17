@@ -108,12 +108,14 @@ public final class RoleAction extends AdminNavAction {
 	@RequestMapping(value="set-authority", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String setAuthority(int role_id, String menu_id){
-		if (role_id <= 0 || menu_id == null || "".equals(menu_id))
+		if (role_id <= 0 || menu_id == null)
 			return sendJSONError("角色权限设置失败。");
-		String[] menus = menu_id.split(",");
-		int result1 = roleMapper.deleteRoleAuthority(role_id);
-		int result2 = roleMapper.setRoleAuthority(role_id, menus);
-		if (result1 == 0 || result2 == 0)
+		int result = roleMapper.deleteRoleAuthority(role_id);
+		if (!"".equals(menu_id)) {
+			String[] menus = menu_id.split(",");
+			result = result | roleMapper.setRoleAuthority(role_id, menus);
+		}
+		if (result == 0)
 			return sendJSONError("角色权限设置失败。");
 		return sendJSONMsg("角色权限设置成功。");
 	}
