@@ -26,5 +26,7 @@
 		<mapper resource="dao/system/MenuMapper.xml" />
 		<mapper resource="dao/system/RoleMapper.xml" />
 		<mapper resource="dao/system/UserMapper.xml" />
+		<!-- 警告：不要添加下面这个配置，如果你不需要用自定义菜单 -->
+		<mapper resource="dao/customer/CustomMenuMapper.xml" />
 	</mappers>
 </configuration>
