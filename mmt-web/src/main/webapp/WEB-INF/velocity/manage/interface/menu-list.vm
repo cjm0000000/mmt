@@ -15,6 +15,12 @@
 					<button id="menu-delete" type="button" disabled="true" class="btn btn-danger btn-md" >
 						<span class="glyphicon glyphicon-trash"></span> 删 除
 					</button>
+					<button type="button" class="btn btn-primary btn-md" >
+						<span class="glyphicon glyphicon-share"></span> 同步到微信
+					</button>
+					<button  type="button" class="btn btn-primary btn-md" >
+						<span class="glyphicon glyphicon-share"></span> 同步到易信
+					</button>
             	</div>
 			</div>
 		</div>
@@ -40,9 +46,11 @@
 					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
 			  		<td>
 			  			#if($menu.menulevcod == 2)
-			  				&nbsp;&nbsp;&nbsp;&nbsp;
+			  				&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span>&nbsp;
+			  			#else
+			  				<span class="glyphicon glyphicon-tags"></span>&nbsp;
 			  			#end
-			  			<span class="$!menu.menuico"></span> $!menu.name
+			  			$!menu.name
 			  		</td>
 			  		<td>$!menu.type</td>
 			  		<td>$!menu.key</td>

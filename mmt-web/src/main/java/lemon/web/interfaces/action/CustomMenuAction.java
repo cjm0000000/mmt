@@ -34,8 +34,18 @@ import org.springframework.web.servlet.ModelAndView;
 public final class CustomMenuAction extends AdminNavAction {
 	/** 虚拟根目录ID */
 	private static final int VIRTUAL_ROOT_MENU_ID = -5743;
+	private static final List<String> MENU_TYPE = new ArrayList<>(2);
+	private static final CustomMenu VIRTUAL_MENU = new CustomMenu();
 	@Autowired
 	private CustomMenuMapper customMenuMapper;
+	
+	static{
+		MENU_TYPE.add("click");
+		MENU_TYPE.add("view");
+		VIRTUAL_MENU.setMenu_id(VIRTUAL_ROOT_MENU_ID);
+		VIRTUAL_MENU.setMenulevcod((byte) 0);
+		VIRTUAL_MENU.setName("请选择上级菜单");
+	}
 
 	/**
 	 * 显示菜单列表[无需分页]
@@ -75,7 +85,7 @@ public final class CustomMenuAction extends AdminNavAction {
 			sendError("请先登录。");
 		CustomMenu supMenu;
 		if(menu.getSupmenucode() == VIRTUAL_ROOT_MENU_ID)
-			supMenu = virtualMenu();
+			supMenu = VIRTUAL_MENU;
 		else
 			supMenu = customMenuMapper.getMenu(menu.getSupmenucode());
 		if(supMenu == null)
@@ -126,7 +136,7 @@ public final class CustomMenuAction extends AdminNavAction {
 			sendError("请先登录。");
 		// 查询上级菜单
 		List<CustomMenu> pmList = customMenuMapper.getMenuListByLevel(user.getCust_id(), (byte) 1);
-		pmList.add(0, virtualMenu());
+		pmList.add(0, VIRTUAL_MENU);
 		// 查询当前菜单
 		CustomMenu menu = null;
 		if (menu_id > 0)
@@ -136,7 +146,22 @@ public final class CustomMenuAction extends AdminNavAction {
 		Map<String, Object> result = new HashMap<>();
 		result.put("pmList", pmList);
 		result.put("menu", menu);
+		result.put("menuType", MENU_TYPE);
 		return new ModelAndView(getAddEditView(), "result", result);
+	}
+	
+	@RequestMapping(value = "sync_menu_wx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String syncMenu2WX(HttpSession session){
+		//FIXME 把自定义菜单同步到微信
+		return null;
+	}
+	
+	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String syncMenu2YX(HttpSession session){
+		//FIXME 把自定义菜单同步到易信
+		return null;
 	}
 
 	@Override
@@ -185,18 +210,6 @@ public final class CustomMenuAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 生成一个虚拟的上级菜单
-	 * @return
-	 */
-	private CustomMenu virtualMenu(){
-		CustomMenu menu = new CustomMenu();
-		menu.setMenu_id(VIRTUAL_ROOT_MENU_ID);
-		menu.setMenulevcod((byte) 0);
-		menu.setName("请选择上级菜单");
-		return menu;
-	}
-	
-	/**
 	 * 生成每个客户唯一的KEY
 	 * @param cust_id
 	 * @return
@@ -209,5 +222,5 @@ public final class CustomMenuAction extends AdminNavAction {
 			else key = UUID.randomUUID().toString();
 		}
 	}
-
+	
 }
