@@ -21,12 +21,18 @@ $(function() {
 			menuico		: $('#menuico').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
+		mmtPost(url_save, params_save, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
 	$('#menu-delete').on('click', function(){
+		$("#menu-confirm-modal").modal();
+	});
+	
+	//确认删除
+	$("#menu-confirm-modal").on('click', '.confirm-delete', function(){
 		var menu_id = getSelectedValues("menu_id");
 		mmtPost(url_delete, {menu_id:menu_id}, $('body'), $('.text-left'));
 	});
+	
 });

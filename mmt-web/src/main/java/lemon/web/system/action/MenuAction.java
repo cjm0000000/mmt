@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.MenuMapper;
-import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,10 +63,12 @@ public final class MenuAction extends AdminNavAction {
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(Menu menu) {
+	public String save(@Valid Menu menu, BindingResult br) {
 		Menu supMenu = menuMapper.getMenu(menu.getSupmenucode());
 		if(supMenu == null)
-			return BS3UI.danger("保存失败： 菜单信息不完整。");
+			return sendJSONError("保存失败： 菜单信息不完整。");
+		if(br.hasErrors())
+			return sendJSONError(br.getFieldError().getDefaultMessage());
 		String lev = String.valueOf(Integer.parseInt(supMenu.getMenulevcod())+1);
 		menu.setMenulevcod(lev);
 		int result = 0;
@@ -74,9 +77,9 @@ public final class MenuAction extends AdminNavAction {
 		else
 			result = menuMapper.editMenu(menu);
 		if(result == 0)
-			return BS3UI.danger("保存失败。");
+			return sendJSONError("菜单保存失败。");
 		else
-			return BS3UI.success("保存成功。");
+			return sendJSONMsg("菜单保存成功。");
 	}
 	
 	/**
@@ -90,9 +93,9 @@ public final class MenuAction extends AdminNavAction {
 		String[] ids = menu_id.split(",");
 		int result = menuMapper.deleteMenu(ids);
 		if (result == 0)
-			return BS3UI.danger("保存失败。");
+			return sendJSONError("菜单删除失败。");
 		else
-			return BS3UI.success("保存成功。");
+			return sendJSONMsg("菜单删除成功。");
 	}
 	
 	/**

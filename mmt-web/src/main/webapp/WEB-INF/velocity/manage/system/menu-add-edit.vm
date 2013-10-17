@@ -3,7 +3,6 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> #if($result.menu.menu_id == 0)添加#else编辑#end菜单</h4>
 </div>
-<div class="modal-pre-body" style="padding:10px;"></div>
 <div class="modal-body">
 	<input type="hidden" id="menu_id" value="$!result.menu.menu_id" />
 	<div class="well">
