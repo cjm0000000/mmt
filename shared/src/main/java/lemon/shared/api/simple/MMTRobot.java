@@ -25,7 +25,7 @@ public class MMTRobot {
 	 */
 	public String reply(int cust_id, String msg) {
 		if(null == msg || msg.equals(""))
-			return sendWelcome();
+			return null;
 		String replyMsg;
 		// 绝对匹配，如果匹配到则返回
 		replyMsg = getL1Msg(cust_id, msg);
@@ -39,7 +39,7 @@ public class MMTRobot {
 		replyMsg = getL3Msg(msg);
 		if (null != replyMsg)
 			return replyMsg;
-		return sendWelcome();
+		return null;
 	}
 
 	/**
@@ -74,12 +74,4 @@ public class MMTRobot {
 			msgBeanMapper.getL3Msg(msg).getValue();
 	}
 	
-	/**
-	 * 发送欢迎消息
-	 * @return
-	 */
-	private String sendWelcome(){
-		//TODO 发送欢迎消息
-		return null;
-	}
 }
