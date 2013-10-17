@@ -7,11 +7,10 @@ VALUES (1,'MMT消息服务平台','1',0,' ',' ',0),
 (5,'用户管理','3',2,'system/user','glyphicon glyphicon-user',1),
 (6,'角色管理','3',2,'system/role','glyphicon glyphicon-lock',2),
 (7,'菜单管理','3',2,'system/menu','glyphicon glyphicon-list',3),
-(8,'微信自定义菜单','3',3,'','glyphicon glyphicon-th-list',2),
 (9,'客户信息管理','3',4,'customer/information','glyphicon glyphicon-user',1),
 (10,'微信接口配置','3',3,'interface/weixinconfig','glyphicon glyphicon-tag',1),
-(11,'易信接口配置','3',3,'interface/yixinconfig','glyphicon glyphicon-tag',3),
-(12,'易信自定义菜单','3',3,'','glyphicon glyphicon-th-list',4),
+(11,'易信接口配置','3',3,'interface/yixinconfig','glyphicon glyphicon-tag',2),
+(12,'自定义菜单','3',3,'interface/menu','glyphicon glyphicon-th-list',3),
 (13,'一级响应信息','3',15,'message/level1','glyphicon glyphicon-leaf',1),
 (14,'二级响应信息','3',15,'message/level2','glyphicon glyphicon-leaf',2),
 (15,'消息库管理','2',1,'message','glyphicon glyphicon-tint',4),
@@ -34,4 +33,4 @@ VALUES (1,'EncryptKey','uziV2+-1FkVt)gkfuBsFsR3UgWvagl$yLRFfPbdw_)-x%9-F-W3qLg5u
 
 #权限信息
 INSERT INTO `system_role_menu` (`role_id`,`menu_id`) 
-VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16);
+VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16);
