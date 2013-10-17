@@ -19,11 +19,16 @@ $(function() {
 			cust_name	: $('#cust_name').val(),
 			memo		: $('#memo').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
+		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
 	$('#cust-delete').on('click', function(){
+		$("#cust-confirm-modal").modal();
+	});
+	
+	//确认删除
+	$("#cust-confirm-modal").on('click', '.confirm-delete', function(){
 		var cust_id = getSelectedValues("cust_id");
 		mmtPost(url_delete, {cust_id:cust_id}, $('body'), $('.panel-heading'));
 	});

@@ -2,6 +2,9 @@ package lemon.shared.customer.bean;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lemon.shared.entity.Status;
 
 /**
@@ -12,6 +15,8 @@ import lemon.shared.entity.Status;
  */
 public class Customer {
 	private int cust_id;
+	@NotEmpty(message="客户名称不能为空")
+	@Length(max = 20, min = 2, message = "客户名称长度必须在 2 - 20 位之间")
 	private String cust_name;
 	private String memo;
 	private Status status;

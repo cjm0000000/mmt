@@ -106,9 +106,8 @@ function mmtPost(url, params, target, tipsTarget){
 				if($('.json-result'))
 					$('.json-result').remove();
 				target.modal('loading');
-				target.prepend(result.msg);
+				tipsTarget.prepend(result.msg);
 			}
 	    });
-		
 	}, 500);
 }
