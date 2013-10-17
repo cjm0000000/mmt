@@ -1,14 +1,11 @@
 package lemon.shared.toolkit.weather.bean;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
  * 存放天气信息
  * @author lemon
  * @version 1.0
  *
  */
-@XStreamAlias("weatherinfo")
 public class WeatherInfo {
 	private String city;
 	private String city_en;

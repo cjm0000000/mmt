@@ -2,16 +2,15 @@ package lemon.shared.toolkit.weather;
 
 import java.io.IOException;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.weather.bean.City;
 import lemon.shared.toolkit.weather.bean.WeatherInfo;
 import lemon.shared.toolkit.weather.mapper.CityMapper;
-import lemon.shared.toolkit.xstream.XStreamHelper;
 
 /**
  * 天气查询API<br>
@@ -45,10 +44,8 @@ public final class Weather {
 		if(city == null)
 			return null;
 		String weatherUrl = SEARCH_WEATHER_URL.replaceAll("#cityid#", city.getCitycode());
-		
-		XStream xStream = XStreamHelper.createJSONXStream();
-		xStream.processAnnotations(WeatherInfo.class);
-		return (WeatherInfo) xStream.fromXML(HttpConnector.get(weatherUrl));
+		JSONObject json = JSONObject.fromObject(HttpConnector.get(weatherUrl));
+		return (WeatherInfo) JSONObject.toBean(json.getJSONObject("weatherinfo"), WeatherInfo.class);
 	}
 
 	public void initCity() throws IOException {

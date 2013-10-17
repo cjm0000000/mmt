@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,7 +16,6 @@ import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.request.bean.Token;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.secure.SecureUtil;
-import lemon.shared.toolkit.xstream.XStreamHelper;
 
 /**
  * Abstract MMT API
@@ -57,12 +58,12 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		Map<String, Object> params = getAccessTokenRequestParams(mmt_token);
 		//获取结果
 		String result = HttpConnector.get(url, params);
-		if(result.startsWith("{\"errcode\"")){
-			ReturnCode rCode = (ReturnCode) XStreamHelper.createJSONXStream()
-					.fromXML(addRoot(ReturnCode.class, result));
+		JSONObject jsonObj = JSONObject.fromObject(result);
+		if(jsonObj.get("errcode") != null){
+			ReturnCode rCode = (ReturnCode) JSONObject.toBean(jsonObj, ReturnCode.class);
 			sendError(rCode.getErrmsg());
 		}
-		Token token = (Token) XStreamHelper.createJSONXStream().fromXML(addRoot(Token.class, result));
+		Token token = (Token) JSONObject.toBean(jsonObj, Token.class);
 		return token.getAccess_token();
 	}
 	
@@ -90,17 +91,4 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		return sha1str.equalsIgnoreCase(sa.getSignature());
 	}
 
-	/**
-	 * 为JSON字符串加根节点
-	 * @param clazz
-	 * @param json
-	 * @return
-	 */
-	private String addRoot(Class<?> clazz, String json){
-		StringBuilder sb = new StringBuilder();
-		sb.append("{").append("\"");
-		sb.append(clazz.getName()).append("\"").append(":");
-		sb.append(json).append("}");
-		return sb.toString();
-	}
 }
