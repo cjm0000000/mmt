@@ -1,5 +1,8 @@
 package lemon.shared.message.bean;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * message bean
  * @author lemon
@@ -9,7 +12,11 @@ package lemon.shared.message.bean;
 public class MsgBean {
 	private int id;
 	private int cust_id;
+	@NotEmpty(message="关键字不能为空")
+	@Length(max = 1024, message = "关键字长度不能超过30")
 	private String key;
+	@NotEmpty(message="内容不能为空")
+	@Length(max = 1024, message = "内容长度不能超过1024")
 	private String value;
 	
 	public int getId() {

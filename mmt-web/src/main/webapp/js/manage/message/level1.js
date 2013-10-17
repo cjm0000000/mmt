@@ -9,6 +9,7 @@ $(function() {
 				value	: $('#value'+(key+1)).val()
 			});
 		});
+		$(".level1-save").attr('disabled',true);
 		$.post(url_save, {json:JSON.stringify(result)},function(data){
 			$(".panel-body").prepend(data);
 			setTimeout(function(){

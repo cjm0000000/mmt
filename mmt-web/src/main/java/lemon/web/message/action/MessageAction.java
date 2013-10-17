@@ -16,7 +16,6 @@ import lemon.shared.message.bean.MsgBean;
 import lemon.shared.message.mapper.MsgBeanMapper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
-import lemon.web.ui.BS3UI;
 
 /**
  * 通用消息管理
@@ -141,12 +140,12 @@ public abstract class MessageAction extends AdminNavAction {
 	@ResponseBody
 	public String delete(String id) {
 		if (id == null || "".equals(id))
-			return BS3UI.success("删除失败： 信息不存在。");
+			return sendJSONError("删除失败： 信息不存在。");
 		int result = msgBeanMapper.deleteMsg(id, getLevel());
 		if (0 != result)
-			return BS3UI.success("删除成功。");
+			return sendJSONMsg("删除成功。");
 		else
-			return BS3UI.danger("删除失败。");
+			return sendJSONError("删除失败。");
 	}
 	
 	/**

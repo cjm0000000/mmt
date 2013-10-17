@@ -56,6 +56,15 @@
 	</div>
 </div>
 <div id="msg-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
+<div id="msg-confirm-modal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+  <div class="modal-body">
+    <h4>你确定要删除所选的消息吗？</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-success">取消</button>
+    <button type="button" data-dismiss="modal" class="confirm-delete btn btn-danger"><span class="glyphicon glyphicon-trash"></span> 确认删除</button>
+  </div>
+</div>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
 <script src="#{getContextPath}js/mmt.js"></script>

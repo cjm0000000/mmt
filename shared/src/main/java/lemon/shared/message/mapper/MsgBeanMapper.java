@@ -86,6 +86,18 @@ public interface MsgBeanMapper {
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
 	MsgBean getL2Msg(@Param("cust_id") int cust_id, @Param("key") String key);
+	
+	/**
+	 * 根据KEY获取二级消息<br>
+	 * 严格匹配
+	 * 
+	 * @param cust_id
+	 * @param key
+	 * @return
+	 */
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key`=#{key}")
+	@Lang(RawLanguageDriver.class)
+	MsgBean getL2MsgStrictly(@Param("cust_id") int cust_id, @Param("key") String key);
 
 	/**
 	 * 获取通用消息<br>
@@ -98,6 +110,18 @@ public interface MsgBeanMapper {
 	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
 	MsgBean getL3Msg(@Param("key") String key);
+	
+	/**
+	 * 获取通用消息<br>
+	 * 严格匹配
+	 * 
+	 * @param cust_id
+	 * @param key
+	 * @return
+	 */
+	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key`=#{key}")
+	@Lang(RawLanguageDriver.class)
+	MsgBean getL3MsgStrictly(@Param("key") String key);
 	
 	/**
 	 * 获取一级消息列表

@@ -19,11 +19,16 @@ $(function() {
 			key		: $('#key').val(),
 			value	: $('#value').val()
 	 	};
-		mmtPost(url_save, params_save, $modal.find('.modal-body'), $modal.find('.modal-pre-body'));
+		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
 	$('#msg-delete').on('click', function(){
+		$("#msg-confirm-modal").modal();
+	});
+	
+	//确认删除
+	$("#msg-confirm-modal").on('click', '.confirm-delete', function(){
 		var id = getSelectedValues("id");
 		mmtPost(url_delete, {id : id}, $('body'), $('.panel-heading'));
 	});
