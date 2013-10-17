@@ -21,6 +21,8 @@
 				<prop key="input.encoding">UTF-8</prop>
 				<prop key="output.encoding">UTF-8</prop>
 				<prop key="velocimacro.library">VM_global_library.vm</prop>
+				<prop key="eventhandler.referenceinsertion.class">org.apache.velocity.app.event.implement.EscapeHtmlReference</prop>
+				<prop key="eventhandler.escape.html.match">/.*/</prop>
 			</props>
 		</property>
 	</bean>
