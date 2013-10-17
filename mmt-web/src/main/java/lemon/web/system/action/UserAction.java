@@ -114,8 +114,14 @@ public final class UserAction extends AdminNavAction {
 			item.setValue(secureKey);
 			userConfigMapper.addItem(item);
 			//保存角色信息
-			userMapper.addUserRole(user.getUser_id(), user.getRole_id(),
-					user.getCust_id());
+			userMapper.addUserRole(user.getUser_id(), user.getRole_id(), user.getCust_id());
+			//保存首页配置
+			UserConfig indexConfig = new UserConfig();
+			indexConfig.setUser_id(user.getUser_id());
+			indexConfig.setKey(USER_CUSTOMIZATION_HOME);
+			//TODO 首页配置最好从页面获取
+			indexConfig.setValue("message/level1");
+			userConfigMapper.addItem(indexConfig);
 		}else{
 			userMapper.updateUser(user);
 		}

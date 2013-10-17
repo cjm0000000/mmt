@@ -91,6 +91,7 @@ public class LoginAction extends MMTAction {
 	@RequestMapping(value="/logout")
 	public ModelAndView logout(HttpSession session){
 		session.removeAttribute(TOKEN);
+		session.removeAttribute(USER_CUSTOMIZATION_HOME);
 		return new ModelAndView(VIEW_LOGOUT_PAGE,"msg","您已经成功退出。");
 	}
 	
