@@ -1,4 +1,4 @@
-package lemon.shared;
+package lemon.shared.test.customer;
 
 import static org.junit.Assert.*;
 
@@ -79,7 +79,7 @@ public class CustomerTest {
 		assertNotEquals(0, list.size());
 		
 		int result = custMapper.delete(cust.getCust_id());
-		assertEquals(1, result);
+		assertNotEquals(0, result);
 	}
 	
 	private CustomerService addService(int cust_id){
@@ -89,7 +89,7 @@ public class CustomerTest {
 		service.setExpire_time("0000-00-00 00:00");
 		service.setStatus(Status.AVAILABLE);
 		int result = custMapper.addService(service);
-		assertEquals(1, result);
+		assertNotEquals(0, result);
 		return service;
 	}
 	
@@ -99,7 +99,7 @@ public class CustomerTest {
 		cust.setMemo("MEMO...");
 		cust.setStatus(Status.AVAILABLE);
 		int result = custMapper.addCustomer(cust);
-		assertEquals(1, result);
+		assertNotEquals(0, result);
 		return cust;
 	}
 	
@@ -108,7 +108,7 @@ public class CustomerTest {
 		cust.setMemo(memo);
 		int result = custMapper.updateCustomer(cust);
 		System.out.println("UPD: "+result);
-		assertEquals(1, result);
+		assertNotEquals(0, result);
 	}
 	
 	private List<Customer> list(){
