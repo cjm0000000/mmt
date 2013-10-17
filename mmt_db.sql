@@ -172,9 +172,9 @@ CREATE TABLE `mmt_custom_menu` (
   `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
   `key` varchar(128) NOT NULL DEFAULT '' COMMENT '菜单链接',
   `type` varchar(5) NOT NULL DEFAULT '' COMMENT '类型',
-  `sort` decimal(4,0) DEFAULT '0' COMMENT '排序号',
+  `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='客户自定义菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户自定义菜单表';
 
 #
 # 地区表

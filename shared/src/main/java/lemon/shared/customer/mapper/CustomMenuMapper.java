@@ -52,6 +52,16 @@ public interface CustomMenuMapper {
 	CustomMenu getMenu(int menu_id);
 	
 	/**
+	 * get menu by key and id
+	 * @param cust_id
+	 * @param key
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	CustomMenu getMenuByKey(@Param("cust_id") int cust_id,
+			@Param("key") String key);
+	
+	/**
 	 * get all menu list by customer id
 	 * @param cust_id
 	 * @return

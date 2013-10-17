@@ -37,6 +37,12 @@
 			FROM mmt_custom_menu A
 		WHERE A.menu_id=#{menu_id}
 	</select>
+	<select id="getMenuByKey" resultType="lemon.shared.customer.bean.CustomMenu">
+		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
+			FROM mmt_custom_menu A
+		WHERE A.cust_id=#{cust_id}
+			AND A.`key`=#{key}
+	</select>
 	<select id="getMenuList" parameterType="int" resultType="lemon.shared.customer.bean.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
 			FROM mmt_custom_menu A 
