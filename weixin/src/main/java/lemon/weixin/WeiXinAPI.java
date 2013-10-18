@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
+import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.log.bean.MsgLog;
 import lemon.weixin.log.mapper.WXLogManager;

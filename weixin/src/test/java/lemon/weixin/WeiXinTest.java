@@ -1,6 +1,8 @@
 package lemon.weixin;
 
 import static org.junit.Assert.*;
+import lemon.weixin.config.WeiXin;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

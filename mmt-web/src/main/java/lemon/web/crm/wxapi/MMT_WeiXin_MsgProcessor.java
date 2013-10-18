@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lemon.shared.api.simple.MMTRobot;
-import lemon.weixin.WeiXin;
+import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.message.WeiXinMsgHelper;
 import lemon.weixin.message.bean.Article;

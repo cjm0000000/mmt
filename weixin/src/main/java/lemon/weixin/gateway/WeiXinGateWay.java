@@ -10,7 +10,7 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.api.simple.MMTGateWay;
 import lemon.shared.entity.MMTCharset;
-import lemon.weixin.WeiXin;
+import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
 

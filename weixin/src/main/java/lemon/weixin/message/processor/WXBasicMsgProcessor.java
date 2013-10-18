@@ -2,11 +2,11 @@ package lemon.weixin.message.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lemon.weixin.WeiXin;
 import lemon.weixin.WeiXinException;
 import lemon.weixin.message.WeiXinMsgHelper;
 import lemon.weixin.message.bean.*;
 import lemon.weixin.message.parser.TextMsgParser;
+import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.fans.WeiXinFansManager;
 import lemon.weixin.fans.bean.WeiXinFans;
