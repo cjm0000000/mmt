@@ -4,8 +4,10 @@ import java.security.SecureRandom;
 import java.util.Date;
 
 import lemon.shared.access.bean.SiteAccess;
-import lemon.yixin.bean.log.*;
-import lemon.yixin.dao.YXLogManager;
+import lemon.yixin.log.bean.MsgLog;
+import lemon.yixin.log.bean.SubscribeLog;
+import lemon.yixin.log.bean.UnSubscribeLog;
+import lemon.yixin.log.mapper.YXLogManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

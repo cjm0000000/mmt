@@ -4,10 +4,10 @@ import javax.servlet.http.HttpSession;
 
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.ServiceType;
-import lemon.yixin.YiXin;
-import lemon.yixin.bean.YiXinConfig;
-import lemon.yixin.biz.customer.SimpleYiXinMsgProcessor;
-import lemon.yixin.dao.YXConfigMapper;
+import lemon.yixin.config.YiXin;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.config.mapper.YXConfigMapper;
+import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

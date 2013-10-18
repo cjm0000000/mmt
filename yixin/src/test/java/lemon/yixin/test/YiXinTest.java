@@ -1,7 +1,7 @@
 package lemon.yixin.test;
 
 import static org.junit.Assert.*;
-import lemon.yixin.YiXin;
+import lemon.yixin.config.YiXin;
 
 import org.junit.Before;
 import org.junit.Test;

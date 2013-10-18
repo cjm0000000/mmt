@@ -1,12 +1,19 @@
 package lemon.web.crm.yxapi;
 
 import lemon.shared.api.simple.MMTRobot;
-import lemon.yixin.YiXin;
-import lemon.yixin.bean.YiXinConfig;
-import lemon.yixin.bean.message.*;
-import lemon.yixin.biz.YiXinMsgHelper;
-import lemon.yixin.biz.customer.YXCustBasicMsgProcessor;
-import lemon.yixin.biz.parser.*;
+import lemon.yixin.config.YiXin;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.message.YiXinMsgHelper;
+import lemon.yixin.message.bean.AudioMessage;
+import lemon.yixin.message.bean.EventMessage;
+import lemon.yixin.message.bean.ImageMessage;
+import lemon.yixin.message.bean.LinkMessage;
+import lemon.yixin.message.bean.LocationMessage;
+import lemon.yixin.message.bean.MusicMessage;
+import lemon.yixin.message.bean.TextMessage;
+import lemon.yixin.message.bean.VideoMessage;
+import lemon.yixin.message.parser.TextMsgParser;
+import lemon.yixin.message.processor.YXBasicMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +26,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class MMT_YiXin_MsgProcessor extends YXCustBasicMsgProcessor {
+public class MMT_YiXin_MsgProcessor extends YXBasicMsgProcessor {
 	@Autowired
 	private YiXinMsgHelper msgHelper;
 	@Autowired

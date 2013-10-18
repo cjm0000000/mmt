@@ -10,12 +10,12 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
-import lemon.yixin.YiXin;
-import lemon.yixin.bean.YiXinConfig;
-import lemon.yixin.bean.message.TextMessage;
-import lemon.yixin.biz.YiXinMsgHelper;
-import lemon.yixin.biz.parser.TextMsgParser;
-import lemon.yixin.dao.YXConfigMapper;
+import lemon.yixin.config.YiXin;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.config.mapper.YXConfigMapper;
+import lemon.yixin.message.YiXinMsgHelper;
+import lemon.yixin.message.bean.TextMessage;
+import lemon.yixin.message.parser.TextMsgParser;
 
 import org.jdom2.Document;
 import org.jdom2.Element;

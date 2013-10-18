@@ -10,9 +10,9 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.api.simple.MMTGateWay;
 import lemon.shared.entity.MMTCharset;
-import lemon.yixin.YiXin;
-import lemon.yixin.bean.YiXinConfig;
-import lemon.yixin.dao.YXConfigMapper;
+import lemon.yixin.config.YiXin;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.config.mapper.YXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

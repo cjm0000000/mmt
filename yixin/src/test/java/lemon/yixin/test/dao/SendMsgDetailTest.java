@@ -1,9 +1,14 @@
 package lemon.yixin.test.dao;
 
 import static org.junit.Assert.*;
-import lemon.yixin.bean.message.*;
-import lemon.yixin.biz.parser.*;
-import lemon.yixin.dao.YXSendMsgDetailMapper;
+import lemon.yixin.message.bean.Article;
+import lemon.yixin.message.bean.MusicMessage;
+import lemon.yixin.message.bean.NewsMessage;
+import lemon.yixin.message.bean.TextMessage;
+import lemon.yixin.message.mapper.YXSendMsgDetailMapper;
+import lemon.yixin.message.parser.MusicMsgParser;
+import lemon.yixin.message.parser.NewsMsgParser;
+import lemon.yixin.message.parser.TextMsgParser;
 
 import org.junit.Before;
 import org.junit.Ignore;

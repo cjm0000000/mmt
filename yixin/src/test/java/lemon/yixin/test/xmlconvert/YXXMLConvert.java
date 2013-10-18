@@ -8,7 +8,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import lemon.shared.toolkit.xstream.XStreamHelper;
-import lemon.yixin.bean.message.*;
+import lemon.yixin.message.bean.Article;
+import lemon.yixin.message.bean.EventMessage;
+import lemon.yixin.message.bean.EventType;
+import lemon.yixin.message.bean.ImageMessage;
+import lemon.yixin.message.bean.LinkMessage;
+import lemon.yixin.message.bean.LocationMessage;
+import lemon.yixin.message.bean.MusicMessage;
+import lemon.yixin.message.bean.NewsMessage;
+import lemon.yixin.message.bean.TextMessage;
 
 import com.thoughtworks.xstream.XStream;
 

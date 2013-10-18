@@ -7,8 +7,8 @@ import java.util.List;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
-import lemon.yixin.bean.YiXinConfig;
-import lemon.yixin.dao.YXConfigMapper;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.config.mapper.YXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

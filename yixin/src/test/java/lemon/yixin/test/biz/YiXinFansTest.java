@@ -1,8 +1,8 @@
 package lemon.yixin.test.biz;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.yixin.bean.YiXinFans;
-import lemon.yixin.biz.YiXinFansManager;
+import lemon.yixin.fans.YiXinFansManager;
+import lemon.yixin.fans.bean.YiXinFans;
 
 import org.junit.After;
 import org.junit.Before;
