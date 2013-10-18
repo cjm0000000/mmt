@@ -4,10 +4,10 @@ import java.security.SecureRandom;
 import java.util.Date;
 
 import lemon.shared.access.bean.SiteAccess;
-import lemon.weixin.bean.log.MsgLog;
-import lemon.weixin.bean.log.SubscribeLog;
-import lemon.weixin.bean.log.UnSubscribeLog;
-import lemon.weixin.dao.WXLogManager;
+import lemon.weixin.log.bean.MsgLog;
+import lemon.weixin.log.bean.SubscribeLog;
+import lemon.weixin.log.bean.UnSubscribeLog;
+import lemon.weixin.log.mapper.WXLogManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

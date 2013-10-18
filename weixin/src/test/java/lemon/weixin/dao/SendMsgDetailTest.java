@@ -1,13 +1,14 @@
 package lemon.weixin.dao;
 
 import static org.junit.Assert.*;
-import lemon.weixin.bean.message.Article;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.biz.parser.MusicMsgParser;
-import lemon.weixin.biz.parser.NewsMsgParser;
-import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.message.bean.Article;
+import lemon.weixin.message.bean.MusicMessage;
+import lemon.weixin.message.bean.NewsMessage;
+import lemon.weixin.message.bean.TextMessage;
+import lemon.weixin.message.mapper.WXSendMsgDetailMapper;
+import lemon.weixin.message.parser.MusicMsgParser;
+import lemon.weixin.message.parser.NewsMsgParser;
+import lemon.weixin.message.parser.TextMsgParser;
 
 import org.junit.Before;
 import org.junit.Test;

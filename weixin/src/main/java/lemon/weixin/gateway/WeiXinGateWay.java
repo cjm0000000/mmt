@@ -11,8 +11,8 @@ import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.api.simple.MMTGateWay;
 import lemon.shared.entity.MMTCharset;
 import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.dao.WXConfigMapper;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

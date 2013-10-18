@@ -2,7 +2,7 @@ package lemon.weixin;
 
 import java.util.Date;
 
-import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.message.bean.TextMessage;
 
 public class MessageFactory {
 	

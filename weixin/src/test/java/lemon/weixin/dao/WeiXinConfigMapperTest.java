@@ -7,8 +7,9 @@ import java.util.List;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
-import lemon.weixin.bean.AccountType;
-import lemon.weixin.bean.WeiXinConfig;
+import lemon.weixin.config.bean.AccountType;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

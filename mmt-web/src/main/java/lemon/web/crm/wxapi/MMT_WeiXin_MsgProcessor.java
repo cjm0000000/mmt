@@ -5,22 +5,22 @@ import org.springframework.stereotype.Service;
 
 import lemon.shared.api.simple.MMTRobot;
 import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.bean.message.Article;
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.bean.message.VideoMessage;
-import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.biz.WeiXinMsgHelper;
-import lemon.weixin.biz.customer.WXCustBasicMsgProcessor;
-import lemon.weixin.biz.parser.MusicMsgParser;
-import lemon.weixin.biz.parser.NewsMsgParser;
-import lemon.weixin.biz.parser.TextMsgParser;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.message.WeiXinMsgHelper;
+import lemon.weixin.message.bean.Article;
+import lemon.weixin.message.bean.EventMessage;
+import lemon.weixin.message.bean.ImageMessage;
+import lemon.weixin.message.bean.LinkMessage;
+import lemon.weixin.message.bean.LocationMessage;
+import lemon.weixin.message.bean.MusicMessage;
+import lemon.weixin.message.bean.NewsMessage;
+import lemon.weixin.message.bean.TextMessage;
+import lemon.weixin.message.bean.VideoMessage;
+import lemon.weixin.message.bean.VoiceMessage;
+import lemon.weixin.message.parser.MusicMsgParser;
+import lemon.weixin.message.parser.NewsMsgParser;
+import lemon.weixin.message.parser.TextMsgParser;
+import lemon.weixin.message.processor.WXBasicMsgProcessor;
 
 /**
  * Lemon message test business
@@ -29,7 +29,7 @@ import lemon.weixin.biz.parser.TextMsgParser;
  *
  */
 @Service
-public class MMT_WeiXin_MsgProcessor extends WXCustBasicMsgProcessor {
+public class MMT_WeiXin_MsgProcessor extends WXBasicMsgProcessor {
 	@Autowired
 	private WeiXinMsgHelper msgHelper;
 	@Autowired

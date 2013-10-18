@@ -1,21 +1,21 @@
 package lemon.weixin.dao;
 
 import static org.junit.Assert.*;
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.TextMessage;
-import lemon.weixin.bean.message.VideoMessage;
-import lemon.weixin.bean.message.VoiceMessage;
-import lemon.weixin.biz.WeiXinMsgHelper;
-import lemon.weixin.biz.parser.EventMsgParser;
-import lemon.weixin.biz.parser.ImageMsgParser;
-import lemon.weixin.biz.parser.LinkMsgParser;
-import lemon.weixin.biz.parser.LocationMsgParser;
-import lemon.weixin.biz.parser.TextMsgParser;
-import lemon.weixin.biz.parser.VideoMsgParser;
-import lemon.weixin.biz.parser.VoiceMsgParser;
+import lemon.weixin.message.WeiXinMsgHelper;
+import lemon.weixin.message.bean.EventMessage;
+import lemon.weixin.message.bean.ImageMessage;
+import lemon.weixin.message.bean.LinkMessage;
+import lemon.weixin.message.bean.LocationMessage;
+import lemon.weixin.message.bean.TextMessage;
+import lemon.weixin.message.bean.VideoMessage;
+import lemon.weixin.message.bean.VoiceMessage;
+import lemon.weixin.message.parser.EventMsgParser;
+import lemon.weixin.message.parser.ImageMsgParser;
+import lemon.weixin.message.parser.LinkMsgParser;
+import lemon.weixin.message.parser.LocationMsgParser;
+import lemon.weixin.message.parser.TextMsgParser;
+import lemon.weixin.message.parser.VideoMsgParser;
+import lemon.weixin.message.parser.VoiceMsgParser;
 
 import org.junit.Before;
 import org.junit.Test;

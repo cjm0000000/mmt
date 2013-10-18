@@ -11,15 +11,15 @@ import org.junit.runners.JUnit4;
 
 import lemon.shared.toolkit.xstream.XStreamHelper;
 import lemon.weixin.MessageFactory;
-import lemon.weixin.bean.message.Article;
-import lemon.weixin.bean.message.EventMessage;
-import lemon.weixin.bean.message.EventType;
-import lemon.weixin.bean.message.ImageMessage;
-import lemon.weixin.bean.message.LinkMessage;
-import lemon.weixin.bean.message.LocationMessage;
-import lemon.weixin.bean.message.MusicMessage;
-import lemon.weixin.bean.message.NewsMessage;
-import lemon.weixin.bean.message.TextMessage;
+import lemon.weixin.message.bean.Article;
+import lemon.weixin.message.bean.EventMessage;
+import lemon.weixin.message.bean.EventType;
+import lemon.weixin.message.bean.ImageMessage;
+import lemon.weixin.message.bean.LinkMessage;
+import lemon.weixin.message.bean.LocationMessage;
+import lemon.weixin.message.bean.MusicMessage;
+import lemon.weixin.message.bean.NewsMessage;
+import lemon.weixin.message.bean.TextMessage;
 
 import com.thoughtworks.xstream.XStream;
 

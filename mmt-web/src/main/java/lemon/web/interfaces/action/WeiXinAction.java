@@ -6,9 +6,9 @@ import javax.servlet.http.HttpSession;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.ServiceType;
 import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.biz.customer.SimpleWeiXinMsgProcessor;
-import lemon.weixin.dao.WXConfigMapper;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
+import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

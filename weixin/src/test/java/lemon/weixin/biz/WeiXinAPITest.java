@@ -6,8 +6,9 @@ import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
 import lemon.weixin.WeiXin;
-import lemon.weixin.bean.WeiXinConfig;
-import lemon.weixin.dao.WXConfigMapper;
+import lemon.weixin.WeiXinAPI;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
