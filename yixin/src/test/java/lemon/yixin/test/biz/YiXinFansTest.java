@@ -14,15 +14,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class YiXinFansTest {
-	private YiXinFansManager wxFansManager;
+	private YiXinFansManager yxFansManager;
 	private AbstractApplicationContext acx;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		wxFansManager = acx.getBean(YiXinFansManager.class);
-		assertNotNull(wxFansManager);
+		yxFansManager = acx.getBean(YiXinFansManager.class);
+		assertNotNull(yxFansManager);
 	}
 	
 	@After
@@ -38,9 +38,10 @@ public class YiXinFansTest {
 		YiXinFans fans = new YiXinFans();
 		fans.setCust_id(cust_id);
 		fans.setYxid(wxid);
-		wxFansManager.saveFans(fans);
+		fans.setNick_name("");
+		yxFansManager.saveFans(fans);
 		//disable
-		wxFansManager.disableFans(cust_id, wxid);
+		yxFansManager.disableFans(cust_id, wxid);
 	}
 	
 }

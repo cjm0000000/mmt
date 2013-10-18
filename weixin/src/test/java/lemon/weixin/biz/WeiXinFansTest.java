@@ -38,6 +38,7 @@ public class WeiXinFansTest {
 		WeiXinFans fans = new WeiXinFans();
 		fans.setCust_id(cust_id);
 		fans.setWxid(wxid);
+		fans.setNick_name("");
 		wxFansManager.saveFans(fans);
 		//disable
 		wxFansManager.disableFans(cust_id, wxid);

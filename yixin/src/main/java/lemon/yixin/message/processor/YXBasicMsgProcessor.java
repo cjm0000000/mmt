@@ -241,7 +241,7 @@ public abstract class YXBasicMsgProcessor implements YXMsgProcessor {
 		//save fans
 		YiXinFans fans = new YiXinFans();
 		fans.setCust_id(cfg.getCust_id());
-		fans.setNick_name(null);
+		fans.setNick_name("");
 		fans.setYxid(msg.getFromUserName());
 		wxFansManager.saveFans(fans);
 		//process subscribe business

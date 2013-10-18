@@ -220,7 +220,7 @@ public abstract class WXBasicMsgProcessor implements WXMsgProcessor {
 		//save fans
 		WeiXinFans fans = new WeiXinFans();
 		fans.setCust_id(cfg.getCust_id());
-		fans.setNick_name(null);
+		fans.setNick_name("");
 		fans.setWxid(msg.getFromUserName());
 		wxFansManager.saveFans(fans);
 		//process subscribe business
