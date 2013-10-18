@@ -1,15 +1,15 @@
-package lemon.shared.message.bean;
+package lemon.shared.robotmsg.bean;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * message bean
+ * Robot message bean
  * @author lemon
  * @version 1.0
  *
  */
-public class MsgBean {
+public class RobotMsgBean {
 	private int id;
 	private int cust_id;
 	@NotEmpty(message="关键字不能为空")
@@ -48,9 +48,9 @@ public class MsgBean {
 	public boolean equals(Object obj){
 		if(obj == null)
 			return false;
-		if(!(obj instanceof MsgBean))
+		if(!(obj instanceof RobotMsgBean))
 			return false;
-		MsgBean target = (MsgBean) obj;
+		RobotMsgBean target = (RobotMsgBean) obj;
 		if (key == null)
 			return target.key == null;
 		return key.equals(target.key);

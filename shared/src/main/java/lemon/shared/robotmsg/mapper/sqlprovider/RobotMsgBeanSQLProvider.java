@@ -1,4 +1,4 @@
-package lemon.shared.message.mapper.sqlprovider;
+package lemon.shared.robotmsg.mapper.sqlprovider;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import org.apache.ibatis.jdbc.SQL;
  * @version 1.0
  * 
  */
-public class MsgBeanSQLProvider {
+public class RobotMsgBeanSQLProvider {
 
 	/**
 	 * 提供addMsg的SQL

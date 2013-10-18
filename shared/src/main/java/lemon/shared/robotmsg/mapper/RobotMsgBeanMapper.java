@@ -1,4 +1,4 @@
-package lemon.shared.message.mapper;
+package lemon.shared.robotmsg.mapper;
 
 import java.util.List;
 
@@ -13,54 +13,54 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
-import lemon.shared.message.bean.MsgBean;
-import lemon.shared.message.mapper.sqlprovider.MsgBeanSQLProvider;
+import lemon.shared.robotmsg.bean.RobotMsgBean;
+import lemon.shared.robotmsg.mapper.sqlprovider.RobotMsgBeanSQLProvider;
 
 /**
- * MsgBeanMapper Repository
+ * RobotMsgBeanMapper Repository
  * 
  * @author lemon
  * @version 1.0
  * 
  */
 @Repository
-public interface MsgBeanMapper {
+public interface RobotMsgBeanMapper {
 	
 	/**
-	 * 添加MsgBean
+	 * 添加RobotMsgBean
 	 * @param msg
 	 * @param level
 	 * @return
 	 */
-	@InsertProvider(type = MsgBeanSQLProvider.class, method = "addMsgSQL")
+	@InsertProvider(type = RobotMsgBeanSQLProvider.class, method = "addMsgSQL")
 	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "msg.id")
-	int addMsg(@Param("msg") MsgBean msg, @Param("level") int level);
+	int addMsg(@Param("msg") RobotMsgBean msg, @Param("level") int level);
 	
 	/**
-	 * 获取MsgBean
+	 * 获取RobotMsgBean
 	 * @param id
 	 * @param level
 	 * @return
 	 */
-	@SelectProvider(type = MsgBeanSQLProvider.class, method = "getMsgSQL")
-	MsgBean getMsg(@Param("id") int id, @Param("level") int level);
+	@SelectProvider(type = RobotMsgBeanSQLProvider.class, method = "getMsgSQL")
+	RobotMsgBean getMsg(@Param("id") int id, @Param("level") int level);
 	
 	/**
-	 * 更新MsgBean
+	 * 更新RobotMsgBean
 	 * @param msg
 	 * @param level
 	 * @return
 	 */
-	@UpdateProvider(type = MsgBeanSQLProvider.class, method = "updateMsgSQL")
-	int updateMsg(@Param("msg") MsgBean msg, @Param("level") int level);
+	@UpdateProvider(type = RobotMsgBeanSQLProvider.class, method = "updateMsgSQL")
+	int updateMsg(@Param("msg") RobotMsgBean msg, @Param("level") int level);
 	
 	/**
-	 * 删除MsgBean
+	 * 删除RobotMsgBean
 	 * @param id
 	 * @param level
 	 * @return
 	 */
-	@DeleteProvider(type = MsgBeanSQLProvider.class, method = "deleteMsgSQL")
+	@DeleteProvider(type = RobotMsgBeanSQLProvider.class, method = "deleteMsgSQL")
 	int deleteMsg(@Param("id") String id, @Param("level") int level);
 
 	/**
@@ -73,7 +73,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l1 A WHERE A.cust_id=#{cust_id} AND A.`key`=#{key}")
 	@Lang(RawLanguageDriver.class)
-	MsgBean getL1Msg(@Param("cust_id") int cust_id, @Param("key") String key);
+	RobotMsgBean getL1Msg(@Param("cust_id") int cust_id, @Param("key") String key);
 
 	/**
 	 * 根据KEY获取二级消息<br>
@@ -85,7 +85,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
-	MsgBean getL2Msg(@Param("cust_id") int cust_id, @Param("key") String key);
+	RobotMsgBean getL2Msg(@Param("cust_id") int cust_id, @Param("key") String key);
 	
 	/**
 	 * 根据KEY获取二级消息<br>
@@ -97,7 +97,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} AND A.`key`=#{key}")
 	@Lang(RawLanguageDriver.class)
-	MsgBean getL2MsgStrictly(@Param("cust_id") int cust_id, @Param("key") String key);
+	RobotMsgBean getL2MsgStrictly(@Param("cust_id") int cust_id, @Param("key") String key);
 
 	/**
 	 * 获取通用消息<br>
@@ -109,7 +109,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key` LIKE CONCAT('%',#{key},'%') ORDER BY A.`key` LIMIT 1")
 	@Lang(RawLanguageDriver.class)
-	MsgBean getL3Msg(@Param("key") String key);
+	RobotMsgBean getL3Msg(@Param("key") String key);
 	
 	/**
 	 * 获取通用消息<br>
@@ -121,7 +121,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A WHERE A.`key`=#{key}")
 	@Lang(RawLanguageDriver.class)
-	MsgBean getL3MsgStrictly(@Param("key") String key);
+	RobotMsgBean getL3MsgStrictly(@Param("key") String key);
 	
 	/**
 	 * 获取一级消息列表
@@ -132,7 +132,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l1 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
-	List<MsgBean> getL1List(@Param("cust_id") int cust_id,
+	List<RobotMsgBean> getL1List(@Param("cust_id") int cust_id,
 			@Param("start") int start, @Param("limit") int limit);
 	
 	/**
@@ -144,7 +144,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
-	List<MsgBean> getL2List(@Param("cust_id") int cust_id,
+	List<RobotMsgBean> getL2List(@Param("cust_id") int cust_id,
 			@Param("start") int start, @Param("limit") int limit);
 	
 	/**
@@ -165,7 +165,7 @@ public interface MsgBeanMapper {
 	 */
 	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
-	List<MsgBean> getL3List(@Param("start") int start, @Param("limit") int limit);
+	List<RobotMsgBean> getL3List(@Param("start") int start, @Param("limit") int limit);
 	
 	/**
 	 * 获取三级消息数量

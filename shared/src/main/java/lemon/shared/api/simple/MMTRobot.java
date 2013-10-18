@@ -3,7 +3,7 @@ package lemon.shared.api.simple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.message.mapper.MsgBeanMapper;
+import lemon.shared.robotmsg.mapper.RobotMsgBeanMapper;
 
 /**
  * 消息机器人
@@ -15,7 +15,7 @@ import lemon.shared.message.mapper.MsgBeanMapper;
 @Service
 public class MMTRobot {
 	@Autowired
-	private MsgBeanMapper msgBeanMapper;
+	private RobotMsgBeanMapper msgBeanMapper;
 	
 	/**
 	 * 智能生成回复内容

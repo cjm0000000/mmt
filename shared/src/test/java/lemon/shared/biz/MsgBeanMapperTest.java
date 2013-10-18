@@ -2,8 +2,8 @@ package lemon.shared.biz;
 
 import static org.junit.Assert.*;
 
-import lemon.shared.message.bean.MsgBean;
-import lemon.shared.message.mapper.MsgBeanMapper;
+import lemon.shared.robotmsg.bean.RobotMsgBean;
+import lemon.shared.robotmsg.mapper.RobotMsgBeanMapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class MsgBeanMapperTest {
-	private MsgBeanMapper msgBeanMapper;
+	private RobotMsgBeanMapper msgBeanMapper;
 	private AbstractApplicationContext acx;
 	
 	@Before
@@ -24,7 +24,7 @@ public class MsgBeanMapperTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		msgBeanMapper = acx.getBean(MsgBeanMapper.class);
+		msgBeanMapper = acx.getBean(RobotMsgBeanMapper.class);
 		assertNotNull(msgBeanMapper);
 	}
 	
@@ -36,28 +36,28 @@ public class MsgBeanMapperTest {
 	@Test
 	@Ignore
 	public void getL1Msg(){
-		MsgBean mb = msgBeanMapper.getL1Msg(1, "q1");
+		RobotMsgBean mb = msgBeanMapper.getL1Msg(1, "q1");
 		assertNotNull(mb);
 	}
 	
 	@Test
 	@Ignore
 	public void getL2Msg(){
-		MsgBean mb = msgBeanMapper.getL2Msg(1, "key");
+		RobotMsgBean mb = msgBeanMapper.getL2Msg(1, "key");
 		assertNotNull(mb);
 	}
 	
 	@Test
 	@Ignore
 	public void getL3Msg(){
-		MsgBean mb = msgBeanMapper.getL3Msg("%a%");
+		RobotMsgBean mb = msgBeanMapper.getL3Msg("%a%");
 		assertNotNull(mb);
 	}
 	
 	@Test
 	@Ignore
 	public void addMsg(){
-		MsgBean mb = new MsgBean();
+		RobotMsgBean mb = new RobotMsgBean();
 		mb.setCust_id(1);
 		mb.setKey("key");
 		mb.setValue("vava");
@@ -67,7 +67,7 @@ public class MsgBeanMapperTest {
 	@Test
 	@Ignore
 	public void update(){
-		MsgBean mb1 = new MsgBean();
+		RobotMsgBean mb1 = new RobotMsgBean();
 		mb1.setCust_id(1);
 		mb1.setKey("key1");
 		mb1.setValue("vava1");
@@ -78,20 +78,20 @@ public class MsgBeanMapperTest {
 		mb1.setValue("VVVV");
 		msgBeanMapper.updateMsg(mb1, 1);
 		
-		MsgBean mb = msgBeanMapper.getL1Msg(1, "keyyyy");
+		RobotMsgBean mb = msgBeanMapper.getL1Msg(1, "keyyyy");
 		assertEquals(mb.getValue(), mb1.getValue());
 	}
 	
 	@Test
 	@Ignore
 	public void delete(){
-		MsgBean mb1 = new MsgBean();
+		RobotMsgBean mb1 = new RobotMsgBean();
 		mb1.setCust_id(1);
 		mb1.setKey("key1");
 		mb1.setValue("vava1");
 		msgBeanMapper.addMsg(mb1, 3);
 		
-		MsgBean mb2 = new MsgBean();
+		RobotMsgBean mb2 = new RobotMsgBean();
 		mb2.setCust_id(1);
 		mb2.setKey("key12");
 		mb2.setValue("vava1");

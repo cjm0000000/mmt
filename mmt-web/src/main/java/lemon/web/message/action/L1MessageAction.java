@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import lemon.shared.message.bean.MsgBean;
+import lemon.shared.robotmsg.bean.RobotMsgBean;
 import lemon.web.system.bean.User;
 import lemon.web.ui.BS3UI;
 
@@ -61,14 +61,14 @@ public final class L1MessageAction extends MessageAction {
 		if(json == null)
 			return BS3UI.warning("保存失败： 信息格式不正确。");
 		// 解析JSON,转Java集合
-		Collection<MsgBean> msgList = json2collection(json);
+		Collection<RobotMsgBean> msgList = json2collection(json);
 		//去空去重复
-		Set<MsgBean> set = grep(msgList);
+		Set<RobotMsgBean> set = grep(msgList);
 		//清理
 		msgList.clear();
 		//数据入库
 		int result = 0;
-		for (MsgBean msgBean : set) {
+		for (RobotMsgBean msgBean : set) {
 			msgBean.setCust_id(user.getCust_id());
 			if(msgBean.getId() <= 0)
 				result = msgBeanMapper.addMsg(msgBean, getLevel());
@@ -113,7 +113,7 @@ public final class L1MessageAction extends MessageAction {
 	}
 
 	@Override
-	protected void obtainResult(List<MsgBean> msgList) {
+	protected void obtainResult(List<RobotMsgBean> msgList) {
 		if(msgList.size() < 10)
 			for (int i = msgList.size(); i < 10; i++) 
 				msgList.add(null);
@@ -124,7 +124,7 @@ public final class L1MessageAction extends MessageAction {
 	 * @param mb
 	 * @return
 	 */
-	private boolean isBlank(MsgBean mb) {
+	private boolean isBlank(RobotMsgBean mb) {
 		if (null == mb)
 			return true;
 		if (mb.getCust_id() == 0) {
@@ -141,9 +141,9 @@ public final class L1MessageAction extends MessageAction {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private Collection<MsgBean> json2collection(String json) {
+	private Collection<RobotMsgBean> json2collection(String json) {
 		JSONArray jsonArray = JSONArray.fromObject(json);
-		return JSONArray.toCollection(jsonArray, MsgBean.class);
+		return JSONArray.toCollection(jsonArray, RobotMsgBean.class);
 	}
 	
 	/**
@@ -153,10 +153,10 @@ public final class L1MessageAction extends MessageAction {
 	 * @param msgList
 	 * @return
 	 */
-	private Set<MsgBean> grep(Collection<MsgBean> msgList){
-		Set<MsgBean> set 	= new HashSet<MsgBean>(msgList.size());
-		Set<MsgBean> temp 	= new HashSet<MsgBean>(msgList.size());
-		for (MsgBean msgBean : msgList) {
+	private Set<RobotMsgBean> grep(Collection<RobotMsgBean> msgList){
+		Set<RobotMsgBean> set 	= new HashSet<RobotMsgBean>(msgList.size());
+		Set<RobotMsgBean> temp 	= new HashSet<RobotMsgBean>(msgList.size());
+		for (RobotMsgBean msgBean : msgList) {
 			if (isBlank(msgBean))
 				continue;
 			if(msgBean.getId() > 0)
@@ -164,7 +164,7 @@ public final class L1MessageAction extends MessageAction {
 			else
 				temp.add(msgBean);
 		}
-		for (MsgBean mb : temp)
+		for (RobotMsgBean mb : temp)
 			set.add(mb);
 		temp.clear();
 		return set;
