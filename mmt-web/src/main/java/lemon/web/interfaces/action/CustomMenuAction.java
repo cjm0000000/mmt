@@ -6,13 +6,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.CustomMenu;
 import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.request.bean.ReturnCode;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
+import lemon.weixin.config.bean.AccountType;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +46,12 @@ public final class CustomMenuAction extends AdminNavAction {
 	private static final CustomMenu VIRTUAL_MENU = new CustomMenu();
 	@Autowired
 	private CustomMenuMapper customMenuMapper;
+	@Autowired
+	private WXConfigMapper wxConfigMapper;
+	@Resource(name="weiXinAPI")
+	private MmtAPI weixinApi;
+	@Resource(name="yiXinAPI")
+	private MmtAPI yixinApi;
 	
 	static{
 		MENU_TYPE.add("click");
@@ -150,16 +164,42 @@ public final class CustomMenuAction extends AdminNavAction {
 		return new ModelAndView(getAddEditView(), "result", result);
 	}
 	
+	/**
+	 * 同步自定义菜单到微信
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "sync_menu_wx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String syncMenu2WX(HttpSession session){
-		//FIXME 把自定义菜单同步到微信
-		return null;
+		User user = (User) session.getAttribute(TOKEN);
+		if(null == user)
+			sendError("请先登录。");
+		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
+		if(cfg == null)
+			return sendJSONError("请先配置微信接口。");
+		if(cfg.getAccount_type().equals(AccountType.DY))
+			return sendJSONError("您是订阅号，无法同步自定义菜单，请先升级到服务号。");
+		String result = weixinApi.createMenus(cfg.getApi_url(), generateJson(user.getCust_id()));
+		JSONObject json = JSONObject.fromObject(result);
+		ReturnCode rCode = (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
+		if(rCode.getErrcode() == 0)
+			return sendJSONMsg("同步成功。");
+		else
+			return sendJSONError("同步失败：errcode="+rCode.getErrcode()+", errmsg="+rCode.getErrmsg());
 	}
 	
+	/**
+	 * 同步自定义菜单到易信
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String syncMenu2YX(HttpSession session){
+		User user = (User) session.getAttribute(TOKEN);
+		if(null == user)
+			sendError("请先登录。");
 		//FIXME 把自定义菜单同步到易信
 		return null;
 	}
@@ -221,6 +261,13 @@ public final class CustomMenuAction extends AdminNavAction {
 				return key;
 			else key = UUID.randomUUID().toString();
 		}
+	}
+	
+	private String generateJson(int cust_id){
+		List<CustomMenu> menuList = obtainMenuTree(cust_id);
+		//JSONObject jsonObj = JSONObject.fromObject(menuList);
+		//TODO parser List to JSON
+		return null;
 	}
 	
 }
