@@ -14,12 +14,14 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.CustomMenu;
 import lemon.shared.customer.mapper.CustomMenuMapper;
 import lemon.shared.request.bean.ReturnCode;
+import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
-
+import lemon.weixin.custommenu.bean.WXCustomMenuAdpater;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +94,7 @@ public final class CustomMenuAction extends AdminNavAction {
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	//FIXME 如果是VIEW类型，需要输入网址
 	public String save(@Valid CustomMenu menu, BindingResult br,
 			HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
@@ -180,13 +183,13 @@ public final class CustomMenuAction extends AdminNavAction {
 			return sendJSONError("请先配置微信接口。");
 		if(cfg.getAccount_type().equals(AccountType.DY))
 			return sendJSONError("您是订阅号，无法同步自定义菜单，请先升级到服务号。");
-		String result = weixinApi.createMenus(cfg.getApi_url(), generateJson(user.getCust_id()));
-		JSONObject json = JSONObject.fromObject(result);
-		ReturnCode rCode = (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
+		//同步数据
+		ReturnCode rCode = weixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
 		if(rCode.getErrcode() == 0)
 			return sendJSONMsg("同步成功。");
 		else
-			return sendJSONError("同步失败：errcode="+rCode.getErrcode()+", errmsg="+rCode.getErrmsg());
+			return sendJSONError("同步失败：errcode=" + rCode.getErrcode()
+					+ ", errmsg=" + rCode.getErrmsg());
 	}
 	
 	/**
@@ -222,25 +225,17 @@ public final class CustomMenuAction extends AdminNavAction {
 	private List<CustomMenu> obtainMenuTree(int cust_id){
 		//获取所有菜单
 		List<CustomMenu> list = customMenuMapper.getMenuList(cust_id);
-		//一级菜单
-		List<CustomMenu> l1_list = new ArrayList<>(list.size());
-		//二级菜单
-		List<CustomMenu> l2_list = new ArrayList<>(list.size());
-		//分离菜单
-		for (CustomMenu customMenu : list) {
-			if(customMenu.getMenulevcod() == 1)
-				l1_list.add(customMenu);
-			else if(customMenu.getMenulevcod() == 2)
-				l2_list.add(customMenu);
-		}
+		// 一级菜单
+		List<CustomMenu> l1_list = getMenuListByLevel(list, (byte) 1);
+		// 二级菜单
+		List<CustomMenu> l2_list = getMenuListByLevel(list, (byte) 2);
 		list.clear();
-		
 		//生成最终结果
 		List<CustomMenu> result = new ArrayList<>(list.size());
 		for (CustomMenu parent : l1_list) {
 			result.add(parent);
 			for (CustomMenu customMenu : l2_list) {
-				if(customMenu.getSupmenucode() == parent.getMenu_id())
+				if (customMenu.getSupmenucode() == parent.getMenu_id())
 					result.add(customMenu);
 			}
 		}
@@ -263,11 +258,57 @@ public final class CustomMenuAction extends AdminNavAction {
 		}
 	}
 	
-	private String generateJson(int cust_id){
-		List<CustomMenu> menuList = obtainMenuTree(cust_id);
-		//JSONObject jsonObj = JSONObject.fromObject(menuList);
-		//TODO parser List to JSON
-		return null;
+	/**
+	 * 生成微信需要的JSON
+	 * @param cust_id
+	 * @return
+	 */
+	private String generateWXJson(int cust_id){
+		//获取所有菜单
+		List<CustomMenu> list = customMenuMapper.getMenuList(cust_id);
+		//一级菜单
+		List<CustomMenu> l1_list = getMenuListByLevel(list, (byte) 1);
+		//二级菜单
+		List<CustomMenu> l2_list = getMenuListByLevel(list, (byte) 2);
+		list.clear();
+		//生成最终结果
+		List<WXCustomMenuAdpater> result = new ArrayList<>(list.size());
+		for (CustomMenu parent : l1_list) {
+			//获取叶子节点
+			List<WXCustomMenuAdpater> subList = new ArrayList<>();
+			for (CustomMenu customMenu : l2_list) {
+				if (customMenu.getSupmenucode() == parent.getMenu_id())
+					subList.add(new WXCustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), customMenu.getKey(), null));
+			}
+			if (subList.size() == 0)
+				subList = null;
+			//添加节点
+			result.add(new WXCustomMenuAdpater(parent.getName(), parent.getType(), parent.getKey(), parent.getKey(), subList));
+		}
+		l1_list.clear();
+		l2_list.clear();
+
+		// 生成JSON
+		JSONArray jsonArray = JSONArray.fromObject(result, JSONHelper.filterNull());
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("button", jsonArray);
+		result.clear();
+		return jsonObj.toString();
+	}
+	
+	/**
+	 * 根据菜单等级获取菜单列表
+	 * @param all
+	 * @param level
+	 * @return
+	 */
+	private List<CustomMenu> getMenuListByLevel(List<CustomMenu> all, byte level) {
+		List<CustomMenu> result = new ArrayList<>(all.size());
+		for (CustomMenu customMenu : all) {
+			if (customMenu.getMenulevcod() == level)
+				result.add(customMenu);
+		}
+		return result;
 	}
 	
 }

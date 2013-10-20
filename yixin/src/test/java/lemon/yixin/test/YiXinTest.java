@@ -17,10 +17,10 @@ public class YiXinTest {
 		
 	}
 	@Test
-	public void testWeiXinProperties() {
-		assertEquals("https://api.yixin.im/cgi-bin/token?grant_type=#{MMT}&appid=#{MMT}&secret=#{MMT}", YiXin.getCommonUrl());
-		assertEquals("https://api.yixin.im/cgi-bin/menu/create?access_token=#{MMT}", YiXin.getCreateMenuUrl());
-		assertEquals("https://api.yixin.im/cgi-bin/menu/get?access_token=#{MMT}", YiXin.getSearchMenuUrl());
-		assertEquals("https://api.yixin.im/cgi-bin/menu/delete?access_token=#{MMT}", YiXin.getDeleteMenuUrl());
+	public void testYiXinProperties() {
+		assertEquals("https://api.yixin.im/cgi-bin/token", YiXin.getCommonUrl());
+		assertEquals("https://api.yixin.im/cgi-bin/menu/create", YiXin.getCreateMenuUrl());
+		assertEquals("https://api.yixin.im/cgi-bin/menu/get", YiXin.getSearchMenuUrl());
+		assertEquals("https://api.yixin.im/cgi-bin/menu/delete", YiXin.getDeleteMenuUrl());
 	}
 }

@@ -36,7 +36,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @param mmt_token
 	 * @return
 	 */
-	public abstract Map<String, Object> getAccessTokenRequestParams(String mmt_token);
+	public abstract Map<String, Object> getAccessTokenRequestParams(MMTConfig config);
 	
 	/**
 	 * 发送错误信息
@@ -51,11 +51,11 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	protected abstract void saveAccessLog(SiteAccess sa);
 	
 	@Override
-	public final String getAcessToken(String mmt_token) {
+	public final String getAcessToken(MMTConfig config) {
 		//请求URL
 		String url = getCommonUrl();
 		// 请求参数
-		Map<String, Object> params = getAccessTokenRequestParams(mmt_token);
+		Map<String, Object> params = getAccessTokenRequestParams(config);
 		//获取结果
 		String result = HttpConnector.get(url, params);
 		JSONObject jsonObj = JSONObject.fromObject(result);

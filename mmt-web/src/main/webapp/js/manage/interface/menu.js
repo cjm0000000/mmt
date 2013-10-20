@@ -8,7 +8,7 @@ $(function() {
 		if(opType === 'menu-update'){
 			menu_id = getSelectedValues('menu_id');
 		}
-		loadPage(url_showPage, {menu_id:menu_id}, $modal);
+		loadPage(baseUrl + "add-edit-page", {menu_id:menu_id}, $modal);
 	});
 	
 	//监听保存数据事件
@@ -20,7 +20,7 @@ $(function() {
 			type		: $('#type').val(),
 			sort		: $('#sort').val()
 	 	};
-		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
+		mmtPost(baseUrl+ "save", params_save, $modal, $modal.find('.modal-body'));
 	});
 	
 	//监听删除事件
@@ -31,6 +31,11 @@ $(function() {
 	//确认删除
 	$("#menu-confirm-modal").on('click', '.confirm-delete', function(){
 		var menu_id = getSelectedValues("menu_id");
-		mmtPost(url_delete, {menu_id:menu_id}, $('body'), $('.text-left'));
+		mmtPost(baseUrl + "delete", {menu_id:menu_id}, $('body'), $('.text-left'));
+	});
+	
+	//同步到微信
+	$('#sync-weixin').on('click', function(){
+		mmtPost(baseUrl + "sync_menu_wx", null, $('body'), $('.text-left'));
 	});
 });

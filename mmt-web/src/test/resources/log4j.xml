@@ -21,6 +21,9 @@
 	<logger name="com.mchange.v2">
 		<level value="INFO" />
 	</logger>
+	<logger name="org.apache.commons.beanutils">
+		<level value="INFO"/>
+	</logger>
 	<root>
 		<priority value="DEBUG" />
 		<appender-ref ref="CONSOLE" />

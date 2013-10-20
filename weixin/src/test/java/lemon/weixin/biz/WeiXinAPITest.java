@@ -92,7 +92,7 @@ public class WeiXinAPITest {
 	@Test
 	@Ignore
 	public void getAcessToken(){
-		String ss = api.getAcessToken(MMT_TOKEN);
+		String ss = api.getAcessToken(wxConfigMapper.get(cust_id));
 		System.out.println(ss);
 	}
 	

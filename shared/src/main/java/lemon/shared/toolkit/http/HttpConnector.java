@@ -18,7 +18,7 @@ import lemon.shared.MMTContext;
  * @version 1.0
  * 
  */
-public class HttpConnector {
+public final class HttpConnector {
 	private static final String POST = "POST";
 	private static final String GET = "GET";
 
@@ -47,6 +47,23 @@ public class HttpConnector {
 	public static String post(String url, String msg) {
 		try {
 			return connect(url, POST, msg, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 发送POST消息
+	 * 
+	 * @param url
+	 * @param msg
+	 * @param params
+	 * @return
+	 */
+	public static String post(String url, Map<String, Object> params) {
+		try {
+			return connect(url, POST, null, params);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -123,7 +140,8 @@ public class HttpConnector {
 			if (method.equals(POST)) {
 				con.setDoOutput(true);
 				// send message
-				sendBytes(con, sendMsg);
+				if(null != sendMsg)
+					sendBytes(con, sendMsg);
 			} else
 				con.setDoOutput(false);
 			// get reply message

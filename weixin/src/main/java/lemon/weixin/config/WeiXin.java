@@ -26,15 +26,17 @@ public class WeiXin {
 	private static String menuURL_SEARCH;
 	/** 删除菜单URL */
 	private static String menuURL_DELETE;
+	
+	static{
+		loadWeiXinProperties();
+	}
 
 	/**
 	 * 清空Map
 	 */
 	public synchronized static void init() {
-		if (configs == null){
+		if (configs == null)
 			configs = new ConcurrentHashMap<>();
-			loadWeiXinProperties();
-		}
 		else
 			configs.clear();
 	}
@@ -100,8 +102,7 @@ public class WeiXin {
 	 * load WeiXin's configures
 	 */
 	private static void loadWeiXinProperties() {
-		try (InputStream in = WeiXin.class.getClassLoader()
-				.getResourceAsStream("weixin.properties")) {
+		try (InputStream in = WeiXin.class.getClassLoader().getResourceAsStream("weixin.properties")) {
 			Properties p = new Properties();
 			p.load(in);
 			commonUrl = p.getProperty("common-url");

@@ -1,6 +1,8 @@
 package lemon.shared.api;
 
 import lemon.shared.access.bean.SiteAccess;
+import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.request.bean.ReturnCode;
 
 /**
  * MMT message API
@@ -27,31 +29,31 @@ public interface MmtAPI {
 	
 	/**
 	 * Third-part get access token
-	 * @param mmt_token
+	 * @param config
 	 * @return access token
 	 */
-	String getAcessToken(String mmt_token);
+	String getAcessToken(MMTConfig config);
 	
 	/**
 	 * Third part create menus
-	 * @param mmt_token
+	 * @param config
 	 * @param menuJson
 	 * @return
 	 */
-	String createMenus(String mmt_token, String menuJson);
+	ReturnCode createMenus(MMTConfig config, String menuJson);
 	
 	
 	/**
 	 * Third part get menus from WeiXin server
-	 * @param mmt_token
+	 * @param config
 	 * @return
 	 */
-	String getMenus(String mmt_token);
+	String getMenus(MMTConfig config);
 	
 	/**
 	 * Third part delete menus
-	 * @param mmt_token
+	 * @param config
 	 * @return
 	 */
-	String deleteMenus(String mmt_token);
+	ReturnCode deleteMenus(MMTConfig config);
 }

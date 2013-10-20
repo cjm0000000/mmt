@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
+import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.request.bean.ReturnCode;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.log.bean.MsgLog;
@@ -53,19 +55,19 @@ public class YiXinAPI extends AbstractMmtAPI {
 	}
 	
 	@Override
-	public String createMenus(String mmt_token, String menuJson) {
+	public ReturnCode createMenus(MMTConfig config, String menuJson) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getMenus(String mmt_token) {
+	public String getMenus(MMTConfig config) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String deleteMenus(String mmt_token) {
+	public ReturnCode deleteMenus(MMTConfig config) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -76,8 +78,8 @@ public class YiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public Map<String, Object> getAccessTokenRequestParams(String mmt_token) {
-		YiXinConfig cfg = YiXin.getConfig(mmt_token);
+	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {
+		YiXinConfig cfg = (YiXinConfig) config;
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
 		params.put("grant_type", "client_credential");
