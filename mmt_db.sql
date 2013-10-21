@@ -3,10 +3,11 @@
 # 系统配置表
 #
 CREATE TABLE `system_config` (
+  `group` varchar(255) NOT NULL DEFAULT '' COMMENT '配置组',
   `key` varchar(128) NOT NULL DEFAULT '' COMMENT '配置名称',
   `value` varchar(256) DEFAULT '' COMMENT '配置内容',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`key`)
+  PRIMARY KEY (`group`,`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表';
 
 #

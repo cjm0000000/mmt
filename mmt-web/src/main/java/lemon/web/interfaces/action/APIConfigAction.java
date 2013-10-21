@@ -190,7 +190,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 		// 获取服务类型
 		CustomerService service = customerMapper.getService(cust_id, getServiceType());
 		//获取系统域名
-		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY);
+		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY, DOMAIN_KEY);
 		if(null == syscfg)
 			sendError("请先配置域名。");
 		if(mmtcfg != null)

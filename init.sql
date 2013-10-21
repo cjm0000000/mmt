@@ -26,6 +26,12 @@ VALUES (1,'系统管理员','管理客户接口','AVAILABLE',0,'AVAILABLE'),
 INSERT INTO `system_user` (`user_id`,`username`,`password`,`xm`,`idcard`,`mphone`,`islock`,`bz`,`status`) 
 VALUES (1,'mmtuser','7744ECF0A5500EACF229B022A0F41081','MMTCHAT','330','1234','UNAVAILABLE','bz','AVAILABLE');
 
+#系统配置信息
+INSERT INTO `system_config` (`group`,`key`,`value`,`timestamp`) 
+VALUES ('CUSTOM_MENU_TYPE','click','事件','2013-10-22 00:16:33'),
+('CUSTOM_MENU_TYPE','view','网址','2013-10-22 00:16:44'),
+('DOMAIN','DOMAIN','http://www.baidu.com','2013-10-21 23:58:11');
+
 #用户配置信息
 INSERT INTO `system_user_config` (`user_id`,`key`,`value`,`timestamp`) 
 VALUES (1,'EncryptKey','uziV2+-1FkVt)gkfuBsFsR3UgWvagl$yLRFfPbdw_)-x%9-F-W3qLg5umr/DNZh)oWfnIwl18t/BsJ#%PEFJ(GGyOW/atOWcSWlNym6yiomyd^4YQ!HjP=15.)IpYr(0UoTu_Y`UxoGHf)spiDEiCkQG6NW=P20nj/~ZyFPU6W8.vcY=7qeNuYB^G!H$aIzlQaZgrCSI8~)MbNqPP@@Yi1UI4eh7sRn`^5e=aqqiHnXVr%Ur=5@3&Z_.DmfH#J&u','2013-09-12 14:27:26'),

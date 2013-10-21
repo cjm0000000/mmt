@@ -27,7 +27,7 @@
 			<div class="col-lg-9">
 				<select class="selectpicker" id="type" name="type" data-width="100%">
 				#foreach($type in $result.menuType)
-					<option value="$!type">$!type</option>
+					<option value="$!type.key">$!type.value</option>
 				#end
 				</select>
 			</div>

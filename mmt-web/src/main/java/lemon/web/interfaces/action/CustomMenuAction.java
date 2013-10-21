@@ -17,6 +17,7 @@ import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
+import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
@@ -44,8 +45,9 @@ import org.springframework.web.servlet.ModelAndView;
 public final class CustomMenuAction extends AdminNavAction {
 	/** 虚拟根目录ID */
 	private static final int VIRTUAL_ROOT_MENU_ID = -5743;
-	private static final List<String> MENU_TYPE = new ArrayList<>(2);
 	private static final CustomMenu VIRTUAL_MENU = new CustomMenu();
+	/** 自定义菜单类型 */
+	private static final String MENU_TYPE_GROUP = "CUSTOM_MENU_TYPE";
 	@Autowired
 	private CustomMenuMapper customMenuMapper;
 	@Autowired
@@ -54,10 +56,10 @@ public final class CustomMenuAction extends AdminNavAction {
 	private MmtAPI weixinApi;
 	@Resource(name="yiXinAPI")
 	private MmtAPI yixinApi;
+	@Autowired
+	private SystemConfigMapper systemConfigMapper;
 	
 	static{
-		MENU_TYPE.add("click");
-		MENU_TYPE.add("view");
 		VIRTUAL_MENU.setMenu_id(VIRTUAL_ROOT_MENU_ID);
 		VIRTUAL_MENU.setMenulevcod((byte) 0);
 		VIRTUAL_MENU.setName("请选择上级菜单");
@@ -163,7 +165,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		Map<String, Object> result = new HashMap<>();
 		result.put("pmList", pmList);
 		result.put("menu", menu);
-		result.put("menuType", MENU_TYPE);
+		result.put("menuType", systemConfigMapper.getItems(MENU_TYPE_GROUP));
 		return new ModelAndView(getAddEditView(), "result", result);
 	}
 	

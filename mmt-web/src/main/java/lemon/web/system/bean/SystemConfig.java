@@ -7,10 +7,17 @@ package lemon.web.system.bean;
  *
  */
 public class SystemConfig {
+	private String group;
 	private String key;
 	private String value;
 	private String timestamp;
 	
+	public String getGroup() {
+		return group;
+	}
+	public void setGroup(String group) {
+		this.group = group;
+	}
 	public String getKey() {
 		return key;
 	}
