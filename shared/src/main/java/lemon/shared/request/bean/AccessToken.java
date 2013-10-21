@@ -11,7 +11,7 @@ import lemon.shared.customer.bean.BaseService;
 public class AccessToken extends BaseService {
 	private String access_token;
 	private int expires_in;
-	private String expire_time;
+	private int expire_time;
 	
 	public String getAccess_token() {
 		return access_token;
@@ -25,10 +25,10 @@ public class AccessToken extends BaseService {
 	public void setExpires_in(int expires_in) {
 		this.expires_in = expires_in;
 	}
-	public String getExpire_time() {
+	public int getExpire_time() {
 		return expire_time;
 	}
-	public void setExpire_time(String expire_time) {
+	public void setExpire_time(int expire_time) {
 		this.expire_time = expire_time;
 	}
 }

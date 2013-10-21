@@ -210,13 +210,12 @@ CREATE TABLE `mmt_log_custommenu` (
 # ACCESS TOKEN表
 #
 CREATE TABLE `mmt_request_accesstoken` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
   `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT '有效的AccessToken',
-  `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '有效期',
+  `expire_time` int(11) NOT NULL DEFAULT '0' COMMENT '有效期',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`cust_id`,`service_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN表';
 
 #

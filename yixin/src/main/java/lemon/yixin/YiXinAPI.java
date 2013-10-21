@@ -12,6 +12,7 @@ import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.entity.ServiceType;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
@@ -27,7 +28,7 @@ import lemon.yixin.message.parser.YXMsgParser;
  * 
  */
 @Service("yiXinAPI")
-public class YiXinAPI extends AbstractMmtAPI {
+public final class YiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(YiXinAPI.class);
 	@Autowired
 	private YXLogManager yxLogManager;
@@ -98,8 +99,13 @@ public class YiXinAPI extends AbstractMmtAPI {
 	 * @param log
 	 */
 	@Override
-	public final void saveSiteAccessLog(SiteAccess log) {
+	public void saveSiteAccessLog(SiteAccess log) {
 		yxLogManager.saveSiteAccessLog(log);
+	}
+	
+	@Override
+	protected ServiceType getServiceType() {
+		return ServiceType.YIXIN;
 	}
 	
 	/**

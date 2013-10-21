@@ -14,6 +14,9 @@ import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.entity.Action;
+import lemon.shared.entity.ServiceType;
+import lemon.shared.log.bean.CustomMenuLog;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;
@@ -31,7 +34,7 @@ import lemon.weixin.message.parser.WXMsgParser;
  * 
  */
 @Service("weiXinAPI")
-public class WeiXinAPI extends AbstractMmtAPI {
+public final class WeiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(WeiXinAPI.class);
 	@Autowired
 	private WXLogManager wxLogManager;
@@ -69,6 +72,16 @@ public class WeiXinAPI extends AbstractMmtAPI {
 		Map<String, Object> params = new HashMap<>();
 		params.put("access_token", getAcessToken(config));
 		String result = HttpConnector.post(WeiXin.getCreateMenuUrl(), menuJson, params);
+		//save log
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token(params.get("access_token").toString());
+		log.setAction(Action.CREATE);
+		log.setCust_id(config.getCust_id());
+		log.setMsg(menuJson);
+		log.setResult(result);
+		log.setService_type(ServiceType.WEIXIN);
+		mmtLogManager.saveCustomMenuLog(log);
+		//parser result
 		JSONObject json = JSONObject.fromObject(result);
 		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
 	}
@@ -100,7 +113,7 @@ public class WeiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public final Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {
+	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {
 		WeiXinConfig cfg = (WeiXinConfig) config;
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
@@ -120,8 +133,13 @@ public class WeiXinAPI extends AbstractMmtAPI {
 	 * @param log
 	 */
 	@Override
-	public final void saveSiteAccessLog(SiteAccess log) {
+	public void saveSiteAccessLog(SiteAccess log) {
 		wxLogManager.saveSiteAccessLog(log);
+	}
+	
+	@Override
+	public ServiceType getServiceType() {
+		return ServiceType.WEIXIN;
 	}
 	
 	/**
