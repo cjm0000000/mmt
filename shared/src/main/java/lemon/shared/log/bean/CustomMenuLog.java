@@ -11,15 +11,15 @@ import lemon.shared.entity.Action;
  */
 public class CustomMenuLog extends BaseService {
 	private Action action;
-	private String accesstoken;
+	private String access_token;
 	private String msg;
 	private String result;
 	
-	public String getAccesstoken() {
-		return accesstoken;
+	public String getAccess_token() {
+		return access_token;
 	}
-	public void setAccesstoken(String accesstoken) {
-		this.accesstoken = accesstoken;
+	public void setAccess_token(String access_token) {
+		this.access_token = access_token;
 	}
 	public String getMsg() {
 		return msg;

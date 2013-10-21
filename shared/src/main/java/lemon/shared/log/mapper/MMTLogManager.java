@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
+import org.springframework.stereotype.Repository;
 
 import lemon.shared.log.bean.AccessTokenLog;
 import lemon.shared.log.bean.CustomMenuLog;
@@ -14,6 +15,7 @@ import lemon.shared.log.bean.CustomMenuLog;
  * @version 1.0
  *
  */
+@Repository
 public interface MMTLogManager {
 	/**
 	 * save access token log
