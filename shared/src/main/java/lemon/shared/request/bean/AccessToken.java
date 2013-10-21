@@ -1,14 +1,17 @@
 package lemon.shared.request.bean;
 
+import lemon.shared.customer.bean.BaseService;
+
 /**
  * API返回的Token
  * @author lemon
  * @version 1.0
  *
  */
-public class Token {
+public class AccessToken extends BaseService {
 	private String access_token;
 	private int expires_in;
+	private String expire_time;
 	
 	public String getAccess_token() {
 		return access_token;
@@ -22,5 +25,10 @@ public class Token {
 	public void setExpires_in(int expires_in) {
 		this.expires_in = expires_in;
 	}
-	
+	public String getExpire_time() {
+		return expire_time;
+	}
+	public void setExpire_time(String expire_time) {
+		this.expire_time = expire_time;
+	}
 }

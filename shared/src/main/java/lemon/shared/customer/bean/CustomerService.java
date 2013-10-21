@@ -9,6 +9,7 @@ import lemon.shared.entity.Status;
  * @version 1.0
  *
  */
+//TODO 修改成继承BaseService
 public class CustomerService {
 	private int id;
 	private int cust_id;

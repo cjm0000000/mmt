@@ -98,7 +98,7 @@ public class YiXinAPI extends AbstractMmtAPI {
 	 * @param log
 	 */
 	@Override
-	public final void saveAccessLog(SiteAccess log) {
+	public final void saveSiteAccessLog(SiteAccess log) {
 		yxLogManager.saveSiteAccessLog(log);
 	}
 	

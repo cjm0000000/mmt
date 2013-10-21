@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.request.bean.ReturnCode;
-import lemon.shared.request.bean.Token;
+import lemon.shared.request.bean.AccessToken;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.secure.SecureUtil;
 
@@ -48,7 +48,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * 保存
 	 * @param sa
 	 */
-	protected abstract void saveAccessLog(SiteAccess sa);
+	protected abstract void saveSiteAccessLog(SiteAccess sa);
 	
 	@Override
 	public final String getAcessToken(MMTConfig config) {
@@ -63,7 +63,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 			ReturnCode rCode = (ReturnCode) JSONObject.toBean(jsonObj, ReturnCode.class);
 			sendError(rCode.getErrmsg());
 		}
-		Token token = (Token) JSONObject.toBean(jsonObj, Token.class);
+		AccessToken token = (AccessToken) JSONObject.toBean(jsonObj, AccessToken.class);
 		return token.getAccess_token();
 	}
 	
@@ -72,7 +72,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		if (null == sa || sa.getSignature() == null)
 			return false;
 		// save log
-		saveAccessLog(sa);
+		saveSiteAccessLog(sa);
 		// nonce,token,timestamp dictionary sort
 		List<String> list = new ArrayList<>();
 		list.add(sa.getNonce());

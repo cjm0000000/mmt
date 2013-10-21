@@ -7,6 +7,7 @@ import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -30,6 +31,7 @@ public class WeiXinTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testCreateMenu(){
 		WeiXinConfig cfg = wxConfigMapper.get(1);
 		ReturnCode rCode = wxApi.createMenus(cfg, "null");

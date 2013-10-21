@@ -177,6 +177,49 @@ CREATE TABLE `mmt_custom_menu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户自定义菜单表';
 
 #
+# ACCESS TOKEN请求日志
+#
+CREATE TABLE `mmt_log_accesstoken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `appid` varchar(255) NOT NULL DEFAULT '' COMMENT 'APPID',
+  `secret` varchar(255) NOT NULL DEFAULT '' COMMENT 'SECRET',
+  `grant_type` varchar(255) NOT NULL DEFAULT 'client_credential' COMMENT 'grant_type',
+  `result` varchar(1024) NOT NULL DEFAULT '' COMMENT '请求结果',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN请求日志';
+
+#
+# 自定义菜单请求日志
+#
+CREATE TABLE `mmt_log_custommenu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `action` varchar(6) NOT NULL DEFAULT '' COMMENT '动作',
+  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT 'ACCESS TOKEN',
+  `msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '发送的消息',
+  `result` varchar(255) NOT NULL DEFAULT '' COMMENT '请求结果',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='自定义菜单请求日志';
+
+#
+# ACCESS TOKEN表
+#
+CREATE TABLE `mmt_request_accesstoken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT '有效的AccessToken',
+  `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '有效期',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN表';
+
+#
 # 地区表
 #
 CREATE TABLE `mmt_city` (

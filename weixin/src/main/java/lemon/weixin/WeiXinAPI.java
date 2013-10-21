@@ -120,7 +120,7 @@ public class WeiXinAPI extends AbstractMmtAPI {
 	 * @param log
 	 */
 	@Override
-	public final void saveAccessLog(SiteAccess log) {
+	public final void saveSiteAccessLog(SiteAccess log) {
 		wxLogManager.saveSiteAccessLog(log);
 	}
 	
