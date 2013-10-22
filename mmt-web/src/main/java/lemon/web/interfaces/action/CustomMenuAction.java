@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.CustomMenu;
+import lemon.shared.customer.bean.CustomMenuAdpater;
 import lemon.shared.customer.mapper.CustomMenuMapper;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.json.JSONHelper;
@@ -22,7 +23,6 @@ import lemon.weixin.WeiXinException;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
-import lemon.weixin.custommenu.bean.WXCustomMenuAdpater;
 import lemon.yixin.YiXinException;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
@@ -305,18 +305,18 @@ public final class CustomMenuAction extends AdminNavAction {
 		List<CustomMenu> l2_list = getMenuListByLevel(list, (byte) 2);
 		list.clear();
 		//生成最终结果
-		List<WXCustomMenuAdpater> result = new ArrayList<>(list.size());
+		List<CustomMenuAdpater> result = new ArrayList<>(list.size());
 		for (CustomMenu parent : l1_list) {
 			//获取叶子节点
-			List<WXCustomMenuAdpater> subList = new ArrayList<>();
+			List<CustomMenuAdpater> subList = new ArrayList<>();
 			for (CustomMenu customMenu : l2_list) {
 				if (customMenu.getSupmenucode() == parent.getMenu_id())
-					subList.add(new WXCustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), customMenu.getKey(), null));
+					subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), customMenu.getKey(), null));
 			}
 			if (subList.size() == 0)
 				subList = null;
 			//添加节点
-			result.add(new WXCustomMenuAdpater(parent.getName(), parent.getType(), parent.getKey(), parent.getKey(), subList));
+			result.add(new CustomMenuAdpater(parent.getName(), parent.getType(), parent.getKey(), parent.getKey(), subList));
 		}
 		l1_list.clear();
 		l2_list.clear();
