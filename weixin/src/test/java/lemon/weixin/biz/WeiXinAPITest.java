@@ -81,7 +81,7 @@ public class WeiXinAPITest {
 		log.setEchostr("5921940693384818207");
 		log.setNonce("1378809259");
 		log.setSignature("d864452f69eccd3bc25c4ab94a1723cbba282ff6");
-		log.setTimestamp("1377955356");
+		log.setTimestamp_api("1377955356");
 		log.setCust_id(1);
 		log.setToken("QEQdsqo");
 

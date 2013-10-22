@@ -29,6 +29,8 @@ import lemon.yixin.config.mapper.YXConfigMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -47,6 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/interface/menu")
 public final class CustomMenuAction extends AdminNavAction {
+	private static Log logger = LogFactory.getLog(CustomMenuAction.class);
 	/** 虚拟根目录ID */
 	private static final int VIRTUAL_ROOT_MENU_ID = -5743;
 	private static final CustomMenu VIRTUAL_MENU = new CustomMenu();
@@ -196,7 +199,9 @@ public final class CustomMenuAction extends AdminNavAction {
 			return sendJSONError("您是订阅号，无法同步自定义菜单，请先升级到服务号。");
 		ReturnCode rCode = null;
 		try{
-			rCode = weixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
+			String json = generateJson(user.getCust_id());
+			logger.debug(json);
+			rCode = weixinApi.createMenus(cfg, json);
 		}catch(WeiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -226,7 +231,9 @@ public final class CustomMenuAction extends AdminNavAction {
 			return sendJSONError("请先配置易信接口。");
 		ReturnCode rCode = null;
 		try{
-			rCode = yixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
+			String json = generateJson(user.getCust_id());
+			logger.debug(json);
+			rCode = yixinApi.createMenus(cfg, json);
 		}catch(YiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -292,11 +299,11 @@ public final class CustomMenuAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 生成微信需要的JSON
+	 * 生成需要的JSON
 	 * @param cust_id
 	 * @return
 	 */
-	private String generateWXJson(int cust_id){
+	private String generateJson(int cust_id){
 		//获取所有菜单
 		List<CustomMenu> list = customMenuMapper.getMenuList(cust_id);
 		//一级菜单
@@ -306,17 +313,31 @@ public final class CustomMenuAction extends AdminNavAction {
 		list.clear();
 		//生成最终结果
 		List<CustomMenuAdpater> result = new ArrayList<>(list.size());
+		String url;
 		for (CustomMenu parent : l1_list) {
 			//获取叶子节点
 			List<CustomMenuAdpater> subList = new ArrayList<>();
 			for (CustomMenu customMenu : l2_list) {
-				if (customMenu.getSupmenucode() == parent.getMenu_id())
-					subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), customMenu.getKey(), null));
+				if (customMenu.getSupmenucode() == parent.getMenu_id()){
+					if(customMenu.getType().equals("view"))
+						subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), null, null));
+					else
+						subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), null, customMenu.getKey(), null));
+				}
 			}
 			if (subList.size() == 0)
 				subList = null;
 			//添加节点
-			result.add(new CustomMenuAdpater(parent.getName(), parent.getType(), parent.getKey(), parent.getKey(), subList));
+			if(parent.getType().equals("view"))
+				url = parent.getKey();
+			else
+				url = null;
+			if(subList != null && subList.size() > 0){
+				parent.setType(null);
+				parent.setKey(null);
+				url = null;
+			}
+			result.add(new CustomMenuAdpater(parent.getName(), parent.getType(), url, parent.getKey(), subList));
 		}
 		l1_list.clear();
 		l2_list.clear();

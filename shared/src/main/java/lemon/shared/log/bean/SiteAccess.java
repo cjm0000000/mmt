@@ -1,6 +1,6 @@
 package lemon.shared.log.bean;
 
-import java.util.Date;
+import lemon.shared.customer.bean.BaseService;
 
 /**
  * Site access object
@@ -8,14 +8,11 @@ import java.util.Date;
  * @version 1.0
  *
  */
-public class SiteAccess {
-	private int id;
-	private int cust_id;
+public class SiteAccess extends BaseService {
 	private String signature;
-	private String timestamp;
+	private String timestamp_api;
 	private String nonce;
 	private String echostr;
-	private Date log_date;
 	private String token;
 	
 	public String getSignature() {
@@ -24,11 +21,11 @@ public class SiteAccess {
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-	public String getTimestamp() {
-		return timestamp;
+	public String getTimestamp_api() {
+		return timestamp_api;
 	}
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
+	public void setTimestamp_api(String timestamp_api) {
+		this.timestamp_api = timestamp_api;
 	}
 	public String getNonce() {
 		return nonce;
@@ -41,24 +38,6 @@ public class SiteAccess {
 	}
 	public void setEchostr(String echostr) {
 		this.echostr = echostr;
-	}
-	public Date getLog_date() {
-		return log_date;
-	}
-	public void setLog_date(Date log_date) {
-		this.log_date = log_date;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getCust_id() {
-		return cust_id;
-	}
-	public void setCust_id(int cust_id) {
-		this.cust_id = cust_id;
 	}
 	public String getToken() {
 		return token;

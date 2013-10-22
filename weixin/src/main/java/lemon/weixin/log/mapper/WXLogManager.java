@@ -20,14 +20,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface WXLogManager {
-	/**
-	 * Save site access log
-	 * 
-	 * @param log
-	 */
-	@Insert("INSERT INTO weixin_log_siteaccess(cust_id,signature,timestamp,nonce,echostr,token) SELECT #{cust_id},#{signature},#{timestamp},#{nonce},#{echostr},#{token}")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-	void saveSiteAccessLog(SiteAccess log);
 
 	/**
 	 * save message log

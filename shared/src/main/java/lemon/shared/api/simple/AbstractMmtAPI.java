@@ -55,16 +55,10 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	public abstract void sendError(String errorMsg);
 	
 	/**
-	 * 保存SiteAccess日志
-	 * @param sa
-	 */
-	protected abstract void saveSiteAccessLog(SiteAccess sa);
-	
-	/**
 	 * 获取服务类型
 	 * @return
 	 */
-	protected abstract ServiceType getServiceType();
+	public abstract ServiceType getServiceType();
 	
 	@Override
 	public final String getAcessToken(MMTConfig config) {
@@ -110,12 +104,13 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		if (null == sa || sa.getSignature() == null)
 			return false;
 		// save log
-		saveSiteAccessLog(sa);
+		sa.setService_type(getServiceType());
+		mmtLogManager.saveSiteAccessLog(sa);
 		// nonce,token,timestamp dictionary sort
 		List<String> list = new ArrayList<>();
 		list.add(sa.getNonce());
 		list.add(sa.getToken());
-		list.add(sa.getTimestamp());
+		list.add(sa.getTimestamp_api());
 		Collections.sort(list);
 		StringBuilder sb = new StringBuilder();
 		for (String str : list) {

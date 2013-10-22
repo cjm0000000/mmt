@@ -16,7 +16,6 @@ import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.Action;
 import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.CustomMenuLog;
-import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;
@@ -137,15 +136,6 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 		throw new WeiXinException(errorMsg);
 	}
 
-	/**
-	 * save access log
-	 * @param log
-	 */
-	@Override
-	public void saveSiteAccessLog(SiteAccess log) {
-		wxLogManager.saveSiteAccessLog(log);
-	}
-	
 	@Override
 	public ServiceType getServiceType() {
 		return ServiceType.WEIXIN;

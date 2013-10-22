@@ -7,7 +7,6 @@ import lemon.yixin.log.bean.MsgLog;
 import lemon.yixin.log.bean.SubscribeLog;
 import lemon.yixin.log.bean.UnSubscribeLog;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.springframework.stereotype.Repository;
@@ -21,15 +20,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface YXLogManager {
-	/**
-	 * Save site access log
-	 * 
-	 * @param log
-	 */
-	@Insert("INSERT INTO yixin_log_siteaccess(cust_id,signature,timestamp,nonce,echostr,token) SELECT #{cust_id},#{signature},#{timestamp},#{nonce},#{echostr},#{token}")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-	void saveSiteAccessLog(SiteAccess log);
-
 	/**
 	 * save message log
 	 * 
@@ -69,20 +59,4 @@ public interface YXLogManager {
 	 */
 	// TODO query for message log
 	List<MsgLog> listMsgLogs(int cust_id);
-
-	/**
-	 * delete site access log
-	 * 
-	 * @param id
-	 */
-	@Delete("DELETE FROM yixin_log_siteaccess WHERE id=#{id}")
-	void deleteSiteAccessLog(int id);
-
-	/**
-	 * delete message log
-	 * 
-	 * @param id
-	 */
-	@Delete("DELETE FROM yixin_log_msg WHERE id=#{id}")
-	void deleteMsgLog(int id);
 }

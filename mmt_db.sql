@@ -291,21 +291,6 @@ CREATE TABLE `weixin_log_msg` (
 ) ENGINE=InnoDB AUTO_INCREMENT=509 DEFAULT CHARSET=utf8 COMMENT='微信消息日志';
 
 #
-# 微信接口接入日志
-#
-CREATE TABLE `weixin_log_siteaccess` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `signature` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
-  `nonce` varchar(30) DEFAULT NULL COMMENT '接收到的nonce',
-  `echostr` varchar(50) DEFAULT NULL COMMENT '接收到的echostr',
-  `token` varchar(50) NOT NULL DEFAULT '' COMMENT '微信接入TOKEN',
-  `timestamp` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
-  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8 COMMENT='微信接口接入日志';
-
-#
 # 微信订阅日志表
 #
 CREATE TABLE `weixin_log_subscribe` (
@@ -512,21 +497,6 @@ CREATE TABLE `yixin_log_msg` (
   `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='易信消息日志';
-
-#
-# 易信接口接入日志
-#
-CREATE TABLE `yixin_log_siteaccess` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `signature` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
-  `nonce` varchar(30) DEFAULT NULL COMMENT '接收到的nonce',
-  `echostr` varchar(50) DEFAULT NULL COMMENT '接收到的echostr',
-  `token` varchar(50) NOT NULL DEFAULT '' COMMENT '易信接入TOKEN',
-  `timestamp` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
-  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='易信接口接入日志';
 
 #
 # 易信订阅日志表

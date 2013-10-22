@@ -35,7 +35,7 @@ public class YiXinAPITest {
 		sa.setEchostr("5921940693384818207");
 		sa.setNonce("1378809259");
 		sa.setSignature("d864452f69eccd3bc25c4ab94a1723cbba282ff6");
-		sa.setTimestamp("1377955356");
+		sa.setTimestamp_api("1377955356");
 		sa.setCust_id(1);
 		sa.setToken("QEQdsqo");
 

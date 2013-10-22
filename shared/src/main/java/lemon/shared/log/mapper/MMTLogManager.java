@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import lemon.shared.log.bean.AccessTokenLog;
 import lemon.shared.log.bean.CustomMenuLog;
+import lemon.shared.log.bean.SiteAccess;
 
 /**
  * MMT log manager
@@ -37,6 +38,12 @@ public interface MMTLogManager {
 	@Lang(RawLanguageDriver.class)
 	int saveCustomMenuLog(CustomMenuLog log);
 	
-	//FIXME 保存SiteAccess Log
-	int saveSiteAccessLog();
+	/**
+	 * save site access log
+	 * @param sa
+	 * @return
+	 */
+	@Insert("INSERT INTO mmt_log_siteaccess(cust_id,service_type,signature,nonce,echostr,token,timestamp_api) SELECT #{cust_id},#{service_type},#{signature},#{nonce},#{echostr},#{token},#{timestamp_api}")
+	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	int saveSiteAccessLog(SiteAccess sa);
 }

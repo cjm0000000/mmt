@@ -96,7 +96,7 @@ public abstract class MMTGateWay implements Filter {
 		sa.setEchostr(echostr);
 		sa.setNonce(nonce);
 		sa.setSignature(signature);
-		sa.setTimestamp(timestamp);
+		sa.setTimestamp_api(timestamp);
 		sa.setCust_id(cfg.getCust_id());
 		sa.setToken(cfg.getToken());
 
