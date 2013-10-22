@@ -18,6 +18,7 @@ import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
+import lemon.weixin.WeiXinException;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
@@ -96,7 +97,6 @@ public final class CustomMenuAction extends AdminNavAction {
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	//FIXME 如果是VIEW类型，需要输入网址
 	public String save(@Valid CustomMenu menu, BindingResult br,
 			HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
@@ -116,10 +116,14 @@ public final class CustomMenuAction extends AdminNavAction {
 		menu.setCust_id(user.getCust_id());
 		int result = 0;
 		if(menu.getMenu_id() <= 0){
-			menu.setKey(generateKey(user.getCust_id()));
+			if(menu.getType().equals("click"))
+				menu.setKey(generateKey(user.getCust_id()));
 			result = customMenuMapper.addMenu(menu);
-		}else
+		}else{
+			if(menu.getType().equals("click"))
+				menu.setKey(null);
 			result = customMenuMapper.editMenu(menu);
+		}
 		if(result == 0)
 			return sendJSONError("菜单保存失败。");
 		else
@@ -162,7 +166,7 @@ public final class CustomMenuAction extends AdminNavAction {
 			menu = customMenuMapper.getMenu(menu_id);
 		if(menu == null)
 			menu = new CustomMenu();
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<>(8);
 		result.put("pmList", pmList);
 		result.put("menu", menu);
 		result.put("menuType", systemConfigMapper.getItems(MENU_TYPE_GROUP));
@@ -185,8 +189,15 @@ public final class CustomMenuAction extends AdminNavAction {
 			return sendJSONError("请先配置微信接口。");
 		if(cfg.getAccount_type().equals(AccountType.DY))
 			return sendJSONError("您是订阅号，无法同步自定义菜单，请先升级到服务号。");
+		ReturnCode rCode = null;
+		try{
+			rCode = weixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
+		}catch(WeiXinException e){
+			return sendJSONError(e.getMessage());
+		}
+		if(rCode == null)
+			return sendJSONError("自定义菜单同步失败。");
 		//同步数据
-		ReturnCode rCode = weixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
 		if(rCode.getErrcode() == 0)
 			return sendJSONMsg("同步成功。");
 		else

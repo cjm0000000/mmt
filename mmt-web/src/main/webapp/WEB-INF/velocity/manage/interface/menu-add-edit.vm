@@ -32,6 +32,12 @@
 				</select>
 			</div>
 		</div>
+		<div id="div-url-key" class="form-group row" style="display:none;">
+			<label for="key" class="col-lg-3 control-label" style="padding:6px;">网址</label>
+			<div class="col-lg-9">
+				<input type="text" class="form-control" id="key" name="key" value="$!result.menu.key" />
+			</div>
+		</div>
 		<div class="form-group row">
 			<label for="sort" class="col-lg-3 control-label" style="padding:6px;">排序号</label>
 			<div class="col-lg-9">
@@ -49,8 +55,6 @@
 $('select').selectpicker();
 #if($result.menu.supmenucode != 0)
 	$('#supmenucode').selectpicker('val', '$!result.menu.supmenucode');
-#end
-#if($result.menu.supmenucode != 0)
 	$('#type').selectpicker('val', '$!result.menu.type');
 #end
 </script>

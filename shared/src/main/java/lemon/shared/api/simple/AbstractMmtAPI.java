@@ -92,7 +92,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		JSONObject jsonObj = JSONObject.fromObject(result);
 		if(jsonObj.get("errcode") != null){
 			ReturnCode rCode = (ReturnCode) JSONObject.toBean(jsonObj, ReturnCode.class);
-			sendError(rCode.getErrmsg());
+			sendError("Get Access Token faild: " + rCode.getErrmsg());
 		}
 		token = (AccessToken) JSONObject.toBean(jsonObj, AccessToken.class);
 		//保存

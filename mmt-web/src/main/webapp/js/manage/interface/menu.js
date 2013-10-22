@@ -18,9 +18,18 @@ $(function() {
 			name		: $('#name').val(),
 			supmenucode	: $('#supmenucode').val(),
 			type		: $('#type').val(),
+			key			: $('#key').val(),
 			sort		: $('#sort').val()
 	 	};
 		mmtPost(baseUrl+ "save", params_save, $modal, $modal.find('.modal-body'));
+	});
+	
+	//监听按钮类型SELECT
+	$modal.on('change', '#type', function(){
+		if($('#type').val() === 'view')
+			$('#div-url-key').css('display','block');
+		else
+			$('#div-url-key').css('display','none');
 	});
 	
 	//监听删除事件

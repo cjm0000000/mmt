@@ -26,6 +26,9 @@
 				<if test="type != null and type != ''">
 					A.type=#{type},
 				</if>
+				<if test="key != null and key != ''">
+					A.`key`=#{key},
+				</if>
 				<if test="sort != null and sort != ''">
 					A.sort=#{sort}
 				</if>
