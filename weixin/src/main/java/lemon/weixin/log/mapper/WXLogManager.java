@@ -2,12 +2,11 @@ package lemon.weixin.log.mapper;
 
 import java.util.List;
 
-import lemon.shared.access.bean.SiteAccess;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.weixin.log.bean.MsgLog;
 import lemon.weixin.log.bean.SubscribeLog;
 import lemon.weixin.log.bean.UnSubscribeLog;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.springframework.stereotype.Repository;
@@ -69,20 +68,4 @@ public interface WXLogManager {
 	 */
 	// TODO query for message log
 	List<MsgLog> listMsgLogs(int cust_id);
-
-	/**
-	 * delete site access log
-	 * 
-	 * @param id
-	 */
-	@Delete("DELETE FROM weixin_log_siteaccess WHERE id=#{id}")
-	void deleteSiteAccessLog(int id);
-
-	/**
-	 * delete message log
-	 * 
-	 * @param id
-	 */
-	@Delete("DELETE FROM weixin_log_msg WHERE id=#{id}")
-	void deleteMsgLog(int id);
 }

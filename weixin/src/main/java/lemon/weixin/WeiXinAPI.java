@@ -10,13 +10,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.Action;
 import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.CustomMenuLog;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;

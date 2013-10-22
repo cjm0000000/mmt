@@ -1,7 +1,7 @@
 package lemon.shared.api;
 
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.request.bean.ReturnCode;
 
 /**

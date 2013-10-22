@@ -36,4 +36,7 @@ public interface MMTLogManager {
 	@Insert("INSERT INTO mmt_log_custommenu(cust_id,service_type,action,access_token,msg,result) SELECT #{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result}")
 	@Lang(RawLanguageDriver.class)
 	int saveCustomMenuLog(CustomMenuLog log);
+	
+	//FIXME 保存SiteAccess Log
+	int saveSiteAccessLog();
 }

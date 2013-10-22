@@ -3,7 +3,7 @@ package lemon.yixin.test.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import lemon.shared.access.bean.SiteAccess;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.yixin.log.bean.MsgLog;
 import lemon.yixin.log.bean.SubscribeLog;
 import lemon.yixin.log.bean.UnSubscribeLog;

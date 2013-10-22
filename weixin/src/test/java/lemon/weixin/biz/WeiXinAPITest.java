@@ -1,10 +1,10 @@
 package lemon.weixin.biz;
 
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.weixin.WeiXinAPI;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;

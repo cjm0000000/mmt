@@ -11,10 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.AccessTokenLog;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.log.mapper.MMTLogManager;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.request.bean.AccessToken;

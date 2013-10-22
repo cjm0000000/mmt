@@ -1,7 +1,7 @@
 package lemon.yixin.test.biz;
 
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.toolkit.secure.SecureUtil;
 import static org.junit.Assert.*;
 

@@ -220,6 +220,22 @@ CREATE TABLE `mmt_request_accesstoken` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN表';
 
 #
+# 接口接入日志
+#
+CREATE TABLE `mmt_log_siteaccess` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
+  `signature` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
+  `nonce` varchar(30) DEFAULT NULL COMMENT '接收到的nonce',
+  `echostr` varchar(50) DEFAULT NULL COMMENT '接收到的echostr',
+  `token` varchar(50) NOT NULL DEFAULT '' COMMENT '接入TOKEN',
+  `timestamp` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
+  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='接口接入日志';
+
+#
 # 地区表
 #
 CREATE TABLE `mmt_city` (

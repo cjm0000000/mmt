@@ -1,4 +1,4 @@
-package lemon.shared.access.bean;
+package lemon.shared.log.bean;
 
 import java.util.Date;
 

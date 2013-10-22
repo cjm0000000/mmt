@@ -3,7 +3,7 @@ package lemon.weixin.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import lemon.shared.access.bean.SiteAccess;
+import lemon.shared.log.bean.SiteAccess;
 import lemon.weixin.log.bean.MsgLog;
 import lemon.weixin.log.bean.SubscribeLog;
 import lemon.weixin.log.bean.UnSubscribeLog;
@@ -55,7 +55,6 @@ public class WXLogTest {
 			wXLogManager.saveSiteAccessLog(log);
 			logger.info("ID=" + log.getId());
 			assertNotEquals(0, log.getId());
-			wXLogManager.deleteSiteAccessLog(log.getId());
 		}
 		logger.info("end...");
 	}
@@ -67,13 +66,11 @@ public class WXLogTest {
 			wXLogManager.saveMessageLog(receive);
 			logger.info("ID=" + receive.getId());
 			assertNotEquals(0, receive.getId());
-			wXLogManager.deleteMsgLog(receive.getId());
 			
 			MsgLog send = MsgLog.createReciveLog(123,"<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378001728</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[你好]]></Content><MsgId>5918472355591487529</MsgId></xml>");
 			wXLogManager.saveMessageLog(send);
 			logger.info("ID=" + send.getId());
 			assertNotEquals(0, send.getId());
-			wXLogManager.deleteMsgLog(send.getId());
 		}
 		logger.info("end...");
 	}

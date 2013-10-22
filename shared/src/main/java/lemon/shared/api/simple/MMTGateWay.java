@@ -18,8 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import lemon.shared.MmtException;
-import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MmtAPI;
+import lemon.shared.log.bean.SiteAccess;
 import static lemon.shared.entity.MMTCharset.*;
 
 /**
