@@ -82,7 +82,7 @@ public interface CustomerMapper {
 	 * add customer service
 	 * @param service
 	 */
-	@Insert("INSERT INTO customer_service(cust_id,service,status,expire_time) SELECT #{cust_id},#{service},#{status},#{expire_time}")
+	@Insert("INSERT INTO customer_service(cust_id,service_type,status,expire_time) SELECT #{cust_id},#{service_type},#{status},#{expire_time}")
 	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
 	@Lang(RawLanguageDriver.class)
 	int addService(CustomerService service);
@@ -92,7 +92,7 @@ public interface CustomerMapper {
 	 * @param id
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.id=#{id}")
+	@Select("SELECT A.id,A.cust_id,A.service_type,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.id=#{id}")
 	@Lang(RawLanguageDriver.class)
 	CustomerService getServiceById(int id);
 	
@@ -102,16 +102,16 @@ public interface CustomerMapper {
 	 * @param service
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id} AND A.service=#{service}")
+	@Select("SELECT A.id,A.cust_id,A.service_type,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id} AND A.service_type=#{service_type}")
 	@Lang(RawLanguageDriver.class)
-	CustomerService getService(@Param("cust_id")int cust_id, @Param("service")ServiceType service);
+	CustomerService getService(@Param("cust_id")int cust_id, @Param("service_type")ServiceType service_type);
 	
 	/**
 	 * get all the services of the customer
 	 * @param cust_id
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.service,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id}")
+	@Select("SELECT A.id,A.cust_id,A.service_type,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.cust_id=#{cust_id}")
 	@Lang(RawLanguageDriver.class)
 	List<CustomerService> getServices(int cust_id);
 	
@@ -121,7 +121,7 @@ public interface CustomerMapper {
 	 * @param service
 	 * @return
 	 */
-	@Delete("DELETE FROM customer_service WHERE cust_id=#{cust_id} AND service=#{service}")
+	@Delete("DELETE FROM customer_service WHERE cust_id=#{cust_id} AND service_type=#{service_type}")
 	@Lang(RawLanguageDriver.class)
-	int deleteService(@Param("cust_id")int cust_id, @Param("service")ServiceType service);
+	int deleteService(@Param("cust_id")int cust_id, @Param("service_type")ServiceType service_type);
 }

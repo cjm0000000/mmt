@@ -1,6 +1,5 @@
 package lemon.shared.customer.bean;
 
-import lemon.shared.entity.ServiceType;
 import lemon.shared.entity.Status;
 
 /**
@@ -9,32 +8,10 @@ import lemon.shared.entity.Status;
  * @version 1.0
  *
  */
-//TODO 修改成继承BaseService
-public class CustomerService {
-	private int id;
-	private int cust_id;
-	private ServiceType service;
+public class CustomerService extends BaseService {
 	private Status status;
 	private String expire_time;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getCust_id() {
-		return cust_id;
-	}
-	public void setCust_id(int cust_id) {
-		this.cust_id = cust_id;
-	}
-	public ServiceType getService() {
-		return service;
-	}
-	public void setService(ServiceType service) {
-		this.service = service;
-	}
 	public Status getStatus() {
 		return status;
 	}

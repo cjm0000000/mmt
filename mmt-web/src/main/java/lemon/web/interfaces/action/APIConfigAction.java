@@ -212,7 +212,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
 		service.setExpire_time(expireTime);
-		service.setService(getServiceType());
+		service.setService_type(getServiceType());
 		service.setStatus(Status.AVAILABLE);
 		return customerMapper.addService(service);
 	}

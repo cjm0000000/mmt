@@ -34,7 +34,7 @@ public interface WXConfigMapper {
 	 * Get all active configures
 	 * @return
 	 */
-	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.welcome_msg, A.appid, A.secret, A.api_url, A.account_type FROM weixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND S.service='WEIXIN'")
+	@Select("SELECT A.cust_id, A.wx_account, A.token, A.timestamp, A.biz_class, A.subscribe_msg, A.welcome_msg, A.appid, A.secret, A.api_url, A.account_type FROM weixin_config A, customer C, customer_service S WHERE A.cust_id=C.cust_id AND A.cust_id=S.cust_id AND C.status='AVAILABLE' AND S.status='AVAILABLE' AND S.service_type='WEIXIN'")
 	@Lang(RawLanguageDriver.class)
 	List<WeiXinConfig> availableList();
 	

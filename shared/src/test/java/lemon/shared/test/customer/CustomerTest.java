@@ -64,12 +64,12 @@ public class CustomerTest {
 		CustomerService s1 = custMapper.getServiceById(service.getId());
 		assertNotNull(s1);
 		assertEquals(s1.getStatus(), Status.AVAILABLE);
-		assertEquals(s1.getService(), ServiceType.WEIXIN);
+		assertEquals(s1.getService_type(), ServiceType.WEIXIN);
 		
 		CustomerService s2 = custMapper.getService(cust.getCust_id(), ServiceType.WEIXIN);
 		assertNotNull(s2);
 		assertEquals(s2.getStatus(), Status.AVAILABLE);
-		assertEquals(s2.getService(), ServiceType.WEIXIN);
+		assertEquals(s2.getService_type(), ServiceType.WEIXIN);
 		
 		CustomerService s3 = custMapper.getService(cust.getCust_id(), ServiceType.OTHER);
 		assertNull(s3);
@@ -85,7 +85,7 @@ public class CustomerTest {
 	private CustomerService addService(int cust_id){
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
-		service.setService(ServiceType.WEIXIN);
+		service.setService_type(ServiceType.WEIXIN);
 		service.setExpire_time("0000-00-00 00:00");
 		service.setStatus(Status.AVAILABLE);
 		int result = custMapper.addService(service);

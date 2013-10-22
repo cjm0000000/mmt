@@ -16,14 +16,14 @@
 		<div class="panel-body">
 			<div class="input-group col-lg-12" style="padding:5px;">
 				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
-					#if($service.service == 'WEIXIN')
+					#if($service.service_type == 'WEIXIN')
 						<input type="checkbox" id="wxservice" name="wxservice" checked>
 					#else
 						<input type="checkbox" id="wxservice" name="wxservice">
 					#end
 				</div>
 			</div>
-			<div id="form-main" #if($service.service != 'WEIXIN') style="display:none;" #end >
+			<div id="form-main" #if($service.service_type != 'WEIXIN') style="display:none;" #end >
 				#if($cfg)
 					<input type="hidden" id="cust_id" value="$!cfg.cust_id" />
 				#else
@@ -88,7 +88,7 @@
 <script type="text/javascript">
 $(".switch").bootstrapSwitch();
 var url_save = "#{getContextPath}webservices/interface/weixinconfig/save";
-#if($service.service != 'WEIXIN')
+#if($service.service_type != 'WEIXIN')
 	$(".wx-config").attr('disabled',true);
 #end
 </script>
