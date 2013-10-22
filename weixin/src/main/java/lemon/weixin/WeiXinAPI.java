@@ -103,6 +103,15 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 		Map<String, Object> params = new HashMap<>();
 		params.put("access_token", getAcessToken(config));
 		String result = HttpConnector.post(WeiXin.getDeleteMenuUrl(), params);
+		// save log
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token(params.get("access_token").toString());
+		log.setAction(Action.CREATE);
+		log.setCust_id(config.getCust_id());
+		log.setMsg("");
+		log.setResult(result);
+		log.setService_type(ServiceType.WEIXIN);
+		mmtLogManager.saveCustomMenuLog(log);
 		JSONObject json = JSONObject.fromObject(result);
 		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
 	}

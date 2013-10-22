@@ -47,4 +47,9 @@ $(function() {
 	$('#sync-weixin').on('click', function(){
 		mmtPost(baseUrl + "sync_menu_wx", null, $('body'), $('.text-left'));
 	});
+	
+	//同步到易信
+	$('#sync-yixin').on('click', function(){
+		mmtPost(baseUrl + "sync_menu_yx", null, $('body'), $('.text-left'));
+	});
 });

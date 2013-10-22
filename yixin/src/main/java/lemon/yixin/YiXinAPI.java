@@ -3,6 +3,8 @@ package lemon.yixin;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,11 @@ import lemon.shared.access.bean.SiteAccess;
 import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.entity.Action;
 import lemon.shared.entity.ServiceType;
+import lemon.shared.log.bean.CustomMenuLog;
 import lemon.shared.request.bean.ReturnCode;
+import lemon.shared.toolkit.http.HttpConnector;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.log.bean.MsgLog;
@@ -57,20 +62,53 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	
 	@Override
 	public ReturnCode createMenus(MMTConfig config, String menuJson) {
-		// TODO Auto-generated method stub
-		return null;
+		YiXinConfig cfg = (YiXinConfig) config;
+		if(cfg == null)
+			throw new YiXinException("客户易信配置信息不存在。");
+		//发送请求
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		String result = HttpConnector.post(YiXin.getCreateMenuUrl(), menuJson, params);
+		//save log
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token(params.get("access_token").toString());
+		log.setAction(Action.CREATE);
+		log.setCust_id(config.getCust_id());
+		log.setMsg(menuJson);
+		log.setResult(result);
+		log.setService_type(ServiceType.YIXIN);
+		mmtLogManager.saveCustomMenuLog(log);
+		//parser result
+		JSONObject json = JSONObject.fromObject(result);
+		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
 	}
 
 	@Override
 	public String getMenus(MMTConfig config) {
-		// TODO Auto-generated method stub
+		// TODO 获取易信自定义菜单【暂时可以不实现】
 		return null;
 	}
 
 	@Override
 	public ReturnCode deleteMenus(MMTConfig config) {
-		// TODO Auto-generated method stub
-		return null;
+		YiXinConfig cfg = (YiXinConfig) config;
+		if(cfg == null)
+			throw new YiXinException("客户易信配置信息不存在。");
+		//发送请求
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		String result = HttpConnector.post(YiXin.getDeleteMenuUrl(), params);
+		// save log
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token(params.get("access_token").toString());
+		log.setAction(Action.DELETE);
+		log.setCust_id(config.getCust_id());
+		log.setMsg("");
+		log.setResult(result);
+		log.setService_type(ServiceType.YIXIN);
+		mmtLogManager.saveCustomMenuLog(log);
+		JSONObject json = JSONObject.fromObject(result);
+		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
 	}
 
 	@Override

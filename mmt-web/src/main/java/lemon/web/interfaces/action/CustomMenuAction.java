@@ -23,6 +23,9 @@ import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
 import lemon.weixin.custommenu.bean.WXCustomMenuAdpater;
+import lemon.yixin.YiXinException;
+import lemon.yixin.config.bean.YiXinConfig;
+import lemon.yixin.config.mapper.YXConfigMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -53,6 +56,8 @@ public final class CustomMenuAction extends AdminNavAction {
 	private CustomMenuMapper customMenuMapper;
 	@Autowired
 	private WXConfigMapper wxConfigMapper;
+	@Autowired
+	private YXConfigMapper yxConfigMapper;
 	@Resource(name="weiXinAPI")
 	private MmtAPI weixinApi;
 	@Resource(name="yiXinAPI")
@@ -216,8 +221,23 @@ public final class CustomMenuAction extends AdminNavAction {
 		User user = (User) session.getAttribute(TOKEN);
 		if(null == user)
 			sendError("请先登录。");
-		//FIXME 把自定义菜单同步到易信
-		return null;
+		YiXinConfig cfg = yxConfigMapper.get(user.getCust_id());
+		if(cfg == null)
+			return sendJSONError("请先配置易信接口。");
+		ReturnCode rCode = null;
+		try{
+			rCode = yixinApi.createMenus(cfg, generateWXJson(user.getCust_id()));
+		}catch(YiXinException e){
+			return sendJSONError(e.getMessage());
+		}
+		if(rCode == null)
+			return sendJSONError("自定义菜单同步失败。");
+		//同步数据
+		if(rCode.getErrcode() == 0)
+			return sendJSONMsg("同步成功。");
+		else
+			return sendJSONError("同步失败：errcode=" + rCode.getErrcode()
+					+ ", errmsg=" + rCode.getErrmsg());
 	}
 
 	@Override
