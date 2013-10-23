@@ -230,8 +230,8 @@ CREATE TABLE `mmt_log_siteaccess` (
   `nonce` varchar(30) DEFAULT NULL COMMENT '接收到的nonce',
   `echostr` varchar(50) DEFAULT NULL COMMENT '接收到的echostr',
   `token` varchar(50) NOT NULL DEFAULT '' COMMENT '接入TOKEN',
-  `timestamp` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
-  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_api` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='接口接入日志';
 
