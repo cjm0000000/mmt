@@ -62,16 +62,15 @@
       <script src="#{getContextPath}bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
     <div class="container">
-	#if($msg)
+	#if($msg.tip)
 		<div style="width:50%;margin: 0 auto;" class="alert alert-info fade in">
 	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	        <strong>$msg.tip
+	        <strong>$!msg.tip
 	    </div>
 	#end
-      <form method="post" class="form-signin">
+      <form method="post" action="#{getContextPath}mmt_auth_center" class="form-signin">
         <h2 class="form-signin-heading">请登录</h2>
         <input type="text" name="username" value="$!msg.username" class="form-control" placeholder="用户名" autofocus>
         <input type="password" name="password" class="form-control" placeholder="密 &nbsp; &nbsp;码">

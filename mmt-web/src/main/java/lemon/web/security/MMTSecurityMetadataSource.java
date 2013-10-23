@@ -12,8 +12,6 @@ import lemon.web.system.bean.Role;
 import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMapper;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -34,13 +32,10 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 	@Autowired
 	private MenuMapper menuMapper;
 	private Map<String, Collection<ConfigAttribute>> resourceMap = null;
-	private static Log logger = LogFactory.getLog(MMTSecurityMetadataSource.class);
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException {
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();  
-		logger.debug("requestUrl is : " + requestUrl);  
-		//FIXME URL需要处理下，匹配context内的绝对URL
         if(resourceMap == null) {  
             loadResourceDefine();  
         }  
@@ -54,7 +49,6 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		logger.debug("support Class: " + clazz);
 		return true;
 	}
 	

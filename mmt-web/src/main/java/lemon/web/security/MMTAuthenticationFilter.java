@@ -18,7 +18,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 /**
  * 用户授权管理
@@ -27,8 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @version 1.0
  * 
  */
-public class MMTAuthenticationFilter extends
-		UsernamePasswordAuthenticationFilter {
+public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	/** 用户存放密钥的KEY */
 	private static final String ENCRYPY_KEY = "EncryptKey";
 	@Autowired
@@ -40,9 +39,13 @@ public class MMTAuthenticationFilter extends
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
 
+	public MMTAuthenticationFilter() {
+		super(null);
+	}
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
+		System.out.println("================Begin MMTAuthenticationFilter======");
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 
@@ -84,17 +87,26 @@ public class MMTAuthenticationFilter extends
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}
 
-	@Override
 	protected String obtainUsername(HttpServletRequest request) {
 		Object obj = request.getParameter(USERNAME);
 		return null == obj ? "" : obj.toString().trim();
 	}
 
-	@Override
 	protected String obtainPassword(HttpServletRequest request) {
 		Object obj = request.getParameter(PASSWORD);
 		return null == obj ? "" : obj.toString();
 	}
+	
+	 /**
+     * Provided so that subclasses may configure what is put into the authentication request's details
+     * property.
+     *
+     * @param request that an authentication request is being created for
+     * @param authRequest the authentication request object that should have its details set
+     */
+    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+        authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
+    }
 	
 	/**
 	 * save login log

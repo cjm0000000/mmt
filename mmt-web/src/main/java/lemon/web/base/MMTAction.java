@@ -32,7 +32,7 @@ public class MMTAction {
 	/** 无权限视图 */
 	protected static final String VIEW_FORBIDDEN = "forbidden";
 	/** 用户存放密钥的KEY */
-	protected static final String ENCRYPY_KEY = "EncryptKey";
+	public static final String ENCRYPY_KEY = "EncryptKey";
 	/** 存放域名的KEY */
 	protected static final String DOMAIN_KEY = "DOMAIN";
 	

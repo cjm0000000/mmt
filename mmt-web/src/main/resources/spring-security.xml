@@ -10,8 +10,8 @@
         
 	<global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 	<http pattern="/webservices/login*" security="none" />
-	<http pattern="/webservices/logout*" security="none" />
 	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID" />
 		<!-- 实现免登陆验证 -->
 		<remember-me />
@@ -25,10 +25,9 @@
         <authentication-provider user-service-ref="mmtUserDetailsService" />
     </authentication-manager>
     <!-- 登录验证器 -->  
-    <beans:bean id="mmtAuthenticationFilter"
-		class="lemon.web.security.MMTAuthenticationFilter">
+    <beans:bean id="mmtAuthenticationFilter" class="lemon.web.security.MMTAuthenticationFilter">
 		<!-- 处理登录的action -->
-		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="filterProcessesUrl" value="/mmt_auth_center" />
 		<!-- 验证成功后的处理 -->
 		<beans:property name="authenticationSuccessHandler"
 			ref="loginLogAuthenticationSuccessHandler" />

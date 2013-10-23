@@ -4,10 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lemon.shared.entity.Status;
+import lemon.shared.toolkit.secure.SecureUtil;
+import lemon.web.base.MMTAction;
 import lemon.web.global.MMTException;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
+import lemon.web.system.bean.UserConfig;
 import lemon.web.system.mapper.RoleMapper;
+import lemon.web.system.mapper.UserConfigMapper;
 import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +35,11 @@ public class MMTUserDetailsService implements UserDetailsService {
 	private UserMapper userMapper;
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private UserConfigMapper userConfigMapper;
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		//FIXME MMTUserDetailsService没有起作用
-		System.out.println("进入MMTUserDetailsService");
 		if(username == null)
 			throw new MMTException("用户名不能为空。", new NullPointerException());
 		User user = userMapper.getUserById(userMapper.getUserIdByName(username));
@@ -50,9 +54,13 @@ public class MMTUserDetailsService implements UserDetailsService {
         boolean accountNonExpired = true;  
         boolean credentialsNonExpired = true;  
         boolean accountNonLocked = user.getIslock().equals(Status.UNAVAILABLE);
-        
+        //需要解密用户名
+        UserConfig cfg = userConfigMapper.getItem(user.getUser_id(), MMTAction.ENCRYPY_KEY);
+        if(cfg == null)
+        	throw new MMTException("用户密钥不存在。", new NullPointerException());
+        String pass = SecureUtil.aesDecrypt(user.getPassword(), cfg.getValue());
 		return new org.springframework.security.core.userdetails.User(
-				user.getUsername(), user.getPassword(), enables,
+				user.getUsername(), pass, enables,
 				accountNonExpired, credentialsNonExpired, accountNonLocked,
 				authSet);
 	}

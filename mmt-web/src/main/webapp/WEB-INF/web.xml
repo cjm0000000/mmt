@@ -48,10 +48,16 @@
 	<filter>  
         <filter-name>springSecurityFilterChain</filter-name>  
     	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
-    </filter>  
+    </filter>
+    <!-- Spring Security 默认过滤 -->
     <filter-mapping>  
         <filter-name>springSecurityFilterChain</filter-name>  
         <url-pattern>/webservices/*</url-pattern>  
+    </filter-mapping>
+    <!-- Spring Security 用户验证中心 -->
+     <filter-mapping>  
+        <filter-name>springSecurityFilterChain</filter-name>  
+        <url-pattern>/mmt_auth_center</url-pattern>  
     </filter-mapping>
 	<!-- Spring MVC 配置 -->
 	<servlet>

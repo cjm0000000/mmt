@@ -53,7 +53,7 @@
             #end
           </ul>
 		#if(!$user_token)
-			<form method="post" action="#{getContextPath}webservices/login" class="navbar-form navbar-right">
+			<form method="post" action="#{getContextPath}mmt_auth_center" class="navbar-form navbar-right">
 	            <div class="form-group">
 	              <input type="text" name="username" placeholder="用户名" class="form-control">
 	            </div>
