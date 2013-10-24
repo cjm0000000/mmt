@@ -103,6 +103,8 @@ public final class UserAction extends AdminNavAction {
 		if(result.hasErrors())
 			return sendJSONError(result.getFieldError().getDefaultMessage());
 		if(user.getUser_id() <= 0){
+			if(userMapper.getUserIdByName(user.getUsername()) != null)
+				return sendJSONError("用户名[" + user.getUsername() + "]已经存在。");
 			user.setStatus(Status.AVAILABLE);
 			//生成密钥
 			String secureKey = SecureUtil.generateSecretKey(128);
@@ -124,6 +126,10 @@ public final class UserAction extends AdminNavAction {
 			indexConfig.setValue("message/level1");
 			userConfigMapper.addItem(indexConfig);
 		}else{
+			Integer user_id;
+			if ((user_id = userMapper.getUserIdByName(user.getUsername())) != null
+					&& user_id.intValue() != user.getUser_id())
+				return sendJSONError("用户名[" + user.getUsername() + "]已经存在。");
 			userMapper.updateUser(user);
 		}
 		return sendJSONMsg("用户信息保存成功。");
