@@ -1,13 +1,9 @@
 package lemon.web.system.bean;
 
-import java.util.Collection;
-
 import javax.validation.constraints.Digits;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lemon.shared.entity.Status;
 
@@ -20,8 +16,7 @@ import lemon.shared.entity.Status;
  * @version 1.0
  * 
  */
-public class User implements UserDetails {
-	private static final long serialVersionUID = -2139877941379861819L;
+public class User  {
 	private int user_id;
 	private String password;
 	@NotEmpty(message = "用户名不能为空")
@@ -44,132 +39,80 @@ public class User implements UserDetails {
 	public int getUser_id() {
 		return user_id;
 	}
-
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Override
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getIdcard() {
 		return idcard;
 	}
-
 	public void setIdcard(String idcard) {
 		this.idcard = idcard;
 	}
-
 	public String getMphone() {
 		return mphone;
 	}
-
 	public void setMphone(String mphone) {
 		this.mphone = mphone;
 	}
-
 	public Status getIslock() {
 		return islock;
 	}
-
 	public void setIslock(Status islock) {
 		this.islock = islock;
 	}
-
 	public String getBz() {
 		return bz;
 	}
-
 	public void setBz(String bz) {
 		this.bz = bz;
 	}
-
 	public Status getStatus() {
 		return status;
 	}
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
 	public int getRole_id() {
 		return role_id;
 	}
-
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
-
 	public String getRole_name() {
 		return role_name;
 	}
-
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
 	}
-
 	public String getXm() {
 		return xm;
 	}
-
 	public void setXm(String xm) {
 		this.xm = xm;
 	}
-
 	public int getCust_id() {
 		return cust_id;
 	}
-
 	public void setCust_id(int cust_id) {
 		this.cust_id = cust_id;
 	}
-
 	public String getCust_name() {
 		return cust_name;
 	}
-
 	public void setCust_name(String cust_name) {
 		this.cust_name = cust_name;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return islock.equals(Status.UNAVAILABLE);
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return status.equals(Status.AVAILABLE);
 	}
 
 }
