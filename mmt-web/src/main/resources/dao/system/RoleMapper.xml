@@ -63,7 +63,7 @@
 		INSERT INTO system_role_menu(role_id,menu_id) 
 			SELECT #{role_id},menu_id
 				FROM system_menu A 
-			WHERE a.menu_id IN 
+			WHERE A.menu_id IN 
 		<foreach collection="list" item="list" index="index" open="(" separator="," close=")">
 			#{list}
 		</foreach>
