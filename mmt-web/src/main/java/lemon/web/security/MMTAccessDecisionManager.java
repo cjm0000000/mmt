@@ -38,8 +38,8 @@ public class MMTAccessDecisionManager implements AccessDecisionManager {
 					return;
 		}
 		// 没有权限
-		//FIXME 1. MVC 需要捕获这个异常；2. 显示登录页面的错误提醒
-		throw new AccessDeniedException("\u00ef\u00bb\u00bf\u00e6\u008b\u0092\u00e7\u00bb\u009d\u00e8\u00ae\u00bf\u00e9\u0097\u00ae\u00e3\u0080\u0082");
+		//FIXME 2. 显示登录页面的错误提醒
+		throw new AccessDeniedException("拒绝访问。");
 	}
 
 	@Override

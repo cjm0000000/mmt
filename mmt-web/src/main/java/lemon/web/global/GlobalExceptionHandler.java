@@ -32,4 +32,14 @@ public class GlobalExceptionHandler {
 	public ModelAndView handleAccessDeniedException(AccessDeniedException e){
 		return new ModelAndView("forbidden","msg",e.getMessage());
 	}
+	
+	/**
+	 * 处理空指针异常
+	 * @param ex
+	 * @return
+	 */
+	@ExceptionHandler
+	public ModelAndView handleNullPointerException(NullPointerException ex) {
+		return new ModelAndView("error","msg",ex.getMessage());
+	}
 }

@@ -44,6 +44,15 @@ public final class LoginAction extends MMTAction {
 	}
 	
 	/**
+	 * 拒绝访问
+	 * @return
+	 */
+	@RequestMapping(value="/forbidden")
+	public String forbidden(){
+		return VIEW_FORBIDDEN;
+	}
+	
+	/**
 	 * 返回提示信息
 	 * @param tip		提示信息
 	 * @param user_name 给表单填充用户名

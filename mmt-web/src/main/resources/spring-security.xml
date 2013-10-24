@@ -10,7 +10,8 @@
         
 	<global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 	<http pattern="/webservices/login*" security="none" />
-	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+	<http pattern="/webservices/logout*" security="none" />
+	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint" access-denied-page="/webservices/forbidden">
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<logout logout-url="/webservices/logout" delete-cookies="JSESSIONID" />
 		<!-- 实现免登陆验证 -->

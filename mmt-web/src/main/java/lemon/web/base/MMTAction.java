@@ -23,14 +23,14 @@ public class MMTAction {
 	protected static final String VIEW_LOGIN_PAGE = "/login";
 	/** 登出页面视图 */
 	protected static final String VIEW_LOGOUT_PAGE = "/logout";
+	/** 无权限视图 */
+	protected static final String VIEW_FORBIDDEN = "/forbidden";
 	/** 存放用户Session */
 	public static final String TOKEN = "user_token";
 	/** 用户定制的首页 */
 	public static final String USER_CUSTOMIZATION_HOME = "CUSTOMIZATION_HOME";
 	/** 默认视图 */
 	protected static final String DEFAULT_VIEW = "list";
-	/** 无权限视图 */
-	protected static final String VIEW_FORBIDDEN = "forbidden";
 	/** 用户存放密钥的KEY */
 	public static final String ENCRYPY_KEY = "EncryptKey";
 	/** 存放域名的KEY */

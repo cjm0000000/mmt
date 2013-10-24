@@ -96,6 +96,7 @@ public final class UserAction extends AdminNavAction {
 	 */
 	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	//FIXME BUG: 用户名重复检测没做
 	public String save(@Valid User user, BindingResult result) {
 		if(user == null)
 			return sendJSONError("参数不能为空。");
