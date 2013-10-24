@@ -38,7 +38,6 @@ public class MMTAccessDecisionManager implements AccessDecisionManager {
 					return;
 		}
 		// 没有权限
-		//FIXME 2. 显示登录页面的错误提醒
 		throw new AccessDeniedException("拒绝访问。");
 	}
 

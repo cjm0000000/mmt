@@ -45,10 +45,13 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
-		System.out.println("================Begin MMTAuthenticationFilter======");
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
-
+		
+		if(username.length() < 3 || username.length() > 30)
+			throw new AuthenticationServiceException("用户名长度必须在 3 - 30 位之间");
+		if (password.length() <= 0)
+			throw new AuthenticationServiceException("请输入密码");
 		// 验证用户信息
 		Integer user_id = userMapper.getUserIdByName(username);
 		if(user_id == null){

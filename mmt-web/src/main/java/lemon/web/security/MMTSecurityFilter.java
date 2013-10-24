@@ -37,7 +37,6 @@ public class MMTSecurityFilter extends AbstractSecurityInterceptor
 			FilterChain chain) throws IOException, ServletException {
 		// 1.获取请求资源的权限
 		// 2.是否拥有权限
-		System.out.println("------------MyFilterSecurityInterceptor.doFilter()-------....");
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		InterceptorStatusToken token = super.beforeInvocation(fi);
 		try {
@@ -45,7 +44,6 @@ public class MMTSecurityFilter extends AbstractSecurityInterceptor
 		} finally {
 			super.afterInvocation(token, null);
 		}
-		System.out.println("------------MyFilterSecurityInterceptor.doFilter()-------....");
 	}
 
 	@Override

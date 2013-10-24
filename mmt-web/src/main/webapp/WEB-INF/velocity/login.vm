@@ -64,15 +64,15 @@
   </head>
   <body>
     <div class="container">
-	#if($msg.tip)
+	#if($SPRING_SECURITY_LAST_EXCEPTION)
 		<div style="width:50%;margin: 0 auto;" class="alert alert-info fade in">
 	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	        <strong>$!msg.tip
+	        <strong>$!SPRING_SECURITY_LAST_EXCEPTION.message
 	    </div>
 	#end
       <form method="post" action="#{getContextPath}mmt_auth_center" class="form-signin">
         <h2 class="form-signin-heading">请登录</h2>
-        <input type="text" name="username" value="$!msg.username" class="form-control" placeholder="用户名" autofocus>
+        <input type="text" name="username" value="$!SPRING_SECURITY_LAST_USERNAME" class="form-control" placeholder="用户名" autofocus>
         <input type="password" name="password" class="form-control" placeholder="密 &nbsp; &nbsp;码">
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">登 &nbsp;&nbsp;&nbsp;录</button>
