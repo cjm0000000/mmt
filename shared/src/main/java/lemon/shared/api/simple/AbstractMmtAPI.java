@@ -12,13 +12,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.AccessTokenLog;
 import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.log.mapper.MMTLogManager;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.request.bean.AccessToken;
 import lemon.shared.request.mapper.AccessTokenMapper;
+import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.secure.SecureUtil;
 

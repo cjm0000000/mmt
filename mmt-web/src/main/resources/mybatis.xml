@@ -22,11 +22,4 @@
 		<setting name="defaultStatementTimeout" value="30000" />
 	</settings>
 	<!-- 非注解的sql映射文件配置，如果使用mybatis注解，该mapper无需配置，但是如果mybatis注解中包含@resultMap注解，则mapper必须配置，给resultMap注解使用 -->
-	<mappers>
-		<mapper resource="dao/system/MenuMapper.xml" />
-		<mapper resource="dao/system/RoleMapper.xml" />
-		<mapper resource="dao/system/UserMapper.xml" />
-		<!-- 警告：不要添加下面这个配置，如果你不需要用自定义菜单 -->
-		<mapper resource="dao/customer/CustomMenuMapper.xml" />
-	</mappers>
 </configuration>

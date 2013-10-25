@@ -1,7 +1,7 @@
 package lemon.shared.log.bean;
 
-import lemon.shared.customer.bean.BaseService;
 import lemon.shared.entity.Action;
+import lemon.shared.service.BaseService;
 
 /**
  * custom menu log

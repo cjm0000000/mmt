@@ -2,10 +2,10 @@ package lemon.shared.test.log;
 
 import static org.junit.Assert.*;
 import lemon.shared.entity.Action;
-import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.AccessTokenLog;
 import lemon.shared.log.bean.CustomMenuLog;
 import lemon.shared.log.mapper.MMTLogManager;
+import lemon.shared.service.ServiceType;
 
 import org.junit.Before;
 import org.junit.Test;

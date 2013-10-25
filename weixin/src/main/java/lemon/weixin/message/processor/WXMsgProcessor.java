@@ -1,5 +1,6 @@
 package lemon.weixin.message.processor;
 
+import lemon.shared.service.ServiceProperty;
 import lemon.weixin.message.bean.WeiXinMessage;
 
 /**
@@ -8,7 +9,7 @@ import lemon.weixin.message.bean.WeiXinMessage;
  * @version 1.0
  *
  */
-public interface WXMsgProcessor {
+public interface WXMsgProcessor extends ServiceProperty {
 	/**
 	 * customer message process<BR>
 	 * @param mmt_token	is unique in MMT system

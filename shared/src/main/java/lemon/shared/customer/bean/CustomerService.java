@@ -1,6 +1,7 @@
 package lemon.shared.customer.bean;
 
 import lemon.shared.entity.Status;
+import lemon.shared.service.BaseService;
 
 /**
  * MMT customer service entity

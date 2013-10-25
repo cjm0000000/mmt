@@ -1,5 +1,6 @@
 package lemon.yixin.message.processor;
 
+import lemon.shared.service.ServiceProperty;
 import lemon.yixin.message.bean.YiXinMessage;
 
 /**
@@ -8,7 +9,7 @@ import lemon.yixin.message.bean.YiXinMessage;
  * @version 1.0
  *
  */
-public interface YXMsgProcessor {
+public interface YXMsgProcessor extends ServiceProperty{
 	/**
 	 * customer message process<BR>
 	 * @param mmt_token	is unique in MMT system

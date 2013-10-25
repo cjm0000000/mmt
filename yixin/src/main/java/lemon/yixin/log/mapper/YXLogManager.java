@@ -4,8 +4,6 @@ import java.util.List;
 
 import lemon.shared.log.bean.SiteAccess;
 import lemon.yixin.log.bean.MsgLog;
-import lemon.yixin.log.bean.SubscribeLog;
-import lemon.yixin.log.bean.UnSubscribeLog;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
@@ -29,21 +27,6 @@ public interface YXLogManager {
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	void saveMessageLog(MsgLog log);
 	
-	/**
-	 * save subscribe log
-	 * @param log
-	 */
-	@Insert("INSERT INTO yixin_log_subscribe(cust_id,yxid) SELECT #{cust_id},#{yxid}")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-	void saveSubscribeLog(SubscribeLog log);
-	
-	/**
-	 * save unsubscribe log
-	 * @param log
-	 */
-	@Insert("INSERT INTO yixin_log_unsubscribe(cust_id,yxid) SELECT #{cust_id},#{yxid}")
-	void saveUnSubscribeLog(UnSubscribeLog log);
-
 	/**
 	 * query for site access log 
 	 * 

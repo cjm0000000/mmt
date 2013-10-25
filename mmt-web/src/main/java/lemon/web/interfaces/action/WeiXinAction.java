@@ -4,7 +4,7 @@ package lemon.web.interfaces.action;
 import javax.servlet.http.HttpSession;
 
 import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.entity.ServiceType;
+import lemon.shared.service.ServiceType;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;

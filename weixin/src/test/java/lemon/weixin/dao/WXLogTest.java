@@ -3,12 +3,10 @@ package lemon.weixin.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.log.mapper.MMTLogManager;
+import lemon.shared.service.ServiceType;
 import lemon.weixin.log.bean.MsgLog;
-import lemon.weixin.log.bean.SubscribeLog;
-import lemon.weixin.log.bean.UnSubscribeLog;
 import lemon.weixin.log.mapper.WXLogManager;
 
 import org.apache.commons.logging.Log;
@@ -77,19 +75,4 @@ public class WXLogTest {
 		logger.info("end...");
 	}
 	
-	@Test
-	public void subscribeLog(){
-		SubscribeLog log = new SubscribeLog();
-		log.setCust_id(100);
-		log.setWxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
-		wXLogManager.saveSubscribeLog(log);
-	}
-	
-	@Test
-	public void unSubscribeLog(){
-		UnSubscribeLog log = new UnSubscribeLog();
-		log.setCust_id(100);
-		log.setWxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
-		wXLogManager.saveUnSubscribeLog(log);
-	}
 }

@@ -3,12 +3,10 @@ package lemon.yixin.test.dao;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import lemon.shared.entity.ServiceType;
 import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.log.mapper.MMTLogManager;
+import lemon.shared.service.ServiceType;
 import lemon.yixin.log.bean.MsgLog;
-import lemon.yixin.log.bean.SubscribeLog;
-import lemon.yixin.log.bean.UnSubscribeLog;
 import lemon.yixin.log.mapper.YXLogManager;
 
 import org.apache.commons.logging.Log;
@@ -75,21 +73,5 @@ public class YXLogTest {
 			assertNotEquals(0, send.getId());
 		}
 		logger.info("end...");
-	}
-	
-	@Test
-	public void subscribeLog(){
-		SubscribeLog log = new SubscribeLog();
-		log.setCust_id(100);
-		log.setYxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
-		yxLogManager.saveSubscribeLog(log);
-	}
-	
-	@Test
-	public void unSubscribeLog(){
-		UnSubscribeLog log = new UnSubscribeLog();
-		log.setCust_id(100);
-		log.setYxid("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
-		yxLogManager.saveUnSubscribeLog(log);
 	}
 }

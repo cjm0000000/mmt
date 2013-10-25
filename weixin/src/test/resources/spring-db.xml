@@ -31,7 +31,7 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mmtDS" />
 		<!-- <property name="configLocation" value="classpath:mybatis.xml" /> -->
-		<property name="mapperLocations" value="classpath*:dao/weixin/*.xml" />
+		<property name="mapperLocations" value="classpath*:dao/*/*.xml" />
 	</bean>
 	<!-- <bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

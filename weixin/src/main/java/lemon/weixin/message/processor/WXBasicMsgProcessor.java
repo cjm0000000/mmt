@@ -2,17 +2,16 @@ package lemon.weixin.message.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lemon.shared.entity.Status;
+import lemon.shared.fans.Fans;
+import lemon.shared.fans.FansManager;
+import lemon.shared.service.ServiceType;
 import lemon.weixin.WeiXinException;
 import lemon.weixin.message.WeiXinMsgHelper;
 import lemon.weixin.message.bean.*;
 import lemon.weixin.message.parser.TextMsgParser;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.fans.WeiXinFansManager;
-import lemon.weixin.fans.bean.WeiXinFans;
-import lemon.weixin.log.bean.SubscribeLog;
-import lemon.weixin.log.bean.UnSubscribeLog;
-import lemon.weixin.log.mapper.WXLogManager;
 
 /**
  * Basic customer message processor
@@ -26,9 +25,11 @@ public abstract class WXBasicMsgProcessor implements WXMsgProcessor {
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
-	private WXLogManager wxLogManager;
-	@Autowired
-	private WeiXinFansManager wxFansManager;
+	private FansManager fansManager;
+	
+	public final ServiceType getServiceType(){
+		return ServiceType.WEIXIN;
+	}
 	
 	public final String processBiz(String mmt_token, WeiXinMessage msg) {
 		if(msg == null)
@@ -172,13 +173,8 @@ public abstract class WXBasicMsgProcessor implements WXMsgProcessor {
 	protected String unsubscribe(String mmt_token, EventMessage msg){
 		//get customer's configure
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
-		//save unsubscribe log
-		UnSubscribeLog log = new UnSubscribeLog();
-		log.setCust_id(cfg.getCust_id());
-		log.setWxid(msg.getFromUserName());
-		wxLogManager.saveUnSubscribeLog(log);
 		//update fans information
-		wxFansManager.disableFans(cfg.getCust_id(), msg.getFromUserName());
+		fansManager.disableFans(cfg.getCust_id(), getServiceType(), msg.getFromUserName());
 		return null;
 	}
 	
@@ -212,19 +208,27 @@ public abstract class WXBasicMsgProcessor implements WXMsgProcessor {
 	 */
 	private final String preSubscribe(String mmt_token, EventMessage msg){
 		WeiXinConfig cfg = WeiXin.getConfig(mmt_token);
-		//save subscribe log
-		SubscribeLog log = new SubscribeLog();
-		log.setCust_id(cfg.getCust_id());
-		log.setWxid(msg.getFromUserName());
-		wxLogManager.saveSubscribeLog(log);
 		//save fans
-		WeiXinFans fans = new WeiXinFans();
-		fans.setCust_id(cfg.getCust_id());
-		fans.setNick_name("");
-		fans.setWxid(msg.getFromUserName());
-		wxFansManager.saveFans(fans);
+		Fans fans = obtainFans(cfg, msg.getFromUserName());
+		fansManager.saveFans(fans);
 		//process subscribe business
 		return subscribe(cfg, msg);
+	}
+	
+	/**
+	 * 组装Fan
+	 * @param cfg
+	 * @param user_id
+	 * @return
+	 */
+	private Fans obtainFans(WeiXinConfig cfg, String user_id) {
+		Fans fans = new Fans();
+		fans.setCust_id(cfg.getCust_id());
+		fans.setService_type(getServiceType());
+		fans.setStatus(Status.AVAILABLE);
+		fans.setNick_name("");
+		fans.setUser_id(user_id);
+		return fans;
 	}
 	
 }

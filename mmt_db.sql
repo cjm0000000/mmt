@@ -106,6 +106,7 @@ CREATE TABLE `system_user_config` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表';
 
+#############################  API共享   #############################
 #
 # 客户信息表
 #
@@ -236,6 +237,33 @@ CREATE TABLE `mmt_log_siteaccess` (
 ) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='接口接入日志';
 
 #
+# 粉丝表
+#
+CREATE TABLE `mmt_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `user_id` char(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+  `nick_name` varchar(50) NOT NULL DEFAULT '' COMMENT '昵称',
+  `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='粉丝表';
+
+#
+# 粉丝订阅/退订日志表
+#
+CREATE TABLE `mmt_fans_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `action` varchar(11) NOT NULL DEFAULT '' COMMENT '动作',
+  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `user_id` char(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订阅时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='粉丝订阅/退订日志表';
+
+#
 # 地区表
 #
 CREATE TABLE `mmt_city` (
@@ -244,7 +272,7 @@ CREATE TABLE `mmt_city` (
   `province` char(10) NOT NULL DEFAULT '' COMMENT '省份',
   `city_alias` varchar(20) NOT NULL DEFAULT '' COMMENT '城市别名',
   PRIMARY KEY (`citycode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区表';
 
 ########################### For WeiXin #####################
 #
@@ -266,19 +294,6 @@ CREATE TABLE `weixin_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
 
 #
-# 微信粉丝表
-#
-CREATE TABLE `weixin_fans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `nick_name` varchar(50) DEFAULT '' COMMENT '昵称',
-  `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信粉丝表';
-
-#
 # 微信消息日志表
 #
 CREATE TABLE `weixin_log_msg` (
@@ -289,28 +304,6 @@ CREATE TABLE `weixin_log_msg` (
   `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=509 DEFAULT CHARSET=utf8 COMMENT='微信消息日志';
-
-#
-# 微信订阅日志表
-#
-CREATE TABLE `weixin_log_subscribe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
-  `subscribe_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订阅时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信订阅日志表';
-
-#
-# 微信退订日志表
-#
-CREATE TABLE `weixin_log_unsubscribe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `wxid` char(32) NOT NULL DEFAULT '' COMMENT '微信ID',
-  `unsubscribe_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '取消订阅时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信退订日志表';
 
 #
 # 微信接收消息汇总表
@@ -474,19 +467,6 @@ CREATE TABLE `yixin_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信配置信息表'
 
 #
-# 易信粉丝表
-#
-CREATE TABLE `yixin_fans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `yxid` char(32) NOT NULL DEFAULT '' COMMENT '易信ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `nick_name` varchar(50) DEFAULT '' COMMENT '昵称',
-  `status` char(11) NOT NULL DEFAULT '' COMMENT '状态（1：订阅：0：取消订阅）',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信粉丝表';
-
-#
 # 易信消息日志表
 #
 CREATE TABLE `yixin_log_msg` (
@@ -497,28 +477,6 @@ CREATE TABLE `yixin_log_msg` (
   `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='易信消息日志';
-
-#
-# 易信订阅日志表
-#
-CREATE TABLE `yixin_log_subscribe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `yxid` char(32) NOT NULL DEFAULT '' COMMENT '易信ID',
-  `subscribe_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订阅时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信订阅日志表';
-
-#
-# 易信退订日志表
-#
-CREATE TABLE `yixin_log_unsubscribe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `yxid` char(32) NOT NULL DEFAULT '' COMMENT '易信ID',
-  `unsubscribe_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '取消订阅时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信退订日志表';
 
 #
 # 易信接收消息汇总表

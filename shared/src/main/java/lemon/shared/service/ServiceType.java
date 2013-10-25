@@ -1,4 +1,4 @@
-package lemon.shared.entity;
+package lemon.shared.service;
 
 /**
  * MMT customer service type

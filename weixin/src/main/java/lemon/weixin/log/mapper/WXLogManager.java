@@ -4,8 +4,6 @@ import java.util.List;
 
 import lemon.shared.log.bean.SiteAccess;
 import lemon.weixin.log.bean.MsgLog;
-import lemon.weixin.log.bean.SubscribeLog;
-import lemon.weixin.log.bean.UnSubscribeLog;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
@@ -30,21 +28,6 @@ public interface WXLogManager {
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	void saveMessageLog(MsgLog log);
 	
-	/**
-	 * save subscribe log
-	 * @param log
-	 */
-	@Insert("INSERT INTO weixin_log_subscribe(cust_id,wxid) SELECT #{cust_id},#{wxid}")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-	void saveSubscribeLog(SubscribeLog log);
-	
-	/**
-	 * save unsubscribe log
-	 * @param log
-	 */
-	@Insert("INSERT INTO weixin_log_unsubscribe(cust_id,wxid) SELECT #{cust_id},#{wxid}")
-	void saveUnSubscribeLog(UnSubscribeLog log);
-
 	/**
 	 * query for site access log 
 	 * 

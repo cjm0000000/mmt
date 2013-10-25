@@ -1,12 +1,9 @@
-package lemon.shared.customer.bean;
-
-import lemon.shared.entity.ServiceType;
+package lemon.shared.service;
 
 /**
  * Base element of Log
  * @author lemon
  * @version 1.0
- *
  */
 public class BaseService {
 	protected int id;

@@ -1,7 +1,7 @@
 package lemon.shared.request.mapper;
 
-import lemon.shared.entity.ServiceType;
 import lemon.shared.request.bean.AccessToken;
+import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

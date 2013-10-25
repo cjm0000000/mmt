@@ -4,7 +4,7 @@ import java.util.List;
 
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.bean.CustomerService;
-import lemon.shared.entity.ServiceType;
+import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

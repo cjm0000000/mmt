@@ -1,9 +1,9 @@
 package lemon.shared.test.request;
 
 import static org.junit.Assert.*;
-import lemon.shared.entity.ServiceType;
 import lemon.shared.request.bean.AccessToken;
 import lemon.shared.request.mapper.AccessTokenMapper;
+import lemon.shared.service.ServiceType;
 
 import org.junit.Before;
 import org.junit.Test;

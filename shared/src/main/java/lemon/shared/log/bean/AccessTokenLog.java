@@ -1,6 +1,6 @@
 package lemon.shared.log.bean;
 
-import lemon.shared.customer.bean.BaseService;
+import lemon.shared.service.BaseService;
 
 /**
  * Access token log entity

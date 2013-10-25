@@ -7,8 +7,8 @@ import java.util.List;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.bean.CustomerService;
 import lemon.shared.customer.mapper.CustomerMapper;
-import lemon.shared.entity.ServiceType;
 import lemon.shared.entity.Status;
+import lemon.shared.service.ServiceType;
 
 import org.junit.After;
 import org.junit.Before;

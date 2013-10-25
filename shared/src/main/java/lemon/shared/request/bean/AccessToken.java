@@ -1,6 +1,6 @@
 package lemon.shared.request.bean;
 
-import lemon.shared.customer.bean.BaseService;
+import lemon.shared.service.BaseService;
 
 /**
  * API返回的Token

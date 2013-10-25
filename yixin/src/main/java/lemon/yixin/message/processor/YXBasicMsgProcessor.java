@@ -2,14 +2,13 @@ package lemon.yixin.message.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lemon.shared.entity.Status;
+import lemon.shared.fans.Fans;
+import lemon.shared.fans.FansManager;
+import lemon.shared.service.ServiceType;
 import lemon.yixin.YiXinException;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.fans.YiXinFansManager;
-import lemon.yixin.fans.bean.YiXinFans;
-import lemon.yixin.log.bean.SubscribeLog;
-import lemon.yixin.log.bean.UnSubscribeLog;
-import lemon.yixin.log.mapper.YXLogManager;
 import lemon.yixin.message.YiXinMsgHelper;
 import lemon.yixin.message.bean.AudioMessage;
 import lemon.yixin.message.bean.EventMessage;
@@ -31,13 +30,15 @@ import lemon.yixin.message.parser.TextMsgParser;
  */
 public abstract class YXBasicMsgProcessor implements YXMsgProcessor {
 	@Autowired
-	private YiXinMsgHelper wxMsgHelper;
+	private YiXinMsgHelper yxMsgHelper;
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
-	private YXLogManager wxLogManager;
-	@Autowired
-	private YiXinFansManager wxFansManager;
+	private FansManager fansManager;
+	
+	public final ServiceType getServiceType(){
+		return ServiceType.WEIXIN;
+	}
 	
 	public final String processBiz(String mmt_token, YiXinMessage msg) {
 		if(msg == null)
@@ -47,35 +48,35 @@ public abstract class YXBasicMsgProcessor implements YXMsgProcessor {
 		msg.setCust_id(cfg.getCust_id());
 		if(msg instanceof EventMessage){
 			//save event message
-			wxMsgHelper.saveRecvEventMsg((EventMessage) msg);
+			yxMsgHelper.saveRecvEventMsg((EventMessage) msg);
 			return processEvent(mmt_token,(EventMessage) msg);
 		}else if(msg instanceof ImageMessage){
 			//save image message
-			wxMsgHelper.saveRecvImageMsg((ImageMessage) msg);
+			yxMsgHelper.saveRecvImageMsg((ImageMessage) msg);
 			return processImageMsg(mmt_token,(ImageMessage) msg);
 		}else if(msg instanceof LinkMessage){
 			//save link message
-			wxMsgHelper.saveRecvLinkMsg((LinkMessage) msg);
+			yxMsgHelper.saveRecvLinkMsg((LinkMessage) msg);
 			return processLinkMsg(mmt_token,(LinkMessage) msg);
 		}else if(msg instanceof LocationMessage){
 			//save location message
-			wxMsgHelper.saveRecvLocationMsg((LocationMessage) msg);
+			yxMsgHelper.saveRecvLocationMsg((LocationMessage) msg);
 			return processLocationMsg(mmt_token,(LocationMessage) msg);
 		}else if(msg instanceof TextMessage){
 			//save text message
-			wxMsgHelper.saveRecvTextMsg((TextMessage) msg);
+			yxMsgHelper.saveRecvTextMsg((TextMessage) msg);
 			return processTextMsg(mmt_token,(TextMessage) msg);
 		}else if(msg instanceof VideoMessage){
 			//save video message
-			wxMsgHelper.saveRecvVideoMsg((VideoMessage) msg);
+			yxMsgHelper.saveRecvVideoMsg((VideoMessage) msg);
 			return processVideoMsg(mmt_token, (VideoMessage) msg);
 		}else if(msg instanceof AudioMessage){
 			//save voice message
-			wxMsgHelper.saveRecvVoiceMsg((AudioMessage) msg);
+			yxMsgHelper.saveRecvVoiceMsg((AudioMessage) msg);
 			return processAudioMsg(mmt_token, (AudioMessage) msg);
 		}else if(msg instanceof MusicMessage){
 			//save music message
-			wxMsgHelper.saveRecvMusicMsg((MusicMessage) msg);
+			yxMsgHelper.saveRecvMusicMsg((MusicMessage) msg);
 			return processMusicMsg(mmt_token, (MusicMessage) msg);
 		}
 		return null;
@@ -193,13 +194,8 @@ public abstract class YXBasicMsgProcessor implements YXMsgProcessor {
 	protected String unsubscribe(String mmt_token, EventMessage msg){
 		//get customer's configure
 		YiXinConfig cfg = YiXin.getConfig(mmt_token);
-		//save unsubscribe log
-		UnSubscribeLog log = new UnSubscribeLog();
-		log.setCust_id(cfg.getCust_id());
-		log.setYxid(msg.getFromUserName());
-		wxLogManager.saveUnSubscribeLog(log);
 		//update fans information
-		wxFansManager.disableFans(cfg.getCust_id(), msg.getFromUserName());
+		fansManager.disableFans(cfg.getCust_id(), getServiceType(), msg.getFromUserName());
 		return null;
 	}
 	
@@ -233,19 +229,27 @@ public abstract class YXBasicMsgProcessor implements YXMsgProcessor {
 	 */
 	private final String preSubscribe(String mmt_token, EventMessage msg){
 		YiXinConfig cfg = YiXin.getConfig(mmt_token);
-		//save subscribe log
-		SubscribeLog log = new SubscribeLog();
-		log.setCust_id(cfg.getCust_id());
-		log.setYxid(msg.getFromUserName());
-		wxLogManager.saveSubscribeLog(log);
-		//save fans
-		YiXinFans fans = new YiXinFans();
-		fans.setCust_id(cfg.getCust_id());
-		fans.setNick_name("");
-		fans.setYxid(msg.getFromUserName());
-		wxFansManager.saveFans(fans);
-		//process subscribe business
+		// save fans
+		Fans fans = obtainFans(cfg, msg.getFromUserName());
+		fansManager.saveFans(fans);
+		// process subscribe business
 		return subscribe(cfg, msg);
+	}
+	
+	/**
+	 * 组装Fan
+	 * @param cfg
+	 * @param user_id
+	 * @return
+	 */
+	private Fans obtainFans(YiXinConfig cfg, String user_id) {
+		Fans fans = new Fans();
+		fans.setCust_id(cfg.getCust_id());
+		fans.setService_type(getServiceType());
+		fans.setStatus(Status.AVAILABLE);
+		fans.setNick_name("");
+		fans.setUser_id(user_id);
+		return fans;
 	}
 	
 }
