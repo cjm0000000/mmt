@@ -3,22 +3,28 @@ package lemon.weixin.message.processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.api.simple.MMTRobot;
+import lemon.shared.message.MsgManager;
+import lemon.shared.message.metadata.AudioMessage;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.VideoMessage;
+import lemon.shared.message.metadata.VoiceMessage;
+import lemon.shared.message.metadata.event.EventMessage;
+import lemon.shared.message.metadata.recv.ImageMessage;
+import lemon.shared.message.metadata.recv.LinkMessage;
+import lemon.shared.message.metadata.recv.LocationMessage;
+import lemon.shared.message.metadata.send.MusicMessage;
+import lemon.shared.message.metadata.send.NewsMessage;
+import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
+import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
+import lemon.shared.message.parser.NewsMsgParser;
+import lemon.shared.message.parser.TextMsgParser;
+import lemon.shared.message.processor.AbstractMsgProcessor;
+import lemon.shared.service.ServiceType;
 import lemon.weixin.WeiXinException;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.message.WeiXinMsgHelper;
-import lemon.weixin.message.bean.EventMessage;
-import lemon.weixin.message.bean.ImageMessage;
-import lemon.weixin.message.bean.LinkMessage;
-import lemon.weixin.message.bean.LocationMessage;
-import lemon.weixin.message.bean.NewsMessage;
-import lemon.weixin.message.bean.TextMessage;
-import lemon.weixin.message.bean.VideoMessage;
-import lemon.weixin.message.bean.VoiceMessage;
-import lemon.weixin.message.bean.WeiXinMessage;
-import lemon.weixin.message.parser.NewsMsgParser;
-import lemon.weixin.message.parser.TextMsgParser;
 import lemon.weixin.toolkit.WeatherAdapter;
 
 /**
@@ -29,17 +35,26 @@ import lemon.weixin.toolkit.WeatherAdapter;
  * 
  */
 @Service
-public class SimpleWeiXinMsgProcessor extends WXBasicMsgProcessor {
+public final class SimpleWeiXinMsgProcessor extends AbstractMsgProcessor {
 	@Autowired
-	private WeiXinMsgHelper msgHelper;
-	@Autowired
-	private TextMsgParser textMsgParser;
+	private MsgManager msgManager;
 	@Autowired
 	private NewsMsgParser newsMsgParser;
+	@Autowired
+	private TextMsgParser textMsgParser;
 	@Autowired
 	private MMTRobot mmtRobot;
 	@Autowired
 	private WeatherAdapter weatherAdapter;
+	
+	@Override
+	public MMTConfig getConfig(String mmt_token) {
+		return WeiXin.getConfig(mmt_token);
+	}
+	
+	public ServiceType getServiceType(){
+		return ServiceType.WEIXIN;
+	}
 
 	@Override
 	public String processImageMsg(String mmt_token, ImageMessage msg) {
@@ -62,7 +77,8 @@ public class SimpleWeiXinMsgProcessor extends WXBasicMsgProcessor {
 		if(replyMsg == null)
 			throw new WeiXinException("地理位置消息处理失败。");
 		// save log
-		msgHelper.saveSendNewsMsg(replyMsg);
+		replyMsg.setService_type(getServiceType());
+		msgManager.saveSendNewsMsg(replyMsg);
 		return newsMsgParser.toXML(replyMsg);
 	}
 
@@ -85,27 +101,26 @@ public class SimpleWeiXinMsgProcessor extends WXBasicMsgProcessor {
 
 	@Override
 	public String processVideoMsg(String mmt_token, VideoMessage msg) {
-		return sendTextMessage(msg, "亲，我暂时无法识别视频信息哦，您可以给我发文字消息。");
+		if (!(msg instanceof WXVideoMessage))
+			throw new WeiXinException("不是正确的视频格式。");
+		return sendTextMessage((WXVideoMessage)msg, "亲，我暂时无法识别视频信息哦，您可以给我发文字消息。");
 	}
 
 	@Override
 	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
-		return sendTextMessage(msg, "亲，我暂时无法识别语音信息哦，您可以给我发文字消息。");
+		if (!(msg instanceof WXVoiceMessage))
+			throw new WeiXinException("不是正确的语音格式。");
+		return sendTextMessage((WXVoiceMessage) msg, "亲，我暂时无法识别语音信息哦，您可以给我发文字消息。");
 	}
-	
-	/**
-	 * 发送文本消息
-	 * @param msg
-	 * @param content
-	 * @return
-	 */
-	protected String sendTextMessage(WeiXinMessage msg,String content){
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent(content);
-		// save log
-		msgHelper.saveSendTextMsg(replyMsg);
-		return textMsgParser.toXML(replyMsg);
+
+	@Override
+	public String processAudioMsg(String mmt_token, AudioMessage msg) {
+		throw new WeiXinException("微信不支持接收Audio消息。");
+	}
+
+	@Override
+	public String processMusicMsg(String mmt_token, MusicMessage msg) {
+		throw new WeiXinException("微信不支持接收Music消息。");
 	}
 
 }

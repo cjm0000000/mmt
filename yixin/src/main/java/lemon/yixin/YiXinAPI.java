@@ -7,22 +7,19 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.Action;
 import lemon.shared.log.bean.CustomMenuLog;
+import lemon.shared.message.parser.AbstractMsgParser;
+import lemon.shared.message.parser.MsgParser;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.log.bean.MsgLog;
-import lemon.yixin.log.mapper.YXLogManager;
-import lemon.yixin.message.parser.YXMsgParser;
 
 /**
  * The YiXin API for message
@@ -34,8 +31,6 @@ import lemon.yixin.message.parser.YXMsgParser;
 @Service("yiXinAPI")
 public final class YiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(YiXinAPI.class);
-	@Autowired
-	private YXLogManager yxLogManager;
 	private MsgParser parser;
 
 	@Override
@@ -44,13 +39,13 @@ public final class YiXinAPI extends AbstractMmtAPI {
 		int cust_id = cfg.getCust_id();
 		logger.debug("Receive a message: " + msg);
 		//save received log
-		saveReciveMessageLog(cust_id, msg);
+		saveRecvMsgLog(cust_id, msg);
 		//get message parser
-		parser = YXMsgParser.getParser(msg);
+		parser = AbstractMsgParser.getParser(getServiceType(), msg);
 		if(null == parser)
 			throw new YiXinException("No parser find.");
 		//process message and generate replay message
-		String rMsg = parser.parseMessage(token, msg);
+		String rMsg = parser.parseMessage(cfg, msg);
 		logger.debug("Generate a reply message: " + rMsg);
 		//save reply log
 		if(rMsg != null)
@@ -135,25 +130,4 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	public ServiceType getServiceType() {
 		return ServiceType.YIXIN;
 	}
-	
-	/**
-	 * save revive message log
-	 * @param cust_id
-	 * @param msg
-	 */
-	private void saveReciveMessageLog(int cust_id, String msg){
-		MsgLog log = MsgLog.createReciveLog(cust_id, msg);
-		yxLogManager.saveMessageLog(log);
-	}
-	
-	/**
-	 * save send message log
-	 * @param cust_id
-	 * @param msg
-	 */
-	private void saveSendMessageLog(int cust_id, String msg){
-		MsgLog log = MsgLog.createSendLog(cust_id, msg);
-		yxLogManager.saveMessageLog(log);
-	}
-
 }

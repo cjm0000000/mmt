@@ -10,19 +10,21 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
+import lemon.shared.message.MsgManager;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.send.NewsMessage;
+import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
+import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
+import lemon.shared.message.parser.NewsMsgParser;
+import lemon.shared.message.parser.TextMsgParser;
+import lemon.shared.message.parser.weixin.VideoMsgParser;
+import lemon.shared.message.parser.weixin.VoiceMsgParser;
+import lemon.shared.service.ServiceType;
+import lemon.weixin.WeiXinAPI;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
-import lemon.weixin.message.WeiXinMsgHelper;
-import lemon.weixin.message.bean.NewsMessage;
-import lemon.weixin.message.bean.TextMessage;
-import lemon.weixin.message.bean.VideoMessage;
-import lemon.weixin.message.bean.VoiceMessage;
-import lemon.weixin.message.parser.NewsMsgParser;
-import lemon.weixin.message.parser.TextMsgParser;
-import lemon.weixin.message.parser.VideoMsgParser;
-import lemon.weixin.message.parser.VoiceMsgParser;
 import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.jdom2.Document;
@@ -47,7 +49,7 @@ public class SimpleWeiXinMsgProcessorTest {
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private final String bizClass = SimpleWeiXinMsgProcessor.class.getName();
 	private final int cust_id = 1000;
-	private WeiXinMsgHelper msgHelper;
+	private MsgManager msgManager;
 	private ApplicationContext acx;
 	private CustomerMapper customerMapper;
 	private WXConfigMapper	wxConfigMapper;
@@ -56,12 +58,12 @@ public class SimpleWeiXinMsgProcessorTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(MmtAPI.class);
-		msgHelper = acx.getBean(WeiXinMsgHelper.class);
+		api = acx.getBean(WeiXinAPI.class);
+		msgManager = acx.getBean(MsgManager.class);
 		customerMapper = acx.getBean(CustomerMapper.class);
 		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
-		assertNotNull(msgHelper);
+		assertNotNull(msgManager);
 		assertNotNull(customerMapper);
 		assertNotNull(wxConfigMapper);
 		
@@ -101,7 +103,8 @@ public class SimpleWeiXinMsgProcessorTest {
 	public void testSaveTextMsg(){
 		String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(txtMsg);
-		msgHelper.saveRecvTextMsg(msg);
+		msg.setService_type(ServiceType.WEIXIN);
+		msgManager.saveRecvTextMsg(msg);
 	}
 	@Test
 	public void parserMsgType() throws JDOMException, IOException{
@@ -158,7 +161,7 @@ public class SimpleWeiXinMsgProcessorTest {
 	public void videoMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		VideoMessage msg = acx.getBean(VideoMsgParser.class).toMsg(result);
+		WXVideoMessage msg = acx.getBean(VideoMsgParser.class).toMsg(result);
 		assertEquals(msg.getThumbMediaId(), "gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk");
 		assertEquals(msg.getMediaId(), "Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd");
 	}
@@ -167,7 +170,7 @@ public class SimpleWeiXinMsgProcessorTest {
 	public void voiceMsgTest(){
 		String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
-		VoiceMessage msg = acx.getBean(VoiceMsgParser.class).toMsg(result);
+		WXVoiceMessage msg = acx.getBean(VoiceMsgParser.class).toMsg(result);
 		assertEquals(msg.getFormat(), "amr");
 		assertEquals(msg.getMediaId(), "PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj");
 		assertEquals(msg.getRecognition(), "");

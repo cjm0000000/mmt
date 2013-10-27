@@ -17,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lemon.shared.entity.MMTCharset;
+import lemon.shared.message.metadata.send.NewsMessage;
+import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.toolkit.weather.Weather;
 import lemon.shared.toolkit.weather.bean.WeatherInfo;
 import lemon.weixin.WeiXinException;
-import lemon.weixin.message.bean.NewsMessage;
-import lemon.weixin.message.parser.NewsMsgParser;
 
 @Service
 public class WeatherAdapter {

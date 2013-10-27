@@ -15,6 +15,8 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.log.bean.AccessTokenLog;
 import lemon.shared.log.bean.SiteAccess;
 import lemon.shared.log.mapper.MMTLogManager;
+import lemon.shared.message.log.MsgLog;
+import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.request.bean.AccessToken;
 import lemon.shared.request.mapper.AccessTokenMapper;
@@ -32,6 +34,8 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	private static Log logger = LogFactory.getLog(AbstractMmtAPI.class);
 	@Autowired
 	protected MMTLogManager mmtLogManager;
+	@Autowired
+	private MsgLogManager msgLogManager;
 	@Autowired
 	private AccessTokenMapper accessTokenMapper;
 	
@@ -122,6 +126,40 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		// compare
 		logger.debug("signature:" + sa.getSignature());
 		return sha1str.equalsIgnoreCase(sa.getSignature());
+	}
+	
+	/**
+	 * save revive message log
+	 * @param cust_id
+	 * @param msg
+	 */
+	protected int saveRecvMsgLog(int cust_id, String msg){
+		MsgLog log = obtainMsgLog(cust_id, msg);
+		return msgLogManager.saveRecvLog(log);
+	}
+	
+	/**
+	 * save send message log
+	 * @param cust_id
+	 * @param msg
+	 */
+	protected int saveSendMessageLog(int cust_id, String msg){
+		MsgLog log = obtainMsgLog(cust_id, msg);
+		return msgLogManager.saveSendLog(log);
+	}
+	
+	/**
+	 * generate message log
+	 * @param cust_id
+	 * @param msg
+	 * @return
+	 */
+	private MsgLog obtainMsgLog(int cust_id, String msg){
+		MsgLog log = new MsgLog();
+		log.setCust_id(cust_id);
+		log.setMsg(msg);
+		log.setService_type(getServiceType());
+		return log;
 	}
 
 }

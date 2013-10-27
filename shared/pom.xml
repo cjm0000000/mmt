@@ -35,6 +35,13 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
+		<!-- ========== JDOM配置开始 ========== -->
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+		<!-- ========== JDOM配置结束 ========== -->
 	</dependencies>
 	<build>
 		<plugins>

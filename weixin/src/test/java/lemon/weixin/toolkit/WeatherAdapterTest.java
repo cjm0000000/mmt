@@ -1,7 +1,7 @@
 package lemon.weixin.toolkit;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.weixin.message.bean.NewsMessage;
+import lemon.shared.message.metadata.send.NewsMessage;
 
 import org.junit.After;
 import org.junit.Before;

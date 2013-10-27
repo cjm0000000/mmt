@@ -7,16 +7,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import lemon.shared.event.EventType;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.event.EventMessage;
+import lemon.shared.message.metadata.recv.ImageMessage;
+import lemon.shared.message.metadata.recv.LinkMessage;
+import lemon.shared.message.metadata.recv.LocationMessage;
+import lemon.shared.message.metadata.send.Article;
+import lemon.shared.message.metadata.send.NewsMessage;
+import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.toolkit.xstream.XStreamHelper;
-import lemon.yixin.message.bean.Article;
-import lemon.yixin.message.bean.EventMessage;
-import lemon.yixin.message.bean.EventType;
-import lemon.yixin.message.bean.ImageMessage;
-import lemon.yixin.message.bean.LinkMessage;
-import lemon.yixin.message.bean.LocationMessage;
-import lemon.yixin.message.bean.MusicMessage;
-import lemon.yixin.message.bean.NewsMessage;
-import lemon.yixin.message.bean.TextMessage;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -125,8 +125,8 @@ public class YXXMLConvert {
 	
 	@Test
 	public void testMusicMessage() {
-		xStream.processAnnotations(MusicMessage.class);
-		MusicMessage msg = new MusicMessage();
+		xStream.processAnnotations(YXMusicMessage.class);
+		YXMusicMessage msg = new YXMusicMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
 		msg.setCreateTime((int) (System.currentTimeMillis()/1000));
@@ -137,7 +137,7 @@ public class YXXMLConvert {
 		msg.setDesc("descdesc");
 		String str = xStream.toXML(msg);
 		logger.debug(str);
-		MusicMessage msg2 = (MusicMessage) xStream.fromXML(str);
+		YXMusicMessage msg2 = (YXMusicMessage) xStream.fromXML(str);
 		
 		assertEquals(msg.getUrl(), msg2.getUrl());
 		assertEquals(msg.getName(), msg2.getName());

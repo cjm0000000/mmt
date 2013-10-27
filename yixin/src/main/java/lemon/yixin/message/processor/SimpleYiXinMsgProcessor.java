@@ -1,27 +1,34 @@
 package lemon.yixin.message.processor;
 
+import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.api.simple.MMTRobot;
+import lemon.shared.message.MsgManager;
+import lemon.shared.message.metadata.AudioMessage;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.VideoMessage;
+import lemon.shared.message.metadata.VoiceMessage;
+import lemon.shared.message.metadata.event.EventMessage;
+import lemon.shared.message.metadata.recv.ImageMessage;
+import lemon.shared.message.metadata.recv.LinkMessage;
+import lemon.shared.message.metadata.recv.LocationMessage;
+import lemon.shared.message.metadata.send.MusicMessage;
+import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
+import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
+import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
+import lemon.shared.message.parser.TextMsgParser;
+import lemon.shared.message.processor.AbstractMsgProcessor;
+import lemon.shared.service.ServiceType;
+import lemon.yixin.YiXinException;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.message.YiXinMsgHelper;
-import lemon.yixin.message.bean.AudioMessage;
-import lemon.yixin.message.bean.EventMessage;
-import lemon.yixin.message.bean.ImageMessage;
-import lemon.yixin.message.bean.LinkMessage;
-import lemon.yixin.message.bean.LocationMessage;
-import lemon.yixin.message.bean.MusicMessage;
-import lemon.yixin.message.bean.TextMessage;
-import lemon.yixin.message.bean.VideoMessage;
-import lemon.yixin.message.bean.YiXinMessage;
-import lemon.yixin.message.parser.TextMsgParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleYiXinMsgProcessor extends YXBasicMsgProcessor {
+public class SimpleYiXinMsgProcessor extends AbstractMsgProcessor {
 	@Autowired
-	private YiXinMsgHelper msgHelper;
+	private MsgManager msgManager;
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
@@ -62,33 +69,37 @@ public class SimpleYiXinMsgProcessor extends YXBasicMsgProcessor {
 
 	@Override
 	public String processVideoMsg(String mmt_token, VideoMessage msg) {
-		return sendTextMessage(msg, "亲，我暂时无法识别视频信息哦，您可以给我发文字消息。");
+		if (!(msg instanceof YXVideoMessage))
+			throw new YiXinException("不是正确的视频格式。");
+		return sendTextMessage((YXVideoMessage)msg, "亲，我暂时无法识别视频信息哦，您可以给我发文字消息。");
 	}
 
 	@Override
 	public String processAudioMsg(String mmt_token, AudioMessage msg) {
-		return sendTextMessage(msg, "亲，我暂时无法识别语音信息哦，您可以给我发文字消息。");
+		if (!(msg instanceof YXAudioMessage))
+			throw new YiXinException("不是正确的音频格式。");
+		return sendTextMessage((YXAudioMessage)msg, "亲，我暂时无法识别语音信息哦，您可以给我发文字消息。");
 	}
 	
 	@Override
 	public String processMusicMsg(String mmt_token, MusicMessage msg) {
-		return sendTextMessage(msg, "亲，我暂时无法识别音乐哦，您可以给我发文字消息。");
+		if (!(msg instanceof YXMusicMessage))
+			throw new YiXinException("不是正确的音乐格式。");
+		return sendTextMessage((YXMusicMessage)msg, "亲，我暂时无法识别音乐哦，您可以给我发文字消息。");
 	}
 	
-	/**
-	 * 发送文本消息
-	 * @param msg
-	 * @param content
-	 * @return
-	 */
-	protected String sendTextMessage( YiXinMessage msg,String content){
-		TextMessage replyMsg = new TextMessage();
-		buildReplyMsg(msg, replyMsg);
-		replyMsg.setContent(content);
-		// save log
-		msgHelper.saveSendTextMsg(replyMsg);
-		return textMsgParser.toXML(replyMsg);
+	@Override
+	public ServiceType getServiceType() {
+		return ServiceType.YIXIN;
 	}
 
-	
+	@Override
+	public MMTConfig getConfig(String mmt_token) {
+		return YiXin.getConfig(mmt_token);
+	}
+
+	@Override
+	public String processVoiceMsg(String mmt_token, VoiceMessage msg) {
+		throw new YiXinException("微信不支持接收Voice消息。");
+	}
 }

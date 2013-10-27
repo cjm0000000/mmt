@@ -7,23 +7,20 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.api.MsgParser;
 import lemon.shared.api.simple.AbstractMmtAPI;
 import lemon.shared.api.simple.MMTConfig;
 import lemon.shared.entity.Action;
 import lemon.shared.log.bean.CustomMenuLog;
+import lemon.shared.message.parser.AbstractMsgParser;
+import lemon.shared.message.parser.MsgParser;
 import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.log.bean.MsgLog;
-import lemon.weixin.log.mapper.WXLogManager;
-import lemon.weixin.message.parser.WXMsgParser;
 
 /**
  * The WeiXin API for message
@@ -35,8 +32,6 @@ import lemon.weixin.message.parser.WXMsgParser;
 @Service("weiXinAPI")
 public final class WeiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(WeiXinAPI.class);
-	@Autowired
-	private WXLogManager wxLogManager;
 	private MsgParser parser;
 
 	@Override
@@ -45,13 +40,13 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 		int cust_id = cfg.getCust_id();
 		logger.debug("Receive a message: " + msg);
 		//save received log
-		saveReciveMessageLog(cust_id, msg);
+		saveRecvMsgLog(cust_id, msg);
 		//get message parser
-		parser = WXMsgParser.getParser(msg);
+		parser = AbstractMsgParser.getParser(getServiceType(), msg);
 		if(null == parser)
 			throw new WeiXinException("No parser find.");
 		//process message and generate replay message
-		String rMsg = parser.parseMessage(token, msg);
+		String rMsg = parser.parseMessage(cfg, msg);
 		logger.debug("Generate a reply message: " + rMsg);
 		//save reply log
 		if(rMsg != null)
@@ -141,24 +136,5 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 		return ServiceType.WEIXIN;
 	}
 	
-	/**
-	 * save revive message log
-	 * @param cust_id
-	 * @param msg
-	 */
-	private void saveReciveMessageLog(int cust_id, String msg){
-		MsgLog log = MsgLog.createReciveLog(cust_id, msg);
-		wxLogManager.saveMessageLog(log);
-	}
-	
-	/**
-	 * save send message log
-	 * @param cust_id
-	 * @param msg
-	 */
-	private void saveSendMessageLog(int cust_id, String msg){
-		MsgLog log = MsgLog.createSendLog(cust_id, msg);
-		wxLogManager.saveMessageLog(log);
-	}
 
 }

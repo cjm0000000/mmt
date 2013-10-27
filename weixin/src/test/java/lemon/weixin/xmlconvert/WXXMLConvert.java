@@ -9,17 +9,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import lemon.shared.event.EventType;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.event.EventMessage;
+import lemon.shared.message.metadata.recv.ImageMessage;
+import lemon.shared.message.metadata.recv.LinkMessage;
+import lemon.shared.message.metadata.recv.LocationMessage;
+import lemon.shared.message.metadata.send.Article;
+import lemon.shared.message.metadata.send.NewsMessage;
+import lemon.shared.message.metadata.specific.weixin.WXMusicMessage;
 import lemon.shared.toolkit.xstream.XStreamHelper;
-import lemon.weixin.MessageFactory;
-import lemon.weixin.message.bean.Article;
-import lemon.weixin.message.bean.EventMessage;
-import lemon.weixin.message.bean.EventType;
-import lemon.weixin.message.bean.ImageMessage;
-import lemon.weixin.message.bean.LinkMessage;
-import lemon.weixin.message.bean.LocationMessage;
-import lemon.weixin.message.bean.MusicMessage;
-import lemon.weixin.message.bean.NewsMessage;
-import lemon.weixin.message.bean.TextMessage;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -44,7 +43,12 @@ public class WXXMLConvert {
 	@Test
 	public void testTextMessage() {
 		xStream.processAnnotations(TextMessage.class);
-		TextMessage txt = MessageFactory.makeTextMsg();
+		TextMessage txt = new TextMessage();
+        txt.setToUserName("weixin");
+        txt.setFromUserName("lemon");
+        txt.setCreateTime(new Date().getTime());
+        txt.setContent("hello,weixin, I am \"lemon\".");
+        txt.setMsgId(1024102410241024L);
 		String msg = xStream.toXML(txt);
 		logger.debug(msg);
 		logger.debug(txt.getContent());
@@ -146,9 +150,9 @@ public class WXXMLConvert {
 	}
 	
 	@Test
-	public void testMusicMessage() {
-		xStream.processAnnotations(MusicMessage.class);
-		MusicMessage msg = new MusicMessage();
+	public void testWXMusicMessage() {
+		xStream.processAnnotations(WXMusicMessage.class);
+		WXMusicMessage msg = new WXMusicMessage();
 		msg.setToUserName("weixin");
 		msg.setFromUserName("lemon");
 		msg.setCreateTime(new Date().getTime());
@@ -158,7 +162,7 @@ public class WXXMLConvert {
 		String str = xStream.toXML(msg);
 		logger.debug(str);
 		logger.debug(msg.getMusicUrl());
-		MusicMessage msg2 = (MusicMessage) xStream.fromXML(str);
+		WXMusicMessage msg2 = (WXMusicMessage) xStream.fromXML(str);
 		logger.debug(msg2.getMusicUrl());
 		
 		assertTrue("MUSIC URL message convert faild.",

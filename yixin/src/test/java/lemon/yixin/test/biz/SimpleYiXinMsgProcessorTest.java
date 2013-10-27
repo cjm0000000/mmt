@@ -10,12 +10,14 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.bean.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.entity.Status;
+import lemon.shared.message.MsgManager;
+import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.parser.TextMsgParser;
+import lemon.shared.service.ServiceType;
+import lemon.yixin.YiXinAPI;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
-import lemon.yixin.message.YiXinMsgHelper;
-import lemon.yixin.message.bean.TextMessage;
-import lemon.yixin.message.parser.TextMsgParser;
 import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.jdom2.Document;
@@ -39,7 +41,7 @@ public class SimpleYiXinMsgProcessorTest {
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private final String bizClass = SimpleYiXinMsgProcessor.class.getName();
 	private final int cust_id = 1000;
-	private YiXinMsgHelper msgHelper;
+	private MsgManager msgHelper;
 	private ApplicationContext acx;
 	private CustomerMapper customerMapper;
 	private YXConfigMapper	yxConfigMapper;
@@ -48,8 +50,8 @@ public class SimpleYiXinMsgProcessorTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(MmtAPI.class);
-		msgHelper = acx.getBean(YiXinMsgHelper.class);
+		api = acx.getBean(YiXinAPI.class);
+		msgHelper = acx.getBean(MsgManager.class);
 		customerMapper = acx.getBean(CustomerMapper.class);
 		yxConfigMapper = acx.getBean(YXConfigMapper.class);
 		assertNotNull(api);
@@ -92,6 +94,7 @@ public class SimpleYiXinMsgProcessorTest {
 	public void testSaveTextMsg(){
 		String txtMsg = "<xml>  <ToUserName>11b09b69e7e169ed</ToUserName>  <FromUserName>eddc9f8ab0c0afc9</FromUserName>  <CreateTime>1379080088</CreateTime>  <MsgId>5</MsgId>  <MsgType>text</MsgType>  <Content>你好</Content></xml>";
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(txtMsg);
+		msg.setService_type(ServiceType.YIXIN);
 		msgHelper.saveRecvTextMsg(msg);
 	}
 	@Test
@@ -166,5 +169,6 @@ public class SimpleYiXinMsgProcessorTest {
 		TextMessage msg = acx.getBean(TextMsgParser.class).toMsg(result);
 		assertEquals(msg.getContent(),"亲，我暂时无法识别音乐哦，您可以给我发文字消息。");
 	}
+	//FIXME 很多BUG
 	
 }
