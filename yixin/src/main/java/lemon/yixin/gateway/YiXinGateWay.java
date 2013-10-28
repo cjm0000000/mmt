@@ -7,9 +7,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.api.simple.MMTGateWay;
-import lemon.shared.entity.MMTCharset;
+import lemon.shared.config.MMTCharset;
+import lemon.shared.config.MMTConfig;
+import lemon.shared.gateway.AbstractGateWay;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service("yixinGW")
-public final class YiXinGateWay extends MMTGateWay {
+public final class YiXinGateWay extends AbstractGateWay {
 	private static Log logger = LogFactory.getLog(YiXinGateWay.class);
 	@Resource(name="yiXinAPI")
 	private MmtAPI yxAPI;

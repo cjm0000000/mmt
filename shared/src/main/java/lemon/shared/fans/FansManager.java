@@ -1,7 +1,7 @@
 package lemon.shared.fans;
 
 import lemon.shared.MmtException;
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.fans.persistence.FansRepository;
 import lemon.shared.service.ServiceType;

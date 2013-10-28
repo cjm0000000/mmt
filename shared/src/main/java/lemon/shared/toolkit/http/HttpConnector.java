@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import lemon.shared.MMTContext;
+import lemon.shared.config.MMTCharset;
 
 /**
  * HTTP 消息管理器
@@ -164,7 +164,7 @@ public final class HttpConnector {
 		OutputStream os = null;
 		try {
 			os = con.getOutputStream();
-			os.write(msg.getBytes(MMTContext.LOCAL_CHARSET));
+			os.write(msg.getBytes(MMTCharset.LOCAL_CHARSET));
 			os.flush();
 		} finally {
 			if (null != os)
@@ -184,7 +184,7 @@ public final class HttpConnector {
 		try {
 			is = con.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is,
-					MMTContext.LOCAL_CHARSET));
+					MMTCharset.LOCAL_CHARSET));
 			StringBuffer sb = new StringBuffer();
 			String line;
 			while ((line = br.readLine()) != null)

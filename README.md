@@ -1,24 +1,26 @@
-# MMT is a smart message robot.
+# MMT是一个智能的微信、易信公众平台接入系统.
 
-1. WeiXin feature is Integrated, You can easy use the it.
-2. YiXin feature is Integrated, You can easy use the it.
+### 特性：
+ 1. 集成微信公众平台API。
+ 2. 集成易信公众平台API。
+ 3. 集成简单WEB管理平台。
+ 4. Spring Security 3 管理系统权限。
 
-## User Guide
-
+## 用户手册
 	
-### 1. Create tables
-Download [Table structure] (https://github.com/cjm0000000/mmt/blob/master/mmt_db.sql)
+### 1. 创建表（基于MYSQL数据库）
+下载 [建表SQL] (https://github.com/cjm0000000/mmt/blob/master/mmt_db.sql)
 
-### 2. Build from code
+### 2. 构建【构建之前请先修改数据源】
 
 	$ git clone https://github.com/cjm0000000/mmt.git mmt
 	$ cd mmt
 	$ mvn install
 		
-### 3. configure the WeiXin feature at web.xml:
+### 3. 配置微信接入:
 
 	<filter>
-		<filter-name>microChatGW</filter-name>
+		<filter-name>weixinGW</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
@@ -26,12 +28,14 @@ Download [Table structure] (https://github.com/cjm0000000/mmt/blob/master/mmt_db
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>microChatGW</filter-name>
-		<url-pattern>/microchat/*</url-pattern>
+		<filter-name>weixinGW</filter-name>
+		<url-pattern>/weichat/*</url-pattern>
 	</filter-mapping>
 	
+### 4. 配置易信接入:
+
 	<filter>
-		<filter-name>yixinxGW</filter-name>
+		<filter-name>yixinGW</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
@@ -39,17 +43,17 @@ Download [Table structure] (https://github.com/cjm0000000/mmt/blob/master/mmt_db
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>yixinxGW</filter-name>
+		<filter-name>yixinGW</filter-name>
 		<url-pattern>/echat/*</url-pattern>
 	</filter-mapping>
 
-### 4. implement your personalized message business:
+### 5. 实现自定义消息处理器:
 
-For WeiXin: You can implement your business by extends `lemon.weixin.biz.customer.WXCustBasicMsgProcessor`,
-this class supply an easy subscribe implement.
+MMT为您的消息处理提供一个模板类 `lemon.shared.message.processor.AbstractMsgProcessor`, 
+你可以继承这个抽象类来实现自定义的消息处理机。
 
-For YiXin: You can implement your business by extends `lemon.yixin.biz.customer.YXCustBasicMsgProcessor`,
-this class supply an easy subscribe implement.
+MMT也提供了简单的消息实现: `lemon.weixin.message.processor.SimpleWeiXinMsgProcessor`
+和`lemon.yixin.message.processor.SimpleYiXinMsgProcessor`.
 
 =====
-Good luck for you!
+祝你好运!

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.mapper.RoleMapper;

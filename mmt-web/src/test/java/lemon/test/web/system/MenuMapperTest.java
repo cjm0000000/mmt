@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.entity.Status;
 import lemon.web.system.bean.Menu;
-import lemon.web.system.bean.Role;
 import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMapper;
 
@@ -108,17 +106,6 @@ public class MenuMapperTest {
 		menu.setSupmenucode(parent_id);
 		menuMapper.addMenu(menu);
 		return menu;
-	}
-	
-	private Role addRole(){
-		Role role = new Role();
-		role.setReloadable(Status.AVAILABLE);
-		role.setRole_desc("role_desc");
-		role.setRole_name("ROLE_NAME!##$");
-		role.setSort(1);
-		role.setStatus(Status.AVAILABLE);
-		roleMapper.addRole(role);
-		return role;
 	}
 	
 }

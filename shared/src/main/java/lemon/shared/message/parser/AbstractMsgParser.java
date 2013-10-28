@@ -16,8 +16,8 @@ import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.MMTContext;
 import lemon.shared.MmtException;
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.entity.MMTCharset;
+import lemon.shared.config.MMTCharset;
+import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.message.processor.MsgProcessor;

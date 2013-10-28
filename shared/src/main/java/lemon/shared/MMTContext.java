@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;;
  */
 @Component
 public final class MMTContext implements ApplicationContextAware {
-	/** 本地编码  */
-	public static final String LOCAL_CHARSET = "UTF-8";
 	@Autowired
 	private static ApplicationContext context;
 	

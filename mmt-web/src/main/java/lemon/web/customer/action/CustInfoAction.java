@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import lemon.shared.customer.bean.Customer;
+import lemon.shared.config.Status;
+import lemon.shared.customer.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
-import lemon.shared.entity.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 

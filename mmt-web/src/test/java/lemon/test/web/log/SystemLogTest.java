@@ -2,7 +2,7 @@ package lemon.test.web.log;
 
 import java.util.List;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.log.mapper.SystemLogManager;
 

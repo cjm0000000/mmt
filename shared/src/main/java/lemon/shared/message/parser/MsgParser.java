@@ -1,6 +1,6 @@
 package lemon.shared.message.parser;
 
-import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.config.MMTConfig;
 
 /**
  * Message parser

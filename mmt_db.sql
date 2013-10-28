@@ -13,7 +13,7 @@ CREATE TABLE `system_config` (
 #
 # 登录日志表
 #
-CREATE TABLE `system_log_login` (
+CREATE TABLE `system_login_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
@@ -106,7 +106,7 @@ CREATE TABLE `system_user_config` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配置表';
 
-#############################  API共享   #############################
+#############################  CUSTOMER   #############################
 #
 # 客户信息表
 #
@@ -116,7 +116,37 @@ CREATE TABLE `customer` (
   `memo` varchar(255) NOT NULL DEFAULT '' COMMENT '客户介绍',
   `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=1089 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
+
+#
+# 客户自定义菜单表
+#
+CREATE TABLE `customer_menu` (
+  `menu_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `name` char(20) NOT NULL DEFAULT '' COMMENT '菜单名称',
+  `menulevcod` tinyint(1) NOT NULL DEFAULT '1' COMMENT '菜单等级',
+  `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
+  `key` varchar(128) NOT NULL DEFAULT '' COMMENT '菜单链接',
+  `type` varchar(5) NOT NULL DEFAULT '' COMMENT '类型',
+  `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8 COMMENT='客户自定义菜单表';
+
+#
+# 自定义菜单请求日志
+#
+CREATE TABLE `customer_menu_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `action` varchar(6) NOT NULL DEFAULT '' COMMENT '动作',
+  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT 'ACCESS TOKEN',
+  `msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '发送的消息',
+  `result` varchar(255) NOT NULL DEFAULT '' COMMENT '请求结果',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='自定义菜单请求日志';
 
 #
 # 客户服务开通情况表
@@ -129,101 +159,13 @@ CREATE TABLE `customer_service` (
   `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '服务到期时间（0000-00-00表示永久有效）',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表';
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表';
 
-#
-# 第一层业务处理库，严格匹配KEY
-#
-CREATE TABLE `mmt_biz_l1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
-  `value` varchar(1024) NOT NULL DEFAULT '' COMMENT '内容',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='第一层业务处理库，严格匹配KEY';
-
-#
-# 第二层业务处理库，模糊匹配KEY
-#
-CREATE TABLE `mmt_biz_l2` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
-  `value` varchar(1024) NOT NULL DEFAULT '' COMMENT '内容',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='第二层业务处理库，模糊匹配KEY';
-
-#
-# 通用业务处理库，模糊匹配KEY
-#
-CREATE TABLE `mmt_biz_l3` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
-  `value` varchar(1024) NOT NULL DEFAULT '' COMMENT '内容',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='通用业务处理库，模糊匹配KEY';
-
-#
-# 客户自定义菜单表
-#
-CREATE TABLE `mmt_custom_menu` (
-  `menu_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `name` char(20) NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `menulevcod` tinyint(1) NOT NULL DEFAULT '1' COMMENT '菜单等级',
-  `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
-  `key` varchar(128) NOT NULL DEFAULT '' COMMENT '菜单链接',
-  `type` varchar(5) NOT NULL DEFAULT '' COMMENT '类型',
-  `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
-  PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='客户自定义菜单表';
-
-#
-# ACCESS TOKEN请求日志
-#
-CREATE TABLE `mmt_log_accesstoken` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
-  `appid` varchar(255) NOT NULL DEFAULT '' COMMENT 'APPID',
-  `secret` varchar(255) NOT NULL DEFAULT '' COMMENT 'SECRET',
-  `grant_type` varchar(255) NOT NULL DEFAULT 'client_credential' COMMENT 'grant_type',
-  `result` varchar(1024) NOT NULL DEFAULT '' COMMENT '请求结果',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN请求日志';
-
-#
-# 自定义菜单请求日志
-#
-CREATE TABLE `mmt_log_custommenu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
-  `action` varchar(6) NOT NULL DEFAULT '' COMMENT '动作',
-  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT 'ACCESS TOKEN',
-  `msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '发送的消息',
-  `result` varchar(255) NOT NULL DEFAULT '' COMMENT '请求结果',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='自定义菜单请求日志';
-
-#
-# ACCESS TOKEN表
-#
-CREATE TABLE `mmt_request_accesstoken` (
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
-  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT '有效的AccessToken',
-  `expire_time` int(11) NOT NULL DEFAULT '0' COMMENT '有效期',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`cust_id`,`service_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN表';
-
+#############################  ACCESS   #############################
 #
 # 接口接入日志
 #
-CREATE TABLE `mmt_log_siteaccess` (
+CREATE TABLE `access_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
@@ -234,12 +176,52 @@ CREATE TABLE `mmt_log_siteaccess` (
   `timestamp_api` varchar(20) DEFAULT NULL COMMENT '接收到的timestamp',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='接口接入日志';
+) ENGINE=InnoDB AUTO_INCREMENT=673 DEFAULT CHARSET=utf8 COMMENT='接口接入日志';
 
+#
+# ACCESS TOKEN表
+#
+CREATE TABLE `access_token` (
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT '有效的AccessToken',
+  `expire_time` int(11) NOT NULL DEFAULT '0' COMMENT '有效期',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cust_id`,`service_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN表';
+
+#
+# ACCESS TOKEN请求日志
+#
+CREATE TABLE `access_token_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `appid` varchar(255) NOT NULL DEFAULT '' COMMENT 'APPID',
+  `secret` varchar(255) NOT NULL DEFAULT '' COMMENT 'SECRET',
+  `grant_type` varchar(255) NOT NULL DEFAULT 'client_credential' COMMENT 'grant_type',
+  `result` varchar(1024) NOT NULL DEFAULT '' COMMENT '请求结果',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='ACCESS TOKEN请求日志';
+
+#############################  CITY   #############################
+#
+# 地区表
+#
+CREATE TABLE `city` (
+  `citycode` char(9) NOT NULL COMMENT '地区代码',
+  `city_name` char(10) NOT NULL DEFAULT '' COMMENT '地区名称',
+  `province` char(10) NOT NULL DEFAULT '' COMMENT '省份',
+  `city_alias` varchar(20) NOT NULL DEFAULT '' COMMENT '城市别名',
+  PRIMARY KEY (`citycode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区表';
+
+#############################  FANS   #############################
 #
 # 粉丝表
 #
-CREATE TABLE `mmt_fans` (
+CREATE TABLE `fans` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
@@ -253,7 +235,7 @@ CREATE TABLE `mmt_fans` (
 #
 # 粉丝订阅/退订日志表
 #
-CREATE TABLE `mmt_fans_log` (
+CREATE TABLE `fans_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `action` varchar(11) NOT NULL DEFAULT '' COMMENT '动作',
@@ -261,52 +243,13 @@ CREATE TABLE `mmt_fans_log` (
   `user_id` char(32) NOT NULL DEFAULT '' COMMENT '用户ID',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '订阅时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='粉丝订阅/退订日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8 COMMENT='粉丝订阅/退订日志表';
 
-#
-# 消息接收日志
-#
-CREATE TABLE `mmt_msg_log_recv` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
-  `msg` varchar(2048) NOT NULL DEFAULT '' COMMENT '消息内容',
-  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息接收日志';
-
-#
-# 消息发送日志
-#
-CREATE TABLE `mmt_msg_log_send` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
-  `msg` varchar(2048) NOT NULL DEFAULT '' COMMENT '消息内容',
-  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息发送日志';
-
-#
-# 消息接收汇总表
-#
-CREATE TABLE `mmt_msg_detail_recv` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
-  `toUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '接受者ID',
-  `fromUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '发送者ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务器创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `msgId` bigint(20) NOT NULL DEFAULT '0' COMMENT '信息ID',
-  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '接收时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息接收汇总表';
-
+#############################  MESSAGE   #############################
 #
 # 消息发送汇总表
 #
-CREATE TABLE `mmt_msg_detail_send` (
+CREATE TABLE `msg_detail_send` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
@@ -319,24 +262,258 @@ CREATE TABLE `mmt_msg_detail_send` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息发送汇总表';
 
 #
-# 地区表
+# 易信语音消息接收表
 #
-CREATE TABLE `mmt_city` (
-  `citycode` char(9) NOT NULL COMMENT '地区代码',
-  `city_name` char(10) NOT NULL DEFAULT '' COMMENT '地区名称',
-  `province` char(10) NOT NULL DEFAULT '' COMMENT '省份',
-  `city_alias` varchar(20) NOT NULL DEFAULT '' COMMENT '城市别名',
-  PRIMARY KEY (`citycode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区表';
+CREATE TABLE `msg_recv_audio_yixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信语音消息接收表';
 
-########################### For WeiXin #####################
 #
-# 微信配置表
+# 消息接收汇总表
+#
+CREATE TABLE `msg_recv_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
+  `toUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '接受者ID',
+  `fromUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '发送者ID',
+  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务器创建时间',
+  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
+  `msgId` bigint(20) DEFAULT '0' COMMENT '信息ID',
+  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '接收时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8 COMMENT='消息接收汇总表';
+
+#
+# 事件消息接收表
+#
+CREATE TABLE `msg_recv_event` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
+  `eventKey` char(64) NOT NULL DEFAULT '' COMMENT '事件KEY',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='事件消息接收表';
+
+#
+# 图片消息接收表
+#
+CREATE TABLE `msg_recv_image` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片链接',
+  `mediaId` char(64) DEFAULT '',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片消息接收表';
+
+#
+# 链接消息接收表
+#
+CREATE TABLE `msg_recv_link` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='链接消息接收表';
+
+#
+# 地理位置消息接收表
+#
+CREATE TABLE `msg_recv_location` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
+  `location_Y` varchar(15) NOT NULL DEFAULT '0' COMMENT 'Y坐标',
+  `scale` int(11) NOT NULL DEFAULT '0' COMMENT '放大倍数',
+  `label` varchar(255) DEFAULT '' COMMENT '地址',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地理位置消息接收表';
+
+#
+# 消息接收日志
+#
+CREATE TABLE `msg_recv_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `msg` varchar(2048) NOT NULL DEFAULT '' COMMENT '消息内容',
+  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=408 DEFAULT CHARSET=utf8 COMMENT='消息接收日志';
+
+#
+# 易信音乐消息接收表
+#
+CREATE TABLE `msg_recv_music_yixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片地址',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
+  `desc` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信音乐消息接收表';
+
+#
+# 文本消息接收表
+#
+CREATE TABLE `msg_recv_text` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息接收表';
+
+#
+# 微信视频消息接收表
+#
+CREATE TABLE `msg_recv_video_weixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `mediaId` char(64) NOT NULL,
+  `thumbMediaId` varchar(255) NOT NULL,
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信视频消息接收表';
+
+#
+# 易信视频消息接收表
+#
+CREATE TABLE `msg_recv_video_yixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信视频消息接收表';
+
+#
+# 微信语音消息接收表
+#
+CREATE TABLE `msg_recv_voice_weixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `mediaId` char(64) NOT NULL,
+  `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
+  `recognition` varchar(255) NOT NULL,
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信语音消息接收表';
+
+#
+# 一级消息库
+#
+CREATE TABLE `msg_repo_l1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
+  `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='一级消息库';
+
+#
+# 二级消息库
+#
+CREATE TABLE `msg_repo_l2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
+  `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='二级消息库';
+
+#
+# 通用消息库
+#
+CREATE TABLE `msg_repo_l3` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
+  `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='通用消息库';
+
+#
+# 消息发送汇总表
+#
+CREATE TABLE `msg_send_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `toUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '接受者ID',
+  `fromUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '发送者ID',
+  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
+  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '发送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8 COMMENT='消息发送汇总表';
+
+#
+# 消息发送日志
+#
+CREATE TABLE `msg_send_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` varchar(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `msg` varchar(2048) NOT NULL DEFAULT '' COMMENT '消息内容',
+  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=utf8 COMMENT='消息发送日志';
+
+#
+# 微信音乐消息发送表
+#
+CREATE TABLE `msg_send_music_weixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
+  `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信音乐消息发送表';
+
+#
+# 易信音乐消息发送表
+#
+CREATE TABLE `msg_send_music_yixin` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
+  `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信音乐消息发送表';
+
+#
+# 图文消息发送表
+#
+CREATE TABLE `msg_send_news` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `articleCount` decimal(2,0) NOT NULL DEFAULT '0' COMMENT '文章数量',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图文消息发送表';
+
+#
+# 图文消息发送表——文章
+#
+CREATE TABLE `msg_send_news_article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应news表ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
+  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片地址',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文章地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COMMENT='图文消息发送表——文章';
+
+#
+# 文本消息发送表
+#
+CREATE TABLE `msg_send_text` (
+  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息发送表';
+
+#############################  CONFIG   #############################
+#
+# 微信配置信息表
 #
 CREATE TABLE `weixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `wx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
-  `account_type` varchar(2) NOT NULL DEFAULT 'DY' COMMENT '账户类型',
+  `account_type` char(2) NOT NULL DEFAULT 'DY' COMMENT '帐户类型',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '微信接入TOKEN',
   `subscribe_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '订阅事件需要发送的消息',
   `welcome_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '欢迎信息',
@@ -346,160 +523,16 @@ CREATE TABLE `weixin_config` (
   `api_url` char(40) NOT NULL DEFAULT '' COMMENT '客户微信API的URL(UNIQUE)',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信配置信息表';
 
 #
-# 微信接收消息汇总表
-#
-CREATE TABLE `weixin_recvmsg_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者微信ID',
-  `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者微信ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '微信创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `msgId` bigint(20) DEFAULT NULL COMMENT '信息ID',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '接收时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='微信消息接收汇总表';
-
-#
-# 微信事件消息接收表
-#
-CREATE TABLE `weixin_recvmsg_event` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
-  `eventKey` char(64) NOT NULL DEFAULT '' COMMENT '事件KEY',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信事件消息接收表';
-
-#
-# 微信图片消息接收表
-#
-CREATE TABLE `weixin_recvmsg_image` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片链接',
-  `mediaId` char(64) NOT NULL DEFAULT '',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信图片消息接收表';
-
-#
-# 微信链接消息接收表
-#
-CREATE TABLE `weixin_recvmsg_link` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `title` varchar(255) DEFAULT '' COMMENT '标题',
-  `description` varchar(1024) DEFAULT '' COMMENT '详情',
-  `url` varchar(255) DEFAULT '' COMMENT '链接地址',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信链接消息接收表';
-
-#
-# 微信地理位置消息接收表
-#
-CREATE TABLE `weixin_recvmsg_location` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
-  `location_Y` varchar(15) NOT NULL DEFAULT '0' COMMENT 'Y坐标',
-  `scale` int(11) NOT NULL DEFAULT '0' COMMENT '放大倍数',
-  `label` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信地理位置消息接收表';
-
-#
-# 微信文本消息接收表
-#
-CREATE TABLE `weixin_recvmsg_text` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `content` varchar(2048) DEFAULT '' COMMENT '文本内容',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信文本消息接收表';
-
-#
-# 微信视频消息接收表
-#
-CREATE TABLE `weixin_recvmsg_video` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `mediaId` char(64) NOT NULL,
-  `thumbMediaId` varchar(255) NOT NULL,
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信视频消息接收表';
-
-#
-# 微信语音消息接收表
-#
-CREATE TABLE `weixin_recvmsg_voice` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `mediaId` char(64) NOT NULL,
-  `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
-  `recognition` varchar(255) NOT NULL,
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信语音消息接收表';
-
-#
-# 微信消息发送汇总表
-#
-CREATE TABLE `weixin_sendmsg_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者微信ID',
-  `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者微信ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信消息发送汇总表';
-
-#
-# 微信音乐消息发送表
-#
-CREATE TABLE `weixin_sendmsg_music` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
-  `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信音乐消息发送表';
-
-#
-# 微信图文消息发送表
-#
-CREATE TABLE `weixin_sendmsg_news` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `articleCount` decimal(2,0) NOT NULL DEFAULT '0' COMMENT '文章数量',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信图文消息发送表';
-
-#
-# 微信图文消息发送表——文章
-#
-CREATE TABLE `weixin_sendmsg_news_article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应news表ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
-  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片地址',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文章地址',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信图文消息发送表——文章';
-
-#
-# 微信文本消息发送表
-#
-CREATE TABLE `weixin_sendmsg_text` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `content` varchar(2048) NOT NULL DEFAULT '' COMMENT '文本内容',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信文本消息发送表';
-
-########################### For YiXin #####################
-#
-# 易信配置表
+# 易信配置信息表
 #
 CREATE TABLE `yixin_config` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户ID',
   `yx_account` varchar(50) NOT NULL DEFAULT '' COMMENT '易信号',
   `token` varchar(255) NOT NULL DEFAULT '' COMMENT '易信接入TOKEN',
-  `subscribe_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '订阅事件需要发送的消息',
+  `subscribe_msg` varchar(1024) DEFAULT '' COMMENT '订阅事件需要发送的消息',
   `welcome_msg` varchar(1024) NOT NULL DEFAULT '' COMMENT '欢迎信息',
   `biz_class` varchar(255) NOT NULL DEFAULT '' COMMENT '业务代码实现类',
   `appid` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方用户唯一凭证',
@@ -507,158 +540,4 @@ CREATE TABLE `yixin_config` (
   `api_url` char(40) NOT NULL DEFAULT '' COMMENT '客户易信API的URL(UNIQUE)',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信配置信息表'
-
-#
-# 易信接收消息汇总表
-#
-CREATE TABLE `yixin_recvmsg_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者易信ID',
-  `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者易信ID',
-  `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '易信创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `msgId` bigint(20) DEFAULT NULL COMMENT '信息ID',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '接收时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='易信消息接收汇总表';
-
-#
-# 易信事件消息接收表
-#
-CREATE TABLE `yixin_recvmsg_event` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
-  `eventKey` char(64) NOT NULL DEFAULT '' COMMENT '事件KEY',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信事件消息接收表';
-
-#
-# 易信图片消息接收表
-#
-CREATE TABLE `yixin_recvmsg_image` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `picUrl` varchar(255) DEFAULT '' COMMENT '图片链接',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信图片消息接收表';
-
-#
-# 易信链接消息接收表
-#
-CREATE TABLE `yixin_recvmsg_link` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `title` varchar(250) DEFAULT '' COMMENT '标题',
-  `description` varchar(1024) DEFAULT '' COMMENT '详情',
-  `url` varchar(255) DEFAULT '' COMMENT '链接地址',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信链接消息接收表';
-
-#
-# 易信地理位置消息接收表
-#
-CREATE TABLE `yixin_recvmsg_location` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
-  `location_Y` varchar(15) NOT NULL DEFAULT '0' COMMENT 'Y坐标',
-  `scale` int(11) NOT NULL DEFAULT '0' COMMENT '放大倍数',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信地理位置消息接收表';
-
-#
-# 易信文本消息接收表
-#
-CREATE TABLE `yixin_recvmsg_text` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信文本消息接收表';
-
-#
-# 易信视频消息接收表
-#
-CREATE TABLE `yixin_recvmsg_video` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信视频消息接收表';
-
-#
-# 易信音乐消息接收表
-#
-CREATE TABLE `yixin_recvmsg_music` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片地址',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
-  `desc` varchar(2048) NOT NULL DEFAULT '' COMMENT '详情',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信音乐消息接收表';
-
-#
-# 易信语音消息接收表
-#
-CREATE TABLE `yixin_recvmsg_audio` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信语音消息接收表'
-
-#
-# 易信消息发送汇总表
-#
-CREATE TABLE `yixin_sendmsg_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `toUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '接受者易信ID',
-  `fromUserName` varchar(100) NOT NULL DEFAULT '' COMMENT '发送者易信ID',
-  `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信消息发送汇总表';
-
-#
-# 易信音乐消息发送表
-#
-CREATE TABLE `yixin_sendmsg_music` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
-  `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信音乐消息发送表';
-
-#
-# 易信图文消息发送表
-#
-CREATE TABLE `yixin_sendmsg_news` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `articleCount` decimal(2,0) NOT NULL DEFAULT '0' COMMENT '文章数量',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信图文消息发送表';
-
-#
-# 易信图文消息发送表——文章
-#
-CREATE TABLE `yixin_sendmsg_news_article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应news表ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
-  `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片地址',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文章地址',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信图文消息发送表——文章';
-
-#
-# 易信文本消息发送表
-#
-CREATE TABLE `yixin_sendmsg_text` (
-  `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
-  `content` varchar(1024) NOT NULL COMMENT '文本内容',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信文本消息发送表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='易信配置信息表';

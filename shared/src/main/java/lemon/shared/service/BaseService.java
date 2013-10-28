@@ -1,14 +1,20 @@
 package lemon.shared.service;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 /**
  * Base element of Log
  * @author lemon
  * @version 1.0
  */
 public class BaseService {
+	@XStreamOmitField
 	protected int id;
+	@XStreamOmitField
 	protected int cust_id;
+	@XStreamOmitField
 	protected ServiceType service_type;
+	@XStreamOmitField
 	protected String timestamp;
 	
 	public int getId() {

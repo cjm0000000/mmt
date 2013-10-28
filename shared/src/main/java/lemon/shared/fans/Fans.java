@@ -1,6 +1,6 @@
 package lemon.shared.fans;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.shared.service.BaseService;
 
 /**

@@ -10,11 +10,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import lemon.shared.access.ReturnCode;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.customer.bean.CustomMenu;
-import lemon.shared.customer.bean.CustomMenuAdpater;
+import lemon.shared.customer.CustomMenu;
+import lemon.shared.customer.CustomMenuAdpater;
 import lemon.shared.customer.mapper.CustomMenuMapper;
-import lemon.shared.request.bean.ReturnCode;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;

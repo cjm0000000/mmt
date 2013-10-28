@@ -3,7 +3,7 @@ package lemon.web.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.log.bean.LoginLog;

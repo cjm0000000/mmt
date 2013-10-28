@@ -3,7 +3,7 @@ package lemon.web.security;
 import java.util.HashSet;
 import java.util.Set;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Role;

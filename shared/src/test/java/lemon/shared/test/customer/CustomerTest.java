@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.customer.bean.Customer;
-import lemon.shared.customer.bean.CustomerService;
+import lemon.shared.config.Status;
+import lemon.shared.customer.Customer;
+import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.mapper.CustomerMapper;
-import lemon.shared.entity.Status;
 import lemon.shared.service.ServiceType;
 
 import org.junit.After;

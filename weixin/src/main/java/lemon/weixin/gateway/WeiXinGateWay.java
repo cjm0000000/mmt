@@ -7,9 +7,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.api.simple.MMTGateWay;
-import lemon.shared.entity.MMTCharset;
+import lemon.shared.config.MMTCharset;
+import lemon.shared.config.MMTConfig;
+import lemon.shared.gateway.AbstractGateWay;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service("weixinGW")
-public final class WeiXinGateWay extends MMTGateWay {
+public final class WeiXinGateWay extends AbstractGateWay {
 	private static Log logger = LogFactory.getLog(WeiXinGateWay.class);
 	@Resource(name="weiXinAPI")
 	private MmtAPI wxAPI;

@@ -1,6 +1,6 @@
 package lemon.web.log.bean;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 
 /**
  * login log entity

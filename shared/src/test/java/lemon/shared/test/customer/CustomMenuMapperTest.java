@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.customer.bean.CustomMenu;
+import lemon.shared.customer.Action;
+import lemon.shared.customer.CustomMenu;
+import lemon.shared.customer.log.CustomMenuLog;
 import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.service.ServiceType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -117,6 +120,19 @@ public class CustomMenuMapperTest {
 				String.valueOf(menu1.getMenu_id()),
 				String.valueOf(menu2.getMenu_id()),
 				String.valueOf(menu3.getMenu_id()) });
+	}
+	
+	@Test
+	public void saveCustomMenuLog(){
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token("accesstoken");
+		log.setAction(Action.DELETE);
+		log.setCust_id(1);
+		log.setMsg("msg");
+		log.setResult("result");
+		log.setService_type(ServiceType.WEIXIN);
+		customMenuMapper.saveMenuSyncLog(log);
+		assertNotEquals(0, log.getId());
 	}
 
 	private CustomMenu getCustomMenu() {

@@ -23,7 +23,7 @@ public interface CityMapper {
 	 * 添加城市
 	 * @param city
 	 */
-	@Insert("INSERT INTO mmt_city(citycode,city_name,province,city_alias) VALUES(#{citycode},#{city_name},#{province},CONCAT(#{province},#{city_name}))")
+	@Insert("INSERT INTO city(citycode,city_name,province,city_alias) VALUES(#{citycode},#{city_name},#{province},CONCAT(#{province},#{city_name}))")
 	@Lang(RawLanguageDriver.class)
 	void add(City city);
 	
@@ -32,7 +32,7 @@ public interface CityMapper {
 	 * @param city_name
 	 * @return
 	 */
-	@Select("SELECT A.citycode,A.city_name,A.province FROM mmt_city A WHERE (A.city_name=#{city_name} OR A.city_alias=#{city_name})")
+	@Select("SELECT A.citycode,A.city_name,A.province FROM city A WHERE (A.city_name=#{city_name} OR A.city_alias=#{city_name})")
 	@Lang(RawLanguageDriver.class)
 	City get(String city_name);
 	
@@ -40,6 +40,6 @@ public interface CityMapper {
 	 * 清空数据
 	 */
 	//TODO 最好改成truncate
-	@Delete("DELETE FROM mmt_city")
+	@Delete("DELETE FROM city")
 	void clean();
 }

@@ -3,8 +3,8 @@ package lemon.shared.message.processor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lemon.shared.MmtException;
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.entity.Status;
+import lemon.shared.config.MMTConfig;
+import lemon.shared.config.Status;
 import lemon.shared.event.EventType;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;
@@ -19,9 +19,6 @@ import lemon.shared.message.metadata.recv.ImageMessage;
 import lemon.shared.message.metadata.recv.LinkMessage;
 import lemon.shared.message.metadata.recv.LocationMessage;
 import lemon.shared.message.metadata.send.MusicMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
-import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.processor.MsgProcessor;
 
@@ -69,18 +66,19 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 		}else if(msg instanceof VideoMessage){
 			//save video message
 			msgManager.saveRecvVideoMsg((VideoMessage) msg);
-			return processVideoMsg(mmt_token, (WXVideoMessage) msg);
+			return processVideoMsg(mmt_token, (VideoMessage) msg);
 		}else if(msg instanceof VoiceMessage){
 			//save voice message
-			msgManager.saveRecvVoiceMsg((WXVoiceMessage) msg);
-			return processVoiceMsg(mmt_token, (WXVoiceMessage) msg);
+			msgManager.saveRecvVoiceMsg((VoiceMessage) msg);
+			return processVoiceMsg(mmt_token, (VoiceMessage) msg);
 		}else if(msg instanceof AudioMessage){
 			//save audio message
-			msgManager.saveRecvAudioMsg((YXAudioMessage)msg);
-			return processAudioMsg(mmt_token, (YXAudioMessage)msg);
+			msgManager.saveRecvAudioMsg((AudioMessage)msg);
+			return processAudioMsg(mmt_token, (AudioMessage)msg);
 		}else if(msg instanceof MusicMessage){
 			//save music message
-			//TODO 完成音乐消息处理
+			msgManager.saveRecvMusicMsg((MusicMessage)msg);
+			return processMusicMsg(mmt_token, (MusicMessage)msg);
 		}
 		return null;
 	}

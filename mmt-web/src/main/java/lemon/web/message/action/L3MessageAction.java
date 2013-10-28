@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import lemon.shared.robotmsg.bean.RobotMsgBean;
+import lemon.shared.message.local.LocalMsgBean;
 import lemon.web.system.bean.User;
 
 /**
@@ -47,7 +47,7 @@ public final class L3MessageAction extends MessageAction {
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(@Valid RobotMsgBean msg, BindingResult br, HttpSession session) {
+	public String save(@Valid LocalMsgBean msg, BindingResult br, HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
 		if(null == user)
 			sendError("请先登录。");
@@ -96,7 +96,7 @@ public final class L3MessageAction extends MessageAction {
 	}
 
 	@Override
-	protected void obtainResult(List<RobotMsgBean> msgList) {
+	protected void obtainResult(List<LocalMsgBean> msgList) {
 		
 	}
 }

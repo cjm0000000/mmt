@@ -14,7 +14,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import lemon.shared.entity.MMTCharset;
+import lemon.shared.config.MMTCharset;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

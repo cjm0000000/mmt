@@ -2,7 +2,7 @@ package lemon.web.interfaces.action;
 
 import javax.servlet.http.HttpSession;
 
-import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.config.MMTConfig;
 import lemon.shared.service.ServiceType;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;

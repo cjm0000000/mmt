@@ -2,7 +2,8 @@ package lemon.shared.customer.mapper;
 
 import java.util.List;
 
-import lemon.shared.customer.bean.CustomMenu;
+import lemon.shared.customer.CustomMenu;
+import lemon.shared.customer.log.CustomMenuLog;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
@@ -78,4 +79,12 @@ public interface CustomMenuMapper {
 	@Lang(RawLanguageDriver.class)
 	List<CustomMenu> getMenuListByLevel(@Param("cust_id") int cust_id,
 			@Param("level") byte level);
+	
+	/**
+	 * save custom menu log
+	 * @param log
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	int saveMenuSyncLog(CustomMenuLog log);
 }

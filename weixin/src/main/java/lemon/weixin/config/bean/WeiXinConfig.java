@@ -1,6 +1,6 @@
 package lemon.weixin.config.bean;
 
-import lemon.shared.api.simple.MMTConfig;
+import lemon.shared.config.MMTConfig;
 
 /**
  * Customer's configures of WeiXin

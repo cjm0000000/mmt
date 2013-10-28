@@ -2,8 +2,8 @@ package lemon.shared.customer.mapper;
 
 import java.util.List;
 
-import lemon.shared.customer.bean.Customer;
-import lemon.shared.customer.bean.CustomerService;
+import lemon.shared.customer.Customer;
+import lemon.shared.customer.CustomerService;
 import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Delete;

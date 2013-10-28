@@ -4,11 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.customer.bean.Customer;
-import lemon.shared.customer.bean.CustomerService;
+import lemon.shared.config.MMTConfig;
+import lemon.shared.config.Status;
+import lemon.shared.customer.Customer;
+import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.mapper.CustomerMapper;
-import lemon.shared.entity.Status;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;

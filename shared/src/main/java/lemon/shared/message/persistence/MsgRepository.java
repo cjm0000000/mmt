@@ -35,7 +35,7 @@ public interface MsgRepository {
 	 * @param id
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId, B.content FROM mmt_msg_recv_detail A, mmt_msg_recv_text B WHERE A.id=B.detail_id AND A.msgType='text' AND A.id=#{id}")
+	@Select("SELECT A.id,A.cust_id,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId, B.content FROM msg_recv_detail A, msg_recv_text B WHERE A.id=B.detail_id AND A.msgType='text' AND A.id=#{id}")
 	TextMessage getRecvTextMsg(int id);
 	
 	/**
@@ -43,7 +43,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_audio_yixin(detail_id,url,name,mimeType) SELECT #{id},#{url},#{name},#{mimeType}")
+	@Insert("INSERT INTO msg_recv_audio_yixin(detail_id,url,name,mimeType) SELECT #{id},#{url},#{name},#{mimeType}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvYXAudioMsg(YXAudioMessage msg);
 	
@@ -52,7 +52,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_event(detail_id,eventType,eventKey) SELECT #{id},#{eventType},#{eventKey}")
+	@Insert("INSERT INTO msg_recv_event(detail_id,eventType,eventKey) SELECT #{id},#{eventType},#{eventKey}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvEventMsg(EventMessage msg);
 	
@@ -61,7 +61,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_image(detail_id,picUrl,mediaId) SELECT #{id},#{picUrl},#{mediaId}")
+	@Insert("INSERT INTO msg_recv_image(detail_id,picUrl,mediaId) SELECT #{id},#{picUrl},#{mediaId}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvImageMsg(ImageMessage msg);
 	
@@ -70,7 +70,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_link(detail_id,title,description,url) SELECT #{id}, #{title}, #{description},#{url}")
+	@Insert("INSERT INTO msg_recv_link(detail_id,title,description,url) SELECT #{id}, #{title}, #{description},#{url}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvLinkMsg(LinkMessage msg);
 	
@@ -79,7 +79,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_location(detail_id,location_X,location_Y,scale,label) SELECT #{id}, #{location_X}, #{location_Y},#{scale},#{label}")
+	@Insert("INSERT INTO msg_recv_location(detail_id,location_X,location_Y,scale,label) SELECT #{id}, #{location_X}, #{location_Y},#{scale},#{label}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvLocationMsg(LocationMessage msg);
 
@@ -88,7 +88,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) SELECT #{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now()")
+	@Insert("INSERT INTO msg_recv_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) SELECT #{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now()")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvMsgDetail(Message msg);
@@ -98,7 +98,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_text(detail_id,content) SELECT #{id},#{content}")
+	@Insert("INSERT INTO msg_recv_text(detail_id,content) SELECT #{id},#{content}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvTextMsg(TextMessage msg);
 	
@@ -107,7 +107,7 @@ public interface MsgRepository {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_video_weixin(detail_id,mediaId,thumbMediaId) SELECT #{id}, #{mediaId}, #{thumbMediaId}")
+	@Insert("INSERT INTO msg_recv_video_weixin(detail_id,mediaId,thumbMediaId) SELECT #{id}, #{mediaId}, #{thumbMediaId}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvWXVideoMessage(WXVideoMessage msg);
 	
@@ -116,7 +116,7 @@ public interface MsgRepository {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_video_yixin(detail_id,url,name,mimeType) SELECT #{id}, #{url}, #{name}, #{mimeType}")
+	@Insert("INSERT INTO msg_recv_video_yixin(detail_id,url,name,mimeType) SELECT #{id}, #{url}, #{name}, #{mimeType}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvYXVideoMessage(YXVideoMessage msg);
 
@@ -125,16 +125,25 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_recv_voice_weixin(detail_id,mediaId,format,recognition) SELECT #{id}, #{mediaId}, #{format},#{recognition}")
+	@Insert("INSERT INTO msg_recv_voice_weixin(detail_id,mediaId,format,recognition) SELECT #{id}, #{mediaId}, #{format},#{recognition}")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvWXVoiceMsg(WXVoiceMessage msg);
+	
+	/**
+	 * save receive YiXin music message
+	 * @param msg
+	 * @return
+	 */
+	@Insert("INSERT INTO msg_recv_music_yixin(detail_id,url,name,mimeType,`desc`) SELECT #{id},#{url},#{name},#{mimeType},#{desc}")
+	@Lang(RawLanguageDriver.class)
+	int saveRecvYXMusicMsg(YXMusicMessage msg);
 	
 	/**
 	 * save send message detail
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,timestamp) SELECT #{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},now()")
+	@Insert("INSERT INTO msg_send_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,timestamp) SELECT #{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},now()")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	@Lang(RawLanguageDriver.class)
 	int saveSendMsgDetail(Message msg);
@@ -144,7 +153,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_music_yixin(detail_id,musicUrl,hqMusicUrl) SELECT #{id},#{musicUrl},#{hqMusicUrl}")
+	@Insert("INSERT INTO msg_send_music_yixin(detail_id,musicUrl,hqMusicUrl) SELECT #{id},#{musicUrl},#{hqMusicUrl}")
 	@Lang(RawLanguageDriver.class)
 	int saveSendYXMusicMsg(YXMusicMessage msg);
 	
@@ -153,7 +162,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_music_weixin(detail_id,musicUrl,hqMusicUrl) SELECT #{id},#{musicUrl},#{hqMusicUrl}")
+	@Insert("INSERT INTO msg_send_music_weixin(detail_id,musicUrl,hqMusicUrl) SELECT #{id},#{musicUrl},#{hqMusicUrl}")
 	@Lang(RawLanguageDriver.class)
 	int saveSendWXMusicMsg(WXMusicMessage msg);
 	
@@ -162,7 +171,7 @@ public interface MsgRepository {
 	 * @param article
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_news_article(detail_id,title,description,picUrl,url) SELECT #{id},#{title},#{description},#{picUrl},#{url}")
+	@Insert("INSERT INTO msg_send_news_article(detail_id,title,description,picUrl,url) SELECT #{id},#{title},#{description},#{picUrl},#{url}")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	@Lang(RawLanguageDriver.class)
 	int saveSendNewsArticles(Article article);
@@ -172,7 +181,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_news(detail_id,articleCount) SELECT #{id},#{articleCount}")
+	@Insert("INSERT INTO msg_send_news(detail_id,articleCount) SELECT #{id},#{articleCount}")
 	@Lang(RawLanguageDriver.class)
 	int saveSendNewsMsg(NewsMessage msg);
 	
@@ -181,7 +190,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO mmt_msg_send_text(detail_id,content) SELECT #{id},#{content}")
+	@Insert("INSERT INTO msg_send_text(detail_id,content) SELECT #{id},#{content}")
 	@Lang(RawLanguageDriver.class)
 	int saveSendTextMsg(TextMessage msg);
 }

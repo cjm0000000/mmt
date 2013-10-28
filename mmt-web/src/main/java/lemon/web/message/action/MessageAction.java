@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import lemon.shared.robotmsg.bean.RobotMsgBean;
-import lemon.shared.robotmsg.mapper.RobotMsgBeanMapper;
+import lemon.shared.message.local.LocalMsgBean;
+import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
 
@@ -29,7 +29,7 @@ public abstract class MessageAction extends AdminNavAction {
 	private static final byte LEVEL2 = 2;
 	private static final byte LEVEL3 = 3;
 	@Autowired
-	protected RobotMsgBeanMapper msgBeanMapper;
+	protected LocalMsgBeanRepository msgBeanMapper;
 
 	/**
 	 * 获取消息级别
@@ -60,7 +60,7 @@ public abstract class MessageAction extends AdminNavAction {
 	 * 对结果集特殊处理
 	 * @param msgList
 	 */
-	protected abstract void obtainResult(List<RobotMsgBean> msgList);
+	protected abstract void obtainResult(List<LocalMsgBean> msgList);
 	
 	/**
 	 * 获取消息列表
@@ -69,7 +69,7 @@ public abstract class MessageAction extends AdminNavAction {
 	 * @param pageSize
 	 * @return
 	 */
-	protected List<RobotMsgBean> getMsgList(int cust_id, int page, int pageSize){
+	protected List<LocalMsgBean> getMsgList(int cust_id, int page, int pageSize){
 		if(getLevel() == LEVEL1)
 			return msgBeanMapper.getL1List(cust_id, 0, pageSize);
 		else if(getLevel() == LEVEL2)
@@ -92,7 +92,7 @@ public abstract class MessageAction extends AdminNavAction {
 		// 获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		// 获取Main数据
-		List<RobotMsgBean> msgList = getMsgList(user.getCust_id(), page, getPageSize());
+		List<LocalMsgBean> msgList = getMsgList(user.getCust_id(), page, getPageSize());
 		obtainResult(msgList);
 		resultMap.put("mainViewName", getMainViewName());
 		resultMap.put("msgList", msgList);
@@ -110,11 +110,11 @@ public abstract class MessageAction extends AdminNavAction {
 	 */
 	@RequestMapping(value="add-edit-page")
 	public ModelAndView addOrEditPage(HttpSession session, Integer id) {
-		RobotMsgBean mb = null;
+		LocalMsgBean mb = null;
 		if(id > 0)
 			mb = msgBeanMapper.getMsg(id, getLevel());
 		if(null == mb)
-			mb = new RobotMsgBean();
+			mb = new LocalMsgBean();
 		String title = getAddEditTitle(id);
 		Map<String, Object>	param = new HashMap<>();
 		param.put("msg", mb);

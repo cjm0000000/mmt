@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lemon.shared.customer.mapper.CustomMenuMapper">
-	<insert id="addMenu" parameterType="lemon.shared.customer.bean.CustomMenu" useGeneratedKeys="true" keyProperty="menu_id">
-		INSERT INTO mmt_custom_menu(cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
+	<insert id="addMenu" parameterType="lemon.shared.customer.CustomMenu" useGeneratedKeys="true" keyProperty="menu_id">
+		INSERT INTO customer_menu(cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
 			SELECT #{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort}
 	</insert>
 	<delete id="deleteMenu" parameterType="int">
-		DELETE FROM mmt_custom_menu WHERE menu_id IN
+		DELETE FROM customer_menu WHERE menu_id IN
 		<foreach collection="array" item="menuIds" index="index" open="(" separator="," close=")">
 			#{menuIds}
 		</foreach>
 	</delete>
-	<update id="editMenu" parameterType="lemon.shared.customer.bean.CustomMenu">
-		UPDATE mmt_custom_menu A
+	<update id="editMenu" parameterType="lemon.shared.customer.CustomMenu">
+		UPDATE customer_menu A
 			<set>
 				<if test="name != null and name != ''">
 					A.name=#{name},
@@ -35,28 +35,32 @@
 			</set>
 		WHERE A.menu_id=#{menu_id}
 	</update>
-	<select id="getMenu" parameterType="int" resultType="lemon.shared.customer.bean.CustomMenu">
+	<select id="getMenu" parameterType="int" resultType="lemon.shared.customer.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
-			FROM mmt_custom_menu A
+			FROM customer_menu A
 		WHERE A.menu_id=#{menu_id}
 	</select>
-	<select id="getMenuByKey" resultType="lemon.shared.customer.bean.CustomMenu">
+	<select id="getMenuByKey" resultType="lemon.shared.customer.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
-			FROM mmt_custom_menu A
+			FROM customer_menu A
 		WHERE A.cust_id=#{cust_id}
 			AND A.`key`=#{key}
 	</select>
-	<select id="getMenuList" parameterType="int" resultType="lemon.shared.customer.bean.CustomMenu">
+	<select id="getMenuList" parameterType="int" resultType="lemon.shared.customer.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
-			FROM mmt_custom_menu A 
+			FROM customer_menu A 
 		WHERE A.cust_id=#{cust_id}
 		ORDER BY A.menulevcod,A.sort
 	</select>
-	<select id="getMenuListByLevel" resultType="lemon.shared.customer.bean.CustomMenu">
+	<select id="getMenuListByLevel" resultType="lemon.shared.customer.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
-			FROM mmt_custom_menu A
+			FROM customer_menu A
 		WHERE A.menulevcod=#{level}
 			AND A.cust_id=#{cust_id}
 		ORDER BY A.sort
 	</select>
+	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.log.CustomMenuLog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO customer_menu_log(cust_id,service_type,action,access_token,msg,result) 
+			SELECT #{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result}
+	</insert>
 </mapper>

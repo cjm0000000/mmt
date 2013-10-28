@@ -1,8 +1,8 @@
 package lemon.test.web.interfaces;
 
 import static org.junit.Assert.*;
+import lemon.shared.access.ReturnCode;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.request.bean.ReturnCode;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
 

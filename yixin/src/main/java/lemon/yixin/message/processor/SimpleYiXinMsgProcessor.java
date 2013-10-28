@@ -1,7 +1,7 @@
 package lemon.yixin.message.processor;
 
-import lemon.shared.api.simple.MMTConfig;
-import lemon.shared.api.simple.MMTRobot;
+import lemon.shared.config.MMTConfig;
+import lemon.shared.message.MMTRobot;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.TextMessage;

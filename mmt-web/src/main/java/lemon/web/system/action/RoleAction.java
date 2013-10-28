@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.global.MMTException;
 import lemon.web.system.bean.Menu;

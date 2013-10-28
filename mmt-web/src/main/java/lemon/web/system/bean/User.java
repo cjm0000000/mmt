@@ -5,7 +5,7 @@ import javax.validation.constraints.Digits;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 
 /**
  * User entity

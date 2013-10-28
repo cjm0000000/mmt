@@ -1,7 +1,7 @@
 package lemon.shared.test.fans;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.shared.entity.Status;
+import lemon.shared.config.Status;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;
 import lemon.shared.service.ServiceType;

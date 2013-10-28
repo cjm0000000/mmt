@@ -21,7 +21,7 @@ public interface SystemLogManager {
 	 * save login log
 	 * @param log
 	 */
-	@Insert("INSERT INTO system_log_login(user_id,user_name,role_id,loginstatus,loginip) SELECT #{user_id},#{user_name},#{role_id},#{loginstatus},#{loginip}")
+	@Insert("INSERT INTO system_login_log(user_id,user_name,role_id,loginstatus,loginip) SELECT #{user_id},#{user_name},#{role_id},#{loginstatus},#{loginip}")
 	void saveLoginLog(LoginLog log);
 	
 	/**
@@ -31,6 +31,6 @@ public interface SystemLogManager {
 	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT A.id,A.user_id,A.user_name,A.role_id,A.logintime,A.loginstatus,A.loginip FROM system_log_login A WHERE A.user_id=#{user_id} limit #{start},#{limit} ")
+	@Select("SELECT A.id,A.user_id,A.user_name,A.role_id,A.logintime,A.loginstatus,A.loginip FROM system_login_log A WHERE A.user_id=#{user_id} limit #{start},#{limit} ")
 	List<LoginLog> getLoginLog(@Param("user_id")int user_id, @Param("start")int start, @Param("limit")int limit);
 }

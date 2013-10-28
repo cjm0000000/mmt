@@ -127,12 +127,14 @@ public class MsgManager {
 	}
 	
 	/**
-	 * save received voice message
+	 * save received music message
 	 * @param msg
 	 */
-	public void saveRecvVoiceMsg(WXVoiceMessage msg){
-		saveRecvMsg(msg);
-		msgRepository.saveRecvWXVoiceMsg(msg);
+	public void saveRecvMusicMsg(MusicMessage msg){
+		if (!(msg instanceof YXMusicMessage))
+			return;
+		saveRecvMsg((YXMusicMessage)msg);
+		msgRepository.saveRecvYXMusicMsg((YXMusicMessage)msg);
 	}
 	
 	/**
