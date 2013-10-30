@@ -23,7 +23,7 @@ VALUES (1,'系统管理员','管理客户接口','AVAILABLE',0,'AVAILABLE'),
 (3,'编辑','客户方编辑，可以编辑接口回复的内容等','AVAILABLE',2,'AVAILABLE');
 
 #用户初始化
-INSERT INTO `system_user` (`user_id`,`username`,`password`,`xm`,`idcard`,`mphone`,`islock`,`bz`,`status`) 
+INSERT INTO `system_user` (`user_id`,`user_name`,`password`,`xm`,`idcard`,`mphone`,`islock`,`bz`,`status`) 
 VALUES (1,'mmtuser','7744ECF0A5500EACF229B022A0F41081','MMTCHAT','330','1234','UNAVAILABLE','bz','AVAILABLE');
 
 #系统配置信息
