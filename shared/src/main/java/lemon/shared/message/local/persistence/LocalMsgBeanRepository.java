@@ -130,7 +130,7 @@ public interface LocalMsgBeanRepository {
 	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l1 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM msg_repo_l1 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
 	List<LocalMsgBean> getL1List(@Param("cust_id") int cust_id,
 			@Param("start") int start, @Param("limit") int limit);
@@ -142,7 +142,7 @@ public interface LocalMsgBeanRepository {
 	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
+	@Select("SELECT A.id,A.cust_id,A.`key`,A.`value` FROM msg_repo_l2 A WHERE A.cust_id=#{cust_id} LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
 	List<LocalMsgBean> getL2List(@Param("cust_id") int cust_id,
 			@Param("start") int start, @Param("limit") int limit);
@@ -152,7 +152,7 @@ public interface LocalMsgBeanRepository {
 	 * @param cust_id
 	 * @return
 	 */
-	@Select("SELECT COUNT(1) FROM mmt_biz_l2 A WHERE A.cust_id=#{cust_id}")
+	@Select("SELECT COUNT(1) FROM msg_repo_l2 A WHERE A.cust_id=#{cust_id}")
 	@Lang(RawLanguageDriver.class)
 	int getL2Count(int cust_id);
 	
@@ -163,7 +163,7 @@ public interface LocalMsgBeanRepository {
 	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT A.id,A.`key`,A.`value` FROM mmt_biz_l3 A LIMIT #{start},#{limit}")
+	@Select("SELECT A.id,A.`key`,A.`value` FROM msg_repo_l3 A LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
 	List<LocalMsgBean> getL3List(@Param("start") int start, @Param("limit") int limit);
 	
@@ -171,7 +171,7 @@ public interface LocalMsgBeanRepository {
 	 * 获取三级消息数量
 	 * @return
 	 */
-	@Select("SELECT COUNT(1) FROM mmt_biz_l3 A")
+	@Select("SELECT COUNT(1) FROM msg_repo_l3 A")
 	@Lang(RawLanguageDriver.class)
 	int getL3Count();
 }

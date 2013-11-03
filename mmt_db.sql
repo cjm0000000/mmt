@@ -30,7 +30,7 @@ CREATE TABLE `system_login_log` (
 #
 CREATE TABLE `system_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
   `password` char(128) NOT NULL DEFAULT '' COMMENT '用户密码',
   `xm` varchar(20) DEFAULT NULL COMMENT '用户姓名',
   `idcard` char(18) DEFAULT NULL COMMENT '身份证号码',

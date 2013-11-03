@@ -9,8 +9,6 @@ import lemon.shared.config.Status;
 
 /**
  * User entity
- * <p>
- * Implement Spring Security UserDetails
  * 
  * @author lemon
  * @version 1.0
