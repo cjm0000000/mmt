@@ -56,7 +56,7 @@ public interface UserConfigMapper {
 	 * @param key
 	 * @return
 	 */
-	@Select("SELECT A.user_id, A.`key`, A.value FROM system_user_config A WHERE A.user_id=#{user_id} AND A.key=#{key}")
+	@Select("SELECT A.user_id, A.`key`, A.value FROM system_user_config A WHERE A.user_id=#{user_id} AND A.`key`=#{key}")
 	@Lang(RawLanguageDriver.class)
 	UserConfig getItem(@Param("user_id") int user_id, @Param("key") String key);
 
