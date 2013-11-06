@@ -27,7 +27,7 @@ public interface UserConfigMapper {
 	 * @param item
 	 * @return
 	 */
-	@Insert("INSERT INTO system_user_config(user_id,`key`,value) SELECT #{user_id},#{key},#{value}")
+	@Insert("INSERT INTO system_user_config(user_id,`key`,value) VALUES(#{user_id},#{key},#{value})")
 	@Lang(RawLanguageDriver.class)
 	int addItem(UserConfig item);
 	

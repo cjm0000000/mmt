@@ -26,7 +26,7 @@ public interface SystemConfigMapper {
 	 * @param item
 	 * @return
 	 */
-	@Insert("INSERT INTO system_config(`group`,`key`,value) SELECT #{group},#{key},#{value}")
+	@Insert("INSERT INTO system_config(`group`,`key`,value) VALUES(#{group},#{key},#{value})")
 	@Lang(RawLanguageDriver.class)
 	int addItem(SystemConfig item);
 	

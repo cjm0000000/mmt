@@ -43,7 +43,7 @@ public interface YXConfigMapper {
 	 * @param config
 	 * @return
 	 */
-	@Insert("INSERT INTO yixin_config(cust_id,yx_account,token,subscribe_msg,welcome_msg,biz_class,appid,secret,api_url) SELECT #{cust_id},#{yx_account},#{token},#{subscribe_msg},#{welcome_msg},#{biz_class},#{appid},#{secret},#{api_url}")
+	@Insert("INSERT INTO yixin_config(cust_id,yx_account,token,subscribe_msg,welcome_msg,biz_class,appid,secret,api_url) VALUES (#{cust_id},#{yx_account},#{token},#{subscribe_msg},#{welcome_msg},#{biz_class},#{appid},#{secret},#{api_url})")
 	@Lang(RawLanguageDriver.class)
 	int save(YiXinConfig config);
 	

@@ -3,7 +3,7 @@
 <mapper namespace="lemon.web.system.mapper.MenuMapper">
 	<insert id="addMenu" parameterType="lemon.web.system.bean.Menu" useGeneratedKeys="true" keyProperty="menu_id">
 		INSERT INTO system_menu(menu_name,menulevcod,supmenucode,menuurl,menuico,sort) 
-			SELECT #{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort}
+			VALUES(#{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort})
 	</insert>
 	<delete id="deleteMenu" parameterType="int">
 		DELETE FROM system_menu WHERE menu_id IN

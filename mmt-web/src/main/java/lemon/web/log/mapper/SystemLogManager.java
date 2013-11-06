@@ -21,7 +21,7 @@ public interface SystemLogManager {
 	 * save login log
 	 * @param log
 	 */
-	@Insert("INSERT INTO system_login_log(user_id,user_name,role_id,loginstatus,loginip) SELECT #{user_id},#{user_name},#{role_id},#{loginstatus},#{loginip}")
+	@Insert("INSERT INTO system_login_log(user_id,user_name,role_id,loginstatus,loginip) VALUES(#{user_id},#{user_name},#{role_id},#{loginstatus},#{loginip})")
 	void saveLoginLog(LoginLog log);
 	
 	/**

@@ -43,7 +43,7 @@ public interface WXConfigMapper {
 	 * @param config
 	 * @return
 	 */
-	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,welcome_msg,biz_class,appid,secret,api_url,account_type) SELECT #{cust_id},#{wx_account},#{token},#{subscribe_msg},#{welcome_msg},#{biz_class},#{appid},#{secret},#{api_url},#{account_type}")
+	@Insert("INSERT INTO weixin_config(cust_id,wx_account,token,subscribe_msg,welcome_msg,biz_class,appid,secret,api_url,account_type) VALUES (#{cust_id},#{wx_account},#{token},#{subscribe_msg},#{welcome_msg},#{biz_class},#{appid},#{secret},#{api_url},#{account_type})")
 	@Lang(RawLanguageDriver.class)
 	int save(WeiXinConfig config);
 	

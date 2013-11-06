@@ -28,7 +28,7 @@ public interface AccessRepository {
 	 * @param access
 	 * @return
 	 */
-	@Insert("INSERT INTO access_log(cust_id,service_type,signature,nonce,echostr,token,timestamp_api) SELECT #{cust_id},#{service_type},#{signature},#{nonce},#{echostr},#{token},#{timestamp_api}")
+	@Insert("INSERT INTO access_log(cust_id,service_type,signature,nonce,echostr,token,timestamp_api) VALUES(#{cust_id},#{service_type},#{signature},#{nonce},#{echostr},#{token},#{timestamp_api})")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	int saveAccessLog(Access access);
 	
@@ -57,7 +57,7 @@ public interface AccessRepository {
 	 * @param token
 	 * @return
 	 */
-	@Insert("INSERT INTO access_token(cust_id,service_type,access_token,expire_time) SELECT #{cust_id},#{service_type},#{access_token},#{expire_time}")
+	@Insert("INSERT INTO access_token(cust_id,service_type,access_token,expire_time) VALUES(#{cust_id},#{service_type},#{access_token},#{expire_time})")
 	@Lang(RawLanguageDriver.class)
 	int saveAccessToken(AccessToken token);
 	
@@ -67,7 +67,7 @@ public interface AccessRepository {
 	 * @return
 	 */
 	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-	@Insert("INSERT INTO access_token_log(cust_id,service_type,appid,secret,grant_type,result) SELECT #{cust_id},#{service_type},#{appid},#{secret},#{grant_type},#{result}")
+	@Insert("INSERT INTO access_token_log(cust_id,service_type,appid,secret,grant_type,result) VALUES(#{cust_id},#{service_type},#{appid},#{secret},#{grant_type},#{result})")
 	@Lang(RawLanguageDriver.class)
 	int saveAccessTokenLog(AccessTokenLog log);
 }

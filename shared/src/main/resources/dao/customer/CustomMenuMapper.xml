@@ -3,7 +3,7 @@
 <mapper namespace="lemon.shared.customer.mapper.CustomMenuMapper">
 	<insert id="addMenu" parameterType="lemon.shared.customer.CustomMenu" useGeneratedKeys="true" keyProperty="menu_id">
 		INSERT INTO customer_menu(cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
-			SELECT #{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort}
+			VALUES(#{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort})
 	</insert>
 	<delete id="deleteMenu" parameterType="int">
 		DELETE FROM customer_menu WHERE menu_id IN
@@ -61,6 +61,6 @@
 	</select>
 	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.log.CustomMenuLog" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO customer_menu_log(cust_id,service_type,action,access_token,msg,result) 
-			SELECT #{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result}
+			VALUES(#{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result})
 	</insert>
 </mapper>

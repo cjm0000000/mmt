@@ -17,7 +17,7 @@
 	</select>
 	<insert id="addRole" parameterType="lemon.web.system.bean.Role" useGeneratedKeys="true" keyProperty="role_id">
 		INSERT INTO system_role(role_name,role_desc,status,sort,reloadable) 
-			SELECT #{role_name},#{role_desc},#{status},#{sort},#{reloadable}
+			VALUES(#{role_name},#{role_desc},#{status},#{sort},#{reloadable})
 	</insert>
 	<update id="update" parameterType="lemon.web.system.bean.Role">
 		UPDATE system_role A 

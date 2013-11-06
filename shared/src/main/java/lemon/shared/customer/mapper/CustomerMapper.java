@@ -56,7 +56,7 @@ public interface CustomerMapper {
 	 * Add Customer
 	 * @param cust
 	 */
-	@Insert("INSERT INTO customer(cust_name,memo,status) SELECT #{cust_name},#{memo},#{status}")
+	@Insert("INSERT INTO customer(cust_name,memo,status) VALUES(#{cust_name},#{memo},#{status})")
 	@Options(useGeneratedKeys=true,keyProperty="cust_id",keyColumn="cust_id")
 	@Lang(RawLanguageDriver.class)
 	int addCustomer(Customer cust);
@@ -82,7 +82,7 @@ public interface CustomerMapper {
 	 * add customer service
 	 * @param service
 	 */
-	@Insert("INSERT INTO customer_service(cust_id,service_type,status,expire_time) SELECT #{cust_id},#{service_type},#{status},#{expire_time}")
+	@Insert("INSERT INTO customer_service(cust_id,service_type,status,expire_time) VALUES(#{cust_id},#{service_type},#{status},#{expire_time})")
 	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
 	@Lang(RawLanguageDriver.class)
 	int addService(CustomerService service);
