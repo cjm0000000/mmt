@@ -266,6 +266,7 @@ CREATE TABLE `msg_detail_send` (
 #
 CREATE TABLE `msg_recv_audio_yixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
@@ -293,6 +294,7 @@ CREATE TABLE `msg_recv_detail` (
 #
 CREATE TABLE `msg_recv_event` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
   `eventKey` char(64) NOT NULL DEFAULT '' COMMENT '事件KEY',
   PRIMARY KEY (`detail_id`)
@@ -303,6 +305,7 @@ CREATE TABLE `msg_recv_event` (
 #
 CREATE TABLE `msg_recv_image` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `picUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片链接',
   `mediaId` char(64) DEFAULT '',
   PRIMARY KEY (`detail_id`)
@@ -313,6 +316,7 @@ CREATE TABLE `msg_recv_image` (
 #
 CREATE TABLE `msg_recv_link` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
@@ -324,6 +328,7 @@ CREATE TABLE `msg_recv_link` (
 #
 CREATE TABLE `msg_recv_location` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `location_X` varchar(15) NOT NULL DEFAULT '0' COMMENT 'X坐标',
   `location_Y` varchar(15) NOT NULL DEFAULT '0' COMMENT 'Y坐标',
   `scale` int(11) NOT NULL DEFAULT '0' COMMENT '放大倍数',
@@ -348,6 +353,7 @@ CREATE TABLE `msg_recv_log` (
 #
 CREATE TABLE `msg_recv_music_yixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片地址',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
@@ -360,6 +366,7 @@ CREATE TABLE `msg_recv_music_yixin` (
 #
 CREATE TABLE `msg_recv_text` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息接收表';
@@ -369,6 +376,7 @@ CREATE TABLE `msg_recv_text` (
 #
 CREATE TABLE `msg_recv_video_weixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `mediaId` char(64) NOT NULL,
   `thumbMediaId` varchar(255) NOT NULL,
   PRIMARY KEY (`detail_id`)
@@ -379,6 +387,7 @@ CREATE TABLE `msg_recv_video_weixin` (
 #
 CREATE TABLE `msg_recv_video_yixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '音频地址',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `mimeType` char(10) NOT NULL DEFAULT '' COMMENT '类型',
@@ -390,6 +399,7 @@ CREATE TABLE `msg_recv_video_yixin` (
 #
 CREATE TABLE `msg_recv_voice_weixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `mediaId` char(64) NOT NULL,
   `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
   `recognition` varchar(255) NOT NULL,
@@ -460,6 +470,7 @@ CREATE TABLE `msg_send_log` (
 #
 CREATE TABLE `msg_send_music_weixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
   `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
   PRIMARY KEY (`detail_id`)
@@ -470,6 +481,7 @@ CREATE TABLE `msg_send_music_weixin` (
 #
 CREATE TABLE `msg_send_music_yixin` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `musicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '音乐地址',
   `hqMusicUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '高清音乐地址',
   PRIMARY KEY (`detail_id`)
@@ -480,6 +492,7 @@ CREATE TABLE `msg_send_music_yixin` (
 #
 CREATE TABLE `msg_send_news` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `articleCount` decimal(2,0) NOT NULL DEFAULT '0' COMMENT '文章数量',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图文消息发送表';
@@ -489,6 +502,7 @@ CREATE TABLE `msg_send_news` (
 #
 CREATE TABLE `msg_send_news_article` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应news表ID',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `description` varchar(1024) NOT NULL DEFAULT '' COMMENT '详情',
@@ -502,6 +516,7 @@ CREATE TABLE `msg_send_news_article` (
 #
 CREATE TABLE `msg_send_text` (
   `detail_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应发送detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息发送表';

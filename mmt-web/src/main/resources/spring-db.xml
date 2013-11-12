@@ -13,9 +13,9 @@
 
 	<bean id="mmtDS" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
-		<property name="user" value="root" />
-		<property name="password" value="a" />
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.1.224:8066/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="user" value="mmtuser" />
+		<property name="password" value="pass" />
 		<property name="acquireIncrement" value="3" />
 		<property name="acquireRetryAttempts" value="30"/>
 		<property name="acquireRetryDelay" value="1000"/>

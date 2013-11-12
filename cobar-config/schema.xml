@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2012 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<!DOCTYPE cobar:schema SYSTEM "schema.dtd">
+<cobar:schema xmlns:cobar="http://cobar.alibaba.com/">
+  <!-- schema定义 -->
+  <schema name="mmt_db" dataNode="dn[0]">
+  	<!-- 基础数据没有拆分 -->
+    <table name="city" dataNode="dn[0]"/>
+    <table name="customer" dataNode="dn[0]"/>
+    <table name="system_config" dataNode="dn[0]"/>
+    <table name="system_login_log" dataNode="dn[0]"/>
+    <table name="system_menu" dataNode="dn[0]"/>
+    <table name="system_role" dataNode="dn[0]"/>
+    <table name="system_role_menu" dataNode="dn[0]"/>
+    <table name="system_role_menu_default" dataNode="dn[0]"/>
+    <table name="system_user" dataNode="dn[0]"/>
+    <table name="system_user_config" dataNode="dn[0]"/>
+    <table name="system_user_role" dataNode="dn[0]"/>
+    <table name="msg_repo_l3" dataNode="dn[0]" />
+    <table name="weixin_config" dataNode="dn[0]" />
+    <table name="yixin_config" dataNode="dn[0]" />
+    <!-- 拆分业务数据，这里默认拆分成四分 -->
+    <table name="access_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="access_token" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="access_token_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="customer_menu" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="customer_menu_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="customer_service" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="fans" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="fans_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_audio_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_detail" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_event" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_image" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_link" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_location" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_music_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_text" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_video_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_video_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_recv_voice_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_repo_l1" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_repo_l2" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_detail" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_music_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_music_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_news" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_news_article" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table name="msg_send_text" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+  </schema>
+
+  <!-- 数据节点定义，数据节点由数据源和其他一些参数组织而成。-->
+  <dataNode name="dn">
+    <property name="dataSource">
+      <dataSourceRef>ds_mmt$0-3</dataSourceRef>
+    </property>
+  </dataNode>
+
+  <!-- 数据源定义，数据源是一个具体的后端数据连接的表示。-->
+  <dataSource name="ds_mmt" type="mysql">
+    <property name="location">
+      <location>192.168.1.221:3306/mmt_db</location>
+      <location>192.168.1.221:3306/db1</location>
+      <location>192.168.1.221:3306/db2</location>
+	  <location>192.168.1.221:3306/db3</location>
+    </property>
+    <property name="user">admin</property>
+    <property name="password">pass</property>
+    <property name="sqlMode">STRICT_TRANS_TABLES</property>
+  </dataSource>
+
+</cobar:schema>
