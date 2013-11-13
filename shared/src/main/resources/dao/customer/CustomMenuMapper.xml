@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lemon.shared.customer.mapper.CustomMenuMapper">
-	<insert id="addMenu" parameterType="lemon.shared.customer.CustomMenu" useGeneratedKeys="true" keyProperty="menu_id">
-		INSERT INTO customer_menu(cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
-			VALUES(#{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort})
+	<insert id="addMenu" parameterType="lemon.shared.customer.CustomMenu">
+		INSERT INTO customer_menu(menu_id,cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
+			VALUES(#{menu_id},#{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort})
 	</insert>
 	<delete id="deleteMenu" parameterType="int">
 		DELETE FROM customer_menu WHERE menu_id IN
@@ -35,7 +35,7 @@
 			</set>
 		WHERE A.menu_id=#{menu_id}
 	</update>
-	<select id="getMenu" parameterType="int" resultType="lemon.shared.customer.CustomMenu">
+	<select id="getMenu" parameterType="long" resultType="lemon.shared.customer.CustomMenu">
 		SELECT A.menu_id,A.cust_id,A.name,A.menulevcod,A.supmenucode,A.`key`,A.`type`,A.sort
 			FROM customer_menu A
 		WHERE A.menu_id=#{menu_id}
@@ -59,8 +59,8 @@
 			AND A.cust_id=#{cust_id}
 		ORDER BY A.sort
 	</select>
-	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.log.CustomMenuLog" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO customer_menu_log(cust_id,service_type,action,access_token,msg,result) 
-			VALUES(#{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result})
+	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.log.CustomMenuLog">
+		INSERT INTO customer_menu_log(id,cust_id,service_type,action,access_token,msg,result) 
+			VALUES(#{id},#{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result})
 	</insert>
 </mapper>

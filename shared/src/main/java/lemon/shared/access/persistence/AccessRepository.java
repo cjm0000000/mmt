@@ -8,7 +8,6 @@ import lemon.shared.service.ServiceType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Lang;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
@@ -28,8 +27,8 @@ public interface AccessRepository {
 	 * @param access
 	 * @return
 	 */
-	@Insert("INSERT INTO access_log(cust_id,service_type,signature,nonce,echostr,token,timestamp_api) VALUES(#{cust_id},#{service_type},#{signature},#{nonce},#{echostr},#{token},#{timestamp_api})")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	@Insert("INSERT INTO access_log(id,cust_id,service_type,signature,nonce,echostr,token,timestamp_api) VALUES(#{id},#{cust_id},#{service_type},#{signature},#{nonce},#{echostr},#{token},#{timestamp_api})")
+	@Lang(RawLanguageDriver.class)
 	int saveAccessLog(Access access);
 	
 	/**
@@ -66,8 +65,7 @@ public interface AccessRepository {
 	 * @param log
 	 * @return
 	 */
-	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-	@Insert("INSERT INTO access_token_log(cust_id,service_type,appid,secret,grant_type,result) VALUES(#{cust_id},#{service_type},#{appid},#{secret},#{grant_type},#{result})")
+	@Insert("INSERT INTO access_token_log(id,cust_id,service_type,appid,secret,grant_type,result) VALUES(#{id},#{cust_id},#{service_type},#{appid},#{secret},#{grant_type},#{result})")
 	@Lang(RawLanguageDriver.class)
 	int saveAccessTokenLog(AccessTokenLog log);
 }

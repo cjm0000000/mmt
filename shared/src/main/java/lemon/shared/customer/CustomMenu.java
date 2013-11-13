@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  */
 public class CustomMenu {
-	private int menu_id;
+	private long menu_id;
 	private int cust_id;
 	@NotEmpty(message="菜单名称不能为空")
 	@Length(max = 20, min = 2, message = "菜单名称长度必须在 2 - 16 位之间")
@@ -27,10 +27,10 @@ public class CustomMenu {
 	@Min(value=0,message="排序号不能小于0.")
 	private int sort;
 	
-	public int getMenu_id() {
+	public long getMenu_id() {
 		return menu_id;
 	}
-	public void setMenu_id(int menu_id) {
+	public void setMenu_id(long menu_id) {
 		this.menu_id = menu_id;
 	}
 	public int getCust_id() {

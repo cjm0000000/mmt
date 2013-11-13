@@ -1,10 +1,12 @@
 package lemon.shared.test.access;
 
 import static org.junit.Assert.*;
+
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.persistence.AccessRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ public class AccessTest {
 		at.setExpires_in(3600);
 		at.setExpire_time((int)(System.currentTimeMillis()/1000) + at.getExpires_in() - 10);
 		at.setService_type(ServiceType.WEIXIN);
+		at.setId(IdWorkerManager.getIdWorker(AccessToken.class).getId());
 		int result = accessRepository.saveAccessToken(at);
 		assertNotEquals(0, result);
 		at = accessRepository.getAccessToken(CUST_ID, ServiceType.WEIXIN);
@@ -49,15 +52,15 @@ public class AccessTest {
 	public void saveAccessTokenLog(){
 		AccessTokenLog log = new AccessTokenLog();
 		log.setAppid("APPID");
-		log.setCust_id(1);
+		log.setCust_id(CUST_ID);
 		log.setGrant_type("grant_type");
 		log.setResult("result");
 		log.setSecret("secret");
 		log.setService_type(ServiceType.YIXIN);
 		log.setTimestamp(null);
+		log.setId(IdWorkerManager.getIdWorker(AccessTokenLog.class).getId());
 		accessRepository.saveAccessTokenLog(log);
 		assertNotEquals(0, log.getId());
 	}
-	
 	
 }

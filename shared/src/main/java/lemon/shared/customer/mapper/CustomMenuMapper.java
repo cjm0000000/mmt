@@ -50,7 +50,7 @@ public interface CustomMenuMapper {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	CustomMenu getMenu(int menu_id);
+	CustomMenu getMenu(long menu_id);
 	
 	/**
 	 * get menu by key and id

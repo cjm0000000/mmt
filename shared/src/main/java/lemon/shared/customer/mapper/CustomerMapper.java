@@ -56,9 +56,9 @@ public interface CustomerMapper {
 	 * Add Customer
 	 * @param cust
 	 */
-	@Insert("INSERT INTO customer(cust_name,memo,status) VALUES(#{cust_name},#{memo},#{status})")
-	@Options(useGeneratedKeys=true,keyProperty="cust_id",keyColumn="cust_id")
+	@Insert("INSERT INTO customer(cust_id,cust_name,memo,status) VALUES(#{cust_id},#{cust_name},#{memo},#{status})")
 	@Lang(RawLanguageDriver.class)
+	@Options(useGeneratedKeys = true, keyColumn = "cust_id", keyProperty = "cust_id")
 	int addCustomer(Customer cust);
 	
 	/**
@@ -74,7 +74,7 @@ public interface CustomerMapper {
 	 * @param cust_id
 	 * @return
 	 */
-	@Update("UPDATE customer C SET  C.status='UNAVAILABLE' WHERE C.cust_id=#{cust_id}")
+	@Update("UPDATE customer C SET C.status='UNAVAILABLE' WHERE C.cust_id=#{cust_id}")
 	@Lang(RawLanguageDriver.class)
 	int delete(int cust_id); 
 	
@@ -82,8 +82,7 @@ public interface CustomerMapper {
 	 * add customer service
 	 * @param service
 	 */
-	@Insert("INSERT INTO customer_service(cust_id,service_type,status,expire_time) VALUES(#{cust_id},#{service_type},#{status},#{expire_time})")
-	@Options(useGeneratedKeys=true,keyColumn="id",keyProperty="id")
+	@Insert("INSERT INTO customer_service(id,cust_id,service_type,status,expire_time) VALUES(#{id},#{cust_id},#{service_type},#{status},#{expire_time})")
 	@Lang(RawLanguageDriver.class)
 	int addService(CustomerService service);
 	
@@ -94,7 +93,7 @@ public interface CustomerMapper {
 	 */
 	@Select("SELECT A.id,A.cust_id,A.service_type,A.status,date_format(A.expire_time,'%Y-%m-%d %H:%i') expire_time FROM customer_service A WHERE A.id=#{id}")
 	@Lang(RawLanguageDriver.class)
-	CustomerService getServiceById(int id);
+	CustomerService getServiceById(long id);
 	
 	/**
 	 * get customer service by service type

@@ -10,6 +10,7 @@ import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.log.CustomMenuLog;
 import lemon.shared.customer.mapper.CustomMenuMapper;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -130,7 +131,8 @@ public class CustomMenuMapperTest {
 		log.setCust_id(1);
 		log.setMsg("msg");
 		log.setResult("result");
-		log.setService_type(ServiceType.WEIXIN);
+		log.setService_type(ServiceType.OTHER);
+		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
 		customMenuMapper.saveMenuSyncLog(log);
 		assertNotEquals(0, log.getId());
 	}
@@ -144,6 +146,7 @@ public class CustomMenuMapperTest {
 		menu.setSort(1);
 		menu.setSupmenucode(0);
 		menu.setType("view");
+		menu.setMenu_id(IdWorkerManager.getIdWorker(CustomMenu.class).getId());
 		return menu;
 	}
 }

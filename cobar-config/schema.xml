@@ -19,50 +19,50 @@
   <!-- schema定义 -->
   <schema name="mmt_db" dataNode="dn[0]">
   	<!-- 基础数据没有拆分 -->
-    <table name="city" dataNode="dn[0]"/>
-    <table name="customer" dataNode="dn[0]"/>
-    <table name="system_config" dataNode="dn[0]"/>
-    <table name="system_login_log" dataNode="dn[0]"/>
-    <table name="system_menu" dataNode="dn[0]"/>
-    <table name="system_role" dataNode="dn[0]"/>
-    <table name="system_role_menu" dataNode="dn[0]"/>
-    <table name="system_role_menu_default" dataNode="dn[0]"/>
-    <table name="system_user" dataNode="dn[0]"/>
-    <table name="system_user_config" dataNode="dn[0]"/>
-    <table name="system_user_role" dataNode="dn[0]"/>
-    <table name="msg_repo_l3" dataNode="dn[0]" />
-    <table name="weixin_config" dataNode="dn[0]" />
-    <table name="yixin_config" dataNode="dn[0]" />
+    <table dataNode="dn[0]" name="city" />
+    <table dataNode="dn[0]" name="customer"/>
+    <table dataNode="dn[0]" name="system_config"/>
+    <table dataNode="dn[0]" name="system_login_log"/>
+    <table dataNode="dn[0]" name="system_menu"/>
+    <table dataNode="dn[0]" name="system_role"/>
+    <table dataNode="dn[0]" name="system_role_menu"/>
+    <table dataNode="dn[0]" name="system_role_menu_default"/>
+    <table dataNode="dn[0]" name="system_user"/>
+    <table dataNode="dn[0]" name="system_user_config"/>
+    <table dataNode="dn[0]" name="system_user_role"/>
+    <table dataNode="dn[0]" name="msg_repo_l3"/>
+    <table dataNode="dn[0]" name="weixin_config" />
+    <table dataNode="dn[0]" name="yixin_config" />
     <!-- 拆分业务数据，这里默认拆分成四分 -->
-    <table name="access_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="access_token" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="access_token_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="customer_menu" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="customer_menu_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="customer_service" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="fans" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="fans_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_audio_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_detail" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_event" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_image" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_link" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_location" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_music_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_text" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_video_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_video_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_recv_voice_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_repo_l1" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_repo_l2" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_detail" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_log" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_music_weixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_music_yixin" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_news" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_news_article" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
-    <table name="msg_send_text" dataNode="dn[0],dn[1],dn[2],dn[3]" rule="rule_cust_id" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="access_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="access_token"  />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="access_token_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="customer_menu" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="customer_menu_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="customer_service" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="fans" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="fans_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_audio_yixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_detail" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_event" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_image" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_link" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_location" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_music_yixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_text" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_video_weixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_video_yixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_recv_voice_weixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_repo_l1" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_repo_l2" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_detail" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_log" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_music_weixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_music_yixin" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_news" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_news_article" />
+    <table dataNode="dn$0-3" rule="rule_cust_id" name="msg_send_text" />
   </schema>
 
   <!-- 数据节点定义，数据节点由数据源和其他一些参数组织而成。-->

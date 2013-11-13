@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 public class BaseService {
 	@XStreamOmitField
-	protected int id;
+	protected long id;
 	@XStreamOmitField
 	protected int cust_id;
 	@XStreamOmitField
@@ -17,10 +17,10 @@ public class BaseService {
 	@XStreamOmitField
 	protected String timestamp;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public int getCust_id() {
