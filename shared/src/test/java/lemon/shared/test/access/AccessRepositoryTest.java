@@ -1,7 +1,7 @@
 package lemon.shared.test.access;
 
 import static org.junit.Assert.*;
-
+import lemon.shared.access.Access;
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.persistence.AccessRepository;
@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class AccessTest {
+public class AccessRepositoryTest {
 	private ApplicationContext acx;
 	private AccessRepository accessRepository;
 	private static final int CUST_ID = -5743;
@@ -30,12 +30,31 @@ public class AccessTest {
 		assertNotNull(accessRepository);
 	}
 	
+	
+	/**
+	 * business: access the WeiXin API
+	 */
 	@Test
-	public void accessTokenTest(){
+	public void access(){
+		Access acc = new Access();
+		acc.setCust_id(CUST_ID);
+		acc.setEchostr("5945972242298150991");
+		acc.setId(IdWorkerManager.getIdWorker(Access.class).getId());
+		acc.setNonce("1384404554");
+		acc.setService_type(ServiceType.WEIXIN);
+		acc.setSignature("ceced3c856eb62356041dfa5b5d73dc417eba36c");
+		acc.setTimestamp_api("1384357959");
+		acc.setToken("58fd5e5c1228c6501fcff382b7488ca2");
+		int result = accessRepository.saveAccessLog(acc);
+		assertNotEquals(0, result);
+	}
+	
+	@Test
+	public void accessToken(){
 		AccessToken at = new AccessToken();
-		at.setAccess_token("access_token");
+		at.setAccess_token("eoFYqO38FBRBdSteODittGkw_i7AQD-rPn8vULJscdcuJticQvBUTpS-QXo6IRl2-cJY01YI-jVojpqdSITawfe66qPRJ7JROJwtTOju990xY3SsWg5UNjm2LC_WxtfdfTVYGV0R27Mb9o3gbTEMsg");
 		at.setCust_id(CUST_ID);
-		at.setExpires_in(3600);
+		at.setExpires_in(7200);
 		at.setExpire_time((int)(System.currentTimeMillis()/1000) + at.getExpires_in() - 10);
 		at.setService_type(ServiceType.WEIXIN);
 		at.setId(IdWorkerManager.getIdWorker(AccessToken.class).getId());
@@ -49,15 +68,14 @@ public class AccessTest {
 	}
 	
 	@Test
-	public void saveAccessTokenLog(){
+	public void accessTokenLog(){
 		AccessTokenLog log = new AccessTokenLog();
-		log.setAppid("APPID");
+		log.setAppid("wx18773e3539a14c3b");
 		log.setCust_id(CUST_ID);
-		log.setGrant_type("grant_type");
-		log.setResult("result");
-		log.setSecret("secret");
-		log.setService_type(ServiceType.YIXIN);
-		log.setTimestamp(null);
+		log.setGrant_type("client_credential");
+		log.setResult("{\"access_token\":\"eoFYqO38FBRBdSteODittGkw_i7AQD-rPn8vULJscdcuJticQvBUTpS-QXo6IRl2-cJY01YI-jVojpqdSITawfe66qPRJ7JROJwtTOju990xY3SsWg5UNjm2LC_WxtfdfTVYGV0R27Mb9o3gbTEMsg\",\"expires_in\":7200}");
+		log.setSecret("dd64d7721bd22dfd36d4dcc2c9c6ee68");
+		log.setService_type(ServiceType.WEIXIN);
 		log.setId(IdWorkerManager.getIdWorker(AccessTokenLog.class).getId());
 		accessRepository.saveAccessTokenLog(log);
 		assertNotEquals(0, log.getId());
