@@ -19,6 +19,7 @@ import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 import lemon.shared.message.persistence.MsgRepository;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,8 +163,8 @@ public class MsgManager {
 		saveSendMsg(msg);
 		msgRepository.saveSendNewsMsg(msg);
 		for (Article article : msg.getArticles()) {
-			article.setId(msg.getId());
-			msgRepository.saveSendNewsArticles(article);
+			article.setId(IdWorkerManager.getIdWorker(Article.class).getId());
+			msgRepository.saveSendNewsArticles(msg.getId(), article);
 		}
 	}
 	
@@ -181,6 +182,8 @@ public class MsgManager {
 	 * @param msg
 	 */
 	private void saveRecvMsg(Message msg){
+		prepareMsgId(msg);
+		System.out.println(msg.getId());
 		msgRepository.saveRecvMsgDetail(msg);
 	}
 	
@@ -189,6 +192,15 @@ public class MsgManager {
 	 * @param msg
 	 */
 	private void saveSendMsg(Message msg){
+		prepareMsgId(msg);
 		msgRepository.saveSendMsgDetail(msg);
+	}
+	
+	/**
+	 * 生成消息ID
+	 * @param msg
+	 */
+	private void prepareMsgId(Message msg){
+		msg.setId(IdWorkerManager.getIdWorker(Message.class).getId());
 	}
 }

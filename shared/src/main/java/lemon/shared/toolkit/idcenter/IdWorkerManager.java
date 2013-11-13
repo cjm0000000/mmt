@@ -13,6 +13,7 @@ import lemon.shared.fans.Fans;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.metadata.Message;
+import lemon.shared.message.metadata.send.Article;
 
 /**
  * ID generator manager
@@ -39,6 +40,7 @@ public class IdWorkerManager {
 		
 		idRepos.put(MsgLog.class, 			generateIdWorker(9));
 		idRepos.put(Message.class, 			generateIdWorker(10));
+		idRepos.put(Article.class, 			generateIdWorker(11));
 	}
 	
 	/**

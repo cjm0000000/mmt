@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lemon.shared.fans.persistence.FansRepository">
-	<insert id="saveFans" parameterType="lemon.shared.fans.Fans" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO fans(cust_id,service_type,user_id,nick_name,`status`) 
-			VALUES(#{cust_id},#{service_type},#{user_id},#{nick_name},#{status})
+	<insert id="saveFans" parameterType="lemon.shared.fans.Fans" >
+		INSERT INTO fans(id,cust_id,service_type,user_id,nick_name,`status`) 
+			VALUES(#{id},#{cust_id},#{service_type},#{user_id},#{nick_name},#{status})
 	</insert>
 	<update id="updateFans" parameterType="lemon.shared.fans.Fans">
 		UPDATE fans A
@@ -24,8 +24,8 @@
 			AND A.user_id=#{user_id}
 			AND A.service_type=#{service_type}
 	</select>
-	<insert id="saveFansLog" parameterType="lemon.shared.fans.log.FansLog" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO fans_log(cust_id,action,service_type,user_id) 
-			VALUES(#{cust_id},#{action},#{service_type},#{user_id})
+	<insert id="saveFansLog" parameterType="lemon.shared.fans.log.FansLog" >
+		INSERT INTO fans_log(id,cust_id,action,service_type,user_id) 
+			VALUES(#{id},#{cust_id},#{action},#{service_type},#{user_id})
 	</insert>
 </mapper>

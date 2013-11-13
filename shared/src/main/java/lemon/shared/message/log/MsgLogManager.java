@@ -1,6 +1,7 @@
 package lemon.shared.message.log;
 
 import lemon.shared.message.log.persistence.MsgLogRepository;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public final class MsgLogManager {
 	 * @return
 	 */
 	public int saveRecvLog(MsgLog log){
+		prepareMsgLogId(log);
 		return msgLogRepository.saveMsgLog("recv", log);
 	}
 	
@@ -30,6 +32,15 @@ public final class MsgLogManager {
 	 * @return
 	 */
 	public int saveSendLog(MsgLog log){
+		prepareMsgLogId(log);
 		return msgLogRepository.saveMsgLog("send", log);
+	}
+	
+	/**
+	 * 生成消息日志ID
+	 * @param log
+	 */
+	private void prepareMsgLogId(MsgLog log){
+		log.setId(IdWorkerManager.getIdWorker(MsgLog.class).getId());
 	}
 }

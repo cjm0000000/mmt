@@ -247,21 +247,6 @@ CREATE TABLE `fans_log` (
 
 #############################  MESSAGE   #############################
 #
-# 消息发送汇总表
-#
-CREATE TABLE `msg_detail_send` (
-  `id` bigint(20) NOT NULL COMMENT 'ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
-  `toUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '接受者ID',
-  `fromUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '发送者ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务器创建时间',
-  `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
-  `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '接收时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息发送汇总表';
-
-#
 # 易信语音消息接收表
 #
 CREATE TABLE `msg_recv_audio_yixin` (

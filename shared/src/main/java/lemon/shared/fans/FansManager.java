@@ -5,6 +5,7 @@ import lemon.shared.config.Status;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.fans.persistence.FansRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class FansManager {
 		if(null == fans) throw new MmtException("Can't save, fans is null.");
 		Fans existsFans = fansMapper.getFans(fans.getCust_id(), fans.getService_type(), fans.getUser_id());
 		if(null == existsFans){//add fans
+			fans.setId(IdWorkerManager.getIdWorker(Fans.class).getId());
 			fansMapper.saveFans(fans);
 			existsFans = fans;
 		}else{//update fans
@@ -83,6 +85,7 @@ public class FansManager {
 		log.setCust_id(fans.getCust_id());
 		log.setService_type(fans.getService_type());
 		log.setUser_id(fans.getUser_id());
+		log.setId(IdWorkerManager.getIdWorker(FansLog.class).getId());
 		return fansMapper.saveFansLog(log);
 	}
 

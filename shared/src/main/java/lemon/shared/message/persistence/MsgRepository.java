@@ -17,7 +17,7 @@ import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Lang;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
@@ -88,8 +88,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) VALUES (#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now())")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	@Insert("INSERT INTO msg_recv_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now())")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvMsgDetail(Message msg);
 
@@ -143,8 +142,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_send_detail(cust_id,service_type,toUserName,fromUserName,createTime,msgType,timestamp) VALUES (#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},now())")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	@Insert("INSERT INTO msg_send_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,timestamp) VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},now())")
 	@Lang(RawLanguageDriver.class)
 	int saveSendMsgDetail(Message msg);
 	
@@ -168,13 +166,14 @@ public interface MsgRepository {
 	
 	/**
 	 * save send news's articles
+	 * @param detail_id
 	 * @param article
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_send_news_article(detail_id,title,description,picUrl,url) VALUES (#{id},#{title},#{description},#{picUrl},#{url})")
-	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	@Insert("INSERT INTO msg_send_news_article(id,detail_id,title,description,picUrl,url) VALUES (#{article.id},#{detail_id},#{article.title},#{article.description},#{article.picUrl},#{article.url})")
 	@Lang(RawLanguageDriver.class)
-	int saveSendNewsArticles(Article article);
+	int saveSendNewsArticles(@Param("detail_id") long detail_id,
+			@Param("article") Article article);
 	
 	/**
 	 * save send news message
