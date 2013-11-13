@@ -15,6 +15,7 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuAdpater;
 import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.system.bean.User;
@@ -124,6 +125,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		menu.setCust_id(user.getCust_id());
 		int result = 0;
 		if(menu.getMenu_id() <= 0){
+			menu.setMenu_id(IdWorkerManager.getIdWorker(CustomMenu.class).getId());
 			if(menu.getType().equals("click"))
 				menu.setKey(generateKey(user.getCust_id()));
 			result = customMenuMapper.addMenu(menu);

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>lemon</groupId>
 		<artifactId>mmt</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>weixin</artifactId>
 	<packaging>jar</packaging>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>lemon</groupId>
 			<artifactId>shared</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>

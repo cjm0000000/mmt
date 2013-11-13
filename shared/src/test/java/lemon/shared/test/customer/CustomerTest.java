@@ -9,20 +9,20 @@ import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class CustomerTest {
-	private AbstractApplicationContext acx;
+	private ApplicationContext acx;
 	private CustomerMapper custMapper;
-	
+	 
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
@@ -30,21 +30,6 @@ public class CustomerTest {
 		acx = new ClassPathXmlApplicationContext(resource);
 		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
 		assertNotNull(custMapper);
-	}
-	@After
-	public void destory(){
-		acx.close();
-	}
-	
-	@Test
-	public void upd(){
-		//Test(String), 331(String), 25(Integer)
-		Customer cust = new Customer();
-		cust.setCust_name("Test");
-		cust.setMemo("331");
-		cust.setCust_id(25);
-		int result = custMapper.updateCustomer(cust);
-		System.out.println(result);
 	}
 	
 	@Test
@@ -88,6 +73,7 @@ public class CustomerTest {
 		service.setService_type(ServiceType.WEIXIN);
 		service.setExpire_time("0000-00-00 00:00");
 		service.setStatus(Status.AVAILABLE);
+		service.setId(IdWorkerManager.getIdWorker(CustomerService.class).getId());
 		int result = custMapper.addService(service);
 		assertNotEquals(0, result);
 		return service;

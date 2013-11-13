@@ -55,7 +55,7 @@ public interface SystemConfigMapper {
 	 * @param key
 	 * @return
 	 */
-	@Select("SELECT A.`group`, A.`key`, A.value, A.timestamp FROM system_config A WHERE A.`group`=#{group} AND A.key=#{key}")
+	@Select("SELECT A.`group`, A.`key`, A.value, A.timestamp FROM system_config A WHERE A.`group`=#{group} AND A.`key`=#{key}")
 	@Lang(RawLanguageDriver.class)
 	SystemConfig getItem(@Param("group") String group, @Param("key") String key);
 	

@@ -2,6 +2,7 @@ package lemon.shared.api;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,16 +12,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lemon.shared.MmtException;
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.ReturnCode;
 import lemon.shared.access.Access;
 import lemon.shared.access.persistence.AccessRepository;
 import lemon.shared.config.MMTConfig;
+import lemon.shared.customer.Action;
+import lemon.shared.customer.log.CustomMenuLog;
+import lemon.shared.customer.mapper.CustomMenuMapper;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.secure.SecureUtil;
 
 /**
@@ -35,12 +41,33 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	private MsgLogManager msgLogManager;
 	@Autowired
 	private AccessRepository accessRepository;
+	@Autowired
+	private CustomMenuMapper customMenuMapper;
+	
+	/**
+	 * 验证接口配置
+	 * @param config
+	 * @return
+	 */
+	public abstract void verifyConfig(MMTConfig config);
 	
 	/**
 	 * 获取通用接口URL
 	 * @return
 	 */
 	public abstract String getCommonUrl();
+	
+	/**
+	 * 获取创建菜单接口URL
+	 * @return
+	 */
+	public abstract String getCreateMenuUrl();
+	
+	/**
+	 * 获取删除菜单接口URL
+	 * @return
+	 */
+	public abstract String getDeleteMenuUrl();
 	
 	/**
 	 * 获取AccessToken请求的参数
@@ -60,6 +87,39 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @return
 	 */
 	public abstract ServiceType getServiceType();
+	
+	@Override
+	public final ReturnCode createMenus(MMTConfig config, String menuJson) {
+		//验证配置
+		verifyConfig(config);
+		//发送请求
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		String result = HttpConnector.post(getCreateMenuUrl(), menuJson, params);
+		//save log
+		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
+				.toString(), Action.CREATE, config.getCust_id(), result);
+		customMenuMapper.saveMenuSyncLog(log);
+		//parser result
+		JSONObject json = JSONObject.fromObject(result);
+		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
+	}
+	
+	@Override
+	public final ReturnCode deleteMenus(MMTConfig config) {
+		if(config == null)
+			throw new MmtException("客户接口配置信息不存在。");
+		//发送请求
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		String result = HttpConnector.post(getDeleteMenuUrl(), params);
+		// save log
+		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
+				.toString(), Action.DELETE, config.getCust_id(), result);
+		customMenuMapper.saveMenuSyncLog(log);
+		JSONObject json = JSONObject.fromObject(result);
+		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
+	}
 	
 	@Override
 	public final String getAcessToken(MMTConfig config) {
@@ -82,6 +142,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		log.setSecret(params.get("secret").toString());
 		log.setResult(result);
 		log.setService_type(getServiceType());
+		log.setId(IdWorkerManager.getIdWorker(AccessTokenLog.class).getId());
 		accessRepository.saveAccessTokenLog(log);
 		//parser result
 		JSONObject jsonObj = JSONObject.fromObject(result);
@@ -106,6 +167,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 			return false;
 		// save log
 		sa.setService_type(getServiceType());
+		sa.setId(IdWorkerManager.getIdWorker(Access.class).getId());
 		accessRepository.saveAccessLog(sa);
 		// nonce,token,timestamp dictionary sort
 		List<String> list = new ArrayList<>();
@@ -156,6 +218,27 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		log.setCust_id(cust_id);
 		log.setMsg(msg);
 		log.setService_type(getServiceType());
+		return log;
+	}
+	
+	/**
+	 * 拼装成LOG
+	 * @param access_token
+	 * @param action
+	 * @param cust_id
+	 * @param result
+	 * @return
+	 */
+	private CustomMenuLog generateCustomMenuLog(String access_token,
+			Action action, int cust_id, String result) {
+		CustomMenuLog log = new CustomMenuLog();
+		log.setAccess_token(access_token);
+		log.setAction(action);
+		log.setCust_id(cust_id);
+		log.setMsg("");
+		log.setResult(result);
+		log.setService_type(getServiceType());
+		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
 		return log;
 	}
 

@@ -1,0 +1,7 @@
+Cobar采用1.2.7版本，下载地址：http://code.alibabatech.com/wiki/display/cobar/release
+
+参考配置采用的方案是：
+1 * Cobar Nodes
+4 * Mysql Nodes（由于机器限制，没有开启replication，如果部署在生产系统，请开启replication功能）
+
+如需组建Cobar LB + HA，请参考Cobar产品文档：http://code.alibabatech.com/wiki/pages/viewpage.action?pageId=7671478

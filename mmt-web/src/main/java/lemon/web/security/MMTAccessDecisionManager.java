@@ -38,6 +38,7 @@ public class MMTAccessDecisionManager implements AccessDecisionManager {
 					return;
 		}
 		// 没有权限
+		//FIXME 更新角色权限以后，SS权限没有更改
 		throw new AccessDeniedException("拒绝访问。");
 	}
 
