@@ -32,7 +32,7 @@ public class AccessRepositoryTest {
 	
 	
 	/**
-	 * business: access the WeiXin API
+	 * business: access
 	 */
 	@Test
 	public void access(){

@@ -3,6 +3,7 @@ package lemon.shared.test.customer;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
@@ -19,28 +20,46 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class CustomerTest {
+public class CustomerRepositoryTest {
 	private ApplicationContext acx;
 	private CustomerMapper custMapper;
+	private int CUST_ID = -5743;
 	 
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
+		custMapper = acx.getBean(CustomerMapper.class);
 		assertNotNull(custMapper);
 	}
 	
+	/**
+	 * customer CRUD test
+	 */
 	@Test
-	public void testCustomerBusiness(){
+	public void customerCRUD(){
+		// Add
 		Customer cust = addCustomer();
 		assertNotEquals(0, cust.getCust_id());
-		String memo = "A&*HIO(@(@H(F@()))@JDWJ()!Q@";
-		String name = "name1";
+		// Update
+		String memo = UUID.randomUUID().toString();
+		String name = "CUSTOMER By JUnit 4 Modified";
 		updateCustomer(cust, name, memo);
+		cust = custMapper.getCustomer(CUST_ID);
+		assertEquals(name, cust.getCust_name());
+		assertEquals(memo, cust.getMemo());
+		//Select
 		assertNotEquals(0, list().size());
-		cust = custMapper.getCustomer(cust.getCust_id());
+		//Delete
+		assertNotEquals(0,custMapper.delete(CUST_ID));
+		cust = custMapper.getCustomer(CUST_ID);
+		assertEquals(cust.getStatus(), Status.UNAVAILABLE);
+	}
+	
+	@Test
+	public void customerService(){
+		Customer cust = addCustomer();
 		CustomerService service = addService(cust.getCust_id());
 		assertNotNull(service);
 		assertEquals(service.getExpire_time(), "0000-00-00 00:00");
@@ -62,9 +81,6 @@ public class CustomerTest {
 		List<CustomerService> list = custMapper.getServices(cust.getCust_id());
 		assertNotNull(list);
 		assertNotEquals(0, list.size());
-		
-		int result = custMapper.delete(cust.getCust_id());
-		assertNotEquals(0, result);
 	}
 	
 	private CustomerService addService(int cust_id){
@@ -81,11 +97,12 @@ public class CustomerTest {
 	
 	private Customer addCustomer(){
 		Customer cust = new Customer();
-		cust.setCust_name("LEMON TEST CUSTOMER");
-		cust.setMemo("MEMO...");
+		cust.setCust_name("CUSTOMER By JUnit 4");
+		cust.setMemo(UUID.randomUUID().toString());
 		cust.setStatus(Status.AVAILABLE);
 		int result = custMapper.addCustomer(cust);
 		assertNotEquals(0, result);
+		this.CUST_ID = cust.getCust_id();
 		return cust;
 	}
 	
@@ -93,7 +110,6 @@ public class CustomerTest {
 		cust.setCust_name(name);
 		cust.setMemo(memo);
 		int result = custMapper.updateCustomer(cust);
-		System.out.println("UPD: "+result);
 		assertNotEquals(0, result);
 	}
 	

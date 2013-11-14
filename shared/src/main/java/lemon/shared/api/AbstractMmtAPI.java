@@ -98,7 +98,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		String result = HttpConnector.post(getCreateMenuUrl(), menuJson, params);
 		//save log
 		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
-				.toString(), Action.CREATE, config.getCust_id(), result);
+				.toString(), Action.CREATE, config.getCust_id(), menuJson, result);
 		customMenuMapper.saveMenuSyncLog(log);
 		//parser result
 		JSONObject json = JSONObject.fromObject(result);
@@ -115,7 +115,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		String result = HttpConnector.post(getDeleteMenuUrl(), params);
 		// save log
 		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
-				.toString(), Action.DELETE, config.getCust_id(), result);
+				.toString(), Action.DELETE, config.getCust_id(), null, result);
 		customMenuMapper.saveMenuSyncLog(log);
 		JSONObject json = JSONObject.fromObject(result);
 		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
@@ -230,12 +230,12 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @return
 	 */
 	private CustomMenuLog generateCustomMenuLog(String access_token,
-			Action action, int cust_id, String result) {
+			Action action, int cust_id, String msg, String result) {
 		CustomMenuLog log = new CustomMenuLog();
 		log.setAccess_token(access_token);
 		log.setAction(action);
 		log.setCust_id(cust_id);
-		log.setMsg("");
+		log.setMsg(msg);
 		log.setResult(result);
 		log.setService_type(getServiceType());
 		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());

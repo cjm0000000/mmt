@@ -30,7 +30,7 @@ public interface CustomerMapper {
 	 * @param cust_id
 	 * @return
 	 */
-	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.cust_id=#{cust_id}")
+	@Select("SELECT C.cust_id,C.cust_name,C.memo,C.`status` FROM customer C WHERE C.cust_id=#{cust_id}")
 	@Lang(RawLanguageDriver.class)
 	Customer getCustomer(int cust_id);
 	
@@ -40,7 +40,7 @@ public interface CustomerMapper {
 	 * @param limit
 	 * @return
 	 */
-	@Select("SELECT C.cust_id,C.cust_name,C.memo FROM customer C WHERE C.status='AVAILABLE' LIMIT #{start},#{limit}")
+	@Select("SELECT C.cust_id,C.cust_name,C.memo,C.`status` FROM customer C WHERE C.status='AVAILABLE' LIMIT #{start},#{limit}")
 	@Lang(RawLanguageDriver.class)
 	List<Customer> getCustomerList(@Param("start") int start, @Param("limit") int limit);
 	
