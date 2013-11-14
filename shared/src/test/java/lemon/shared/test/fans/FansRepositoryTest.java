@@ -14,9 +14,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class FansTest {
+public class FansRepositoryTest {
 	private FansManager fansManager;
 	private ApplicationContext acx;
+	private static final int CUST_ID = -5743;
+	
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
@@ -29,17 +31,16 @@ public class FansTest {
 	@Test
 	public void addFans(){
 		String user_id = "ot9x4jpm4x_rBrqacQ8hzikL9D-M";
-		int cust_id = 10;
 		//save
 		Fans fans = new Fans();
-		fans.setCust_id(cust_id);
+		fans.setCust_id(CUST_ID);
 		fans.setUser_id(user_id);
 		fans.setService_type(ServiceType.OTHER);
 		fans.setStatus(Status.AVAILABLE);
 		fans.setNick_name("Tom");
 		fansManager.saveFans(fans);
 		//disable
-		fansManager.disableFans(cust_id,ServiceType.OTHER, user_id);
+		fansManager.disableFans(CUST_ID,ServiceType.OTHER, user_id);
 	}
 	
 }
