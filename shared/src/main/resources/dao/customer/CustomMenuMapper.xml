@@ -11,6 +11,9 @@
 			#{menuIds}
 		</foreach>
 	</delete>
+	<delete id="deleteMenuByCustomer" parameterType="int">
+		DELETE FROM customer_menu WHERE cust_id=#{cust_id}
+	</delete>
 	<update id="editMenu" parameterType="lemon.shared.customer.CustomMenu">
 		UPDATE customer_menu A
 			<set>

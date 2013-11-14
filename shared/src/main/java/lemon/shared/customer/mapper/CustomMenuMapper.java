@@ -38,6 +38,13 @@ public interface CustomMenuMapper {
 	int deleteMenu(String[] menuIds);
 	
 	/**
+	 * Delete menu by customer id
+	 * @param cust_id
+	 * @return
+	 */
+	int deleteMenuByCustomer(int cust_id);
+	
+	/**
 	 * edit menu
 	 * @param menu
 	 * @return

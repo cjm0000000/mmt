@@ -20,8 +20,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class CustomMenuMapperTest {
+public class CustomMenuRepositoryTest {
 	private static final byte LEVEL = 9;
+	private static final int CUST_ID = -5743;
 	private ApplicationContext acx;
 	private CustomMenuMapper customMenuMapper;
 
@@ -37,36 +38,31 @@ public class CustomMenuMapperTest {
 	@Test
 	public void add() {
 		CustomMenu menu = getCustomMenu();
-		customMenuMapper.addMenu(menu);
-		assertNotEquals(0, menu.getMenu_id());
-		customMenuMapper.deleteMenu(new String[] { String.valueOf(menu
-				.getMenu_id()) });
-		assertNull(customMenuMapper.getMenu(menu.getMenu_id()));
+		assertNotEquals(0, customMenuMapper.addMenu(menu));
 	}
 
 	@Test
 	public void update() {
 		CustomMenu menu = getCustomMenu();
-		customMenuMapper.addMenu(menu);
-		String name = "AFTER UPDATE";
+		assertNotEquals(0, customMenuMapper.addMenu(menu));
+		String name = "NAME AFTER UPDATE";
 		int sort = 300;
 		byte menulevcod = 2;
 		int supmenucode = 1;
-		String type = "NEWT";
+		String type = "VIEW";
 		menu.setName(name);
 		menu.setSort(sort);
 		menu.setMenulevcod(menulevcod);
 		menu.setSupmenucode(supmenucode);
 		menu.setType(type);
-		customMenuMapper.editMenu(menu);
+		assertNotEquals(0, customMenuMapper.editMenu(menu));
+		
 		menu = customMenuMapper.getMenu(menu.getMenu_id());
 		assertEquals(name, menu.getName());
 		assertEquals(sort, menu.getSort());
 		assertEquals(menulevcod, menu.getMenulevcod());
 		assertEquals(supmenucode, menu.getSupmenucode());
 		assertEquals(type, menu.getType());
-		customMenuMapper.deleteMenu(new String[] { String.valueOf(menu
-				.getMenu_id()) });
 	}
 
 	@Test
@@ -74,72 +70,72 @@ public class CustomMenuMapperTest {
 		CustomMenu menu1 = getCustomMenu();
 		CustomMenu menu2 = getCustomMenu();
 		CustomMenu menu3 = getCustomMenu();
-		customMenuMapper.addMenu(menu1);
-		customMenuMapper.addMenu(menu2);
-		customMenuMapper.addMenu(menu3);
-		customMenuMapper.deleteMenu(new String[] {
+		assertNotEquals(0, customMenuMapper.addMenu(menu1));
+		assertNotEquals(0, customMenuMapper.addMenu(menu2));
+		assertNotEquals(0, customMenuMapper.addMenu(menu3));
+		
+		int result = customMenuMapper.deleteMenu(new String[] {
 				String.valueOf(menu1.getMenu_id()),
 				String.valueOf(menu2.getMenu_id()),
 				String.valueOf(menu3.getMenu_id()) });
+		assertNotEquals(0, result);
+		
 		menu1 = customMenuMapper.getMenu(menu1.getMenu_id());
-		menu2 = customMenuMapper.getMenu(menu2.getMenu_id());
-		menu3 = customMenuMapper.getMenu(menu3.getMenu_id());
 		assertNull(menu1);
+		
+		menu2 = customMenuMapper.getMenu(menu2.getMenu_id());
 		assertNull(menu2);
+		
+		menu3 = customMenuMapper.getMenu(menu3.getMenu_id());
 		assertNull(menu3);
 	}
 	
 	@Test
 	public void getMenuList(){
+		assertNotEquals(0, customMenuMapper.deleteMenuByCustomer(CUST_ID));
 		CustomMenu menu1 = getCustomMenu();
 		CustomMenu menu2 = getCustomMenu();
 		CustomMenu menu3 = getCustomMenu();
-		customMenuMapper.addMenu(menu1);
-		customMenuMapper.addMenu(menu2);
-		customMenuMapper.addMenu(menu3);
-		List<CustomMenu> list = customMenuMapper.getMenuList(-1);
+		assertNotEquals(0, customMenuMapper.addMenu(menu1));
+		assertNotEquals(0, customMenuMapper.addMenu(menu2));
+		assertNotEquals(0, customMenuMapper.addMenu(menu3));
+		
+		List<CustomMenu> list = customMenuMapper.getMenuList(CUST_ID);
 		assertNotNull(list);
 		assertEquals(3, list.size());
-		customMenuMapper.deleteMenu(new String[] {
-				String.valueOf(menu1.getMenu_id()),
-				String.valueOf(menu2.getMenu_id()),
-				String.valueOf(menu3.getMenu_id()) });
 	}
 	
 	@Test
 	public void getMenuListByLevel(){
+		assertNotEquals(0, customMenuMapper.deleteMenuByCustomer(CUST_ID));
 		CustomMenu menu1 = getCustomMenu();
 		CustomMenu menu2 = getCustomMenu();
 		CustomMenu menu3 = getCustomMenu();
-		customMenuMapper.addMenu(menu1);
-		customMenuMapper.addMenu(menu2);
-		customMenuMapper.addMenu(menu3);
-		List<CustomMenu> list = customMenuMapper.getMenuListByLevel(-1, LEVEL);
+		assertNotEquals(0, customMenuMapper.addMenu(menu1));
+		assertNotEquals(0, customMenuMapper.addMenu(menu2));
+		assertNotEquals(0, customMenuMapper.addMenu(menu3));
+		
+		List<CustomMenu> list = customMenuMapper.getMenuListByLevel(CUST_ID, LEVEL);
 		assertNotNull(list);
 		assertEquals(3, list.size());
-		customMenuMapper.deleteMenu(new String[] {
-				String.valueOf(menu1.getMenu_id()),
-				String.valueOf(menu2.getMenu_id()),
-				String.valueOf(menu3.getMenu_id()) });
 	}
 	
 	@Test
-	public void saveCustomMenuLog(){
+	public void saveMenuSyncLog(){
 		CustomMenuLog log = new CustomMenuLog();
-		log.setAccess_token("accesstoken");
+		log.setAccess_token("access_token");
 		log.setAction(Action.DELETE);
-		log.setCust_id(1);
+		log.setCust_id(CUST_ID);
 		log.setMsg("msg");
 		log.setResult("result");
 		log.setService_type(ServiceType.OTHER);
 		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
-		customMenuMapper.saveMenuSyncLog(log);
-		assertNotEquals(0, log.getId());
+		assertNotEquals(0, customMenuMapper.saveMenuSyncLog(log));
 	}
 
 	private CustomMenu getCustomMenu() {
 		CustomMenu menu = new CustomMenu();
-		menu.setCust_id(-1);
+		menu.setCust_id(CUST_ID);
 		menu.setKey(UUID.randomUUID().toString());
 		menu.setMenulevcod(LEVEL);
 		menu.setName("Test");
