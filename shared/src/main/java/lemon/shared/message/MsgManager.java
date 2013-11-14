@@ -183,7 +183,6 @@ public class MsgManager {
 	 */
 	private void saveRecvMsg(Message msg){
 		prepareMsgId(msg);
-		System.out.println(msg.getId());
 		msgRepository.saveRecvMsgDetail(msg);
 	}
 	

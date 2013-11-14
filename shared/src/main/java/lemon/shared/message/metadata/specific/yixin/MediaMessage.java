@@ -41,7 +41,7 @@ public class MediaMessage extends Message {
 		return mimeType;
 	}
 
-	public void setMimeType(String mimeType) {
+	protected void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
 	

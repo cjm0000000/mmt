@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MsgLogManagerTest {
 	private ApplicationContext acx;
 	private MsgLogManager msgLogManager;
+	private static final int CUST_ID = -5743;
 	
 	@Before
 	public void init() {
@@ -40,7 +41,7 @@ public class MsgLogManagerTest {
 	
 	private MsgLog generateMsgLog(){
 		MsgLog log = new MsgLog();
-		log.setCust_id(10);
+		log.setCust_id(CUST_ID);
 		log.setMsg("hello msg");
 		log.setService_type(ServiceType.OTHER);
 		log.setTimestamp(null);

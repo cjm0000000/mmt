@@ -43,7 +43,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_audio_yixin(detail_id,url,name,mimeType) VALUES(#{id},#{url},#{name},#{mimeType})")
+	@Insert("INSERT INTO msg_recv_audio_yixin(detail_id,cust_id,url,name,mimeType) VALUES(#{id},#{cust_id},#{url},#{name},#{mimeType})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvYXAudioMsg(YXAudioMessage msg);
 	
@@ -52,7 +52,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_event(detail_id,eventType,eventKey) VALUES(#{id},#{eventType},#{eventKey})")
+	@Insert("INSERT INTO msg_recv_event(detail_id,cust_id,eventType,eventKey) VALUES(#{id},#{cust_id},#{eventType},#{eventKey})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvEventMsg(EventMessage msg);
 	

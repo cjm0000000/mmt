@@ -133,7 +133,6 @@ public class YXXMLConvert {
 		msg.setMsgId(1024102410241024L);
 		msg.setUrl("http://www.baidu.com");
 		msg.setName("Music");
-		msg.setMimeType("audio/aac");
 		msg.setDesc("descdesc");
 		String str = xStream.toXML(msg);
 		logger.debug(str);
