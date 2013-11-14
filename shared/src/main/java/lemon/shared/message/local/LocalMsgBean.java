@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  */
 public class LocalMsgBean {
-	private int id;
+	private long id;
 	private int cust_id;
 	@NotEmpty(message="关键字不能为空")
 	@Length(max = 1024, message = "关键字长度不能超过30")
@@ -19,10 +19,10 @@ public class LocalMsgBean {
 	@Length(max = 1024, message = "内容长度不能超过1024")
 	private String value;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public int getCust_id() {

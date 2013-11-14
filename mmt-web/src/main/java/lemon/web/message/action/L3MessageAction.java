@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lemon.shared.message.local.LocalMsgBean;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.system.bean.User;
 
 /**
@@ -60,6 +61,7 @@ public final class L3MessageAction extends MessageAction {
 		msg.setCust_id(user.getCust_id());
 		int result = 0;
 		if(msg.getId() <= 0){
+			msg.setId(IdWorkerManager.getIdWorker(LocalMsgBean.class).getId());
 			result = msgBeanMapper.addMsg(msg, getLevel());
 		}else{
 			result = msgBeanMapper.updateMsg(msg, getLevel());

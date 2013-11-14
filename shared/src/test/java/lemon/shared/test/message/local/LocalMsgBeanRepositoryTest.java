@@ -1,9 +1,13 @@
-package lemon.shared.test.local;
+package lemon.shared.test.message.local;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.UUID;
+
 import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -14,9 +18,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
-public class LocalMsgBeanMapperTest {
+public class LocalMsgBeanRepositoryTest {
 	private LocalMsgBeanRepository msgBeanMapper;
 	private ApplicationContext acx;
+	
+	private static final int CUST_ID = -5743;
 	
 	@Before
 	public void init() {
@@ -28,10 +34,41 @@ public class LocalMsgBeanMapperTest {
 	}
 	
 	@Test
-	@Ignore
-	public void getL1Msg(){
-		LocalMsgBean mb = msgBeanMapper.getL1Msg(1, "q1");
-		assertNotNull(mb);
+	public void addL1Msg(){
+		LocalMsgBean mb = addMsg(1);
+		//verify
+		LocalMsgBean mb2 = msgBeanMapper.getL1Msg(CUST_ID, mb.getKey());
+		assertNotNull(mb2);
+		assertEquals(mb.getValue(), mb2.getValue());
+	}
+	
+	@Test
+	public void addL2Msg(){
+		LocalMsgBean mb = addMsg(2);
+		//verify
+		LocalMsgBean mb2 = msgBeanMapper.getL2Msg(CUST_ID, mb.getKey());
+		assertNotNull(mb2);
+		assertEquals(mb.getValue(), mb2.getValue());
+	}
+	
+	@Test
+	public void addL3Msg(){
+		LocalMsgBean mb = addMsg(3);
+		//verify
+		LocalMsgBean mb2 = msgBeanMapper.getL3Msg(mb.getKey());
+		assertNotNull(mb2);
+		assertEquals(mb.getValue(), mb2.getValue());
+	}
+	
+	@Test
+	public void getL1List(){
+		msgBeanMapper.deleteMsgByCustomer(CUST_ID, 1);
+		for (int i = 0; i < 5; i++) {
+			addMsg(1);
+		}
+		List<LocalMsgBean> list = msgBeanMapper.getL1List(CUST_ID, 0, 10);
+		assertNotNull(list);
+		assertEquals(5, list.size());
 	}
 	
 	@Test
@@ -46,16 +83,6 @@ public class LocalMsgBeanMapperTest {
 	public void getL3Msg(){
 		LocalMsgBean mb = msgBeanMapper.getL3Msg("%a%");
 		assertNotNull(mb);
-	}
-	
-	@Test
-	@Ignore
-	public void addMsg(){
-		LocalMsgBean mb = new LocalMsgBean();
-		mb.setCust_id(1);
-		mb.setKey("key");
-		mb.setValue("vava");
-		msgBeanMapper.addMsg(mb, 2);
 	}
 	
 	@Test
@@ -102,8 +129,13 @@ public class LocalMsgBeanMapperTest {
 		System.out.println(l3_cnt);
 	}
 	
-	@Test
-	public void get(){
-		msgBeanMapper.getMsg(1, 3);
+	private LocalMsgBean addMsg(int level) {
+		LocalMsgBean mb = new LocalMsgBean();
+		mb.setCust_id(CUST_ID);
+		mb.setKey(UUID.randomUUID().toString());
+		mb.setValue(UUID.randomUUID().toString());
+		mb.setId(IdWorkerManager.getIdWorker(LocalMsgBean.class).getId());
+		assertNotEquals(0, msgBeanMapper.addMsg(mb, level));
+		return mb;
 	}
 }

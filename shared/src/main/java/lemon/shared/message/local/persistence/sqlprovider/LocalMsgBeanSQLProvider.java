@@ -27,7 +27,7 @@ public class LocalMsgBeanSQLProvider {
 		return new SQL() {
 			{
 				INSERT_INTO("msg_repo_l" + level);
-				VALUES("`key`,value", "#{msg.key},#{msg.value}");
+				VALUES("id,`key`,value", "#{msg.id},#{msg.key},#{msg.value}");
 				if (level != 3)
 					VALUES("cust_id", "#{msg.cust_id}");
 			}
@@ -67,6 +67,27 @@ public class LocalMsgBeanSQLProvider {
 			{
 				DELETE_FROM("msg_repo_l" + level);
 				WHERE("id IN (" + id + ")");
+				
+			}
+		}.toString();
+	}
+	
+	/**
+	 * 提供deleteMsgSQLByCustomer的SQL
+	 * @param paramMap
+	 * @return
+	 */
+	public String deleteMsgSQLByCustomer(final Map<String, Object> paramMap) {
+		final int cust_id = (int) paramMap.get("cust_id");
+		final int level = (int) paramMap.get("level");
+		if (level != 1 && level != 2 && level != 3)
+			throw new MmtException("消息库找不到: level=" + level);
+		if(level == 3)
+			throw new MmtException("通用消息库不支持按照cust_id删除。");
+		return new SQL() {
+			{
+				DELETE_FROM("msg_repo_l" + level);
+				WHERE("cust_id=" + cust_id);
 				
 			}
 		}.toString();

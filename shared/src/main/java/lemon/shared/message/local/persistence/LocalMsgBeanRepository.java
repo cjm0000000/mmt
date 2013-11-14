@@ -62,6 +62,15 @@ public interface LocalMsgBeanRepository {
 	 */
 	@DeleteProvider(type = LocalMsgBeanSQLProvider.class, method = "deleteMsgSQL")
 	int deleteMsg(@Param("id") String id, @Param("level") int level);
+	
+	/**
+	 * 根据客户ID删除RobotMsgBean
+	 * @param cust_id
+	 * @param level
+	 * @return
+	 */
+	@DeleteProvider(type = LocalMsgBeanSQLProvider.class, method = "deleteMsgSQLByCustomer")
+	int deleteMsgByCustomer(@Param("cust_id") int cust_id, @Param("level") int level);
 
 	/**
 	 * 根据KEY获取一级消息<br>

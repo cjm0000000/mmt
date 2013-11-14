@@ -417,7 +417,7 @@ CREATE TABLE `msg_repo_l2` (
 # 通用消息库
 #
 CREATE TABLE `msg_repo_l3` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `id` bigint(20) NOT NULL COMMENT 'ID',
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT '关键字',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '值',
   PRIMARY KEY (`id`)
