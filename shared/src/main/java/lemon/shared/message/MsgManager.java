@@ -1,5 +1,8 @@
 package lemon.shared.message;
 
+import java.util.List;
+
+import lemon.shared.MmtException;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;
@@ -12,7 +15,6 @@ import lemon.shared.message.metadata.recv.LocationMessage;
 import lemon.shared.message.metadata.send.Article;
 import lemon.shared.message.metadata.send.MusicMessage;
 import lemon.shared.message.metadata.send.NewsMessage;
-import lemon.shared.message.metadata.specific.weixin.WXMusicMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
@@ -36,12 +38,120 @@ public class MsgManager {
 	private MsgRepository msgRepository;
 	
 	/**
-	 * get receive text message by id
+	 * get receive text message by message id
 	 * @param msg_id
 	 * @return
 	 */
-	public TextMessage getRecvTextMsg(int msg_id){
+	public TextMessage getRecvTextMsg(long msg_id){
 		return msgRepository.getRecvTextMsg(msg_id);
+	}
+	
+	/**
+	 * get receive YiXin audio message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public YXAudioMessage getRecvYXAudioMsg(long msg_id){
+		return msgRepository.getRecvYXAudioMsg(msg_id);
+	}
+	
+	/**
+	 * get receive event message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public EventMessage getRecvEventMsg(long msg_id){
+		return msgRepository.getRecvEventMsg(msg_id);
+	}
+	
+	/**
+	 * get receive image message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public ImageMessage getRecvImageMsg(long msg_id){
+		return msgRepository.getRecvImageMsg(msg_id);
+	}
+	
+	/**
+	 * get receive link message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public LinkMessage getRecvLinkMsg(long msg_id){
+		return msgRepository.getRecvLinkMsg(msg_id);
+	}
+	
+	/**
+	 * get receive location message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public LocationMessage getRecvLocationMsg(long msg_id){
+		return msgRepository.getRecvLocationMsg(msg_id);
+	}
+	
+	/**
+	 * get receive WeiXin video message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public WXVideoMessage getRecvWXVideoMsg(long msg_id){
+		return msgRepository.getRecvWXVideoMsg(msg_id);
+	}
+	
+	/**
+	 * get receive YiXin video message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public YXVideoMessage getRecvYXVideoMsg(long msg_id){
+		return msgRepository.getRecvYXVideoMsg(msg_id);
+	}
+	
+	/**
+	 * get receive YiXin video message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public WXVoiceMessage getRecvWXVoiceMsg(long msg_id){
+		return msgRepository.getRecvWXVoiceMsg(msg_id);
+	}
+	
+	/**
+	 * get receive YiXin music message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public YXMusicMessage getRecvYXMusicMsg(long msg_id){
+		return msgRepository.getRecvYXMusicMsg(msg_id);
+	}
+	
+	/**
+	 * get send news message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public NewsMessage getSendNewsMsg(long msg_id){
+		return msgRepository.getSendNewsMsg(msg_id);
+	}
+	
+	/**
+	 * get send news articles by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public List<Article> getArticlesByNews(long msg_id){
+		return msgRepository.getArticlesByNews(msg_id);
+	}
+	
+	/**
+	 * get send text message by message id
+	 * @param msg_id
+	 * @return
+	 */
+	public TextMessage getSendTextMsg(long msg_id){
+		return msgRepository.getSendTextMsg(msg_id);
 	}
 	
 	/**
@@ -50,7 +160,7 @@ public class MsgManager {
 	 */
 	public void saveRecvAudioMsg(AudioMessage msg) {
 		if (!(msg instanceof YXAudioMessage))
-			return;
+			throw new MmtException("不是YXAudioMessage类型，无法保存。");
 		saveRecvMsg((YXAudioMessage) msg);
 		msgRepository.saveRecvYXAudioMsg((YXAudioMessage)msg);
 	}
@@ -107,11 +217,11 @@ public class MsgManager {
 	public void saveRecvVideoMsg(VideoMessage msg){
 		if(msg instanceof WXVideoMessage){
 			WXVideoMessage wxMsg = (WXVideoMessage) msg;
-			saveSendMsg(wxMsg);
+			saveRecvMsg(wxMsg);
 			msgRepository.saveRecvWXVideoMessage(wxMsg);
 		}else if(msg instanceof YXVideoMessage){
 			YXVideoMessage yxMsg = (YXVideoMessage) msg;
-			saveSendMsg(yxMsg);
+			saveRecvMsg(yxMsg);
 			msgRepository.saveRecvYXVideoMessage(yxMsg);
 		}
 	}
@@ -142,23 +252,6 @@ public class MsgManager {
 	 * save send music message
 	 * @param msg
 	 */
-	public void saveSendMusicMsg(MusicMessage msg){
-		if(msg instanceof WXMusicMessage){
-			WXMusicMessage wxMsg = (WXMusicMessage) msg;
-			saveSendMsg(wxMsg);
-			msgRepository.saveSendWXMusicMsg(wxMsg);
-		}else if(msg instanceof YXMusicMessage){
-			YXMusicMessage yxMsg = (YXMusicMessage) msg;
-			saveSendMsg(yxMsg);
-			msgRepository.saveSendYXMusicMsg(yxMsg);
-		}
-		
-	}
-	
-	/**
-	 * save send music message
-	 * @param msg
-	 */
 	public void saveSendNewsMsg(NewsMessage msg){
 		saveSendMsg(msg);
 		msgRepository.saveSendNewsMsg(msg);
@@ -174,6 +267,7 @@ public class MsgManager {
 	 */
 	public void saveSendTextMsg(TextMessage msg){
 		saveSendMsg(msg);
+		System.out.println(msg.getId());
 		msgRepository.saveSendTextMsg(msg);
 	}
 	
