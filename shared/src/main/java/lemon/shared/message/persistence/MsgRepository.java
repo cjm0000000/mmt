@@ -61,7 +61,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_image(detail_id,picUrl,mediaId) VALUES (#{id},#{picUrl},#{mediaId})")
+	@Insert("INSERT INTO msg_recv_image(detail_id,cust_id,picUrl,mediaId) VALUES (#{id},#{cust_id},#{picUrl},#{mediaId})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvImageMsg(ImageMessage msg);
 	
@@ -70,7 +70,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_link(detail_id,title,description,url) VALUES (#{id}, #{title}, #{description},#{url})")
+	@Insert("INSERT INTO msg_recv_link(detail_id,cust_id,title,description,url) VALUES (#{id},#{cust_id},#{title},#{description},#{url})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvLinkMsg(LinkMessage msg);
 	
@@ -79,7 +79,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_location(detail_id,location_X,location_Y,scale,label) VALUES (#{id}, #{location_X}, #{location_Y},#{scale},#{label})")
+	@Insert("INSERT INTO msg_recv_location(detail_id,cust_id,location_X,location_Y,scale,label) VALUES (#{id},#{cust_id},#{location_X},#{location_Y},#{scale},#{label})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvLocationMsg(LocationMessage msg);
 
@@ -97,7 +97,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_text(detail_id,content) VALUES (#{id},#{content})")
+	@Insert("INSERT INTO msg_recv_text(detail_id,cust_id,content) VALUES (#{id},#{cust_id},#{content})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvTextMsg(TextMessage msg);
 	
@@ -106,7 +106,7 @@ public interface MsgRepository {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO msg_recv_video_weixin(detail_id,mediaId,thumbMediaId) VALUES (#{id}, #{mediaId}, #{thumbMediaId})")
+	@Insert("INSERT INTO msg_recv_video_weixin(detail_id,cust_id,mediaId,thumbMediaId) VALUES (#{id},#{cust_id},#{mediaId},#{thumbMediaId})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvWXVideoMessage(WXVideoMessage msg);
 	
@@ -115,7 +115,7 @@ public interface MsgRepository {
 	 * 
 	 * @param msg
 	 */
-	@Insert("INSERT INTO msg_recv_video_yixin(detail_id,url,name,mimeType) VALUES (#{id}, #{url}, #{name}, #{mimeType})")
+	@Insert("INSERT INTO msg_recv_video_yixin(detail_id,cust_id,url,name,mimeType) VALUES (#{id},#{cust_id},#{url},#{name},#{mimeType})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvYXVideoMessage(YXVideoMessage msg);
 
@@ -124,7 +124,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_voice_weixin(detail_id,mediaId,format,recognition) VALUES (#{id}, #{mediaId}, #{format},#{recognition})")
+	@Insert("INSERT INTO msg_recv_voice_weixin(detail_id,cust_id,mediaId,format,recognition) VALUES (#{id},#{cust_id},#{mediaId},#{format},#{recognition})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvWXVoiceMsg(WXVoiceMessage msg);
 	
@@ -133,7 +133,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_recv_music_yixin(detail_id,url,name,mimeType,`desc`) VALUES (#{id},#{url},#{name},#{mimeType},#{desc})")
+	@Insert("INSERT INTO msg_recv_music_yixin(detail_id,cust_id,url,name,mimeType,`desc`) VALUES (#{id},#{cust_id},#{url},#{name},#{mimeType},#{desc})")
 	@Lang(RawLanguageDriver.class)
 	int saveRecvYXMusicMsg(YXMusicMessage msg);
 	
@@ -150,8 +150,9 @@ public interface MsgRepository {
 	 * save send YiXin music message
 	 * @param msg
 	 * @return
+	 * @deprecated No used
 	 */
-	@Insert("INSERT INTO msg_send_music_yixin(detail_id,musicUrl,hqMusicUrl) VALUES (#{id},#{musicUrl},#{hqMusicUrl})")
+	@Insert("INSERT INTO msg_send_music_yixin(detail_id,cust_id,musicUrl,hqMusicUrl) VALUES (#{id},#{cust_id},#{musicUrl},#{hqMusicUrl})")
 	@Lang(RawLanguageDriver.class)
 	int saveSendYXMusicMsg(YXMusicMessage msg);
 	
@@ -159,8 +160,9 @@ public interface MsgRepository {
 	 * save send WeiXin music message
 	 * @param msg
 	 * @return
+	 * @deprecated No used
 	 */
-	@Insert("INSERT INTO msg_send_music_weixin(detail_id,musicUrl,hqMusicUrl) VALUES (#{id},#{musicUrl},#{hqMusicUrl})")
+	@Insert("INSERT INTO msg_send_music_weixin(detail_id,cust_id,musicUrl,hqMusicUrl) VALUES (#{id},#{cust_id},#{musicUrl},#{hqMusicUrl})")
 	@Lang(RawLanguageDriver.class)
 	int saveSendWXMusicMsg(WXMusicMessage msg);
 	
