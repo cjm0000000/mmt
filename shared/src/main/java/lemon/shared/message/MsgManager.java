@@ -164,7 +164,7 @@ public class MsgManager {
 		msgRepository.saveSendNewsMsg(msg);
 		for (Article article : msg.getArticles()) {
 			article.setId(IdWorkerManager.getIdWorker(Article.class).getId());
-			msgRepository.saveSendNewsArticles(msg.getId(), article);
+			msgRepository.saveSendNewsArticles(msg.getCust_id(), msg.getId(), article);
 		}
 	}
 	

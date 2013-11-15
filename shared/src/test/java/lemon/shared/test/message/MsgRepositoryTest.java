@@ -13,6 +13,7 @@ import lemon.shared.message.metadata.recv.ImageMessage;
 import lemon.shared.message.metadata.recv.LinkMessage;
 import lemon.shared.message.metadata.recv.LocationMessage;
 import lemon.shared.message.metadata.send.Article;
+import lemon.shared.message.metadata.send.NewsMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
@@ -157,9 +158,29 @@ public class MsgRepositoryTest {
 	
 	@Test
 	public void saveSendNewsArticles(){
-		//FIXME 完成new 消息入库
 		Article art = new Article();
-		//assertNotEquals(0, msgRepository.saveSendNewsArticles(art));
+		art.setDescription("description" + UUID.randomUUID().toString());
+		art.setId(IdWorkerManager.getIdWorker(Article.class).getId());
+		art.setPicUrl("http://pic.yixin.com/" + UUID.randomUUID().toString());
+		art.setTitle("Title " + UUID.randomUUID().toString());
+		art.setUrl("http://www.google.com/" + UUID.randomUUID().toString());
+		assertNotEquals(0, msgRepository.saveSendNewsArticles(CUST_ID,IdWorkerManager.getIdWorker(Message.class).getId(),art));
+	}
+	
+	@Test
+	public void saveSendNewsMsg(){
+		NewsMessage msg = new NewsMessage();
+		prepareMsg(msg);
+		msg.setArticleCount(new SecureRandom().nextInt(10));
+		assertNotEquals(0, msgRepository.saveSendNewsMsg(msg));
+	}
+	
+	@Test
+	public void saveSendTextMsg(){
+		TextMessage msg = new TextMessage();
+		prepareMsg(msg);
+		msg.setContent(UUID.randomUUID().toString());
+		assertNotEquals(0, msgRepository.saveSendTextMsg(msg));
 	}
 
 	private void prepareMsg(Message msg) {

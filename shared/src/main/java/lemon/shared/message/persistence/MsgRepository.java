@@ -168,13 +168,15 @@ public interface MsgRepository {
 	
 	/**
 	 * save send news's articles
+	 * @param cust_id
 	 * @param detail_id
 	 * @param article
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_send_news_article(id,detail_id,title,description,picUrl,url) VALUES (#{article.id},#{detail_id},#{article.title},#{article.description},#{article.picUrl},#{article.url})")
+	@Insert("INSERT INTO msg_send_news_article(id,cust_id,detail_id,title,description,picUrl,url) VALUES (#{article.id},#{cust_id},#{detail_id},#{article.title},#{article.description},#{article.picUrl},#{article.url})")
 	@Lang(RawLanguageDriver.class)
-	int saveSendNewsArticles(@Param("detail_id") long detail_id,
+	int saveSendNewsArticles(@Param("cust_id") int cust_id,
+			@Param("detail_id") long detail_id,
 			@Param("article") Article article);
 	
 	/**
@@ -182,7 +184,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_send_news(detail_id,articleCount) VALUES (#{id},#{articleCount})")
+	@Insert("INSERT INTO msg_send_news(detail_id,cust_id,articleCount) VALUES (#{id},#{cust_id},#{articleCount})")
 	@Lang(RawLanguageDriver.class)
 	int saveSendNewsMsg(NewsMessage msg);
 	
@@ -191,7 +193,7 @@ public interface MsgRepository {
 	 * @param msg
 	 * @return
 	 */
-	@Insert("INSERT INTO msg_send_text(detail_id,content) VALUES (#{id},#{content})")
+	@Insert("INSERT INTO msg_send_text(detail_id,cust_id,content) VALUES (#{id},#{cust_id},#{content})")
 	@Lang(RawLanguageDriver.class)
 	int saveSendTextMsg(TextMessage msg);
 }
