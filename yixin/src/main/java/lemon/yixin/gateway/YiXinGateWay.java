@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTCharset;
@@ -61,6 +62,11 @@ public final class YiXinGateWay extends AbstractGateWay {
 	@Override
 	protected String getTargetCharset() {
 		return MMTCharset.YIXIN_CHARSET;
+	}
+
+	@Override
+	protected void preProcessMsg(MMTConfig cfg, HttpServletRequest req) {
+		// 易信暂时不需要实现，API没有相关说明，如果加了验证，很可能消息处理会失败
 	}
 	
 }

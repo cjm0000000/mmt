@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTCharset;
@@ -63,6 +64,12 @@ public final class WeiXinGateWay extends AbstractGateWay {
 	@Override
 	protected String getTargetCharset() {
 		return MMTCharset.WEIXIN_CHARSET;
+	}
+
+
+	@Override
+	protected void preProcessMsg(MMTConfig cfg, HttpServletRequest req) {
+		super.doAuthentication(cfg, req);
 	}
 	
 }

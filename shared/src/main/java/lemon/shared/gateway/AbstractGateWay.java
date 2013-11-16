@@ -24,7 +24,7 @@ import lemon.shared.config.MMTConfig;
 import static lemon.shared.config.MMTCharset.*;
 
 /**
- * MMT 通用过滤器
+ * MMT通用消息网关
  * 
  * @author lemon
  * @version 1.0
@@ -34,7 +34,7 @@ public abstract class AbstractGateWay implements Filter {
 	private static Log logger = LogFactory.getLog(AbstractGateWay.class);
 	
 	/**
-	 * 获取App配置信息
+	 * 获取客户接口配置信息
 	 * @param mmt_token
 	 * @return
 	 */
@@ -51,6 +51,42 @@ public abstract class AbstractGateWay implements Filter {
 	 * @return
 	 */
 	protected abstract String getTargetCharset();
+	
+	/**
+	 * 在处理消息之前需要做的事情<BR>
+	 *  微信新增身份验证，原理同doAuthentication
+	 * @param cfg
+	 * @param req
+	 */
+	protected abstract void preProcessMsg(MMTConfig cfg, HttpServletRequest req);
+	
+	/**
+	 * 身份认证
+	 * @param cfg
+	 * @param req
+	 */
+	protected void doAuthentication(MMTConfig cfg, HttpServletRequest req){
+		// 加密签名
+		String signature = req.getParameter("signature");
+		// 时间戳
+		String timestamp = req.getParameter("timestamp");
+		// 随机数
+		String nonce = req.getParameter("nonce");
+		// 随机字符串
+		String echostr = req.getParameter("echostr");
+
+		// 参数装箱
+		Access sa = new Access();
+		sa.setEchostr(echostr);
+		sa.setNonce(nonce);
+		sa.setSignature(signature);
+		sa.setTimestamp_api(timestamp);
+		sa.setCust_id(cfg.getCust_id());
+		sa.setToken(cfg.getToken());
+		
+		if (!getMMTAPI().verifySignature(sa)) 
+			throw new MmtException("身份认证失败：CUST_ID=" + cfg.getCust_id());
+	}
 
 	@Override
 	public final void doFilter(ServletRequest request, ServletResponse response,
@@ -83,30 +119,10 @@ public abstract class AbstractGateWay implements Filter {
 	 */
 	private final void access(MMTConfig cfg, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
-		// 微信加密签名
-		String signature = req.getParameter("signature");
-		// 时间戳
-		String timestamp = req.getParameter("timestamp");
-		// 随机数
-		String nonce = req.getParameter("nonce");
-		// 随机字符串
-		String echostr = req.getParameter("echostr");
-
-		// 参数装箱
-		Access sa = new Access();
-		sa.setEchostr(echostr);
-		sa.setNonce(nonce);
-		sa.setSignature(signature);
-		sa.setTimestamp_api(timestamp);
-		sa.setCust_id(cfg.getCust_id());
-		sa.setToken(cfg.getToken());
-
-		// 验证签名
-		if (getMMTAPI().verifySignature(sa)) {
-			resp.getWriter().print(echostr);
-			return;
-		}
-		resp.getWriter().print("Failure.");
+		//身份认证
+		doAuthentication(cfg, req);
+		//回应Server
+		resp.getWriter().print(req.getParameter("echostr"));
 	}
 	
 	/**
@@ -151,6 +167,7 @@ public abstract class AbstractGateWay implements Filter {
 	private void processMsg(MMTConfig cfg, HttpServletRequest request,
 			HttpServletResponse response) {
 		response.setCharacterEncoding(LOCAL_CHARSET);
+		preProcessMsg(cfg, request);
 		try (PrintWriter out = response.getWriter()) {
 			String msg = getMessage(request);
 			out.println(getMMTAPI().processMsg(cfg.getApi_url(), msg));
