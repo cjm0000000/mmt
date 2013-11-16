@@ -40,7 +40,7 @@ public final class CustInfoAction extends AdminNavAction {
 	 */
 	@RequestMapping("list")
 	public String list() {
-		return "redirect:list/1";
+		return "redirect:/webservices/customer/information/list/1";
 	}
 	
 	/**
