@@ -25,7 +25,7 @@ public interface CityMapper {
 	 */
 	@Insert("INSERT INTO city(citycode,city_name,province,city_alias) VALUES(#{citycode},#{city_name},#{province},CONCAT(#{province},#{city_name}))")
 	@Lang(RawLanguageDriver.class)
-	void add(City city);
+	int add(City city);
 	
 	/**
 	 * 根据名称查询城市
@@ -41,5 +41,5 @@ public interface CityMapper {
 	 */
 	//TODO 最好改成truncate
 	@Delete("DELETE FROM city")
-	void clean();
+	int clean();
 }
