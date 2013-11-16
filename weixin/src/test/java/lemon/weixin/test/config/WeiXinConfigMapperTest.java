@@ -3,30 +3,30 @@ package lemon.weixin.test.config;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.toolkit.EqualsUtil;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
+import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(JUnit4.class)
 public class WeiXinConfigMapperTest {
 	private WXConfigMapper configMapper;
 	private CustomerMapper custMapper;
-	private AbstractApplicationContext acx;
-	private static Log logger = LogFactory.getLog(WeiXinConfigMapperTest.class);
+	private ApplicationContext acx;
+	private static final int CUST_ID = -5743;
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
@@ -37,44 +37,42 @@ public class WeiXinConfigMapperTest {
 		assertNotNull(configMapper);
 		assertNotNull(custMapper);
 	}
-	@After
-	public void destory(){
-		acx.close();
-	}
+	
 	@Test
 	public void crud(){
-		int cust_id = 10;
-		Customer cust = custMapper.getCustomer(cust_id);
+		Customer cust = custMapper.getCustomer(CUST_ID);
 		if(null == cust){
 			cust = new Customer();
-			cust.setCust_name("JUnit Test Customer");
-			cust.setMemo("JUnit Test");
+			cust.setCust_name("JUnit Test Customer " + UUID.randomUUID().toString());
+			cust.setMemo("JUnit description " + UUID.randomUUID().toString());
 			cust.setStatus(Status.AVAILABLE);
-			custMapper.addCustomer(cust);
-			cust_id = cust.getCust_id();
+			assertNotEquals(0, custMapper.addCustomer(cust));
 		}
-		assertNotEquals(0, cust_id);
 		
-		WeiXinConfig cfg = configMapper.get(cust_id);
-		if(null != cfg){
-			configMapper.delete(cust_id);
-		}
+		WeiXinConfig cfg = configMapper.get(CUST_ID);
+		if(null != cfg)
+			assertNotEquals(0, configMapper.delete(CUST_ID));
 		cfg = new WeiXinConfig();
-		cfg.setCust_id(cust_id);
-		cfg.setToken("Junit Test Token");
-		cfg.setWx_account("Junit Test WeiXin Account");
-		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");
+		cfg.setCust_id(CUST_ID);
+		cfg.setToken(UUID.randomUUID().toString());
+		cfg.setWx_account(UUID.randomUUID().toString());
+		cfg.setSubscribe_msg("Welcome to subscribe Junit Test ");
 		cfg.setWelcome_msg("业务咨询请按1");
-		cfg.setApi_url("ASDLADLKJFWQ");
-		cfg.setAppid("APPID");
-		cfg.setSecret("secret");
-		cfg.setBiz_class("com.com.XXX");
+		cfg.setApi_url(UUID.randomUUID().toString());
+		cfg.setAppid(UUID.randomUUID().toString());
+		cfg.setSecret(UUID.randomUUID().toString());
+		cfg.setBiz_class(SimpleWeiXinMsgProcessor.class.getName());
 		cfg.setAccount_type(AccountType.DY);
-		configMapper.save(cfg);
+		assertNotEquals(0, configMapper.save(cfg));
+		
 		List<WeiXinConfig> list = configMapper.availableList();
+		assertNotNull(list);
 		for (WeiXinConfig weiXinConfig : list) {
-			assertNotNull(weiXinConfig.getTimestamp());
-			logger.debug(weiXinConfig);
+			assertNotNull(weiXinConfig);
+			if(weiXinConfig.getCust_id() == CUST_ID){
+				assertTrue(EqualsUtil.deepEquals(weiXinConfig, cfg));
+			}
 		}
 	}
+	
 }
