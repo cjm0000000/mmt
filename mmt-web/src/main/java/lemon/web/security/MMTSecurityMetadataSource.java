@@ -3,8 +3,11 @@ package lemon.web.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import lemon.web.global.MMT;
 import lemon.web.system.bean.Menu;
@@ -31,20 +34,25 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 	private RoleMapper roleMapper;
 	@Autowired
 	private MenuMapper menuMapper;
-	private Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException {
-		String requestUrl = ((FilterInvocation) object).getRequestUrl();  
-        if(resourceMap == null) {  
-            loadResourceDefine();  
-        }  
-        return resourceMap.get(requestUrl); 
+		String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        if(resourceMap == null)
+            loadResourceDefine();
+        return resourceMap.get(requestUrl);
 	}
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		return null;
+		if(resourceMap == null)
+			loadResourceDefine();
+		Set<ConfigAttribute> allResources = new HashSet<>();
+		for (Entry<String, Collection<ConfigAttribute>> entry : resourceMap.entrySet())
+			allResources.addAll(entry.getValue());
+		return allResources;
 	}
 
 	@Override
@@ -55,22 +63,23 @@ public class MMTSecurityMetadataSource implements FilterInvocationSecurityMetada
 	/**
 	 * 加载所有资源与权限的关系 
 	 */
-	private synchronized void loadResourceDefine() {
-		if (resourceMap == null) {
-			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
-			List<Menu> resources = menuMapper.getMenuList();
-			for (Menu resource : resources) {
-				if("1".equals(resource.getMenulevcod())) continue;
-				//获取可以访问这个资源的角色
-				List<Role> roleList = roleMapper.getRoleListByAuthority(resource.getMenu_id());
-				if(null == roleList || roleList.size() == 0) continue;
-				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-				for (Role role : roleList) {
-					configAttributes.add(new SecurityConfig(role.getRole_name()));
-				}
-				//授权信息存入内存
-				resourceMap.put(MMT.FILTER_ROOT + resource.getMenuurl(), configAttributes);
+	public synchronized void loadResourceDefine() {
+		List<Menu> resources = menuMapper.getMenuList();
+		if (resourceMap == null) 
+			resourceMap = new HashMap<String, Collection<ConfigAttribute>>((int)(resources.size()/0.75F));
+		else
+			resourceMap.clear();
+		for (Menu resource : resources) {
+			if("1".equals(resource.getMenulevcod())) continue;
+			//获取可以访问这个资源的角色
+			List<Role> roleList = roleMapper.getRoleListByAuthority(resource.getMenu_id());
+			if(null == roleList || roleList.size() == 0) continue;
+			Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
+			for (Role role : roleList) {
+				configAttributes.add(new SecurityConfig(role.getRole_name()));
 			}
+			//授权信息存入内存
+			resourceMap.put(MMT.FILTER_ROOT + resource.getMenuurl(), configAttributes);
 		}
 	}
 

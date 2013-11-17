@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.global.MMTException;
+import lemon.web.security.MMTSecurityMetadataSource;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
@@ -36,6 +37,8 @@ import org.springframework.web.servlet.ModelAndView;
 public final class RoleAction extends AdminNavAction {
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private MMTSecurityMetadataSource securityMetadataSource;
 
 	/**
 	 * 显示角色列表首页
@@ -117,6 +120,7 @@ public final class RoleAction extends AdminNavAction {
 		}
 		if (result == 0)
 			return sendJSONError("角色权限设置失败。");
+		securityMetadataSource.loadResourceDefine();
 		return sendJSONMsg("角色权限设置成功。");
 	}
 	
