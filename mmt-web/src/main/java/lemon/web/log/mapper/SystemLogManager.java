@@ -22,7 +22,7 @@ public interface SystemLogManager {
 	 * @param log
 	 */
 	@Insert("INSERT INTO system_login_log(user_id,user_name,role_id,loginstatus,loginip) VALUES(#{user_id},#{user_name},#{role_id},#{loginstatus},#{loginip})")
-	void saveLoginLog(LoginLog log);
+	int saveLoginLog(LoginLog log);
 	
 	/**
 	 * query login log by user_id

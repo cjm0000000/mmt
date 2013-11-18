@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
+import lemon.web.global.MMTException;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.log.mapper.SystemLogManager;
 import lemon.web.system.bean.User;
@@ -42,6 +43,7 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	public MMTAuthenticationFilter() {
 		super(null);
 	}
+	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
@@ -68,9 +70,8 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		//保存日志
 		saveLoginLog(request.getRemoteAddr(), user_id, username,user == null ? 0 : user.getRole_id(), user != null);
 		//没有查到用户
-		if(null == user){
+		if(null == user)
 			throw new AuthenticationServiceException("用户名和密码不匹配。");
-		}
 		//登录成功，数据初始化
 		request.getSession().setAttribute(MMTAction.TOKEN, user);
 		//加载用户定制化信息
@@ -78,14 +79,11 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		UserConfig indexConfig = userConfigMapper.getItem(user.getUser_id(), MMTAction.USER_CUSTOMIZATION_HOME);
 		if(indexConfig != null)
 			request.getSession().setAttribute(MMTAction.USER_CUSTOMIZATION_HOME, indexConfig.getValue());
-
 		// UsernamePasswordAuthenticationToken实现 Authentication
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 				username, password);
-
 		// 允许子类设置详细属性
 		setDetails(request, authRequest);
-
 		// 运行UserDetailsService的loadUserByUsername 再次封装Authentication
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}
@@ -131,6 +129,7 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 			log.setLoginstatus(Status.AVAILABLE);
 		else
 			log.setLoginstatus(Status.UNAVAILABLE);
-		systemLogManager.saveLoginLog(log);
+		if(systemLogManager.saveLoginLog(log) == 0)
+			throw new MMTException("登录日志保存失败。");
 	}
 }
