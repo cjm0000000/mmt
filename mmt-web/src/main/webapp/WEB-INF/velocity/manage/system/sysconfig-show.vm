@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-default">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<button id="sysconfig-add" type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 保 存
+			</button>
+		</div>
+		<div class="panel-body">
+			<div class="input-group col-lg-12" style="padding:5px;">
+				<span class="input-group-addon"><span class="label label-primary">域 名</span></span>
+				<input type="text" id="domain" name="domain" value="$!page.domain.value" class="form-control" placeholder="例如：http://www.baidu.com">
+			</div>
+		</div>	
+	</div>
+</div>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/manage/system/sysconfig.js"></script>
+<script type="text/javascript">
+var url_save = "#{getContextPath}webservices/system/sysconfig/save";
+</script>

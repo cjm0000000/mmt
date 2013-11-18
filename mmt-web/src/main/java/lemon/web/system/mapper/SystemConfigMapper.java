@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
@@ -67,4 +68,12 @@ public interface SystemConfigMapper {
 	@Select("SELECT A.`group`, A.`key`, A.value, A.timestamp FROM system_config A WHERE A.`group`=#{group}")
 	@Lang(RawLanguageDriver.class)
 	List<SystemConfig> getItems(String group);
+	
+	/**
+	 * Update system configure item
+	 * @param config
+	 * @return
+	 */
+	@Update("UPDATE system_config A SET A.value=#{value} WHERE A.`group`=#{group} AND A.`key`=#{key}")
+	int updateItem(SystemConfig config);
 }
