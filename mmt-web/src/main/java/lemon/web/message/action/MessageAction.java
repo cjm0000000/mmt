@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -109,7 +110,9 @@ public abstract class MessageAction extends AdminNavAction {
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public ModelAndView addOrEditPage(HttpSession session, Integer id) {
+	public ModelAndView addOrEditPage(
+			HttpSession session,
+			@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
 		LocalMsgBean mb = null;
 		if(id > 0)
 			mb = msgBeanMapper.getMsg(id, getLevel());

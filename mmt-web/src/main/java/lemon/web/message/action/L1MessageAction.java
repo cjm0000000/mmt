@@ -12,6 +12,7 @@ import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,15 +36,17 @@ public final class L1MessageAction extends MessageAction {
 	 * 跳转到Level1页面
 	 * @return
 	 */
-	@RequestMapping("list")
 	@Override
+	@RequestMapping("list")
 	public String index() {
 		return "redirect:show";
 	}
 	
-	@RequestMapping(value="show")
 	@Override
-	public ModelAndView addOrEditPage(HttpSession session, Integer id) {
+	@RequestMapping(value="show")
+	public ModelAndView addOrEditPage(
+			HttpSession session,
+			@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
 		return showIndex(session, 1);
 	}
 
@@ -53,8 +56,8 @@ public final class L1MessageAction extends MessageAction {
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(HttpSession session, String json) {
 		User user = (User) session.getAttribute(TOKEN);
 		if(null == user)
@@ -83,8 +86,8 @@ public final class L1MessageAction extends MessageAction {
 			return BS3UI.danger("保存失败。");
 	}
 	
-	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String id) {
 		return "暂时不支持删除。";
 	}
