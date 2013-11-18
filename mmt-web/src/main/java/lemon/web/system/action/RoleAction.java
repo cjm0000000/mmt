@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.global.MMTException;
 import lemon.web.security.MMTSecurityMetadataSource;
 import lemon.web.system.bean.Menu;
@@ -20,10 +20,12 @@ import lemon.web.system.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 /**
  * 角色管理
@@ -34,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/system/role")
+@SessionAttributes(MMTAction.TOKEN)
 public final class RoleAction extends AdminNavAction {
 	@Autowired
 	private RoleMapper roleMapper;
@@ -52,17 +55,15 @@ public final class RoleAction extends AdminNavAction {
 	/**
 	 * 分页显示角色列表
 	 * @param page
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("list/{page}")
-	public ModelAndView list(@PathVariable("page") int page, HttpSession session) {
+	public ModelAndView list(@PathVariable("page") int page, @ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
 		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
 		if(null == mainViewName)
 			sendNotFoundError();
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
@@ -81,10 +82,11 @@ public final class RoleAction extends AdminNavAction {
 	/**
 	 * 添加角色
 	 * @param role
+	 * @param br
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid Role role, BindingResult br) {
 		if(role == null)
 			return sendJSONError("添加失败 ：  角色信息不全。");
@@ -108,8 +110,8 @@ public final class RoleAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value="set-authority", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="set-authority", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String setAuthority(int role_id, String menu_id){
 		if (role_id <= 0 || menu_id == null)
 			return sendJSONError("角色权限设置失败。");
@@ -129,8 +131,8 @@ public final class RoleAction extends AdminNavAction {
 	 * @param role_id
 	 * @return
 	 */
-	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String role_id) {
 		String[] ids = role_id.split(",");
 		int result = roleMapper.batchDelete(ids);
@@ -200,10 +202,9 @@ public final class RoleAction extends AdminNavAction {
 			//添加二级菜单
 			result.add(m2);
 			//添加三级菜单
-			for (Menu m3 : l3_list) {
+			for (Menu m3 : l3_list)
 				if(m3.getSupmenucode() == m2.getMenu_id())
 					result.add(m3);
-			}
 		}
 		l2_list.clear();
 		l3_list.clear();

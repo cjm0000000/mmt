@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.MenuMapper;
@@ -16,9 +16,11 @@ import lemon.web.system.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,23 +32,22 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/system/menu")
+@SessionAttributes(MMTAction.TOKEN)
 public final class MenuAction extends AdminNavAction {
 	@Autowired
 	private MenuMapper menuMapper;
 
 	/**
 	 * 显示菜单列表[无需分页]
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("list")
-	public ModelAndView list(HttpSession session) {
+	public ModelAndView list(@ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
 		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
 		if(null == mainViewName)
 			sendNotFoundError();
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
@@ -61,8 +62,8 @@ public final class MenuAction extends AdminNavAction {
 	 * @param menu
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid Menu menu, BindingResult br) {
 		Menu supMenu = menuMapper.getMenu(menu.getSupmenucode());
 		if(supMenu == null)
@@ -87,8 +88,8 @@ public final class MenuAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String menu_id) {
 		String[] ids = menu_id.split(",");
 		int result = menuMapper.deleteMenu(ids);
@@ -145,9 +146,8 @@ public final class MenuAction extends AdminNavAction {
 			l3_list = menuMapper.getMenuListByParent(parent.getMenu_id());
 			if(l3_list == null || l3_list.size() == 0)
 				continue;
-			for (Menu l3 : l3_list) {
+			for (Menu l3 : l3_list)
 				result.add(l3);
-			}
 		}
 		l2_list.clear();
 		l3_list.clear();

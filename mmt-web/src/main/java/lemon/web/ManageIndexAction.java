@@ -1,7 +1,5 @@
 package lemon.web;
 
-import javax.servlet.http.HttpSession;
-
 import lemon.web.base.MMTAction;
 import lemon.web.global.MMT;
 import lemon.web.system.bean.Menu;
@@ -10,8 +8,10 @@ import lemon.web.system.mapper.RoleMenuMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 /**
  * Manage index page, for redirect
  * 
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  */
 @Controller
+@SessionAttributes(MMTAction.TOKEN)
 public class ManageIndexAction extends MMTAction {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
@@ -28,15 +29,14 @@ public class ManageIndexAction extends MMTAction {
 	 * show manager home page
 	 * @param first
 	 * @param second
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("{first}/{second}")
 	public String index(@PathVariable String first,
-			@PathVariable String second, HttpSession session) {
+			@PathVariable String second, @ModelAttribute(TOKEN) User user) {
 		if(null == second || "".equals(second))
 			sendNotFoundError();
-		User user = (User) session.getAttribute(TOKEN);
 		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(),
 				first + "/" + second);
 		if(null == activeMenu)
@@ -50,12 +50,11 @@ public class ManageIndexAction extends MMTAction {
 	/**
 	 * show manage home page
 	 * @param menu_L2 二级菜单
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("{menu_L2}")
-	public String index(@PathVariable String menu_L2, HttpSession session) {
-		User user = (User) session.getAttribute(TOKEN);
+	public String index(@PathVariable String menu_L2, @ModelAttribute(TOKEN) User user) {
 		//获取二级目录
 		Menu secondMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), menu_L2);
 		if(null == secondMenu)

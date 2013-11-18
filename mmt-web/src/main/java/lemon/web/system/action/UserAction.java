@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import lemon.shared.config.Status;
@@ -12,6 +11,7 @@ import lemon.shared.customer.Customer;
 import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.bean.UserConfig;
@@ -22,10 +22,12 @@ import lemon.web.system.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -37,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/system/user")
+@SessionAttributes(MMTAction.TOKEN)
 public final class UserAction extends AdminNavAction {
 	@Autowired
 	private UserMapper userMapper;
@@ -65,13 +68,11 @@ public final class UserAction extends AdminNavAction {
 	 */
 	@RequestMapping("list/{page}")
 	public ModelAndView list(@PathVariable("page") int page, String user_name,
-			HttpSession session) {
+			@ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
 		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
 		if(null == mainViewName)
 			sendNotFoundError();
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
@@ -94,9 +95,10 @@ public final class UserAction extends AdminNavAction {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid User user, BindingResult result) {
+		//FIXME 更改用户状态失败，需要排查User以及SS 过滤器
 		if(user == null)
 			return sendJSONError("参数不能为空。");
 		if(result.hasErrors())
@@ -139,8 +141,8 @@ public final class UserAction extends AdminNavAction {
 	 * @param user_id
 	 * @return
 	 */
-	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String user_id) {
 		if (user_id == null || "".equals(user_id))
 			return sendJSONError("删除失败： 用户不存在。 ");

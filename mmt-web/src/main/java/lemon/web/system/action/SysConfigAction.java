@@ -2,9 +2,8 @@ package lemon.web.system.action;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
@@ -12,9 +11,11 @@ import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/system/sysconfig")
+@SessionAttributes(MMTAction.TOKEN)
 public final class SysConfigAction extends AdminNavAction {
 	@Autowired
 	private SystemConfigMapper systemConfigMapper;
@@ -41,17 +43,15 @@ public final class SysConfigAction extends AdminNavAction {
 
 	/**
 	 * 显示配置信息
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("show")
-	public ModelAndView show(HttpSession session) {
+	public ModelAndView show(@ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
 		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
 		if(null == mainViewName)
 			sendNotFoundError();
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
@@ -66,8 +66,8 @@ public final class SysConfigAction extends AdminNavAction {
 	 * @param domain
 	 * @return
 	 */
-	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(String domain) {
 		if(domain == null)
 			return BS3UI.danger("域名不能为空。");
