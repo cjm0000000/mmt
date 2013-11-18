@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import lemon.shared.customer.Action;
 import lemon.shared.customer.CustomMenu;
-import lemon.shared.customer.log.CustomMenuLog;
-import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.customer.CustomMenuLog;
+import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -24,14 +24,14 @@ public class CustomMenuRepositoryTest {
 	private static final byte LEVEL = 9;
 	private static final int CUST_ID = -5743;
 	private ApplicationContext acx;
-	private CustomMenuMapper customMenuMapper;
+	private CustomMenuRepository customMenuMapper;
 
 	@Before
 	public void init() {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		customMenuMapper = acx.getBean(CustomMenuMapper.class);
+		customMenuMapper = acx.getBean(CustomMenuRepository.class);
 		assertNotNull(customMenuMapper);
 	}
 

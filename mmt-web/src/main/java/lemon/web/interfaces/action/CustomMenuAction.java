@@ -13,7 +13,7 @@ import lemon.shared.access.ReturnCode;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuAdpater;
-import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
@@ -60,7 +60,7 @@ public final class CustomMenuAction extends AdminNavAction {
 	/** 自定义菜单类型 */
 	private static final String MENU_TYPE_GROUP = "CUSTOM_MENU_TYPE";
 	@Autowired
-	private CustomMenuMapper customMenuMapper;
+	private CustomMenuRepository customMenuMapper;
 	@Autowired
 	private WXConfigMapper wxConfigMapper;
 	@Autowired

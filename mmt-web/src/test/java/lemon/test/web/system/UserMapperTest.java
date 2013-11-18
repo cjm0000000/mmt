@@ -6,7 +6,7 @@ import java.util.List;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMapper;
@@ -25,7 +25,7 @@ public class UserMapperTest {
 	private ApplicationContext acx;
 	private UserMapper userMapper;
 	private RoleMapper roleMapper;
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 	
 	@Before
 	public void init(){
@@ -34,7 +34,7 @@ public class UserMapperTest {
 		acx = new ClassPathXmlApplicationContext(resource);
 		userMapper = acx.getBean(UserMapper.class);
 		roleMapper = acx.getBean(RoleMapper.class);
-		customerMapper = acx.getBean(CustomerMapper.class);
+		customerMapper = acx.getBean(CustomerRepository.class);
 		assertNotNull(userMapper);
 		assertNotNull(roleMapper);
 		assertNotNull(customerMapper);

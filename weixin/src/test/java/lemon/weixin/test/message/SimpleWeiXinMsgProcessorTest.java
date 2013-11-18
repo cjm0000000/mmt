@@ -9,7 +9,7 @@ import java.io.InputStream;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.send.NewsMessage;
@@ -51,7 +51,7 @@ public class SimpleWeiXinMsgProcessorTest {
 	private final int cust_id = 1000;
 	private MsgManager msgManager;
 	private ApplicationContext acx;
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
@@ -60,7 +60,7 @@ public class SimpleWeiXinMsgProcessorTest {
 		acx = new ClassPathXmlApplicationContext(resource);
 		api = acx.getBean(WeiXinAPI.class);
 		msgManager = acx.getBean(MsgManager.class);
-		customerMapper = acx.getBean(CustomerMapper.class);
+		customerMapper = acx.getBean(CustomerRepository.class);
 		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
 		assertNotNull(msgManager);

@@ -4,6 +4,9 @@
 	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
+			<form method="post" action="../list/1">
+		    	<input type="text" id="cust_name" name="cust_name" value="$!page.cust_name" style="width:30%"  placeholder="输入查询条件">
+		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
 			<button id="cust-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
 			</button>
@@ -13,6 +16,7 @@
 			<button id="cust-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
+			</form>
 		</div>
 			
 		### 数据表

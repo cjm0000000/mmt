@@ -1,6 +1,5 @@
-package lemon.shared.customer.log;
+package lemon.shared.customer;
 
-import lemon.shared.customer.Action;
 import lemon.shared.service.BaseService;
 
 /**

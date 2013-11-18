@@ -6,7 +6,7 @@ import java.util.List;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
 
@@ -23,7 +23,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @RunWith(JUnit4.class)
 public class YiXinConfigMapperTest {
 	private YXConfigMapper configMapper;
-	private CustomerMapper custMapper;
+	private CustomerRepository custMapper;
 	private AbstractApplicationContext acx;
 	private static Log logger = LogFactory.getLog(YiXinConfigMapperTest.class);
 	@Before
@@ -32,7 +32,7 @@ public class YiXinConfigMapperTest {
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
 		configMapper = (YXConfigMapper) acx.getBean(YXConfigMapper.class);
-		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
+		custMapper = (CustomerRepository) acx.getBean(CustomerRepository.class);
 		assertNotNull(configMapper);
 		assertNotNull(custMapper);
 	}

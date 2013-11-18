@@ -8,7 +8,7 @@ import javax.validation.Valid;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -48,7 +48,7 @@ public final class UserAction extends AdminNavAction {
 	@Autowired
 	private RoleMapper roleMapper;
 	@Autowired
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 
 	/**
 	 * 显示用户列表首页
@@ -164,7 +164,7 @@ public final class UserAction extends AdminNavAction {
 		if (user == null)
 			user = new User();
 		List<Role> roleList = roleMapper.getRoleList(0, 0);
-		List<Customer> custList = customerMapper.getCustomerList(0, 10000);
+		List<Customer> custList = customerMapper.getCustomerList(0, -1, null);
 		Map<String, Object> result = new HashMap<>();
 		result.put("user", user);
 		result.put("roleList", roleList);

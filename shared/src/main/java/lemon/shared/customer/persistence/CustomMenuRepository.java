@@ -1,9 +1,9 @@
-package lemon.shared.customer.mapper;
+package lemon.shared.customer.persistence;
 
 import java.util.List;
 
 import lemon.shared.customer.CustomMenu;
-import lemon.shared.customer.log.CustomMenuLog;
+import lemon.shared.customer.CustomMenuLog;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public interface CustomMenuMapper {
+public interface CustomMenuRepository {
 	
 	/**
 	 * add menu

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.toolkit.EqualsUtil;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -24,7 +24,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @RunWith(JUnit4.class)
 public class WeiXinConfigMapperTest {
 	private WXConfigMapper configMapper;
-	private CustomerMapper custMapper;
+	private CustomerRepository custMapper;
 	private ApplicationContext acx;
 	private static final int CUST_ID = -5743;
 	@Before
@@ -33,7 +33,7 @@ public class WeiXinConfigMapperTest {
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
 		configMapper = (WXConfigMapper) acx.getBean(WXConfigMapper.class);
-		custMapper = (CustomerMapper) acx.getBean(CustomerMapper.class);
+		custMapper = (CustomerRepository) acx.getBean(CustomerRepository.class);
 		assertNotNull(configMapper);
 		assertNotNull(custMapper);
 	}

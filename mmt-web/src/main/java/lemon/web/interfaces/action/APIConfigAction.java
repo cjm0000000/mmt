@@ -6,7 +6,7 @@ import lemon.shared.config.MMTConfig;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
@@ -34,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes(MMTAction.TOKEN)
 public abstract class APIConfigAction extends AdminNavAction {
 	@Autowired
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 	@Autowired
 	private SystemConfigMapper systemConfigMapper;
 	

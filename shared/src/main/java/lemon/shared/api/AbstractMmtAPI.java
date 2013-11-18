@@ -20,8 +20,8 @@ import lemon.shared.access.Access;
 import lemon.shared.access.persistence.AccessRepository;
 import lemon.shared.config.MMTConfig;
 import lemon.shared.customer.Action;
-import lemon.shared.customer.log.CustomMenuLog;
-import lemon.shared.customer.mapper.CustomMenuMapper;
+import lemon.shared.customer.CustomMenuLog;
+import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.service.ServiceType;
@@ -42,7 +42,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	@Autowired
 	private AccessRepository accessRepository;
 	@Autowired
-	private CustomMenuMapper customMenuMapper;
+	private CustomMenuRepository customMenuMapper;
 	
 	/**
 	 * 验证接口配置

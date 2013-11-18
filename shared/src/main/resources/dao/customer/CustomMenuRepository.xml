@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.shared.customer.mapper.CustomMenuMapper">
+<mapper namespace="lemon.shared.customer.persistence.CustomMenuRepository">
 	<insert id="addMenu" parameterType="lemon.shared.customer.CustomMenu">
 		INSERT INTO customer_menu(menu_id,cust_id,name,menulevcod,supmenucode,`key`,`type`,sort) 
 			VALUES(#{menu_id},#{cust_id},#{name},#{menulevcod},#{supmenucode},#{key},#{type},#{sort})
@@ -62,7 +62,7 @@
 			AND A.cust_id=#{cust_id}
 		ORDER BY A.sort
 	</select>
-	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.log.CustomMenuLog">
+	<insert id="saveMenuSyncLog" parameterType="lemon.shared.customer.CustomMenuLog">
 		INSERT INTO customer_menu_log(id,cust_id,service_type,action,access_token,msg,result) 
 			VALUES(#{id},#{cust_id},#{service_type},#{action},#{access_token},#{msg},#{result})
 	</insert>

@@ -4,7 +4,7 @@ import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.weixin.WeiXinAPI;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -29,7 +29,7 @@ public class WeiXinAPITest {
 	private final String bizClass = "lemon.weixin.biz.customer.SimpleWeiXinMsgProcessor";
 	private final int cust_id = 100;
 	private ApplicationContext acx;
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
@@ -37,7 +37,7 @@ public class WeiXinAPITest {
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
 		api = acx.getBean(WeiXinAPI.class);
-		customerMapper = acx.getBean(CustomerMapper.class);
+		customerMapper = acx.getBean(CustomerRepository.class);
 		wxConfigMapper = acx.getBean(WXConfigMapper.class);
 		assertNotNull(api);
 		assertNotNull(customerMapper);

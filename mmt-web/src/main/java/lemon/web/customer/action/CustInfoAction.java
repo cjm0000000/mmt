@@ -7,7 +7,7 @@ import javax.validation.Valid;
 
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.User;
@@ -35,7 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes(MMTAction.TOKEN)
 public final class CustInfoAction extends AdminNavAction {
 	@Autowired
-	private CustomerMapper customerMapper;
+	private CustomerRepository customerMapper;
 
 	/**
 	 * 显示客户信息列表首页
@@ -53,6 +53,7 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param user
 	 * @return
 	 */
+	//FIXME 翻页的时候，查询条件会丢失
 	@RequestMapping("list/{page}")
 	public ModelAndView list(@PathVariable("page") int page, String cust_name,
 			@ModelAttribute(TOKEN) User user) {
@@ -63,13 +64,14 @@ public final class CustInfoAction extends AdminNavAction {
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
-		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE);
+		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE, cust_name);
 		obtainServices(custList);
-		int rsCnt = customerMapper.getCustCnt();
+		int rsCnt = customerMapper.getCustCnt(cust_name);
 		resultMap.put("mainViewName", mainViewName);
 		resultMap.put("custList", custList);
 		resultMap.put("rsCnt", rsCnt);
 		resultMap.put("currentPage", page);
+		resultMap.put("cust_name", cust_name);
 		resultMap.put("PAGESIZE", PAGESIZE);
 		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
 	}

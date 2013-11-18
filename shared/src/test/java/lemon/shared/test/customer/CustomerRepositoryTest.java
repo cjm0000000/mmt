@@ -8,7 +8,7 @@ import java.util.UUID;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
-import lemon.shared.customer.mapper.CustomerMapper;
+import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -22,7 +22,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @RunWith(JUnit4.class)
 public class CustomerRepositoryTest {
 	private ApplicationContext acx;
-	private CustomerMapper custMapper;
+	private CustomerRepository custMapper;
 	private int CUST_ID = -5743;
 	 
 	@Before
@@ -30,7 +30,7 @@ public class CustomerRepositoryTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		custMapper = acx.getBean(CustomerMapper.class);
+		custMapper = acx.getBean(CustomerRepository.class);
 		assertNotNull(custMapper);
 	}
 	
@@ -40,7 +40,7 @@ public class CustomerRepositoryTest {
 	@Test
 	public void customerCRUD(){
 		// Add
-		Customer cust = addCustomer();
+		Customer cust = addCustomer(UUID.randomUUID().toString());
 		assertNotEquals(0, cust.getCust_id());
 		// Update
 		String memo = UUID.randomUUID().toString();
@@ -59,7 +59,7 @@ public class CustomerRepositoryTest {
 	
 	@Test
 	public void customerService(){
-		Customer cust = addCustomer();
+		Customer cust = addCustomer(UUID.randomUUID().toString());
 		CustomerService service = addService(cust.getCust_id());
 		assertNotNull(service);
 		assertEquals(service.getExpire_time(), "0000-00-00 00:00");
@@ -83,6 +83,17 @@ public class CustomerRepositoryTest {
 		assertNotEquals(0, list.size());
 	}
 	
+	@Test
+	public void listByName(){
+		String cust_name = UUID.randomUUID().toString();
+		addCustomer(cust_name);
+		List<Customer> list = custMapper.getCustomerList(0, -1, cust_name);
+		assertNotNull(list);
+		assertEquals(cust_name, list.get(0).getCust_name());
+		int cnt = custMapper.getCustCnt(cust_name);
+		assertEquals(cnt, list.size());
+	}
+	
 	private CustomerService addService(int cust_id){
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
@@ -95,9 +106,9 @@ public class CustomerRepositoryTest {
 		return service;
 	}
 	
-	private Customer addCustomer(){
+	private Customer addCustomer(String cust_name){
 		Customer cust = new Customer();
-		cust.setCust_name("CUSTOMER By JUnit 4");
+		cust.setCust_name(cust_name);
 		cust.setMemo(UUID.randomUUID().toString());
 		cust.setStatus(Status.AVAILABLE);
 		int result = custMapper.addCustomer(cust);
@@ -114,7 +125,7 @@ public class CustomerRepositoryTest {
 	}
 	
 	private List<Customer> list(){
-		return custMapper.getCustomerList(0, 10);
+		return custMapper.getCustomerList(0, 10, null);
 	}
 
 }
