@@ -43,7 +43,7 @@ public interface LocalMsgBeanRepository {
 	 * @return
 	 */
 	@SelectProvider(type = LocalMsgBeanSQLProvider.class, method = "getMsgSQL")
-	LocalMsgBean getMsg(@Param("id") int id, @Param("level") int level);
+	LocalMsgBean getMsg(@Param("id") long id, @Param("level") int level);
 	
 	/**
 	 * 更新RobotMsgBean

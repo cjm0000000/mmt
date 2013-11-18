@@ -2,11 +2,11 @@ package lemon.web.message.action;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,28 +30,25 @@ public final class L3MessageAction extends MessageAction {
 
 	/**
 	 * 显示L2消息列表
+	 * @param user
 	 * @param page
-	 * @param session
 	 * @return
 	 */
 	@RequestMapping("list/{page}")
-	public ModelAndView list(@PathVariable("page") int page, HttpSession session) {
-		return showIndex(session, page);
+	public ModelAndView list(@ModelAttribute(TOKEN) User user, @PathVariable("page") int page) {
+		return showIndex(user, page);
 	}
 
 	/**
 	 * 保存三级信息
 	 * @param msg
 	 * @param br
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(@Valid LocalMsgBean msg, BindingResult br, HttpSession session) {
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
+	public String save(@Valid LocalMsgBean msg, BindingResult br, @ModelAttribute(TOKEN) User user) {
 		if(msg == null)
 			return sendJSONError("保存失败： 信息格式不正确。");
 		if(br.hasErrors())
@@ -63,9 +60,9 @@ public final class L3MessageAction extends MessageAction {
 		if(msg.getId() <= 0){
 			msg.setId(IdWorkerManager.getIdWorker(LocalMsgBean.class).getId());
 			result = msgBeanMapper.addMsg(msg, getLevel());
-		}else{
+		}else
 			result = msgBeanMapper.updateMsg(msg, getLevel());
-		}
+		
 		if(result != 0)
 			return sendJSONMsg("保存成功。");
 		else
@@ -99,6 +96,6 @@ public final class L3MessageAction extends MessageAction {
 
 	@Override
 	protected void obtainResult(List<LocalMsgBean> msgList) {
-		
+		//nothing to do
 	}
 }

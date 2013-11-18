@@ -32,6 +32,7 @@
 		<property name="suffix" value=".vm" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 		<property name="exposeSessionAttributes" value="true" />
+		<property name="allowSessionOverride" value="true"/>
 		<property name="requestContextAttribute" value="context" />
 	</bean>
 </beans>

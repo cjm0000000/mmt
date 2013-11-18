@@ -5,11 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,25 +44,24 @@ public final class L1MessageAction extends MessageAction {
 	@Override
 	@RequestMapping(value="show")
 	public ModelAndView addOrEditPage(
-			HttpSession session,
-			@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
-		return showIndex(session, 1);
+			@ModelAttribute(TOKEN) User user,
+			@RequestParam(value = "id", required = false, defaultValue = "0") long id) {
+		return showIndex(user, 1);
 	}
 
 	/**
 	 * 保存一级信息
-	 * @param session
 	 * @param json
+	 * @param user
 	 * @return
 	 */
+	//FIXME 一级消息删除，存在不能删除的问题
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String save(HttpSession session, String json) {
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
-		if(json == null)
-			return BS3UI.warning("保存失败： 信息格式不正确。");
+	public String save(@RequestParam String json,
+			@ModelAttribute(TOKEN) User user) {
+		if(json == null || "".equals(json))
+			return BS3UI.warning("保存失败： 消息格式不正确。");
 		// 解析JSON,转Java集合
 		Collection<LocalMsgBean> msgList = json2collection(json);
 		//去空去重复
@@ -132,11 +130,9 @@ public final class L1MessageAction extends MessageAction {
 	private boolean isBlank(LocalMsgBean mb) {
 		if (null == mb)
 			return true;
-		if (mb.getCust_id() == 0) {
-			if ("".equals(mb.getKey().trim())
-					|| "".equals(mb.getValue().trim()))
+		if (mb.getCust_id() == 0) 
+			if ("".equals(mb.getKey().trim()) || "".equals(mb.getValue().trim()))
 				return true;
-		}
 		return false;
 	}
 	
