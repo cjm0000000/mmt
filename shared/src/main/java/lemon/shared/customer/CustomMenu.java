@@ -19,7 +19,7 @@ public class CustomMenu {
 	@Length(max = 20, min = 2, message = "菜单名称长度必须在 2 - 16 位之间")
 	private String name;
 	private byte menulevcod;
-	private int supmenucode;
+	private long supmenucode;
 	private String key;
 	@NotEmpty(message="按钮类型不能为空")
 	private String type;
@@ -51,10 +51,10 @@ public class CustomMenu {
 	public void setMenulevcod(byte menulevcod) {
 		this.menulevcod = menulevcod;
 	}
-	public int getSupmenucode() {
+	public long getSupmenucode() {
 		return supmenucode;
 	}
-	public void setSupmenucode(int supmenucode) {
+	public void setSupmenucode(long supmenucode) {
 		this.supmenucode = supmenucode;
 	}
 	public String getKey() {

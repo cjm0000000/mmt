@@ -126,7 +126,7 @@ CREATE TABLE `customer_menu` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `name` char(20) NOT NULL DEFAULT '' COMMENT '菜单名称',
   `menulevcod` tinyint(1) NOT NULL DEFAULT '1' COMMENT '菜单等级',
-  `supmenucode` int(10) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
+  `supmenucode` bigint(20) NOT NULL DEFAULT '0' COMMENT '上级菜单编号',
   `key` varchar(128) NOT NULL DEFAULT '' COMMENT '菜单链接',
   `type` varchar(5) NOT NULL DEFAULT '' COMMENT '类型',
   `sort` decimal(4,0) NOT NULL DEFAULT '0' COMMENT '排序号',
