@@ -1,9 +1,8 @@
 package lemon.web.interfaces.action;
 
-import javax.servlet.http.HttpSession;
-
 import lemon.shared.config.MMTConfig;
 import lemon.shared.service.ServiceType;
+import lemon.web.system.bean.User;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
@@ -11,6 +10,7 @@ import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,15 +30,15 @@ public final class YiXinAction extends APIConfigAction {
 
 	/**
 	 * 保存易信配置信息
-	 * @param session
+	 * @param user
 	 * @param cfg
 	 * @param apiStatus
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(HttpSession session, YiXinConfig cfg, boolean apiStatus){
-		return processSave(session, cfg, apiStatus);
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String save(@ModelAttribute(TOKEN) User user, YiXinConfig cfg, boolean apiStatus){
+		return processSave(user, cfg, apiStatus);
 	}
 	
 	@Override

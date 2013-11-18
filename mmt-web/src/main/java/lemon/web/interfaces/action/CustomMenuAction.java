@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import lemon.shared.access.ReturnCode;
@@ -18,6 +17,7 @@ import lemon.shared.customer.mapper.CustomMenuMapper;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.weixin.WeiXinException;
@@ -35,9 +35,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -49,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/interface/menu")
+@SessionAttributes(MMTAction.TOKEN)
 public final class CustomMenuAction extends AdminNavAction {
 	private static Log logger = LogFactory.getLog(CustomMenuAction.class);
 	/** 虚拟根目录ID */
@@ -77,17 +80,15 @@ public final class CustomMenuAction extends AdminNavAction {
 
 	/**
 	 * 显示菜单列表[无需分页]
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping("list")
-	public ModelAndView list(HttpSession session) {
+	public ModelAndView list(@ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
 		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
 		if(null == mainViewName)
 			sendNotFoundError();
-		//获取用户角色
-		User user = (User) session.getAttribute(TOKEN);
 		//获取导航条数据
 		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		//获取Main数据
@@ -104,13 +105,10 @@ public final class CustomMenuAction extends AdminNavAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid CustomMenu menu, BindingResult br,
-			HttpSession session) {
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
+			@ModelAttribute(TOKEN) User user) {
 		CustomMenu supMenu;
 		if(menu.getSupmenucode() == VIRTUAL_ROOT_MENU_ID)
 			supMenu = VIRTUAL_MENU;
@@ -145,8 +143,8 @@ public final class CustomMenuAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String menu_id) {
 		String[] ids = menu_id.split(",");
 		int result = customMenuMapper.deleteMenu(ids);
@@ -159,14 +157,11 @@ public final class CustomMenuAction extends AdminNavAction {
 	/**
 	 * 显示添加或者编辑菜单的页面
 	 * @param menu_id
-	 * @param session
+	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public ModelAndView addOrEditPage(int menu_id, HttpSession session) {
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
+	public ModelAndView addOrEditPage(long menu_id, @ModelAttribute(TOKEN) User user) {
 		// 查询上级菜单
 		List<CustomMenu> pmList = customMenuMapper.getMenuListByLevel(user.getCust_id(), (byte) 1);
 		pmList.add(0, VIRTUAL_MENU);
@@ -185,15 +180,12 @@ public final class CustomMenuAction extends AdminNavAction {
 	
 	/**
 	 * 同步自定义菜单到微信
-	 * @param session
+	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "sync_menu_wx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String syncMenu2WX(HttpSession session){
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
+	@RequestMapping(value = "sync_menu_wx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String syncMenu2WX(@ModelAttribute(TOKEN) User user){
 		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
 		if(cfg == null)
 			return sendJSONError("请先配置微信接口。");
@@ -219,15 +211,12 @@ public final class CustomMenuAction extends AdminNavAction {
 	
 	/**
 	 * 同步自定义菜单到易信
-	 * @param session
+	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String syncMenu2YX(HttpSession session){
-		User user = (User) session.getAttribute(TOKEN);
-		if(null == user)
-			sendError("请先登录。");
+	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String syncMenu2YX(@ModelAttribute(TOKEN) User user){
 		YiXinConfig cfg = yxConfigMapper.get(user.getCust_id());
 		if(cfg == null)
 			return sendJSONError("请先配置易信接口。");
@@ -276,10 +265,9 @@ public final class CustomMenuAction extends AdminNavAction {
 		List<CustomMenu> result = new ArrayList<>(list.size());
 		for (CustomMenu parent : l1_list) {
 			result.add(parent);
-			for (CustomMenu customMenu : l2_list) {
+			for (CustomMenu customMenu : l2_list)
 				if (customMenu.getSupmenucode() == parent.getMenu_id())
 					result.add(customMenu);
-			}
 		}
 		l1_list.clear();
 		l2_list.clear();
@@ -320,12 +308,11 @@ public final class CustomMenuAction extends AdminNavAction {
 			//获取叶子节点
 			List<CustomMenuAdpater> subList = new ArrayList<>();
 			for (CustomMenu customMenu : l2_list) {
-				if (customMenu.getSupmenucode() == parent.getMenu_id()){
+				if (customMenu.getSupmenucode() == parent.getMenu_id())
 					if(customMenu.getType().equals("view"))
 						subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), customMenu.getKey(), null, null));
 					else
 						subList.add(new CustomMenuAdpater(customMenu.getName(), customMenu.getType(), null, customMenu.getKey(), null));
-				}
 			}
 			if (subList.size() == 0)
 				subList = null;
@@ -360,10 +347,9 @@ public final class CustomMenuAction extends AdminNavAction {
 	 */
 	private List<CustomMenu> getMenuListByLevel(List<CustomMenu> all, byte level) {
 		List<CustomMenu> result = new ArrayList<>(all.size());
-		for (CustomMenu customMenu : all) {
+		for (CustomMenu customMenu : all) 
 			if (customMenu.getMenulevcod() == level)
 				result.add(customMenu);
-		}
 		return result;
 	}
 	

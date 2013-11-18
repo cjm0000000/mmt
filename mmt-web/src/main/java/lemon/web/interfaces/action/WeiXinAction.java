@@ -1,10 +1,8 @@
 package lemon.web.interfaces.action;
 
-
-import javax.servlet.http.HttpSession;
-
 import lemon.shared.config.MMTConfig;
 import lemon.shared.service.ServiceType;
+import lemon.web.system.bean.User;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
@@ -12,6 +10,7 @@ import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,15 +30,15 @@ public final class WeiXinAction extends APIConfigAction {
 	
 	/**
 	 * 保存微信配置信息
-	 * @param session
+	 * @param user
 	 * @param cfg
 	 * @param apiStatus
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String save(HttpSession session, WeiXinConfig cfg, boolean apiStatus){
-		return processSave(session, cfg, apiStatus);
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String save(@ModelAttribute(TOKEN) User user, WeiXinConfig cfg, boolean apiStatus){
+		return processSave(user, cfg, apiStatus);
 	}
 
 	@Override

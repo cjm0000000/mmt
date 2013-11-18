@@ -2,8 +2,6 @@ package lemon.web.interfaces.action;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import lemon.shared.config.MMTConfig;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
@@ -12,6 +10,7 @@ import lemon.shared.customer.mapper.CustomerMapper;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
+import lemon.web.base.MMTAction;
 import lemon.web.global.MMT;
 import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
@@ -19,7 +18,10 @@ import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -29,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @version 1.0
  * 
  */
+@SessionAttributes(MMTAction.TOKEN)
 public abstract class APIConfigAction extends AdminNavAction {
 	@Autowired
 	private CustomerMapper customerMapper;
@@ -116,21 +119,18 @@ public abstract class APIConfigAction extends AdminNavAction {
 	
 	/**
 	 * 保存接口配置信息
-	 * @param session
+	 * @param user
 	 * @param cfg
 	 * @param apiStatus
 	 * @return
 	 */
-	public final String processSave(HttpSession session, MMTConfig cfg, boolean apiStatus) {
+	public final String processSave(User user, MMTConfig cfg, boolean apiStatus) {
 		if(cfg == null)
 			return BS3UI.warning("保存失败：信息不全。");
 		if(!apiStatus && cfg.getCust_id() <= 0)
 			return BS3UI.warning("非法访问。");
 		int result = 0;
 		if(cfg.getCust_id() <= 0){
-			User user = (User) session.getAttribute(TOKEN);
-			if(user == null)
-				sendError("请先登录。");
 			cfg.setCust_id(user.getCust_id());
 			//判断api_url是否存在
 			String account = getAPIAccount(cfg);
@@ -161,23 +161,18 @@ public abstract class APIConfigAction extends AdminNavAction {
 	
 	/**
 	 * 显示接口配置信息
-	 * @param session
+	 * @param user
 	 * @param cust_id
 	 * @return
 	 */
 	@RequestMapping(value="show")
-	public final ModelAndView showConfig(HttpSession session, Integer cust_id) {
-		if (null == session)
-			sendError("您登录超时，请重新登录。");
-		User user = (User) session.getAttribute(TOKEN);
-		if (null == user)
-			sendError("您登录超时，请重新登录。");
+	public final ModelAndView showConfig(@ModelAttribute(TOKEN) User user, 
+			@RequestParam(value = "cust_id", required = false, defaultValue = "0") int cust_id) {
 		if(user.getRole_id() != 1)
 			cust_id = user.getCust_id();
-		else{
-			if(null == cust_id || cust_id <= 0)
+		else
+			if(cust_id <= 0)
 				cust_id = user.getCust_id();
-		}
 		if(cust_id <= 0)
 			sendError("客户信息不存在。");
 		// 获取Main视图名称
@@ -192,7 +187,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 		//获取系统域名
 		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY, DOMAIN_KEY);
 		if(null == syscfg)
-			sendError("请先配置域名。");
+			sendError("请先到“系統管理——系統配置”模块配置域名。");
 		if(mmtcfg != null)
 			mmtcfg.setApi_url(syscfg.getValue().trim() + MMT.getContextRoot() + getFilterURL() + mmtcfg.getApi_url());
 		resultMap.put("cfg", mmtcfg);
