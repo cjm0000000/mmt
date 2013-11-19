@@ -55,11 +55,11 @@ public final class L1MessageAction extends MessageAction {
 	 * @param user
 	 * @return
 	 */
-	//FIXME 一级消息删除，存在不能删除的问题
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@RequestParam String json,
 			@ModelAttribute(TOKEN) User user) {
+		System.out.println(json);
 		if(json == null || "".equals(json))
 			return BS3UI.warning("保存失败： 消息格式不正确。");
 		// 解析JSON,转Java集合
@@ -130,9 +130,11 @@ public final class L1MessageAction extends MessageAction {
 	private boolean isBlank(LocalMsgBean mb) {
 		if (null == mb)
 			return true;
-		if (mb.getCust_id() == 0) 
-			if ("".equals(mb.getKey().trim()) || "".equals(mb.getValue().trim()))
-				return true;
+		if ("".equals(mb.getKey().trim()) && "".equals(mb.getValue().trim())){
+			if(mb.getId() > 0)//remove from database
+				msgBeanMapper.deleteMsg(String.valueOf(mb.getId()), getLevel());
+			return true;
+		}
 		return false;
 	}
 	
