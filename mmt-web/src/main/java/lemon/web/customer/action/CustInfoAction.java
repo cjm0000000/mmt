@@ -1,7 +1,6 @@
 package lemon.web.customer.action;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -10,6 +9,7 @@ import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
+import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,27 +54,20 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @return
 	 */
 	@RequestMapping("list/{page}")
-	public ModelAndView list(@PathVariable("page") int page, String cust_name,
+	public ModelAndView list(@PathVariable("page") int page, String s_cust_name,
 			@ModelAttribute(TOKEN) User user) {
-		//获取Main视图名称
-		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
-		if(null == mainViewName)
-			sendNotFoundError();
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		//获取operation
+		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
-		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE, cust_name);
+		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE, s_cust_name);
 		obtainServices(custList);
-		int rsCnt = customerMapper.getCustCnt(cust_name);
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("custList", custList);
-		resultMap.put("rsCnt", rsCnt);
-		resultMap.put("currentPage", page);
-		resultMap.put("cust_name", cust_name);
-		resultMap.put("filters",
-				(cust_name == null || "".equals(cust_name)) ? "" : "cust_name=" + cust_name);
-		resultMap.put("PAGESIZE", PAGESIZE);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		Pagination pg = new Pagination(page, PAGESIZE,
+				customerMapper.getCustCnt(s_cust_name),
+				(s_cust_name == null || "".equals(s_cust_name)) ? null : "s_cust_name="
+						+ s_cust_name);
+		ModelAndView mv = getListResultByPagination(pg, user.getRole_id(), operation, custList);
+		mv.addObject("s_cust_name", s_cust_name);
+		return mv;
 	}
 	
 

@@ -11,7 +11,7 @@
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
 			#foreach( $menu in $top-nav)
-				#if($menu.menu_id == $page.breadcrumb-nav.second.menu_id)
+				#if($menu.menu_id == $breadcrumb-nav.second.menu_id)
 					<li class="active"><a href="#{getContextPath}webservices/$!menu.menuurl"><span class="$!menu.menuico"></span> $!menu.menu_name</a></li>
 				#else
 					<li><a href="#{getContextPath}webservices/$!menu.menuurl"><span class="$!menu.menuico"></span> $!menu.menu_name</a></li>

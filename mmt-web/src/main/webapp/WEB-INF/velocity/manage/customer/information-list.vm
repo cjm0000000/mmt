@@ -5,7 +5,7 @@
 		### 顶部按钮栏
 		<div class="panel-heading">
 			<form method="post" action="../list/1">
-		    	<input type="text" id="cust_name" name="cust_name" value="$!page.cust_name" style="width:30%"  placeholder="输入查询条件">
+		    	<input type="text" id="s_cust_name" name="s_cust_name" value="$!s_cust_name" style="width:30%"  placeholder="输入查询条件">
 		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
 			<button id="cust-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
@@ -30,7 +30,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			#foreach($cust in $page.custList)
+			#foreach($cust in $list)
 				<tr>
 		    		<td><input type="checkbox" value="$!cust.cust_id" name="cust_id" onclick="btnListener(this.name, $('#cust-update'),$('#cust-delete'),true,this);"/></td>
 		       		<td>$!cust.cust_name</td>
@@ -49,7 +49,7 @@
 			</tbody>
 		</table>
 		### 分页栏
-		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt,$!page.filters)
+		#createPagination($pg.currentPage,$pg.pageSize,$pg.resCount,$!pg.filters)
 	</div>
 </div>
 <div id="cust-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
