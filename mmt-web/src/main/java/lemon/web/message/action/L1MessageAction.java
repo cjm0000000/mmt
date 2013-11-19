@@ -59,7 +59,6 @@ public final class L1MessageAction extends MessageAction {
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@RequestParam String json,
 			@ModelAttribute(TOKEN) User user) {
-		System.out.println(json);
 		if(json == null || "".equals(json))
 			return BS3UI.warning("保存失败： 消息格式不正确。");
 		// 解析JSON,转Java集合
