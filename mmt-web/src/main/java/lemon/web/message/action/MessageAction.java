@@ -17,6 +17,7 @@ import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
+import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.User;
 
 /**
@@ -45,12 +46,6 @@ public abstract class MessageAction extends AdminNavAction {
 	 * @return
 	 */
 	protected abstract byte getPageSize();
-	
-	/**
-	 * 获取主页模板名称
-	 * @return
-	 */
-	protected abstract String getMainViewName();
 	
 	/**
 	 * 获取结果集数量
@@ -89,17 +84,16 @@ public abstract class MessageAction extends AdminNavAction {
 	 * @return
 	 */
 	public final ModelAndView showIndex(User user, int page) {
-		// 获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
 		// 获取Main数据
 		List<LocalMsgBean> msgList = getMsgList(user.getCust_id(), page, getPageSize());
 		obtainResult(msgList);
-		resultMap.put("mainViewName", getMainViewName());
-		resultMap.put("msgList", msgList);
-		resultMap.put("rsCnt", getResultCount(user.getCust_id()));
-		resultMap.put("currentPage", page);
-		resultMap.put("PAGESIZE", getPageSize());
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		if(getLevel() == LEVEL1){
+			return getListResult(user.getRole_id(), getMainViewName(), msgList);
+		}else{
+			Pagination pg = new Pagination(page, getPageSize(), getResultCount(user.getCust_id()));
+			return getListResultByPagination(pg, user.getRole_id(), getMainViewName(), msgList);
+		}
+		
 	}
 	
 	/**
@@ -171,5 +165,13 @@ public abstract class MessageAction extends AdminNavAction {
 				sb.append("通用");
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * 获取主页模板名称
+	 * @return
+	 */
+	private String getMainViewName(){
+		return "list";
 	}
 }

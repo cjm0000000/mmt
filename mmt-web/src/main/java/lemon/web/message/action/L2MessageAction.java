@@ -47,8 +47,9 @@ public final class L2MessageAction extends MessageAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	//FIXME 更新二级消息的时候，没有判断重名的KEY
 	public String save(@Valid LocalMsgBean msg, BindingResult br, HttpSession session) {
 		User user = (User) session.getAttribute(TOKEN);
 		if(msg == null)
@@ -84,11 +85,6 @@ public final class L2MessageAction extends MessageAction {
 	@Override
 	protected byte getPageSize() {
 		return PAGESIZE;
-	}
-
-	@Override
-	protected String getMainViewName() {
-		return getMainViewName("list");
 	}
 
 	@Override

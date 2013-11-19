@@ -40,7 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			#foreach($msg in $page.msgList)
+			#foreach($msg in $list)
 				<tr>
 		    		<td><input type="checkbox" value="$!msg.id" name="id" onclick="btnListener('id',$('#msg-edit'), $('#msg-delete'));"/></td>
 		       		<td>$!msg.key</td>
@@ -52,7 +52,7 @@
 			</tbody>
 		</table>
 		### 分页栏
-		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
+		#createPagination($pg.currentPage,$pg.pageSize,$pg.resCount)
 	</div>
 </div>
 <div id="msg-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>

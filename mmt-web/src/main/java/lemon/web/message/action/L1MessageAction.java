@@ -105,11 +105,6 @@ public final class L1MessageAction extends MessageAction {
 	}
 
 	@Override
-	protected String getMainViewName() {
-		return "message/level1";
-	}
-
-	@Override
 	protected int getResultCount(int cust_id) {
 		return 0;
 	}

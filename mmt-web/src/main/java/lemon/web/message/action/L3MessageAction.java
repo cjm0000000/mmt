@@ -46,8 +46,9 @@ public final class L3MessageAction extends MessageAction {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	//FIXME 更新通用消息的时候，没有判断重名的KEY
 	public String save(@Valid LocalMsgBean msg, BindingResult br, @ModelAttribute(TOKEN) User user) {
 		if(msg == null)
 			return sendJSONError("保存失败： 信息格式不正确。");
@@ -82,11 +83,6 @@ public final class L3MessageAction extends MessageAction {
 	@Override
 	protected byte getPageSize() {
 		return PAGESIZE;
-	}
-
-	@Override
-	protected String getMainViewName() {
-		return getMainViewName("list");
 	}
 
 	@Override
