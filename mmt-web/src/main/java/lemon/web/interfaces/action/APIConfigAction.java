@@ -1,13 +1,12 @@
 package lemon.web.interfaces.action;
 
-import java.util.Map;
-
 import lemon.shared.config.MMTConfig;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -135,7 +134,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 			//判断api_url是否存在
 			String account = getAPIAccount(cfg);
 			String api_url = SecureUtil.sha1(account);
-			if(isConfigExists(api_url))
+			while(isConfigExists(api_url))
 				api_url = SecureUtil.sha1(account + System.currentTimeMillis());
 			cfg.setToken(SecureUtil.md5(account + System.currentTimeMillis()));
 			cfg.setApi_url(api_url);
@@ -168,6 +167,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 	@RequestMapping(value="show")
 	public final ModelAndView showConfig(@ModelAttribute(TOKEN) User user, 
 			@RequestParam(value = "cust_id", required = false, defaultValue = "0") int cust_id) {
+		System.out.println("==============="+user);
 		if(user.getRole_id() != 1)
 			cust_id = user.getCust_id();
 		else
@@ -175,26 +175,25 @@ public abstract class APIConfigAction extends AdminNavAction {
 				cust_id = user.getCust_id();
 		if(cust_id <= 0)
 			sendError("客户信息不存在。");
-		// 获取Main视图名称
-		// 获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		//获取系统域名,确保快速失败
+		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY, DOMAIN_KEY);
+		if(null == syscfg)
+			sendError("请先到“系統管理——系統配置”模块配置域名。");
 		// 获取Main数据
 		Customer cust = customerMapper.getCustomer(cust_id);
 		// 获取MMTConfig
 		MMTConfig mmtcfg = getConfig(cust_id);
-		// 获取服务类型
-		CustomerService service = customerMapper.getService(cust_id, getServiceType());
-		//获取系统域名
-		SystemConfig syscfg = systemConfigMapper.getItem(DOMAIN_KEY, DOMAIN_KEY);
-		if(null == syscfg)
-			sendError("请先到“系統管理——系統配置”模块配置域名。");
 		if(mmtcfg != null)
 			mmtcfg.setApi_url(syscfg.getValue().trim() + MMT.getContextRoot() + getFilterURL() + mmtcfg.getApi_url());
-		resultMap.put("cfg", mmtcfg);
-		resultMap.put("cust", cust);
-		resultMap.put("service", service);
-		resultMap.put("mainViewName", getMainViewName());
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		// 获取服务类型
+		CustomerService service = customerMapper.getService(cust_id, getServiceType());
+		// 生成结果
+		ModelAndView mv = getListResult(user.getRole_id(), "config", null);
+		mv.addObject("cfg", mmtcfg);
+		mv.addObject("cust", cust);
+		mv.addObject("service", service);
+		mv.addObject("mainViewName", getMainViewName());
+		return mv;
 	}
 
 	/**
@@ -209,6 +208,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 		service.setExpire_time(expireTime);
 		service.setService_type(getServiceType());
 		service.setStatus(Status.AVAILABLE);
+		service.setId(IdWorkerManager.getIdWorker(CustomerService.class).getId());
 		return customerMapper.addService(service);
 	}
 

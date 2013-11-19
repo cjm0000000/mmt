@@ -7,10 +7,6 @@
 				<span class="glyphicon glyphicon-floppy-save"></span> 保存配置
 			</button>
 		</div>
-		### 获取数据
-		#set($service = $page.service)
-		#set($cfg = $page.cfg)
-		#set($cust = $page.cust)
 			
 		### 数据表单
 		<div class="panel-body">
@@ -25,7 +21,7 @@
 			</div>
 			<div id="form-main" #if($service.service_type != 'YIXIN') style="display:none;" #end >
 				#if($cfg)
-					<input type="hidden" id="cust_id" value="$!cfg.cust_id" />
+					<input type="hidden" id="cust_id" value="$!cust.cust_id" />
 				#else
 					<input type="hidden" id="cust_id" value="0" />
 				#end

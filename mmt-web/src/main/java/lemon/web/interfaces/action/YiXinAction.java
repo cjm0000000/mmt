@@ -35,6 +35,7 @@ public final class YiXinAction extends APIConfigAction {
 	 * @param apiStatus
 	 * @return
 	 */
+	//FIXME User和YiXinConfig的cust_id 冲突
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@ModelAttribute(TOKEN) User user, YiXinConfig cfg, boolean apiStatus){

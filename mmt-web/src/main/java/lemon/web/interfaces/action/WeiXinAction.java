@@ -35,9 +35,10 @@ public final class WeiXinAction extends APIConfigAction {
 	 * @param apiStatus
 	 * @return
 	 */
+	//FIXME User和WeiXinConfig的cust_id 冲突
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String save(@ModelAttribute(TOKEN) User user, WeiXinConfig cfg, boolean apiStatus){
+	public String save(WeiXinConfig cfg, boolean apiStatus, @ModelAttribute(TOKEN) User user){
 		return processSave(user, cfg, apiStatus);
 	}
 
