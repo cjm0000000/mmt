@@ -49,7 +49,7 @@
 			</tbody>
 		</table>
 		### 分页栏
-		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt)
+		#createPagination($page.currentPage,$page.PAGESIZE,$page.rsCnt,$!page.filters)
 	</div>
 </div>
 <div id="cust-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>

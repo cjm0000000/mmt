@@ -11,7 +11,8 @@ $root##
 ### $currentPage 当前页码
 ### $pageSize 每页记录数
 ### $totalCount 总记录数 
-#macro(createPagination $currentPage $pageSize $totalCount)
+### $filters	查询条件
+#macro(createPagination $currentPage $pageSize $totalCount $filters)
 	### 计算总页数
 	#set($pages = $totalCount/$pageSize)
 	#if($totalCount%$pageSize != 0)
@@ -31,11 +32,15 @@ $root##
 	#if($end > $pages)
 		#set($end = $pages)
 	#end
+	### 判断是否需要加过滤条件
+	#if($filters)
+		#set($filters = "?" + $filters)
+	#end
 	### 输出模板
 	<ul class="pagination" style="float:right;">
 	#if($start > 1)
 		#set($preNo = $start - 1)
-		<li><a href="$preNo">&laquo;</a></li>
+		<li><a href="$preNo$!filters">&laquo;</a></li>
 	#else
 		<li class="disabled"><a href="#">&laquo;</a></li>
 	#end
@@ -43,7 +48,7 @@ $root##
 		#if($currentPage == $pageNo)
 			<li class="active"><a href="#">$pageNo <span class="sr-only">(current)</span></a></li>
 		#else
-			<li><a href="$pageNo">$pageNo</a></li>
+			<li><a href="$pageNo$!filters">$pageNo</a></li>
 		#end
 	#end
 	#if($end < $pages)
@@ -51,7 +56,7 @@ $root##
 		#if($afterNo > $pages)
 			#set($afterNo = $pages)
 		#end
-		<li><a href="$afterNo">&raquo;</a></li>
+		<li><a href="$afterNo$!filters">&raquo;</a></li>
 	#else
 		<li class="disabled"><a href="#">&raquo;</a></li>
 	#end

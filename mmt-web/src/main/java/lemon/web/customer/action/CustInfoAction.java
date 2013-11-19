@@ -53,7 +53,6 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param user
 	 * @return
 	 */
-	//FIXME 翻页的时候，查询条件会丢失
 	@RequestMapping("list/{page}")
 	public ModelAndView list(@PathVariable("page") int page, String cust_name,
 			@ModelAttribute(TOKEN) User user) {
@@ -72,6 +71,8 @@ public final class CustInfoAction extends AdminNavAction {
 		resultMap.put("rsCnt", rsCnt);
 		resultMap.put("currentPage", page);
 		resultMap.put("cust_name", cust_name);
+		resultMap.put("filters",
+				(cust_name == null || "".equals(cust_name)) ? "" : "cust_name=" + cust_name);
 		resultMap.put("PAGESIZE", PAGESIZE);
 		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
 	}
