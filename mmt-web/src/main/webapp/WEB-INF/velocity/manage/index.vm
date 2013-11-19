@@ -35,7 +35,7 @@
       <script src="#{getContextPath}bootstrap/assets/js/jquery-1.10.2.min.js"></script>
       <script src="#{getContextPath}bootstrap/js/bootstrap.min.js"></script>
 	  ### Main模板
-	  #parse("manage/${page.mainViewName}.vm")
+	  #parse("manage/${mainViewName}.vm")
     </div> <!-- /container -->
     
 	### 底部模板

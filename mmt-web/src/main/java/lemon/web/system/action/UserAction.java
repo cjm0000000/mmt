@@ -12,6 +12,7 @@ import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
+import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.bean.UserConfig;
@@ -70,24 +71,13 @@ public final class UserAction extends AdminNavAction {
 	@RequestMapping("list/{page}")
 	public ModelAndView list(@PathVariable("page") int page, String user_name,
 			@ModelAttribute(TOKEN) User user) {
-		//获取Main视图名称
-		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
-		if(null == mainViewName)
-			sendNotFoundError();
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		//获取操作名称
+		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
-		List<User> userList = userMapper.getUserList((page - 1) * PAGESIZE,
-				PAGESIZE, user_name);
+		List<User> userList = userMapper.getUserList((page - 1) * PAGESIZE, PAGESIZE, user_name);
 		int userCnt = userMapper.getUserCnt(user_name);
-		if (userList.size() == 0 && page > 1)
-			return new ModelAndView("redirect:" + lastPage(page, userCnt));
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("userList", userList);
-		resultMap.put("userCnt", userCnt);
-		resultMap.put("currentPage", page);
-		resultMap.put("PAGESIZE", PAGESIZE);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		Pagination pg = new Pagination(page, PAGESIZE, userCnt);
+		return getListResultByPagination(pg, user.getRole_id(), operation, userList);
 	}
 	
 	/**

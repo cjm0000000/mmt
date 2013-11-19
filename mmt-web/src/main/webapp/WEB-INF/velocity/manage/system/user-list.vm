@@ -29,7 +29,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			#foreach($user in $page.userList)
+			#foreach($user in $list)
 				<tr>
 		    		<td><input type="checkbox" value="$!user.user_id" name="user_id" onclick="btnListener('user_id',$('#user-update'),$('#user-delete'));"/></td>
 		       		<td>$!user.username</td>
@@ -50,7 +50,7 @@
 			</tbody>
 		</table>
 		### 分页栏
-		#createPagination($page.currentPage,$page.PAGESIZE,$page.userCnt)
+		#createPagination($pg.currentPage,$pg.pageSize,$pg.resCount)
 	</div>
 </div>
 <div id="user-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>

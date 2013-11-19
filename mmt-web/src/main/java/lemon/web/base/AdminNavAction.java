@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 
+import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMenuMapper;
@@ -33,12 +35,48 @@ public abstract class AdminNavAction extends MMTAction {
 	protected abstract String getMenuURL();
 	
 	/**
-	 * 获取最后一页
+	 * 获取List页面数据
+	 * @param role_id
+	 * @param operation
+	 * @param list
 	 * @return
 	 */
-	protected int lastPage(int currentPage, int rsCnt) {
-		int page = rsCnt/PAGESIZE;
-		if(rsCnt % PAGESIZE != 0)
+	protected ModelAndView getListResult(int role_id,
+			String operation, List<?> list) {
+		//获取导航条数据
+		Map<String, Object> resultMap = buildNav(role_id);
+		resultMap.put("mainViewName", getMainViewName(operation));
+		resultMap.put("list", list);
+		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, resultMap);
+	}
+	
+	/**
+	 * 分页获取List页面数据
+	 * @param pg
+	 * @param role_id
+	 * @param operation
+	 * @param list
+	 * @return
+	 */
+	protected ModelAndView getListResultByPagination(Pagination pg,
+			int role_id, String operation, List<?> list) {
+		if (list.size() == 0 && pg.getCurrentPage() > 1)
+			return new ModelAndView("redirect:" + pg.getLastPage());
+		ModelAndView mv = getListResult(role_id, operation, list);
+		mv.addObject("pg", pg);
+		return mv;
+	}
+	
+	/**
+	 * 获取最后一页
+	 * @param pagesize
+	 * @param rsCnt
+	 * @return
+	 */
+	@Deprecated
+	protected int lastPage(int pagesize, int rsCnt) {
+		int page = rsCnt/pagesize;
+		if(rsCnt % pagesize != 0)
 			page ++;
 		if(page <= 0)
 			page = 1;
@@ -117,6 +155,10 @@ public abstract class AdminNavAction extends MMTAction {
 	 * @return
 	 */
 	private Map<String, Menu> getBreadCrumbNavBar(int role_id, Menu thirdMenu){
+		if(role_id <=0)
+			sendNotFoundError();
+		if(thirdMenu == null || thirdMenu.getSupmenucode() <= 0)
+			sendNotFoundError();
 		Menu secondMenu = roleMenuMapper.getMenuByRoleAndId(role_id, thirdMenu.getSupmenucode());
 		Map<String, Menu> breadNavMap = new HashMap<>(4);
 		breadNavMap.put("second", secondMenu);
