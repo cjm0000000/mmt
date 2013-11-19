@@ -73,4 +73,5 @@
 var url_showPage 	= "#{getContextPath}webservices/system/user/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/system/user/save";
 var url_delete 		= "#{getContextPath}webservices/system/user/delete";
+var url_change_lock	= "#{getContextPath}webservices/system/user/update-lock";
 </script>

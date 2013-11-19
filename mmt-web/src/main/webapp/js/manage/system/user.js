@@ -50,8 +50,14 @@ $(function() {
 	
 	//监听Switch按钮
 	$('.label-toggle-switch').on('switch-change', function (e, data) {
-	    $.post(url_save, {user_id : data.el.val(), islock : data.value ? "UNAVAILABLE" : "AVAILABLE"},function(data){
-	 		
+	    $.post(url_change_lock, {user_id : data.el.val(), islock : data.value ? "UNAVAILABLE" : "AVAILABLE"},function(data){
+	    	var result = eval("("+data+")");
+	    	if(!result.success){
+	    		$(".panel-heading").prepend(result.msg);
+	    		setTimeout(function(){
+	    			$(".json-result").remove();
+	    		},500);
+	    	}
 	    });
 	});
 });

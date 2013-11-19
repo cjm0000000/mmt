@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -98,7 +99,6 @@ public final class UserAction extends AdminNavAction {
 	@ResponseBody
 	@RequestMapping(value="save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid User user, BindingResult result) {
-		//FIXME 更改用户状态失败，需要排查User以及SS 过滤器
 		if(user == null)
 			return sendJSONError("参数不能为空。");
 		if(result.hasErrors())
@@ -134,6 +134,28 @@ public final class UserAction extends AdminNavAction {
 			userMapper.updateUser(user);
 		}
 		return sendJSONMsg("用户信息保存成功。");
+	}
+	
+	/**
+	 * 更改用户锁定状态
+	 * @param user_id
+	 * @param isLock
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="update-lock", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String updateLockStatus(@RequestParam int user_id,
+			@RequestParam(required = false) Status islock) {
+		if(user_id <= 0)
+			return sendJSONError("用户不存在。");
+		if(islock == null)
+			return sendJSONError("参数错误。");
+		User u = userMapper.getUserById(user_id);
+		u.setIslock(islock);
+		int result = userMapper.updateUser(u);
+		if(result != 0)
+			return sendJSONMsg("更新成功。");
+		return sendJSONError("更新失败。");
 	}
 	
 	/**
