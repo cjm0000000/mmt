@@ -130,7 +130,7 @@ public abstract class MessageAction extends AdminNavAction {
 	 */
 	@RequestMapping("list")
 	public String index() {
-		return "redirect:list/1";
+		return "redirect:/webservices/message/level"+getLevel()+"/list/1";
 	}
 	
 	/**

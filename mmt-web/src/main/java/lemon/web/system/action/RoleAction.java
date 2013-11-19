@@ -49,7 +49,7 @@ public final class RoleAction extends AdminNavAction {
 	 */
 	@RequestMapping("list")
 	public String list() {
-		return "redirect:list/1";
+		return "redirect:/webservices/system/role/list/1";
 	}
 	
 	/**

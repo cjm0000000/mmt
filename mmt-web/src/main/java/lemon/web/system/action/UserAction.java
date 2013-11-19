@@ -57,7 +57,7 @@ public final class UserAction extends AdminNavAction {
 	 */
 	@RequestMapping("list")
 	public String list() {
-		return "redirect:list/1";
+		return "redirect:/webservices/system/user/list/1";
 	}
 	
 	/**
