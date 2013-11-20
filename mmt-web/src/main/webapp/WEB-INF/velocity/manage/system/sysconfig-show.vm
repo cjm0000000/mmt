@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
 <div class="col-md-9" role="main">
-	<div class="panel panel-default">
+	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
 			<button id="sysconfig-add" type="button" class="btn btn-success btn-md" >
@@ -11,7 +11,7 @@
 		<div class="panel-body">
 			<div class="input-group col-lg-12" style="padding:5px;">
 				<span class="input-group-addon"><span class="label label-primary">域 名</span></span>
-				<input type="text" id="domain" name="domain" value="$!page.domain.value" class="form-control" placeholder="例如：http://www.baidu.com">
+				<input type="text" id="domain" name="domain" value="$!domain.value" class="form-control" placeholder="例如：http://www.baidu.com">
 			</div>
 		</div>	
 	</div>

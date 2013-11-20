@@ -30,7 +30,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				#foreach($menu in $page.menuList)
+				#foreach($menu in $list)
 				#if($menu.menulevcod == '2')
 					<tr class="success">
 				#else

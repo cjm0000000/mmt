@@ -68,22 +68,6 @@ public abstract class AdminNavAction extends MMTAction {
 	}
 	
 	/**
-	 * 获取最后一页
-	 * @param pagesize
-	 * @param rsCnt
-	 * @return
-	 */
-	@Deprecated
-	protected int lastPage(int pagesize, int rsCnt) {
-		int page = rsCnt/pagesize;
-		if(rsCnt % pagesize != 0)
-			page ++;
-		if(page <= 0)
-			page = 1;
-		return page;
-	}
-	
-	/**
 	 * 获取带导航数据的视图
 	 * @param role_id
 	 * @param menuurl
@@ -100,15 +84,6 @@ public abstract class AdminNavAction extends MMTAction {
 		page.put("active-nav", thirdMenu);
 		page.put("breadcrumb-nav", getBreadCrumbNavBar(role_id, thirdMenu));
 		return page;
-	}
-	
-	/**
-	 * 获取Main视图名称
-	 * @param operation 当前操作名称
-	 * @return
-	 */
-	protected String getMainViewName(String operation) {
-		return obtainView() + "-" + operation;
 	}
 	
 	/**
@@ -185,6 +160,15 @@ public abstract class AdminNavAction extends MMTAction {
 	 */
 	private Menu getActiveMenu(int role_id, String url){
 		return roleMenuMapper.getMenuByRoleAndUrl(role_id, url);
+	}
+	
+	/**
+	 * 获取Main视图名称
+	 * @param operation 当前操作名称
+	 * @return
+	 */
+	private String getMainViewName(String operation) {
+		return obtainView() + "-" + operation;
 	}
 	
 }

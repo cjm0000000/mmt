@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
+import lemon.web.base.paging.Pagination;
 import lemon.web.global.MMTException;
 import lemon.web.security.MMTSecurityMetadataSource;
 import lemon.web.system.bean.Menu;
@@ -58,25 +59,14 @@ public final class RoleAction extends AdminNavAction {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("list/{page}")
+	@RequestMapping(value="list/{page}",method=RequestMethod.GET)
 	public ModelAndView list(@PathVariable("page") int page, @ModelAttribute(TOKEN) User user) {
 		//获取Main视图名称
-		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
-		if(null == mainViewName)
-			sendNotFoundError();
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
 		List<Role> roleList = roleMapper.getRoleList((page - 1) * PAGESIZE, PAGESIZE);
-		int rsCnt = roleMapper.getRsCnt();
-		if (roleList.size() == 0 && page > 1)
-			return new ModelAndView("redirect:" + lastPage(page, rsCnt));
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("roleList", roleList);
-		resultMap.put("rsCnt", rsCnt);
-		resultMap.put("currentPage", page);
-		resultMap.put("PAGESIZE", PAGESIZE);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		Pagination pg = new Pagination(page, PAGESIZE, roleMapper.getRsCnt());
+		return getListResultByPagination(pg, user.getRole_id(), operation, roleList);
 	}
 	
 	/**

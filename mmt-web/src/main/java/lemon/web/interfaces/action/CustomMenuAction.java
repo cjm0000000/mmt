@@ -236,11 +236,6 @@ public final class CustomMenuAction extends AdminNavAction {
 		return "interface/menu";
 	}
 	
-	@Override
-	protected int lastPage(int currentPage, int rsCnt) {
-		return 1;
-	}
-	
 	/**
 	 * 生成菜单树
 	 * @param cust_id

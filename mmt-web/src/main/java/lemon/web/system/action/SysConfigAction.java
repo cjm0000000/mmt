@@ -1,7 +1,5 @@
 package lemon.web.system.action;
 
-import java.util.Map;
-
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.SystemConfig;
@@ -46,19 +44,15 @@ public final class SysConfigAction extends AdminNavAction {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("show")
+	@RequestMapping(value = "show", method = RequestMethod.GET)
 	public ModelAndView show(@ModelAttribute(TOKEN) User user) {
-		//获取Main视图名称
-		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
-		if(null == mainViewName)
-			sendNotFoundError();
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		//获取operation
+		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
 		SystemConfig domainCfg = systemConfigMapper.getItem(DOMAIN_KEY, DOMAIN_KEY);
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("domain", domainCfg);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		ModelAndView mv = getListResult(user.getRole_id(), operation, null);
+		mv.addObject("domain", domainCfg);
+		return mv;
 	}
 	
 	/**
