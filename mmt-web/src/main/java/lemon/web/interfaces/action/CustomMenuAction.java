@@ -83,19 +83,12 @@ public final class CustomMenuAction extends AdminNavAction {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public ModelAndView list(@ModelAttribute(TOKEN) User user) {
-		//获取Main视图名称
-		String mainViewName = getMainViewName(Thread.currentThread().getStackTrace()[1].getMethodName());
-		if(null == mainViewName)
-			sendNotFoundError();
-		//获取导航条数据
-		Map<String, Object> resultMap = buildNav(user.getRole_id());
+		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
 		List<CustomMenu> menuList = obtainMenuTree(user.getCust_id());
-		resultMap.put("mainViewName", mainViewName);
-		resultMap.put("menuList", menuList);
-		return new ModelAndView(VIEW_MANAGE_HOME_PAGE, "page", resultMap);
+		return getListResult(user.getRole_id(), operation, menuList);
 	}
 	
 	/**
