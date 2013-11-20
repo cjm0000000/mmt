@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,27 +44,30 @@ public final class L3MessageAction extends MessageAction {
 	 * 保存三级信息
 	 * @param msg
 	 * @param br
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	//FIXME 更新通用消息的时候，没有判断重名的KEY
-	public String save(@Valid LocalMsgBean msg, BindingResult br, @ModelAttribute(TOKEN) User user) {
+	public String save(@Valid LocalMsgBean msg, BindingResult br, ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		if(msg == null)
 			return sendJSONError("保存失败： 信息格式不正确。");
 		if(br.hasErrors())
 			return sendJSONError(br.getFieldError().getDefaultMessage());
-		if(msgBeanMapper.getL3MsgStrictly(msg.getKey()) != null && msg.getId() <= 0)
-			return sendJSONError("保存失败: 关键字" + msg.getKey() + "已经存在。");
 		msg.setCust_id(user.getCust_id());
 		int result = 0;
 		if(msg.getId() <= 0){
+			if(msgBeanMapper.getL3MsgStrictly(msg.getKey()) != null && msg.getId() <= 0)
+				return sendJSONError("保存失败: 关键字" + msg.getKey() + "已经存在。");
 			msg.setId(IdWorkerManager.getIdWorker(LocalMsgBean.class).getId());
 			result = msgBeanMapper.addMsg(msg, getLevel());
-		}else
+		}else{
+			LocalMsgBean existMsg;
+			if((existMsg = msgBeanMapper.getL3MsgStrictly(msg.getKey())) != null && existMsg.getId() != msg.getId())
+				return sendJSONError("保存失败: 关键字" + msg.getKey() + "已经存在。");
 			result = msgBeanMapper.updateMsg(msg, getLevel());
-		
+		}
 		if(result != 0)
 			return sendJSONMsg("保存成功。");
 		else
