@@ -167,7 +167,6 @@ public abstract class APIConfigAction extends AdminNavAction {
 	@RequestMapping(value="show")
 	public final ModelAndView showConfig(@ModelAttribute(TOKEN) User user, 
 			@RequestParam(value = "cust_id", required = false, defaultValue = "0") int cust_id) {
-		System.out.println("==============="+user);
 		if(user.getRole_id() != 1)
 			cust_id = user.getCust_id();
 		else

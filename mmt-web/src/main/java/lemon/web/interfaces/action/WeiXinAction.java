@@ -10,7 +10,7 @@ import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,15 +30,15 @@ public final class WeiXinAction extends APIConfigAction {
 	
 	/**
 	 * 保存微信配置信息
-	 * @param user
 	 * @param cfg
 	 * @param apiStatus
+	 * @param model
 	 * @return
 	 */
-	//FIXME User和WeiXinConfig的cust_id 冲突
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String save(WeiXinConfig cfg, boolean apiStatus, @ModelAttribute(TOKEN) User user){
+	public String save(WeiXinConfig cfg, boolean apiStatus, ModelMap model){
+		User user = (User) model.get(TOKEN);
 		return processSave(user, cfg, apiStatus);
 	}
 
