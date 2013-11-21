@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="cn">
   <head>
@@ -6,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="MMT Smart Robot">
     <meta name="author" content="green120@126.com">
+    #if($user_token)
+    	<meta http-equiv="refresh" content="0; url=#{getContextPath}index">
+    #end
     <link rel="shortcut icon" href="#{getContextPath}images/favicon.png">
     <title>登 录</title>
 
