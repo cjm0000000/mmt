@@ -22,8 +22,8 @@ import lemon.web.system.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,7 +56,7 @@ public final class UserAction extends AdminNavAction {
 	 * 显示用户列表首页
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list() {
 		return "redirect:/webservices/system/user/list/1";
 	}
@@ -65,12 +65,13 @@ public final class UserAction extends AdminNavAction {
 	 * 分页显示用户列表
 	 * @param page
 	 * @param user_name
-	 * @param session
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("list/{page}")
 	public ModelAndView list(@PathVariable("page") int page, String user_name,
-			@ModelAttribute(TOKEN) User user) {
+			ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取操作名称
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
@@ -168,7 +169,7 @@ public final class UserAction extends AdminNavAction {
 	 * @param user_id
 	 * @return
 	 */
-	@RequestMapping(value="add-edit-page")
+	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(int user_id) {
 		User user = null;
 		if (user_id != 0)

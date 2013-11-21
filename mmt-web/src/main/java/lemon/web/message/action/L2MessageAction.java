@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,13 +30,13 @@ public final class L2MessageAction extends MessageAction {
 
 	/**
 	 * 显示L2消息列表
-	 * @param user
 	 * @param page
+	 * @param model
 	 * @return
 	 */
-	@RequestMapping("list/{page}")
-	public ModelAndView list(@ModelAttribute(TOKEN) User user, @PathVariable("page") int page) {
-		return showIndex(user, page);
+	@RequestMapping(value = "list/{page}", method = RequestMethod.GET)
+	public ModelAndView list(@PathVariable("page") int page, ModelMap model) {
+		return showIndex((User) model.get(TOKEN), page);
 	}
 
 	/**

@@ -15,8 +15,8 @@ import lemon.web.system.mapper.MenuMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,11 +39,12 @@ public final class MenuAction extends AdminNavAction {
 
 	/**
 	 * 显示菜单列表[无需分页]
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView list(@ModelAttribute(TOKEN) User user) {
+	public ModelAndView list(ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取operation
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
@@ -98,7 +99,7 @@ public final class MenuAction extends AdminNavAction {
 	 * @param menu_id
 	 * @return
 	 */
-	@RequestMapping(value="add-edit-page")
+	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(int menu_id) {
 		// 查询上级菜单
 		List<Menu> pmList = menuMapper.getParentMenuList();

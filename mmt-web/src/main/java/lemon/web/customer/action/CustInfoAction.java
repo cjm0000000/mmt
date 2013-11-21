@@ -120,8 +120,7 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param cust_id
 	 * @return
 	 */
-	//FIXME 这个方法应该采用GET，但是Jquery的load函数使用的是POST，需要调整
-	@RequestMapping(value = "add-edit-page"/*, method = RequestMethod.GET */)
+	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(int cust_id) {
 		Customer cust = null;
 		if(cust_id > 0)

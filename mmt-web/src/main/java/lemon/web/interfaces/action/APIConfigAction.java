@@ -17,8 +17,9 @@ import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -160,13 +161,15 @@ public abstract class APIConfigAction extends AdminNavAction {
 	
 	/**
 	 * 显示接口配置信息
-	 * @param user
 	 * @param cust_id
+	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="show")
-	public final ModelAndView showConfig(@ModelAttribute(TOKEN) User user, 
-			@RequestParam(value = "cust_id", required = false, defaultValue = "0") int cust_id) {
+	@RequestMapping(value = "show", method = RequestMethod.GET)
+	public final ModelAndView showConfig(
+			@RequestParam(value = "cust_id", required = false, defaultValue = "0") int cust_id,
+			ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		if(user.getRole_id() != 1)
 			cust_id = user.getCust_id();
 		else

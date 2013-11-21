@@ -77,7 +77,7 @@ function loadPage(url, params, target){
 		_modal = $('body');
 	$('body').modalmanager('loading');
 	setTimeout(function(){
-		_modal.load(url, params, function(){
+		_modal.load(url + "?" + $.param(params), function(){
 			if(target)
 				_modal.modal();
 		});

@@ -34,6 +34,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,11 +81,12 @@ public final class CustomMenuAction extends AdminNavAction {
 
 	/**
 	 * 显示菜单列表[无需分页]
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView list(@ModelAttribute(TOKEN) User user) {
+	public ModelAndView list(ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
 		List<CustomMenu> menuList = obtainMenuTree(user.getCust_id());

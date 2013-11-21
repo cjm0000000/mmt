@@ -8,9 +8,10 @@ import lemon.web.system.mapper.RoleMenuMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 /**
  * Manage index page, for redirect
@@ -32,29 +33,29 @@ public class ManageIndexAction extends MMTAction {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("{first}/{second}")
+	@RequestMapping(value = "{first}/{second}", method = RequestMethod.GET)
 	public String index(@PathVariable String first,
-			@PathVariable String second, @ModelAttribute(TOKEN) User user) {
+			@PathVariable String second, ModelMap model) {
 		if(null == second || "".equals(second))
 			sendNotFoundError();
-		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(),
-				first + "/" + second);
+		User user = (User) model.get(TOKEN);
+		Menu activeMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), first + "/" + second);
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
-		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl()
-				+ "/" + DEFAULT_VIEW;
+		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl() + "/" + DEFAULT_VIEW;
 		return view;
 	}
 	
 	/**
 	 * show manage home page
 	 * @param menu_L2 二级菜单
-	 * @param user
+	 * @param model
 	 * @return
 	 */
-	@RequestMapping("{menu_L2}")
-	public String index(@PathVariable String menu_L2, @ModelAttribute(TOKEN) User user) {
+	@RequestMapping(value = "{menu_L2}", method = RequestMethod.GET)
+	public String index(@PathVariable String menu_L2, ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取二级目录
 		Menu secondMenu = roleMenuMapper.getMenuByRoleAndUrl(user.getRole_id(), menu_L2);
 		if(null == secondMenu)
@@ -64,8 +65,7 @@ public class ManageIndexAction extends MMTAction {
 		if(null == activeMenu)
 			sendNotFoundError();
 		//跳转到视图
-		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl()
-				+ "/" + DEFAULT_VIEW;
+		String view = "redirect:" + getManageRoot() + activeMenu.getMenuurl() + "/" + DEFAULT_VIEW;
 		return view;
 	}
 	

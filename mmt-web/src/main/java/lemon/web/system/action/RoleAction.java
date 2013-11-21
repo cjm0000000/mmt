@@ -20,8 +20,8 @@ import lemon.web.system.mapper.RoleMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +48,7 @@ public final class RoleAction extends AdminNavAction {
 	 * 显示角色列表首页
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list() {
 		return "redirect:/webservices/system/role/list/1";
 	}
@@ -56,11 +56,12 @@ public final class RoleAction extends AdminNavAction {
 	/**
 	 * 分页显示角色列表
 	 * @param page
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="list/{page}",method=RequestMethod.GET)
-	public ModelAndView list(@PathVariable("page") int page, @ModelAttribute(TOKEN) User user) {
+	public ModelAndView list(@PathVariable("page") int page, ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取Main视图名称
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
@@ -126,6 +127,12 @@ public final class RoleAction extends AdminNavAction {
 	public String delete(String role_id) {
 		String[] ids = role_id.split(",");
 		int result = roleMapper.batchDelete(ids);
+		try {
+			for (String role : ids)
+				roleMapper.deleteRoleAuthority(Integer.parseInt(role));
+		} catch (NumberFormatException e) {
+			return sendJSONError("角色信息删除失败。");
+		}
 		if(result == 0)
 			return sendJSONError("角色信息删除失败。");
 		return sendJSONMsg("角色信息删除成功。");
@@ -136,7 +143,7 @@ public final class RoleAction extends AdminNavAction {
 	 * @param role_id
 	 * @return
 	 */
-	@RequestMapping(value="add-edit-page")
+	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(int role_id) {
 		Role role = null;
 		if (role_id != 0)
@@ -151,7 +158,7 @@ public final class RoleAction extends AdminNavAction {
 	 * @param role_id
 	 * @return
 	 */
-	@RequestMapping(value="authority-list-page")
+	@RequestMapping(value = "authority-list-page", method = RequestMethod.GET)
 	public ModelAndView authorityListPage(int role_id) {
 		if(role_id == 0)
 			throw new MMTException("角色不存在。");

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -93,18 +92,15 @@ public abstract class MessageAction extends AdminNavAction {
 			Pagination pg = new Pagination(page, getPageSize(), getResultCount(user.getCust_id()));
 			return getListResultByPagination(pg, user.getRole_id(), getMainViewName(), msgList);
 		}
-		
 	}
 	
 	/**
 	 * 显示添加或者编辑客户信息的页面
-	 * @param user
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="add-edit-page")
+	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(
-			@ModelAttribute(TOKEN) User user,
 			@RequestParam(value = "id", required = false, defaultValue = "0") long id) {
 		LocalMsgBean mb = null;
 		if(id > 0)
@@ -132,8 +128,8 @@ public abstract class MessageAction extends AdminNavAction {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String id) {
 		if (id == null || "".equals(id))
 			return sendJSONError("删除失败： 信息不存在。");
@@ -153,16 +149,12 @@ public abstract class MessageAction extends AdminNavAction {
 		StringBuilder sb = new StringBuilder();
 		if(id > 0){
 			sb.append("编辑");
-			if(getLevel() == 2)
-				sb.append("二级");
-			else
-				sb.append("通用");
+			if(getLevel() == 2) sb.append("二级");
+			else sb.append("通用");
 		}else{
 			sb.append("添加");
-			if(getLevel() == 2)
-				sb.append("二级");
-			else
-				sb.append("通用");
+			if(getLevel() == 2) sb.append("二级");
+			else sb.append("通用");
 		}
 		return sb.toString();
 	}

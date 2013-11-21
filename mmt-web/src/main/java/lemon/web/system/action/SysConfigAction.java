@@ -9,7 +9,7 @@ import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +34,7 @@ public final class SysConfigAction extends AdminNavAction {
 	 * 首页
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list() {
 		return "redirect:show";
 	}
@@ -45,7 +45,8 @@ public final class SysConfigAction extends AdminNavAction {
 	 * @return
 	 */
 	@RequestMapping(value = "show", method = RequestMethod.GET)
-	public ModelAndView show(@ModelAttribute(TOKEN) User user) {
+	public ModelAndView show(ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取operation
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据

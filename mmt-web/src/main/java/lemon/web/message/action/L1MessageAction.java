@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,26 +41,32 @@ public final class L1MessageAction extends MessageAction {
 		return "redirect:show";
 	}
 	
-	@Override
-	@RequestMapping(value="show")
+	/**
+	 * 显示首页
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "show", method = RequestMethod.GET)
 	public ModelAndView addOrEditPage(
-			@ModelAttribute(TOKEN) User user,
-			@RequestParam(value = "id", required = false, defaultValue = "0") long id) {
+			@RequestParam(value = "id", required = false, defaultValue = "0") long id,
+			ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		return showIndex(user, 1);
 	}
 
 	/**
 	 * 保存一级信息
 	 * @param json
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String save(@RequestParam String json,
-			@ModelAttribute(TOKEN) User user) {
+	public String save(@RequestParam String json, ModelMap model) {
 		if(json == null || "".equals(json))
 			return BS3UI.warning("保存失败： 消息格式不正确。");
+		User user = (User) model.get(TOKEN);
 		// 解析JSON,转Java集合
 		Collection<LocalMsgBean> msgList = json2collection(json);
 		//去空去重复
@@ -154,12 +160,9 @@ public final class L1MessageAction extends MessageAction {
 		Set<LocalMsgBean> set 	= new HashSet<LocalMsgBean>(msgList.size());
 		Set<LocalMsgBean> temp 	= new HashSet<LocalMsgBean>(msgList.size());
 		for (LocalMsgBean msgBean : msgList) {
-			if (isBlank(msgBean))
-				continue;
-			if(msgBean.getId() > 0)
-				set.add(msgBean);
-			else
-				temp.add(msgBean);
+			if (isBlank(msgBean)) continue;
+			if(msgBean.getId() > 0) set.add(msgBean);
+			else temp.add(msgBean);
 		}
 		for (LocalMsgBean mb : temp)
 			set.add(mb);
