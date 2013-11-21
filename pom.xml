@@ -17,7 +17,7 @@
 	<properties>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework-version>3.2.4.RELEASE</org.springframework-version>
+		<org.springframework-version>3.2.5.RELEASE</org.springframework-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.26</version>
+			<version>5.1.27</version>
 		</dependency>
 		<!-- ========== MYSQL驱动配置结束 ========== -->
 	</dependencies>
