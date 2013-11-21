@@ -4,7 +4,7 @@
 	<div class="panel panel-info">
 		### 顶部按钮栏
 		<div class="panel-heading">
-			<form method="post" action="../list/1">
+			<form method="get" action="../list/1">
 		    	<input type="text" name="k" value="$!k" style="width:30%" placeholder="输入查询条件">
 		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
 			<button id="cust-add" type="button" class="btn btn-success btn-md" >

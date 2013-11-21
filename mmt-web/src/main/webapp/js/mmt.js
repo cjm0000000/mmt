@@ -66,7 +66,7 @@ function getSelectedValues(fieldName){
 }
 
 /**
- * 根据名称获取选中的值
+ * 加载页面
  * @param url	需要载入的URL
  * @param params	参数
  * @param target	宿主元素
@@ -85,7 +85,7 @@ function loadPage(url, params, target){
 }
 
 /**
- * 根据名称获取选中的值
+ * POST数据到后台
  * @param url	需要载入的URL
  * @param params	参数
  * @param target	宿主元素

@@ -42,7 +42,7 @@ public final class CustInfoAction extends AdminNavAction {
 	 * 显示客户信息列表首页
 	 * @return
 	 */
-	@RequestMapping("list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list() {
 		return "redirect:/webservices/customer/information/list/1";
 	}
@@ -54,7 +54,7 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("list/{page}")
+	@RequestMapping(value = "list/{page}", method = RequestMethod.GET)
 	public ModelAndView list(@PathVariable("page") int page,
 			@RequestParam(value = "k", required = false) String key,
 			ModelMap model) {
@@ -120,7 +120,8 @@ public final class CustInfoAction extends AdminNavAction {
 	 * @param cust_id
 	 * @return
 	 */
-	@RequestMapping(value="add-edit-page")
+	//FIXME 这个方法应该采用GET，但是Jquery的load函数使用的是POST，需要调整
+	@RequestMapping(value = "add-edit-page"/*, method = RequestMethod.GET */)
 	public ModelAndView addOrEditPage(int cust_id) {
 		Customer cust = null;
 		if(cust_id > 0)
