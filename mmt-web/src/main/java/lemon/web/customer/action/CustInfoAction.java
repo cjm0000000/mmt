@@ -14,11 +14,12 @@ import lemon.web.system.bean.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,24 +50,25 @@ public final class CustInfoAction extends AdminNavAction {
 	/**
 	 * 分页显示客户信息列表
 	 * @param page
-	 * @param cust_name
-	 * @param user
+	 * @param key
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("list/{page}")
-	public ModelAndView list(@PathVariable("page") int page, String s_cust_name,
-			@ModelAttribute(TOKEN) User user) {
+	public ModelAndView list(@PathVariable("page") int page,
+			@RequestParam(value = "k", required = false) String key,
+			ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		//获取operation
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
-		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE, s_cust_name);
+		List<Customer> custList = customerMapper.getCustomerList((page - 1) * PAGESIZE, PAGESIZE, key);
 		obtainServices(custList);
 		Pagination pg = new Pagination(page, PAGESIZE,
-				customerMapper.getCustCnt(s_cust_name),
-				(s_cust_name == null || "".equals(s_cust_name)) ? null : "s_cust_name="
-						+ s_cust_name);
+				customerMapper.getCustCnt(key),
+				(key == null || "".equals(key)) ? null : "k=" + key);
 		ModelAndView mv = getListResultByPagination(pg, user.getRole_id(), operation, custList);
-		mv.addObject("s_cust_name", s_cust_name);
+		mv.addObject("k", key);
 		return mv;
 	}
 	

@@ -5,7 +5,7 @@
 		### 顶部按钮栏
 		<div class="panel-heading">
 			<form method="post" action="../list/1">
-		    	<input type="text" id="s_cust_name" name="s_cust_name" value="$!s_cust_name" style="width:30%"  placeholder="输入查询条件">
+		    	<input type="text" name="k" value="$!k" style="width:30%" placeholder="输入查询条件">
 		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
 			<button id="cust-add" type="button" class="btn btn-success btn-md" >
 				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
