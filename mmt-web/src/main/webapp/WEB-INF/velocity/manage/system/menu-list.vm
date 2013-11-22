@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
 <link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
+<link rel="stylesheet" href="#{getContextPath}treetable/themes/vsStyle/treeTable.min.css">
 <div class="col-md-9" role="main">
 	<div class="panel panel-info">
 		<!-- Default panel contents -->
@@ -20,35 +21,28 @@
 		</div>
 				
 		<!-- Table -->
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
-			        <th width="45%">菜单名称</th>
-					<th width="40%">菜单链接</th>
-			     	<th width="10%" style="text-align:center;">排序号</th>
-				</tr>
-			</thead>
-			<tbody>
-				#foreach($menu in $list)
+		<table id="treeTable" class="table table-striped table-bordered table-condensed">
+			<tr>
+				<th width="5%"></th>
+				<th width="5%"><input type="checkbox" title="全 选" onclick="checkList(this,'menu_id');btnListener('menu_id',$('#menu-update'),$('#menu-delete'));"/></th>
+		        <th width="40%">菜单名称</th>
+				<th width="40%">菜单链接</th>
+		     	<th width="10%" style="text-align:center;">排序号</th>
+			</tr>
+			#foreach($menu in $list)
 				#if($menu.menulevcod == '2')
-					<tr class="success">
-				#else
-					<tr>
+				<tr id="$!menu.menu_id">
+				#elseif($menu.menulevcod == '3')
+				<tr id="$!menu.menu_id" pId="$!menu.supmenucode">
 				#end
-					<td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
-			  		<td>
-			  			#if($menu.menulevcod == '3')
-			  				&nbsp;&nbsp;&nbsp;&nbsp;
-			  			#end
-			  			<span class="$!menu.menuico"></span> $!menu.menu_name
-			  		</td>
-			  		<td>$menu.menuurl</td>
-			   		<td style="text-align:center;">$menu.sort</td>
-			 	</tr>
-				#end
-			</tbody>
-		</table>
+					<td></td>
+                    <td><input type="checkbox" value="$!menu.menu_id" onclick="btnListener('menu_id',$('#menu-update'),$('#menu-delete'));" name="menu_id"/></td>
+                    <td><span class="$!menu.menuico"></span> $!menu.menu_name</td>
+					<td>$menu.menuurl</td>
+			   		<td style="text-align:center;">$menu.sort</td>							
+                </tr>
+			#end
+        </table>
 	</div>
 </div>
 <div id="menu-ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
@@ -63,10 +57,31 @@
 </div>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
 <script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
+<script src="#{getContextPath}treetable/javascripts/jquery.treeTable.min.js"></script>
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/modal_tips_init.js"></script>
 <script src="#{getContextPath}js/manage/system/menu.js"></script>
 <script type="text/javascript">
+$(function(){
+    var option = {
+        theme:'default',
+        expandLevel : 2,
+        beforeExpand : function($treeTable, id) {
+            //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+            if ($('.' + id, $treeTable).length) { return; }
+            //这里的html可以是ajax请求
+            var html = '<tr id="8" pId="6"><td>5.1</td><td>可以是ajax请求来的内容</td></tr>'
+                     + '<tr id="9" pId="6"><td>5.2</td><td>动态的内容</td></tr>';
+
+            $treeTable.addChilds(html);
+        },
+        onSelect : function($treeTable, id) {
+            window.console && console.log('onSelect:' + id);
+        }
+    };
+    $('#treeTable').treeTable(option);
+});
+
 var url_showPage 	= "#{getContextPath}webservices/system/menu/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/system/menu/save";
 var url_delete 		= "#{getContextPath}webservices/system/menu/delete";
