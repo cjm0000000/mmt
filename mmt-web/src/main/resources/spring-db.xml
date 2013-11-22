@@ -10,12 +10,12 @@
             http://www.springframework.org/schema/context/spring-context-3.2.xsd    
             http://www.springframework.org/schema/tx    
             http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
-
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<bean id="mmtDS" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://192.168.1.224:8066/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
-		<property name="user" value="mmtuser" />
-		<property name="password" value="pass" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mmt_db?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="user" value="root" />
+		<property name="password" value="a" />
 		<property name="acquireIncrement" value="3" />
 		<property name="acquireRetryAttempts" value="30"/>
 		<property name="acquireRetryDelay" value="1000"/>
@@ -26,7 +26,6 @@
 		<property name="idleConnectionTestPeriod" value="60" />
 		<property name="checkoutTimeout" value="30000"/>
 	</bean>
-	
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mmtDS" />
