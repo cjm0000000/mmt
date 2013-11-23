@@ -14,17 +14,31 @@
 	<link rel="stylesheet" href="#{getContextPath}bootstrap/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="#{getContextPath}bootstrap/css/sticky-footer-navbar.css">
+    <style>
+	.json-result{
+		width:400px;
+		height:60px;
+		display:block; 
+		position: absolute;
+		top:10px;
+		left:50%;
+		margin-left:-200px;
+		margin-top:-30px;
+	}
+	</style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="#{getContextPath}bootstrap/assets/js/html5shiv.js"></script>
       <script src="#{getContextPath}bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
     <div id="wrap" class="page-container">
 	  ### 顶部导航模板
       #parse("manage/nav-bar.vm")
+      
+      ### 提示/错误消息面板
+      ### include("manage/tooltip.vm")
       
       ### 面包屑导航模板
       #parse("manage/breadcrumb-nav.vm")

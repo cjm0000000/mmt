@@ -51,7 +51,8 @@ public class BS3UI {
 
 	private static String template(String type, String content) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div class=\"json-result ").append(type).append("\">");
+		sb.append("<div class=\"json-result ").append(type).append(" alert-dismissable").append("\">");
+		sb.append("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
 		sb.append(content);
 		sb.append("</div>");
 		return sb.toString();
