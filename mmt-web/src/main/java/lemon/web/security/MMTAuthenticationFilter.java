@@ -72,6 +72,9 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		//没有查到用户
 		if(null == user)
 			throw new AuthenticationServiceException("用户名和密码不匹配。");
+		//判断是否锁定
+		if(Status.AVAILABLE.equals(user.getIslock()))
+			throw new AuthenticationServiceException("您的帐户已锁定，请联系系统管理员。");
 		//登录成功，数据初始化
 		request.getSession().setAttribute(MMTAction.TOKEN, user);
 		//加载用户定制化信息
