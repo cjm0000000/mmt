@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/interface/weixinconfig")
-public final class WeiXinAction extends APIConfigAction {
+public class WeiXinAction extends APIConfigAction {
 	@Autowired
 	private WXConfigMapper weiXinConfigMapper;
 	

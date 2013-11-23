@@ -36,7 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,13 +96,16 @@ public final class CustomMenuAction extends AdminNavAction {
 	 * 保存菜单
 	 * @param menu
 	 * @param br
-	 * @param session
+	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@Valid CustomMenu menu, BindingResult br,
-			@ModelAttribute(TOKEN) User user) {
+			ModelMap model) {
+		if(br.hasErrors())
+			return sendJSONError(br.getFieldError().getDefaultMessage());
+		User user = (User) model.get(TOKEN);
 		CustomMenu supMenu;
 		if(menu.getSupmenucode() == VIRTUAL_ROOT_MENU_ID)
 			supMenu = VIRTUAL_MENU;
@@ -111,8 +113,6 @@ public final class CustomMenuAction extends AdminNavAction {
 			supMenu = customMenuMapper.getMenu(menu.getSupmenucode());
 		if(supMenu == null)
 			return sendJSONError("保存失败： 上级菜单不存在。");
-		if(br.hasErrors())
-			return sendJSONError(br.getFieldError().getDefaultMessage());
 		byte lev = supMenu.getMenulevcod();
 		menu.setMenulevcod(++lev);
 		menu.setCust_id(user.getCust_id());
@@ -152,11 +152,12 @@ public final class CustomMenuAction extends AdminNavAction {
 	/**
 	 * 显示添加或者编辑菜单的页面
 	 * @param menu_id
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="add-edit-page")
-	public ModelAndView addOrEditPage(long menu_id, @ModelAttribute(TOKEN) User user) {
+	public ModelAndView addOrEditPage(long menu_id, ModelMap model) {
+		User user = (User) model.get(TOKEN);
 		// 查询上级菜单
 		List<CustomMenu> pmList = customMenuMapper.getMenuListByLevel(user.getCust_id(), (byte) 1);
 		pmList.add(0, VIRTUAL_MENU);
@@ -175,12 +176,13 @@ public final class CustomMenuAction extends AdminNavAction {
 	
 	/**
 	 * 同步自定义菜单到微信
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "sync_menu_wx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String syncMenu2WX(@ModelAttribute(TOKEN) User user){
+	public String syncMenu2WX(ModelMap model){
+		User user = (User) model.get(TOKEN);
 		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
 		if(cfg == null)
 			return sendJSONError("请先配置微信接口。");
@@ -206,12 +208,13 @@ public final class CustomMenuAction extends AdminNavAction {
 	
 	/**
 	 * 同步自定义菜单到易信
-	 * @param user
+	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String syncMenu2YX(@ModelAttribute(TOKEN) User user){
+	public String syncMenu2YX(ModelMap model){
+		User user = (User) model.get(TOKEN);
 		YiXinConfig cfg = yxConfigMapper.get(user.getCust_id());
 		if(cfg == null)
 			return sendJSONError("请先配置易信接口。");

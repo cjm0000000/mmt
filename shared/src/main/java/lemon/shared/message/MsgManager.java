@@ -25,6 +25,8 @@ import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Message manager
@@ -158,6 +160,7 @@ public class MsgManager {
 	 * save received audio message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvAudioMsg(AudioMessage msg) {
 		if (!(msg instanceof YXAudioMessage))
 			throw new MmtException("不是YXAudioMessage类型，无法保存。");
@@ -169,6 +172,7 @@ public class MsgManager {
 	 * save received event message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvEventMsg(EventMessage msg){
 		saveRecvMsg(msg);
 		msgRepository.saveRecvEventMsg(msg);
@@ -178,6 +182,7 @@ public class MsgManager {
 	 * save received image message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvImageMsg(ImageMessage msg){
 		saveRecvMsg(msg);
 		msgRepository.saveRecvImageMsg(msg);
@@ -187,6 +192,7 @@ public class MsgManager {
 	 * save received link message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvLinkMsg(LinkMessage msg){
 		saveRecvMsg(msg);
 		msgRepository.saveRecvLinkMsg(msg);
@@ -196,6 +202,7 @@ public class MsgManager {
 	 * save received location message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvLocationMsg(LocationMessage msg){
 		saveRecvMsg(msg);
 		msgRepository.saveRecvLocationMsg(msg);
@@ -205,6 +212,7 @@ public class MsgManager {
 	 * save received text message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvTextMsg(TextMessage msg){
 		saveRecvMsg(msg);
 		msgRepository.saveRecvTextMsg(msg);
@@ -214,6 +222,7 @@ public class MsgManager {
 	 * save received video message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvVideoMsg(VideoMessage msg){
 		if(msg instanceof WXVideoMessage){
 			WXVideoMessage wxMsg = (WXVideoMessage) msg;
@@ -230,9 +239,10 @@ public class MsgManager {
 	 * save received voice message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvVoiceMsg(VoiceMessage msg) {
 		if (!(msg instanceof WXVoiceMessage))
-			return;
+			throw new MmtException("不是WXVoiceMessage类型，无法保存。");
 		saveRecvMsg((WXVoiceMessage) msg);
 		msgRepository.saveRecvWXVoiceMsg((WXVoiceMessage) msg);
 	}
@@ -241,9 +251,10 @@ public class MsgManager {
 	 * save received music message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvMusicMsg(MusicMessage msg){
 		if (!(msg instanceof YXMusicMessage))
-			return;
+			throw new MmtException("不是YXMusicMessage类型，无法保存。");
 		saveRecvMsg((YXMusicMessage)msg);
 		msgRepository.saveRecvYXMusicMsg((YXMusicMessage)msg);
 	}
@@ -252,6 +263,7 @@ public class MsgManager {
 	 * save send music message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveSendNewsMsg(NewsMessage msg){
 		saveSendMsg(msg);
 		msgRepository.saveSendNewsMsg(msg);
@@ -265,9 +277,9 @@ public class MsgManager {
 	 * save send text message
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveSendTextMsg(TextMessage msg){
 		saveSendMsg(msg);
-		System.out.println(msg.getId());
 		msgRepository.saveSendTextMsg(msg);
 	}
 	
@@ -275,6 +287,7 @@ public class MsgManager {
 	 * save common receive message 
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	private void saveRecvMsg(Message msg){
 		prepareMsgId(msg);
 		msgRepository.saveRecvMsgDetail(msg);
@@ -284,6 +297,7 @@ public class MsgManager {
 	 * save common send message 
 	 * @param msg
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	private void saveSendMsg(Message msg){
 		prepareMsgId(msg);
 		msgRepository.saveSendMsgDetail(msg);

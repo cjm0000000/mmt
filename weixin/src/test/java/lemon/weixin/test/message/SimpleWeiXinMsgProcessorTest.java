@@ -20,7 +20,6 @@ import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.parser.weixin.VideoMsgParser;
 import lemon.shared.message.parser.weixin.VoiceMsgParser;
 import lemon.shared.service.ServiceType;
-import lemon.weixin.WeiXinAPI;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -58,7 +57,7 @@ public class SimpleWeiXinMsgProcessorTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(WeiXinAPI.class);
+		api = (MmtAPI) acx.getBean("weiXinAPI");
 		msgManager = acx.getBean(MsgManager.class);
 		customerMapper = acx.getBean(CustomerRepository.class);
 		wxConfigMapper = acx.getBean(WXConfigMapper.class);

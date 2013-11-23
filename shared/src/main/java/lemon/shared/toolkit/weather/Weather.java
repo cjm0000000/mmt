@@ -6,6 +6,8 @@ import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.weather.bean.City;
@@ -20,7 +22,7 @@ import lemon.shared.toolkit.weather.mapper.CityMapper;
  *
  */
 @Service
-public final class Weather {
+public class Weather {
 	/** 查询省份信息URL */
 	private static final String SEARCH_PROVINCE_URL = "http://m.weather.com.cn/data5/city.xml";
 	/** 查询城市信息URL */
@@ -48,6 +50,11 @@ public final class Weather {
 		return (WeatherInfo) JSONObject.toBean(json.getJSONObject("weatherinfo"), WeatherInfo.class);
 	}
 
+	/**
+	 * 初始化城市数据
+	 * @throws IOException
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void initCity() throws IOException {
 		String[] provinces = searchProvinceCode();
 		if (null == provinces)

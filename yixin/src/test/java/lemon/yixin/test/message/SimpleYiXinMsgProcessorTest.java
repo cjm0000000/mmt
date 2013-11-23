@@ -14,7 +14,6 @@ import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.service.ServiceType;
-import lemon.yixin.YiXinAPI;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
@@ -50,7 +49,7 @@ public class SimpleYiXinMsgProcessorTest {
 		String[] resource = { "classpath:spring-db.xml",
 				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
 		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(YiXinAPI.class);
+		api = (MmtAPI) acx.getBean("yiXinAPI");
 		msgHelper = acx.getBean(MsgManager.class);
 		customerMapper = acx.getBean(CustomerRepository.class);
 		yxConfigMapper = acx.getBean(YXConfigMapper.class);

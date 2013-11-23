@@ -2,7 +2,6 @@ package lemon.yixin.message.processor;
 
 import lemon.shared.config.MMTConfig;
 import lemon.shared.message.MMTRobot;
-import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.VideoMessage;
@@ -27,8 +26,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SimpleYiXinMsgProcessor extends AbstractMsgProcessor {
-	@Autowired
-	private MsgManager msgManager;
 	@Autowired
 	private TextMsgParser textMsgParser;
 	@Autowired
@@ -58,7 +55,6 @@ public class SimpleYiXinMsgProcessor extends AbstractMsgProcessor {
 		if (null == reply)
 			reply = getWelcome(cfg);
 		return sendTextMessage(msg, reply);
-		
 	}
 
 	@Override

@@ -9,6 +9,8 @@ import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * manager for fans
@@ -25,6 +27,7 @@ public class FansManager {
 	 * save fans information
 	 * @param fans
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveFans(Fans fans){
 		if(null == fans) throw new MmtException("Can't save, fans is null.");
 		Fans existsFans = fansMapper.getFans(fans.getCust_id(), fans.getService_type(), fans.getUser_id());
@@ -47,6 +50,7 @@ public class FansManager {
 	 * @param service_type
 	 * @param user_id
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void disableFans(int cust_id, ServiceType service_type, String user_id){
 		Fans existsFans = fansMapper.getFans(cust_id, service_type, user_id);
 		if(null == existsFans) return;

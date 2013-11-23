@@ -11,6 +11,8 @@ import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import lemon.shared.MmtException;
 import lemon.shared.access.AccessToken;
@@ -122,6 +124,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	}
 	
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public final String getAcessToken(MMTConfig config) {
 		//从数据库读取Access Token
 		AccessToken token = accessRepository.getAccessToken(config.getCust_id(), getServiceType());

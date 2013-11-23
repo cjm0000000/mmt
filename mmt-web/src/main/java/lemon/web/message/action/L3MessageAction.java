@@ -26,7 +26,7 @@ import lemon.web.system.bean.User;
  */
 @Controller
 @RequestMapping("message/level3")
-public final class L3MessageAction extends MessageAction {
+public class L3MessageAction extends MessageAction {
 
 	/**
 	 * 显示L2消息列表

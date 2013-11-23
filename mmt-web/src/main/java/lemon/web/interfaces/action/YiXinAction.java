@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/interface/yixinconfig")
-public final class YiXinAction extends APIConfigAction {
+public class YiXinAction extends APIConfigAction {
 	@Autowired
 	private YXConfigMapper yxConfigMapper;
 

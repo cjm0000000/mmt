@@ -17,6 +17,8 @@ import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.ui.BS3UI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -124,6 +126,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 	 * @param apiStatus
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public final String processSave(User user, MMTConfig cfg, boolean apiStatus) {
 		if(cfg == null)
 			return BS3UI.warning("保存失败：信息不全。");

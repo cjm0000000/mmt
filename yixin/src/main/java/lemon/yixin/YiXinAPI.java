@@ -27,7 +27,6 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(YiXinAPI.class);
 	private MsgParser parser;
 	
-
 	@Override
 	public String processMsg(String token, String msg) {
 		YiXinConfig cfg = YiXin.getConfig(token);

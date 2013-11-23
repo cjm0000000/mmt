@@ -8,6 +8,8 @@ import java.util.Set;
 import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +31,7 @@ import lemon.web.ui.BS3UI;
  */
 @Controller
 @RequestMapping("message/level1")
-public final class L1MessageAction extends MessageAction {
+public class L1MessageAction extends MessageAction {
 
 	/**
 	 * 跳转到Level1页面
@@ -62,6 +64,7 @@ public final class L1MessageAction extends MessageAction {
 	 * @return
 	 */
 	@ResponseBody
+	@Transactional(propagation = Propagation.REQUIRED)
 	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String save(@RequestParam String json, ModelMap model) {
 		if(json == null || "".equals(json))

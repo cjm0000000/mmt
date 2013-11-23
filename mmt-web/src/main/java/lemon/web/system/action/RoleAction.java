@@ -20,6 +20,8 @@ import lemon.web.system.mapper.RoleMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/system/role")
 @SessionAttributes(MMTAction.TOKEN)
-public final class RoleAction extends AdminNavAction {
+public class RoleAction extends AdminNavAction {
 	@Autowired
 	private RoleMapper roleMapper;
 	@Autowired
@@ -102,6 +104,7 @@ public final class RoleAction extends AdminNavAction {
 	 * @return
 	 */
 	@ResponseBody
+	@Transactional(propagation = Propagation.REQUIRED)
 	@RequestMapping(value="set-authority", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String setAuthority(int role_id, String menu_id){
 		if (role_id <= 0 || menu_id == null)
@@ -123,6 +126,7 @@ public final class RoleAction extends AdminNavAction {
 	 * @return
 	 */
 	@ResponseBody
+	@Transactional(propagation = Propagation.REQUIRED)
 	@RequestMapping(value="delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String delete(String role_id) {
 		String[] ids = role_id.split(",");
