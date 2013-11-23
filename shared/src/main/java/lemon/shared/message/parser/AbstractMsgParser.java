@@ -104,17 +104,10 @@ public abstract class AbstractMsgParser implements MsgParser {
 	 * @return
 	 */
 	private static String getMsgType(String msg) {
-		InputStream is = null;
-		try {
-			try {
-				is = new ByteArrayInputStream(msg.getBytes(MMTCharset.LOCAL_CHARSET));
-				Document doc = new SAXBuilder().build(is);
-				Element e = doc.getRootElement().getChild("MsgType");
-				return e.getValue();
-			} finally {
-				if (null != is)
-					is.close();
-			}
+		try(InputStream is = new ByteArrayInputStream(msg.getBytes(MMTCharset.LOCAL_CHARSET))) {
+			Document doc = new SAXBuilder().build(is);
+			Element e = doc.getRootElement().getChild("MsgType");
+			return e.getValue();
 		} catch (IOException | JDOMException e) {
 			logger.error("Can't get message type:" + e.getMessage());
 		}
