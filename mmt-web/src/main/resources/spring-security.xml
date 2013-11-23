@@ -38,13 +38,14 @@
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 	</beans:bean>
 	<beans:bean id="loginLogAuthenticationSuccessHandler"  
-        class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">  
-        <beans:property name="defaultTargetUrl" value="/index" />  
+        class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <beans:property name="alwaysUseDefaultTargetUrl" value="true" />
+        <beans:property name="defaultTargetUrl" value="/index" />
     </beans:bean>  
     <beans:bean id="simpleUrlAuthenticationFailureHandler"  
         class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">  
         <!-- 可以配置相应的跳转方式。属性forwardToDestination为true采用forward false为sendRedirect -->  
-        <beans:property name="defaultFailureUrl" value="/webservices/login" />  
+        <beans:property name="defaultFailureUrl" value="/webservices/login" />
     </beans:bean>
     <!-- 权限过滤器 -->  
     <beans:bean id="mmtSecurityFilter" class="lemon.web.security.MMTSecurityFilter">  
