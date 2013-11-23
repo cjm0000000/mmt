@@ -7,7 +7,7 @@ package lemon.test.web;
  *
  */
 public abstract class IncomingTasks {
-	//TODO [2013-11-19] Spring Security 重新登录后，缓存的targetURL有问题
-	//TODO [2013-11-19] BS3 悬浮消息框（包括错误消息和提示消息）
 	//TODO [2013-11-22] Using JSR 330 Standard Annotations
+	//TODO [2013-11-23] 微信新功能开发
+	//TODO [2013-11-23] Spring Test加入
 }
