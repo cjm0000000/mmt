@@ -34,4 +34,9 @@ $(function() {
 		var menu_id = getSelectedValues("menu_id");
 		mmtPost(url_delete, {menu_id:menu_id}, $('body'), $('.text-left'));
 	});
+	
+	// treeTable属性设置
+	var option = {theme:'default',expandLevel : 2};
+	$('#treeTable').treeTable(option);
+	
 });
