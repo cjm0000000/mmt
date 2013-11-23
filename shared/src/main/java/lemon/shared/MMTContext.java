@@ -22,7 +22,7 @@ public final class MMTContext implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext ctx)
+	public synchronized void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {
 		context = ctx;
 	}
