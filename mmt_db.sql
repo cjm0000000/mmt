@@ -217,6 +217,34 @@ CREATE TABLE `city` (
   PRIMARY KEY (`citycode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区表';
 
+#############################  多媒体管理   #############################
+#
+# 多媒体表
+#
+CREATE TABLE `media` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `media_type` char(5) NOT NULL DEFAULT '' COMMENT '媒体类型',
+  `real_name` varchar(255) NOT NULL DEFAULT '' COMMENT '真实文件名',
+  `display_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用于显示的文件名',
+  `media_path` varchar(255) NOT NULL DEFAULT 'AVAILABLE' COMMENT '文件路径',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多媒体表';
+#
+# 多媒体同步表
+#
+CREATE TABLE `media_sync` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
+  `m_id` bigint(20) NOT NULL COMMENT '系统内MediaID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
+  `media_id` char(64) NOT NULL DEFAULT '' COMMENT '服务端media_id',
+  `created_at` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务端文件创建时间戳',
+  `expire_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '文件过期时间戳',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多媒体同步表';
 #############################  FANS   #############################
 #
 # 粉丝表
