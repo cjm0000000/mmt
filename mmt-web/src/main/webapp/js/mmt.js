@@ -19,7 +19,7 @@ function checkList(controller, field){
  * @param btnEdit
  * @param btnDel
  * @param singleton
- * @param singleton
+ * @param current
  */
 function btnListener(field, btnEdit, btnDel, singleton, current){
 	if(!btnEdit && !btnDel)
