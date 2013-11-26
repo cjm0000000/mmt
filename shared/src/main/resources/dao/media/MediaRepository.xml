@@ -41,14 +41,24 @@
 			WHERE A.id=#{id}
 	</update>
 	<select id="list" resultType="lemon.shared.media.Media">
+		<bind name="_display_name" value="(display_name == null ? '' : display_name) + '%'" />
 		SELECT A.id,A.cust_id,A.media_type,A.real_name,A.display_name,A.media_path,A.timestamp
 			FROM media A
 		WHERE A.cust_id=#{cust_id}
 			<if test="display_name!=null and display_name!=''">
-				AND A.display_name=#{display_name}
+				AND A.display_name LIKE #{_display_name}
 			</if>
 			<if test="limit != 0">
 				LIMIT #{start},#{limit}
+			</if>
+	</select>
+	<select id="mediaCount" resultType="int">
+		<bind name="_display_name" value="(display_name == null ? '' : display_name) + '%'" />
+		SELECT COUNT(1) FROM
+			media A
+		WHERE A.cust_id=#{cust_id}
+			<if test="display_name!=null and display_name!=''">
+				AND A.display_name LIKE #{_display_name}
 			</if>
 	</select>
 </mapper>

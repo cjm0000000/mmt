@@ -81,4 +81,13 @@ public interface MediaRepository {
 	List<Media> list(@Param("cust_id") int cust_id,
 			@Param("display_name") String display_name,
 			@Param("start") int start, @Param("limit") int limit);
+	
+	/**
+	 * Get media(s) count
+	 * @param cust_id
+	 * @param display_name
+	 * @return
+	 */
+	int mediaCount(@Param("cust_id") int cust_id,
+			@Param("display_name") String display_name);
 }

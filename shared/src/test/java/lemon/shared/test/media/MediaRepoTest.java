@@ -58,11 +58,13 @@ public class MediaRepoTest {
 		m2 = mediaRepository.getMedia(m2.getId());
 		assertNull(m2);
 		//Test list
+		display_name = UUID.randomUUID().toString();
 		media = newMedia(display_name, media_path, media_type, real_name);
 		assertNotEquals(0, mediaRepository.addMedia(media));
-		List<Media> list = mediaRepository.list(CUST_ID, null, 0, 10);
+		List<Media> list = mediaRepository.list(CUST_ID, display_name, 0, 10);
 		assertNotNull(list);
-		assertNotEquals(0, list.size());
+		int count = mediaRepository.mediaCount(CUST_ID, display_name);
+		assertEquals(count, list.size());
 	}
 	
 	@Test

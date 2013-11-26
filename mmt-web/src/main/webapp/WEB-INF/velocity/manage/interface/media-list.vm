@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal-bs3patch.css">
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/modal/css/bootstrap-modal.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-info">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<form method="get" action="../list/1">
+		    	<input type="text" name="k" value="$!k" style="width:30%" placeholder="输入查询条件">
+		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
+			<button id="media-add" type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
+			</button>
+			<button id="media-delete" type="button" disabled class="btn btn-danger btn-md" >
+				<span class="glyphicon glyphicon-trash"></span> 删 除
+			</button>
+			</form>
+		</div>
+			
+		### 数据表
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th width="5%">#</th>
+					<th width="30%">名称</th>
+		            <th width="50%">类型</th>
+		            <th width="15%" style="text-align:center;">同步情况</th>
+				</tr>
+			</thead>
+			<tbody>
+			#foreach($media in $list)
+				<tr>
+		    		<td><input type="checkbox" value="$!media.id" name="id" onclick="btnListener(this.name, $('#media-update'),$('#media-delete'));"/></td>
+		       		<td>$!media.display_name</td>
+		  			<td>$!media.media_type</td>
+		  			<td style="text-align:center;">
+						
+		  			</td>
+		   		</tr>
+			#end
+			</tbody>
+		</table>
+		### 分页栏
+		#createPagination($pg.currentPage,$pg.pageSize,$pg.resCount,$!pg.filters)
+	</div>
+</div>
+<div id="media-confirm-modal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+  <div class="modal-body">
+    <h4>你确定要删除所选的多媒体资源吗？</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-success">取消</button>
+    <button type="button" data-dismiss="modal" class="confirm-delete btn btn-danger"><span class="glyphicon glyphicon-trash"></span> 确认删除</button>
+  </div>
+</div>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modalmanager.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/modal/js/bootstrap-modal.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/modal_tips_init.js"></script>
+<script src="#{getContextPath}js/manage/interface/media.js"></script>
+<script type="text/javascript">
+var url_showPage 	= "#{getContextPath}webservices/interface/media/add-page";
+var url_save 		= "#{getContextPath}webservices/interface/media/save";
+var url_delete 		= "#{getContextPath}webservices/interface/media/delete";
+</script>

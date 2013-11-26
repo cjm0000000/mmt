@@ -2,6 +2,8 @@ package lemon.shared.media;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Media Entity
  * @author lemon
@@ -11,6 +13,7 @@ import java.util.Date;
 public class Media {
 	private long id;
 	private int cust_id;
+	@NotEmpty(message="多媒体类型不能为空")
 	private String media_type;
 	private String real_name;
 	private String display_name;
