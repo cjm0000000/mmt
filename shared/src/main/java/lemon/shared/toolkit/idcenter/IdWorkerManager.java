@@ -11,6 +11,8 @@ import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.log.FansLog;
+import lemon.shared.media.Media;
+import lemon.shared.media.MediaSync;
 import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.metadata.Message;
@@ -43,6 +45,9 @@ public class IdWorkerManager {
 		idRepos.put(Message.class, 			generateIdWorker(10));
 		idRepos.put(Article.class, 			generateIdWorker(11));
 		idRepos.put(LocalMsgBean.class, 	generateIdWorker(12));
+		
+		idRepos.put(Media.class, 			generateIdWorker(13));
+		idRepos.put(MediaSync.class, 		generateIdWorker(14));
 	}
 	
 	/**

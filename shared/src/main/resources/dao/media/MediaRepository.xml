@@ -26,6 +26,14 @@
 			FROM media A
 		WHERE A.id=#{id}
 	</select>
+	<select id="getMediaSync" resultType="lemon.shared.media.MediaSync">
+		SELECT A.id,A.m_id,A.cust_id,A.service_type,A.media_id,A.created_at,A.expire_time,A.timestamp
+			FROM media_sync A
+		WHERE A.m_id=#{m_id}
+		<if test="service_type != null">
+			AND A.service_type=#{service_type}
+		</if>
+	</select>
 	<update id="updateMedia" parameterType="lemon.shared.media.Media">
 		UPDATE media A
 			SET A.display_name=#{display_name},

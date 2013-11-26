@@ -1,12 +1,14 @@
 package lemon.shared.media;
 
+import lemon.shared.service.BaseService;
+
 /**
  * Media synchronize
  * @author lemon
  * @version 1.1
  *
  */
-public class MediaSync {
+public class MediaSync extends BaseService {
 	private long m_id;
 	private String media_id;
 	private long created_at;

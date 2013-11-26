@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 import lemon.shared.media.Media;
+import lemon.shared.media.MediaSync;
 import lemon.shared.media.persistence.MediaRepository;
+import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.EqualsUtil;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -61,6 +63,25 @@ public class MediaRepoTest {
 		List<Media> list = mediaRepository.list(CUST_ID, null, 0, 10);
 		assertNotNull(list);
 		assertNotEquals(0, list.size());
+	}
+	
+	@Test
+	public void mediaSync(){
+		Media media = newMedia("rquest.xml", "/usr/bin", "video", UUID.randomUUID().toString());
+		assertNotEquals(0, mediaRepository.addMedia(media));
+		MediaSync ms = new MediaSync();
+		ms.setCreated_at(System.currentTimeMillis());
+		ms.setCust_id(media.getCust_id());
+		ms.setExpire_time(System.currentTimeMillis() + 3600);
+		ms.setId(IdWorkerManager.getIdWorker(MediaSync.class).getId());
+		ms.setM_id(media.getId());
+		ms.setMedia_id(UUID.randomUUID().toString());
+		ms.setService_type(ServiceType.OTHER);
+		assertNotEquals(0, mediaRepository.addMediaSync(ms));
+		assertNotEquals(0, mediaRepository.deleteMediaSync(ms.getM_id(), ServiceType.OTHER));
+		List<MediaSync> list = mediaRepository.getMediaSync(media.getId(), ServiceType.OTHER);
+		assertNotNull(list);
+		assertEquals(0, list.size());
 	}
 	
 	/**

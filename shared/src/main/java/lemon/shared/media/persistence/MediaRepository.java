@@ -33,11 +33,11 @@ public interface MediaRepository {
 	
 	/**
 	 * delete media synchronize 
-	 * @param m_id
+	 * @param media_id
 	 * @param serviceType
 	 * @return
 	 */
-	int deleteMediaSync(@Param("m_id") long id,
+	int deleteMediaSync(@Param("m_id") long media_id,
 			@Param("service_type") ServiceType serviceType);
 	
 	/**
@@ -53,6 +53,15 @@ public interface MediaRepository {
 	 * @return
 	 */
 	Media getMedia(long id);
+	
+	/**
+	 * get media synchronize
+	 * @param media_id
+	 * @param service_type
+	 * @return
+	 */
+	List<MediaSync> getMediaSync(@Param("m_id") long media_id,
+			@Param("service_type") ServiceType service_type);
 	
 	/**
 	 * update media
