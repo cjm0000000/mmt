@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/switch/css/bootstrap-switch.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-info">
+		<form method="POST" action="#{getContextPath}webservices/interface/media/upload" enctype="multipart/form-data" class="form-horizontal" role="form">
+			### 顶部按钮栏
+			<div class="panel-heading">
+				<button type="button" class="media-upload btn btn-success btn-md" >
+					<span class="glyphicon glyphicon-upload"></span> 上 传
+				</button>
+				<a href="#{getContextPath}webservices/interface/media/list/1" type="button" class="btn btn-info btn-md" >
+					<span class="glyphicon glyphicon-circle-arrow-left"></span> 返回多媒体列表
+				</a>
+			</div>
+			### 数据表单
+			<div class="panel-body">
+			  <div class="form-group">
+			    <label for="media_file" class="col-sm-2 control-label">选择文件</label>
+			    <div class="col-sm-10">
+			    	<input type="file" id="media_file" name="media_file">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="upload-wx" class="col-sm-2 control-label">上传到微信</label>
+			    <div class="col-sm-10">
+					<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="是" data-off-label="否" data-on="success" data-off="danger" />
+						<input type="checkbox" id="upload-wx" name="upload-wx">
+					</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="upload-yx" class="col-sm-2 control-label">上传到易信</label>
+			    <div class="col-sm-10">
+			      	<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="是" data-off-label="否" data-on="success" data-off="danger" />
+						<input type="checkbox" id="upload-yx" name="upload-yx">
+					</div>
+			    </div>
+			  </div>
+	  		</div>
+	  		### 底部按钮
+		  	<div class="panel-footer">
+		  		<button type="button" class="media-upload btn btn-success btn-md" >
+					<span class="glyphicon glyphicon-upload"></span> 上 传
+				</button>
+				<a href="#{getContextPath}webservices/interface/media/list/1" type="button" class="btn btn-info btn-md" >
+					<span class="glyphicon glyphicon-circle-arrow-left"></span> 返回多媒体列表
+				</a>
+		  	</div>
+	  	</form>
+	</div>
+</div>
+<script src="#{getContextPath}bootstrap/plugins/switch/js/bootstrap-switch.min.js"></script>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}js/manage/interface/media.js"></script>
+<script type="text/javascript">
+$(".switch").bootstrapSwitch();
+var url_upload = "#{getContextPath}webservices/interface/media/upload";
+</script>

@@ -20,4 +20,8 @@ $(function() {
 		var media_id = getSelectedValues("id");
 		mmtPost(url_delete, {id: media_id}, $('body'), $('.panel-heading'));
 	});
+	
+	$(".media-upload").on('click',function(){
+		$(".form-horizontal").submit();
+	});
 });

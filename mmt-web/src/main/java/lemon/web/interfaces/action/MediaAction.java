@@ -1,5 +1,6 @@
 package lemon.web.interfaces.action;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -35,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/interface/media")
 @SessionAttributes(MMTAction.TOKEN)
 public final class MediaAction extends AdminNavAction {
+	private static final String MEDIA_TYPE_GROUP = "MEDIA_TYPE";
 	@Autowired
 	private MediaRepository mediaRepository;
 
@@ -118,18 +121,35 @@ public final class MediaAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 显示添加或者编辑多媒体信息的页面
-	 * @param id
+	 * 显示上传多媒体信息的页面
+	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "add-edit-page", method = RequestMethod.GET)
-	public ModelAndView addOrEditPage(long id) {
-		Media media = null;
-		if(id > 0)
-			media = mediaRepository.getMedia(id);
-		if(null == media)
-			media = new Media();
-		return new ModelAndView(getAddEditView(), "media", media);
+	@RequestMapping(value = "show-upload", method = RequestMethod.GET)
+	public ModelAndView showUpload(ModelMap model) {
+		User user = (User) model.get(TOKEN);
+		String operation = "showUpload";
+		//List<SystemConfig> list = systemConfigMapper.getItems(MEDIA_TYPE_GROUP);
+		return getListResult(user.getRole_id(), operation, null);
+	}
+	
+	/**
+	 * 上传文件
+	 * @param name
+	 * @param file
+	 * @param model
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	public String upload(@RequestParam("file") MultipartFile file,
+			ModelMap model) throws IOException {
+		if(file.isEmpty())
+			return sendJSONError("文件不能为空。");
+		byte[] bytes = file.getBytes();
+		System.out.println(bytes.length);
+		User user = (User) model.get(TOKEN);
+		return null;
 	}
 
 	@Override

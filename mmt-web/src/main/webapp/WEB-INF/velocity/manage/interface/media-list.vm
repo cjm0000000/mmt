@@ -7,9 +7,9 @@
 			<form method="get" action="../list/1">
 		    	<input type="text" name="k" value="$!k" style="width:30%" placeholder="输入查询条件">
 		    	<input type="submit" class="btn btn-primary btn-md" value="查 询" />
-			<button id="media-add" type="button" class="btn btn-success btn-md" >
-				<span class="glyphicon glyphicon-plus-sign"></span> 添 加
-			</button>
+			<a href="#{getContextPath}webservices/interface/media/show-upload" type="button" class="btn btn-success btn-md" >
+				<span class="glyphicon glyphicon-cloud-upload"></span> 上传多媒体
+			</a>
 			<button id="media-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
