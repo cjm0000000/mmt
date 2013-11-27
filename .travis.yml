@@ -1,2 +1,6 @@
 language: java
-mvn test
+jdk:
+  - oraclejdk7
+  - openjdk7
+after_success:
+  - "mvn clean"
