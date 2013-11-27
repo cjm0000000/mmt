@@ -107,7 +107,7 @@ public class CustomMenuRepositoryTest {
 	
 	@Test
 	public void getMenuListByLevel(){
-		assertNotEquals(0, customMenuMapper.deleteMenuByCustomer(CUST_ID));
+		customMenuMapper.deleteMenuByCustomer(CUST_ID);
 		CustomMenu menu1 = getCustomMenu();
 		CustomMenu menu2 = getCustomMenu();
 		CustomMenu menu3 = getCustomMenu();
