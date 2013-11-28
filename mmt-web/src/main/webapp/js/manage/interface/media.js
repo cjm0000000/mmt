@@ -1,13 +1,10 @@
 $(function() {
-	
-	//监听保存数据事件
-	$(".save").on('click', function(){
-		var params_save = {
-			cust_id		: $('#cust_id').val(),
-			cust_name	: $('#cust_name').val(),
-			memo		: $('#memo').val()
-	 	};
-		mmtPost(url_save, params_save, $modal, $modal.find('.modal-body'));
+	// Ajax Form
+	$('.form-horizontal').ajaxForm({
+		success : function(responseText){
+			alert(responseText);
+			$('.form-horizontal').reset();
+		}
 	});
 	
 	//监听删除事件
@@ -24,4 +21,7 @@ $(function() {
 	$(".media-upload").on('click',function(){
 		$(".form-horizontal").submit();
 	});
+	
+	//监听Switch
+	$('.label-toggle-switch').on('switch-change');
 });

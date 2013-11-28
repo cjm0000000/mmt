@@ -1,17 +1,26 @@
 package lemon.web.interfaces.action;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import lemon.shared.file.FileManager;
 import lemon.shared.media.Media;
 import lemon.shared.media.persistence.MediaRepository;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
+import lemon.web.global.MMT;
+import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
+import lemon.web.system.mapper.SystemConfigMapper;
+import lemon.web.toolkit.ArchiveManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,9 +46,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/interface/media")
 @SessionAttributes(MMTAction.TOKEN)
 public final class MediaAction extends AdminNavAction {
+	/** 多媒体类型 */
 	private static final String MEDIA_TYPE_GROUP = "MEDIA_TYPE";
+	/** 文件检查规则 */
+	private static Map<String,Integer> verifyPool = null;
 	@Autowired
 	private MediaRepository mediaRepository;
+	@Autowired
+	private SystemConfigMapper systemConfigMapper;
+	@Resource(name="localSystemFileManager")
+	private FileManager fileManager;
+	
+	static{
+		initVerifyRules();
+	}
 
 	/**
 	 * 显示多媒体列表首页
@@ -129,27 +149,59 @@ public final class MediaAction extends AdminNavAction {
 	public ModelAndView showUpload(ModelMap model) {
 		User user = (User) model.get(TOKEN);
 		String operation = "showUpload";
-		//List<SystemConfig> list = systemConfigMapper.getItems(MEDIA_TYPE_GROUP);
-		return getListResult(user.getRole_id(), operation, null);
+		List<SystemConfig> list = systemConfigMapper.getItems(MEDIA_TYPE_GROUP);
+		return getListResult(user.getRole_id(), operation, list);
 	}
 	
 	/**
 	 * 上传文件
-	 * @param name
 	 * @param file
+	 * @param wxSync
+	 * @param yxSync
+	 * @param media_type
 	 * @param model
 	 * @return
-	 * @throws IOException 
 	 */
-	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public String upload(@RequestParam("file") MultipartFile file,
-			ModelMap model) throws IOException {
+	@ResponseBody
+	@RequestMapping(value = "upload", method = RequestMethod.POST, produces="text/html;charset=UTF-8")
+	public String upload(@RequestParam("media_file") MultipartFile file,
+			@RequestParam(value = "upload-wx", required = false) Object wxSync,
+			@RequestParam(value = "upload-yx", required = false) Object yxSync,
+			@RequestParam("media_type") String media_type, ModelMap model) {
 		if(file.isEmpty())
 			return sendJSONError("文件不能为空。");
-		byte[] bytes = file.getBytes();
-		System.out.println(bytes.length);
+		//Verify file suffix
+		String suffix = getSuffix(file.getOriginalFilename());
+		Integer maxSize = verifyPool.get(media_type + "_" + suffix);
+		if(maxSize == null)
+			return sendJSONError("文件格式不支持。");
+		if(toKB(file.getSize()) > maxSize)
+			return sendJSONError("文件大小超出限制[" + maxSize + "KB]。");
+		byte[] bytes = null;
+		try {
+			bytes = file.getBytes();
+		} catch (IOException e) {
+			sendJSONError("文件上传失败。");
+		}
 		User user = (User) model.get(TOKEN);
-		return null;
+		
+		//save file
+		Media media = new Media();
+		media.setCust_id(user.getCust_id());
+		//FIXME 中文文件名乱码
+		media.setDisplay_name(file.getOriginalFilename());
+		media.setId(IdWorkerManager.getIdWorker(Media.class).getId());
+		media.setMedia_path(ArchiveManager.getPrivateFilePath(user.getCust_id()));
+		media.setMedia_type(media_type);
+		media.setReal_name(UUID.randomUUID().toString() + "." + suffix);
+		int result = mediaRepository.addMedia(media);
+		
+		if(result  == 0)
+			return sendJSONError("文件上传失败。");
+		//保存到本地
+		fileManager.writeFile(MMT.getUploadFileRoot() + media.getMedia_path(), media.getReal_name(), bytes);
+		//TODO 同步到Server
+		return sendJSONMsg("上传成功。");
 	}
 
 	@Override
@@ -157,5 +209,33 @@ public final class MediaAction extends AdminNavAction {
 		return "interface/media";
 	}
 	
-
+	/**
+	 * 初始化文件后缀规则
+	 */
+	private static void initVerifyRules(){
+		verifyPool = new HashMap<>();
+		verifyPool.put("image_jpg", 128);
+		verifyPool.put("voice_amr", 256);
+		verifyPool.put("voice_mp3", 256);
+		verifyPool.put("video_mp4", 1024);
+		verifyPool.put("thumb_jpg", 64);
+	}
+	
+	/**
+	 * 获取文件名后缀
+	 * @param fileName
+	 * @return
+	 */
+	private String getSuffix(String fileName){
+		return fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+	}
+	
+	/**
+	 * 转KB
+	 * @param _byte
+	 * @return
+	 */
+	private int toKB(long _byte){
+		return (int) (_byte/1024);
+	}
 }

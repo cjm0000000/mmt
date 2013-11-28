@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.springframework.stereotype.Service;
+
 import lemon.shared.MmtException;
 
 /**
@@ -17,6 +19,7 @@ import lemon.shared.MmtException;
  * @version 1.1
  *
  */
+@Service("localSystemFileManager")
 public class LocalSystemFileManager implements FileManager {
 
 	@Override
