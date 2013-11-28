@@ -35,4 +35,5 @@
 		<property name="allowSessionOverride" value="true"/>
 		<property name="requestContextAttribute" value="context" />
 	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>

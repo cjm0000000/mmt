@@ -1,5 +1,7 @@
 package lemon.web.global;
 
+import java.io.File;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -25,6 +27,9 @@ public class MMTListener implements ServletContextListener {
 		if(realPath.lastIndexOf("/") == 0)
 			realPath = realPath + "/";
 		MMT.setContextRoot(realPath);
+		MMT.setUploadFileRoot(arg0.getServletContext().getRealPath("/")
+				+ File.separator + "data" + File.separator);
+		logger.info("[File upload path=" + MMT.getUploadFileRoot() + "]");
 		logger.info("[Context=" + realPath + "] MMTListener initialized successfully!");
 	}
 

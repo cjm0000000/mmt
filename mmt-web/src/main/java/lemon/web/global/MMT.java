@@ -7,12 +7,18 @@ package lemon.web.global;
  *
  */
 public final class MMT {
-	static String  contextRoot;
+	static String contextRoot;
+	
+	static String uploadFileRoot;
 	/** Spring MVC 过滤器根路径 */
 	public static final String FILTER_ROOT = "/webservices/";
 	
-	static void setContextRoot(String root){
+	static synchronized void setContextRoot(String root){
 		contextRoot = root;
+	}
+	
+	static synchronized void setUploadFileRoot(String phyPath){
+		uploadFileRoot = phyPath;
 	}
 	
 	/**
@@ -21,5 +27,13 @@ public final class MMT {
 	 */
 	public static String getContextRoot(){
 		return contextRoot;
+	}
+	
+	/**
+	 * 获取文件上传根目录
+	 * @return
+	 */
+	public static String getUploadFileRoot(){
+		return uploadFileRoot;
 	}
 }
