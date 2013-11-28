@@ -3,6 +3,8 @@ package lemon.yixin;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -95,6 +97,13 @@ public final class YiXinAPI extends AbstractMmtAPI {
 		YiXinConfig cfg = (YiXinConfig) config;
 		if (cfg == null)
 			sendError("客户易信配置信息不存在。");
+	}
+
+	@Override
+	public JSONObject uploadMedia(MMTConfig config, String type, byte[] file,
+			String fileName) {
+		//Nothing to do
+		return null;
 	}
 
 }

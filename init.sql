@@ -32,7 +32,11 @@ VALUES (1,'mmtuser','41680116FF2D7546B0DF95E873C2ED7F','MMTCHAT','330','1234','U
 INSERT INTO `system_config` (`group`,`key`,`value`,`timestamp`) 
 VALUES ('CUSTOM_MENU_TYPE','click','事件','2013-10-22 00:16:33'),
 ('CUSTOM_MENU_TYPE','view','网址','2013-10-22 00:16:44'),
-('DOMAIN','DOMAIN','http://www.baidu.com','2013-10-21 23:58:11');
+('DOMAIN','DOMAIN','http://www.baidu.com','2013-10-21 23:58:11'),
+('MEDIA_TYPE','image','图片','2013-11-28 21:00:05'),
+('MEDIA_TYPE','thumb','缩略图','2013-11-28 23:43:39'),
+('MEDIA_TYPE','video','视频','2013-11-28 23:43:45'),
+('MEDIA_TYPE','voice','语音[微信]','2013-11-28 23:44:11');
 
 #用户配置信息
 INSERT INTO `system_user_config` (`user_id`,`key`,`value`,`timestamp`) 

@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import lemon.shared.MmtException;
 import lemon.shared.config.MMTCharset;
 
 /**
@@ -32,9 +33,8 @@ public final class HttpConnector {
 		try {
 			return connect(url, POST, null, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("发送消息遇到错误。", e.getCause());
 		}
-		return null;
 	}
 
 	/**
@@ -48,9 +48,8 @@ public final class HttpConnector {
 		try {
 			return connect(url, POST, msg, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("发送消息遇到错误。", e.getCause());
 		}
-		return null;
 	}
 	
 	/**
@@ -65,9 +64,8 @@ public final class HttpConnector {
 		try {
 			return connect(url, POST, null, params);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("发送消息遇到错误。", e.getCause());
 		}
-		return null;
 	}
 
 	/**
@@ -82,9 +80,8 @@ public final class HttpConnector {
 		try {
 			return connect(url, POST, msg, params);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("发送消息遇到错误。", e.getCause());
 		}
-		return null;
 	}
 
 	/**
@@ -97,9 +94,8 @@ public final class HttpConnector {
 		try {
 			return connect(url, GET, null, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("接收消息遇到错误。", e.getCause());
 		}
-		return null;
 	}
 	
 	/**
@@ -112,9 +108,65 @@ public final class HttpConnector {
 		try {
 			return connect(url, GET, null, params);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MmtException("接收消息遇到错误。", e.getCause());
 		}
-		return null;
+	}
+	
+	/**
+	 * 上传文件
+	 * @param strUrl
+	 * @param params
+	 * @param file
+	 * @param fileName
+	 * @return
+	 */
+	public static String uploadFile(String strUrl, Map<String, Object> params,
+			byte[] file,String fileName) {
+		try {
+			if (null != params)
+				strUrl = compile(strUrl, params);
+			URL url = new URL(strUrl);
+			HttpURLConnection con = null;
+			try {
+				con = (HttpURLConnection) url.openConnection();
+				con.setRequestMethod("POST");
+				con.setConnectTimeout(60000);
+				con.setDoOutput(true);
+				
+				String BOUNDARY = "----WebKitFormBoundaryANMJ5hvoEYHzawuE"; // 分隔符
+				
+				StringBuilder sb = new StringBuilder();
+				sb.append("--");
+				sb.append(BOUNDARY);
+				sb.append("\r\n");
+				sb.append("Content-Disposition: form-data; filelength="
+						+ file.length + "; filename=\"" + fileName + "\"\r\n");
+				sb.append("Content-Type: application/octet-stream\r\n\r\n");
+				
+				byte[] data = sb.toString().getBytes();  
+	            byte[] end_data = ("\r\n--" + BOUNDARY + "--\r\n").getBytes();  
+	              
+				con.setRequestProperty("Content-Type",
+						"multipart/form-data; boundary=" + BOUNDARY); // 设置表单类型和分隔符
+				con.setRequestProperty("Content-Length",
+						String.valueOf(data.length + end_data.length)); // 设置内容长度
+				
+				//上传
+				try (OutputStream os = con.getOutputStream()) {
+					os.write(data);
+					os.write(file);
+					os.write(end_data);
+					os.flush();
+				} 
+				// get reply message
+				return getReceive(con);
+			} finally {
+				if (con != null)
+					con.disconnect();
+			}
+		} catch (IOException e) {
+			throw new MmtException("上传文件遇到错误。", e.getCause());
+		}
 	}
 
 	/**
@@ -141,7 +193,7 @@ public final class HttpConnector {
 				con.setDoOutput(true);
 				// send message
 				if(null != sendMsg)
-					sendBytes(con, sendMsg);
+					sendBytes(con, sendMsg.getBytes(MMTCharset.LOCAL_CHARSET));
 			} else
 				con.setDoOutput(false);
 			// get reply message
@@ -159,17 +211,12 @@ public final class HttpConnector {
 	 * @param msg
 	 * @throws IOException
 	 */
-	private static void sendBytes(HttpURLConnection con, String msg)
+	private static void sendBytes(HttpURLConnection con, byte[] msg)
 			throws IOException {
-		OutputStream os = null;
-		try {
-			os = con.getOutputStream();
-			os.write(msg.getBytes(MMTCharset.LOCAL_CHARSET));
+		try (OutputStream os = con.getOutputStream()) {
+			os.write(msg);
 			os.flush();
-		} finally {
-			if (null != os)
-				os.close();
-		}
+		} 
 	}
 
 	/**
@@ -180,20 +227,14 @@ public final class HttpConnector {
 	 * @throws IOException
 	 */
 	private static String getReceive(HttpURLConnection con) throws IOException {
-		InputStream is = null;
-		try {
-			is = con.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is,
-					MMTCharset.LOCAL_CHARSET));
-			StringBuffer sb = new StringBuffer();
+		try (InputStream is = con.getInputStream()){
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, MMTCharset.LOCAL_CHARSET));
+			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null)
 				sb.append(line);
 			return sb.toString();
-		} finally {
-			if (null != is)
-				is.close();
-		}
+		} 
 	}
 
 	/**

@@ -19,13 +19,17 @@ import lemon.weixin.config.bean.WeiXinConfig;
 public class WeiXin {
 	private static ConcurrentMap<String, WeiXinConfig> configs;
 	/** 通用接口URL */
-	private static String commonUrl;
+	private static String COMMON_URL;
 	/** 创建菜单URL */
-	private static String menuURL_CREATE;
+	private static String MENU_CREATE_URL;
 	/** 查询菜单URL */
-	private static String menuURL_SEARCH;
+	private static String MENU_SEARCH_URL;
 	/** 删除菜单URL */
-	private static String menuURL_DELETE;
+	private static String MENU_DELETE_URL;
+	/** 上传多媒体文件URL */
+	private static String MEDIA_UPLOAD_URL;
+	/** 下载多媒体文件URL */
+	private static String MEDIA_DOWNLOAD_URL;
 	
 	static{
 		loadWeiXinProperties();
@@ -71,7 +75,7 @@ public class WeiXin {
 	 * @return
 	 */
 	public static String getCommonUrl(){
-		return commonUrl;
+		return COMMON_URL;
 	}
 	
 	/**
@@ -79,7 +83,7 @@ public class WeiXin {
 	 * @return
 	 */
 	public static String getCreateMenuUrl(){
-		return menuURL_CREATE;
+		return MENU_CREATE_URL;
 	}
 	
 	/**
@@ -87,7 +91,7 @@ public class WeiXin {
 	 * @return
 	 */
 	public static String getSearchMenuUrl(){
-		return menuURL_SEARCH;
+		return MENU_SEARCH_URL;
 	}
 	
 	/**
@@ -95,7 +99,23 @@ public class WeiXin {
 	 * @return
 	 */
 	public static String getDeleteMenuUrl(){
-		return menuURL_DELETE;
+		return MENU_DELETE_URL;
+	}
+	
+	/**
+	 * Get upload media URL
+	 * @return
+	 */
+	public static String getUploadMediaUrl(){
+		return MEDIA_UPLOAD_URL;
+	}
+	
+	/**
+	 * Get download media URL
+	 * @return
+	 */
+	public static String getDownloadMediaUrl(){
+		return MEDIA_DOWNLOAD_URL;
 	}
 	
 	/**
@@ -105,10 +125,12 @@ public class WeiXin {
 		try (InputStream in = WeiXin.class.getClassLoader().getResourceAsStream("weixin.properties")) {
 			Properties p = new Properties();
 			p.load(in);
-			commonUrl = p.getProperty("common-url");
-			menuURL_CREATE = p.getProperty("menu-create-url");
-			menuURL_SEARCH = p.getProperty("menu-search-url");
-			menuURL_DELETE = p.getProperty("menu-delete-url");
+			COMMON_URL = p.getProperty("common-url");
+			MENU_CREATE_URL = p.getProperty("menu-create-url");
+			MENU_SEARCH_URL = p.getProperty("menu-search-url");
+			MENU_DELETE_URL = p.getProperty("menu-delete-url");
+			MEDIA_UPLOAD_URL = p.getProperty("media-upload-url");
+			MEDIA_DOWNLOAD_URL = p.getProperty("media-download-url");
 		} catch (IOException e) {
 			throw new WeiXinException("Load weixin properties faild: "+ e.getCause());
 		}

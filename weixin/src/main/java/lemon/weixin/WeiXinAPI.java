@@ -3,6 +3,8 @@ package lemon.weixin;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import lemon.shared.config.MMTConfig;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.service.ServiceType;
+import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -98,6 +101,18 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 			sendError("客户微信配置信息不存在。");
 		if(cfg.getAccount_type().equals(AccountType.DY))
 			sendError("订阅号不支持自定义菜单操作。");
+	}
+
+	@Override
+	public JSONObject uploadMedia(MMTConfig config, String type, byte[] file, String fileName) {
+		// 请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		params.put("type", type);
+		//上传
+		String result = HttpConnector.uploadFile(WeiXin.getUploadMediaUrl(), params, file, fileName);
+		logger.debug(result);
+		return JSONObject.fromObject(result);
 	}
 
 }

@@ -1,6 +1,7 @@
 package lemon.web.interfaces.action;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,13 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import lemon.shared.api.MmtAPI;
+import lemon.shared.config.MMTCharset;
 import lemon.shared.file.FileManager;
 import lemon.shared.media.Media;
+import lemon.shared.media.MediaSync;
 import lemon.shared.media.persistence.MediaRepository;
+import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -21,6 +26,9 @@ import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.toolkit.ArchiveManager;
+import lemon.weixin.config.bean.WeiXinConfig;
+import lemon.weixin.config.mapper.WXConfigMapper;
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +64,10 @@ public final class MediaAction extends AdminNavAction {
 	private SystemConfigMapper systemConfigMapper;
 	@Resource(name="localSystemFileManager")
 	private FileManager fileManager;
+	@Autowired
+	private WXConfigMapper wxConfigMapper;
+	@Resource(name="weiXinAPI")
+	private MmtAPI weixinApi;
 	
 	static{
 		initVerifyRules();
@@ -170,8 +182,9 @@ public final class MediaAction extends AdminNavAction {
 			@RequestParam("media_type") String media_type, ModelMap model) {
 		if(file.isEmpty())
 			return sendJSONError("文件不能为空。");
+		String fileName = obtainFileName(file);
 		//Verify file suffix
-		String suffix = getSuffix(file.getOriginalFilename());
+		String suffix = getSuffix(fileName);
 		Integer maxSize = verifyPool.get(media_type + "_" + suffix);
 		if(maxSize == null)
 			return sendJSONError("文件格式不支持。");
@@ -188,8 +201,7 @@ public final class MediaAction extends AdminNavAction {
 		//save file
 		Media media = new Media();
 		media.setCust_id(user.getCust_id());
-		//FIXME 中文文件名乱码
-		media.setDisplay_name(file.getOriginalFilename());
+		media.setDisplay_name(fileName);
 		media.setId(IdWorkerManager.getIdWorker(Media.class).getId());
 		media.setMedia_path(ArchiveManager.getPrivateFilePath(user.getCust_id()));
 		media.setMedia_type(media_type);
@@ -200,7 +212,30 @@ public final class MediaAction extends AdminNavAction {
 			return sendJSONError("文件上传失败。");
 		//保存到本地
 		fileManager.writeFile(MMT.getUploadFileRoot() + media.getMedia_path(), media.getReal_name(), bytes);
-		//TODO 同步到Server
+		if(wxSync != null){
+			WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
+			JSONObject resObj = weixinApi.uploadMedia(cfg, media_type, bytes, fileName);
+			if(resObj.get("errcode") != null)
+				return sendJSONError("上传到微信服务器出错[errcode="+resObj.get("errcode")+",errmsg="+resObj.get("errmsg")+"]");
+			if(!media_type.equals(resObj.get("type")))
+				return sendJSONError("与微信服务器同步出错。");
+			//存到同步表
+			MediaSync ms = new MediaSync();
+			ms.setCreated_at(resObj.getLong("created_at"));
+			ms.setCust_id(user.getCust_id());
+			//微信文件过期时间是三天
+			ms.setExpire_time(ms.getCreated_at() + 3 * 24 * 3600);
+			ms.setId(IdWorkerManager.getIdWorker(MediaSync.class).getId());
+			ms.setM_id(media.getId());
+			if("thumb".equals(media_type))
+				ms.setMedia_id(resObj.getString("thumb_media_id"));
+			else
+				ms.setMedia_id(resObj.getString("media_id"));
+			ms.setService_type(ServiceType.WEIXIN);
+			result = mediaRepository.addMediaSync(ms);
+			if(result == 0)
+				return sendJSONError("文件上传成功，但是同步到微信服务器失败。");
+		}
 		return sendJSONMsg("上传成功。");
 	}
 
@@ -237,5 +272,18 @@ public final class MediaAction extends AdminNavAction {
 	 */
 	private int toKB(long _byte){
 		return (int) (_byte/1024);
+	}
+	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private String obtainFileName(MultipartFile file){
+		try {
+			return new String(file.getOriginalFilename().getBytes("iso-8859-1"), MMTCharset.LOCAL_CHARSET);
+		} catch (UnsupportedEncodingException e1) {
+			return file.getOriginalFilename();
+		}
 	}
 }

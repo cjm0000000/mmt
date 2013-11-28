@@ -1,12 +1,4 @@
 $(function() {
-	// Ajax Form
-	$('.form-horizontal').ajaxForm({
-		success : function(responseText){
-			alert(responseText);
-			$('.form-horizontal').reset();
-		}
-	});
-	
 	//监听删除事件
 	$('#media-delete').on('click', function(){
 		$("#media-confirm-modal").modal();
@@ -17,11 +9,4 @@ $(function() {
 		var media_id = getSelectedValues("id");
 		mmtPost(url_delete, {id: media_id}, $('body'), $('.panel-heading'));
 	});
-	
-	$(".media-upload").on('click',function(){
-		$(".form-horizontal").submit();
-	});
-	
-	//监听Switch
-	$('.label-toggle-switch').on('switch-change');
 });

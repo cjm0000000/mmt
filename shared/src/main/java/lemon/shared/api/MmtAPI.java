@@ -1,5 +1,6 @@
 package lemon.shared.api;
 
+import net.sf.json.JSONObject;
 import lemon.shared.access.ReturnCode;
 import lemon.shared.access.Access;
 import lemon.shared.config.MMTConfig;
@@ -56,4 +57,15 @@ public interface MmtAPI {
 	 * @return
 	 */
 	ReturnCode deleteMenus(MMTConfig config);
+	
+	/**
+	 * Upload media to API server
+	 * @param config
+	 * @param type
+	 * @param file
+	 * @param fileName
+	 * @return
+	 */
+	JSONObject uploadMedia(MMTConfig config, String type, byte[] file,
+			String fileName);
 }
