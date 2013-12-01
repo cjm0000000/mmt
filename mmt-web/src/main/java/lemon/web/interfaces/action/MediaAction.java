@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTCharset;
@@ -33,7 +32,6 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -106,35 +104,6 @@ public final class MediaAction extends AdminNavAction {
 		return mv;
 	}
 	
-
-	/**
-	 * 保存多媒体信息
-	 * @param media
-	 * @param br
-	 * @param model
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "save", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public String save(@Valid Media media, BindingResult br, ModelMap model) {
-		if(media == null)
-			return sendJSONError("数据格式不正确。");
-		if(br.hasErrors())
-			return sendJSONError(br.getFieldError().getDefaultMessage());
-		User user = (User) model.get(TOKEN);
-		int result = 0;
-		media.setCust_id(user.getCust_id());
-		if(media.getId() <= 0){
-			media.setId(IdWorkerManager.getIdWorker(Media.class).getId());
-			result = mediaRepository.addMedia(media);
-		}else
-			result = mediaRepository.updateMedia(media);
-		if(result != 0)
-			return sendJSONMsg("多媒体信息保存成功。");
-		else
-			return sendJSONError("多媒体信息保存失败。");
-	}
-	
 	/**
 	 * 删除多媒体信息
 	 * @param media_id
@@ -205,6 +174,7 @@ public final class MediaAction extends AdminNavAction {
 		media.setId(IdWorkerManager.getIdWorker(Media.class).getId());
 		media.setMedia_path(ArchiveManager.getPrivateFilePath(user.getCust_id()));
 		media.setMedia_type(media_type);
+		media.setMedia_size((int) (file.getSize()/1000));
 		media.setReal_name(UUID.randomUUID().toString() + "." + suffix);
 		int result = mediaRepository.addMedia(media);
 		
@@ -214,6 +184,8 @@ public final class MediaAction extends AdminNavAction {
 		fileManager.writeFile(MMT.getUploadFileRoot() + media.getMedia_path(), media.getReal_name(), bytes);
 		if(wxSync != null){
 			WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
+			if(cfg  == null)
+				return sendJSONError("请先配置微信接口。");
 			JSONObject resObj = weixinApi.uploadMedia(cfg, media_type, bytes, fileName);
 			if(resObj.get("errcode") != null)
 				return sendJSONError("上传到微信服务器出错[errcode="+resObj.get("errcode")+",errmsg="+resObj.get("errmsg")+"]");

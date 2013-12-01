@@ -15,6 +15,7 @@ public class Media {
 	private int cust_id;
 	@NotEmpty(message="多媒体类型不能为空")
 	private String media_type;
+	private int media_size;
 	private String real_name;
 	private String display_name;
 	private String media_path;
@@ -37,6 +38,12 @@ public class Media {
 	}
 	public void setMedia_type(String media_type) {
 		this.media_type = media_type;
+	}
+	public int getMedia_size() {
+		return media_size;
+	}
+	public void setMedia_size(int media_size) {
+		this.media_size = media_size;
 	}
 	public String getReal_name() {
 		return real_name;

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lemon.shared.media.persistence.MediaRepository">
 	<insert id="addMedia" parameterType="lemon.shared.media.Media" >
-		INSERT INTO media(id,cust_id,media_type,real_name,display_name,media_path) 
-			VALUES(#{id},#{cust_id},#{media_type},#{real_name},#{display_name},#{media_path})
+		INSERT INTO media(id,cust_id,media_type,media_size,real_name,display_name,media_path) 
+			VALUES(#{id},#{cust_id},#{media_type},#{media_size},#{real_name},#{display_name},#{media_path})
 	</insert>
 	<insert id="addMediaSync" parameterType="lemon.shared.media.MediaSync">
 		INSERT INTO media_sync(id,m_id,cust_id,service_type,media_id,created_at,expire_time)
@@ -22,7 +22,7 @@
 		AND service_type=#{service_type}
 	</delete>
 	<select id="getMedia" parameterType="long" resultType="lemon.shared.media.Media">
-		SELECT A.id,A.cust_id,A.media_type,A.real_name,A.display_name,A.media_path,A.timestamp
+		SELECT A.id,A.cust_id,A.media_type,A.media_size,A.real_name,A.display_name,A.media_path,A.timestamp
 			FROM media A
 		WHERE A.id=#{id}
 	</select>
@@ -42,7 +42,7 @@
 	</update>
 	<select id="list" resultType="lemon.shared.media.Media">
 		<bind name="_display_name" value="(display_name == null ? '' : display_name) + '%'" />
-		SELECT A.id,A.cust_id,A.media_type,A.real_name,A.display_name,A.media_path,A.timestamp
+		SELECT A.id,A.cust_id,A.media_type,A.media_size,A.real_name,A.display_name,A.media_path,A.timestamp
 			FROM media A
 		WHERE A.cust_id=#{cust_id}
 			<if test="display_name!=null and display_name!=''">

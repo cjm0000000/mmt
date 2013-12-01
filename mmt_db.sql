@@ -225,6 +225,7 @@ CREATE TABLE `media` (
   `id` bigint(20) NOT NULL COMMENT 'ID',
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `media_type` char(5) NOT NULL DEFAULT '' COMMENT '媒体类型',
+  `media_size` int(11) NOT NULL DEFAULT '0' COMMENT '文件大小(KB)',
   `real_name` varchar(255) NOT NULL DEFAULT '' COMMENT '真实文件名',
   `display_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用于显示的文件名',
   `media_path` varchar(255) NOT NULL DEFAULT 'AVAILABLE' COMMENT '文件路径',

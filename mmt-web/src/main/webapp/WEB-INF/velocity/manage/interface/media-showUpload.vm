@@ -72,9 +72,10 @@ $('.form-horizontal').ajaxForm({
 	success : function(responseText){
 		var result = eval("("+responseText+")");
 		$(".panel-heading").prepend(result.msg);
-		setTimeout(function(){
-			document.location = $(".back-medial").attr('href');
-		}, 500);
+		if(result.success)
+			setTimeout(function(){
+				document.location = $(".back-medial").attr('href');
+			}, 500);
 	}
 });
 $(".media-upload").on('click',function(){

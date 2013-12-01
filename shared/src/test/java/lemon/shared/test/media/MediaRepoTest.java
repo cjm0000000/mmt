@@ -39,9 +39,11 @@ public class MediaRepoTest {
 		String display_name = "中文.xls";
 		String media_path = "/usr/local";
 		String media_type = "image";
+		int media_size = 743;
 		String real_name = UUID.randomUUID().toString() + ".jpeg";
 		//Test add
-		Media media = newMedia(display_name, media_path, media_type, real_name);
+		Media media = newMedia(display_name, media_path, media_type,
+				media_size, real_name);
 		assertNotEquals(0, mediaRepository.addMedia(media));
 		//Test get
 		Media m2 = mediaRepository.getMedia(media.getId());
@@ -59,7 +61,8 @@ public class MediaRepoTest {
 		assertNull(m2);
 		//Test list
 		display_name = UUID.randomUUID().toString();
-		media = newMedia(display_name, media_path, media_type, real_name);
+		media = newMedia(display_name, media_path, media_type, media_size,
+				real_name);
 		assertNotEquals(0, mediaRepository.addMedia(media));
 		List<Media> list = mediaRepository.list(CUST_ID, display_name, 0, 10);
 		assertNotNull(list);
@@ -69,7 +72,8 @@ public class MediaRepoTest {
 	
 	@Test
 	public void mediaSync(){
-		Media media = newMedia("rquest.xml", "/usr/bin", "video", UUID.randomUUID().toString());
+		Media media = newMedia("rquest.xml", "/usr/bin", "video", 142, UUID
+				.randomUUID().toString());
 		assertNotEquals(0, mediaRepository.addMedia(media));
 		MediaSync ms = new MediaSync();
 		ms.setCreated_at(System.currentTimeMillis());
@@ -91,17 +95,19 @@ public class MediaRepoTest {
 	 * @param display_name
 	 * @param media_path
 	 * @param media_type
+	 * @param media_size
 	 * @param real_name
 	 * @return
 	 */
 	private Media newMedia(String display_name, String media_path,
-			String media_type, String real_name) {
+			String media_type, int media_size, String real_name) {
 		Media media = new Media();
 		media.setId(IdWorkerManager.getIdWorker(Media.class).getId());
 		media.setCust_id(CUST_ID);
 		media.setDisplay_name(display_name);
 		media.setMedia_path(media_path);
 		media.setMedia_type(media_type);
+		media.setMedia_size(media_size);
 		media.setReal_name(real_name);
 		return media;
 	}

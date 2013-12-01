@@ -22,7 +22,8 @@
 				<tr>
 					<th width="5%">#</th>
 					<th width="30%">名称</th>
-		            <th width="50%">类型</th>
+		            <th width="20%">类型</th>
+		            <th width="20%">大小(KB)</th>
 		            <th width="15%" style="text-align:center;">同步情况</th>
 				</tr>
 			</thead>
@@ -32,6 +33,7 @@
 		    		<td><input type="checkbox" value="$!media.id" name="id" onclick="btnListener(this.name, $('#media-update'),$('#media-delete'));"/></td>
 		       		<td>$!media.display_name</td>
 		  			<td>$!media.media_type</td>
+		  			<td>$!media.media_size</td>
 		  			<td style="text-align:center;">
 						
 		  			</td>
