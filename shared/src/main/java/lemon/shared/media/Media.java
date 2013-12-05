@@ -1,6 +1,7 @@
 package lemon.shared.media;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,8 +20,9 @@ public class Media {
 	private String real_name;
 	private String display_name;
 	private String media_path;
-	
 	private Date timestamp;
+	private Set<MediaSync> syncDetails;
+	
 	public long getId() {
 		return id;
 	}
@@ -68,6 +70,12 @@ public class Media {
 	}
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+	public Set<MediaSync> getSyncDetails() {
+		return syncDetails;
+	}
+	public void setSyncDetails(Set<MediaSync> syncDetails) {
+		this.syncDetails = syncDetails;
 	}
 	
 }

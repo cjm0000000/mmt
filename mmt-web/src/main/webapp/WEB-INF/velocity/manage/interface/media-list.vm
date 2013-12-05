@@ -35,7 +35,13 @@
 		  			<td>$!media.media_type</td>
 		  			<td>$!media.media_size</td>
 		  			<td style="text-align:center;">
-						
+						#foreach($sync in $media.syncDetails)
+							#if($sync.service_type == 'WEIXIN')
+								<a data-toggle="tooltip" title="已经上传到微信" href="#"><img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" /></a>&nbsp;
+							#elseif($sync.service_type == 'YIXIN')
+								<a data-toggle="tooltip" title="已经上传到易信" href="#"><img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" /></a>&nbsp;
+							#end
+						#end
 		  			</td>
 		   		</tr>
 			#end
@@ -63,4 +69,5 @@
 var url_showPage 	= "#{getContextPath}webservices/interface/media/add-page";
 var url_save 		= "#{getContextPath}webservices/interface/media/save";
 var url_delete 		= "#{getContextPath}webservices/interface/media/delete";
+$('a').tooltip();
 </script>

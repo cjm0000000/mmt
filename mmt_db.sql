@@ -241,8 +241,8 @@ CREATE TABLE `media_sync` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
   `media_id` char(64) NOT NULL DEFAULT '' COMMENT '服务端media_id',
-  `created_at` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务端文件创建时间戳',
-  `expire_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '文件过期时间戳',
+  `created_at` int(11) NOT NULL DEFAULT '0' COMMENT '服务端文件创建时间戳',
+  `expire_time` int(11) NOT NULL DEFAULT '0' COMMENT '文件过期时间戳',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多媒体同步表';

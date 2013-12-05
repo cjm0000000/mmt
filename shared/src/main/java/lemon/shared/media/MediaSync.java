@@ -11,8 +11,8 @@ import lemon.shared.service.BaseService;
 public class MediaSync extends BaseService {
 	private long m_id;
 	private String media_id;
-	private long created_at;
-	private long expire_time;
+	private int created_at;
+	private int expire_time;
 	
 	public long getM_id() {
 		return m_id;
@@ -26,16 +26,16 @@ public class MediaSync extends BaseService {
 	public void setMedia_id(String media_id) {
 		this.media_id = media_id;
 	}
-	public long getCreated_at() {
+	public int getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(long created_at) {
+	public void setCreated_at(int created_at) {
 		this.created_at = created_at;
 	}
-	public long getExpire_time() {
+	public int getExpire_time() {
 		return expire_time;
 	}
-	public void setExpire_time(long expire_time) {
+	public void setExpire_time(int expire_time) {
 		this.expire_time = expire_time;
 	}
 	

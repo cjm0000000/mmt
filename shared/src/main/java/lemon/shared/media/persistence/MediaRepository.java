@@ -2,7 +2,9 @@ package lemon.shared.media.persistence;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 import lemon.shared.media.Media;
@@ -22,6 +24,7 @@ public interface MediaRepository {
 	 * @param media
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int addMedia(Media media);
 	
 	/**
@@ -29,6 +32,7 @@ public interface MediaRepository {
 	 * @param ms
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int addMediaSync(MediaSync ms);
 	
 	/**
@@ -37,6 +41,7 @@ public interface MediaRepository {
 	 * @param serviceType
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int deleteMediaSync(@Param("m_id") long media_id,
 			@Param("service_type") ServiceType serviceType);
 	
@@ -45,6 +50,7 @@ public interface MediaRepository {
 	 * @param ids
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int deleteMedia(String[] ids);
 	
 	/**
@@ -52,22 +58,33 @@ public interface MediaRepository {
 	 * @param id
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	Media getMedia(long id);
 	
 	/**
 	 * get media synchronize
-	 * @param media_id
-	 * @param service_type
+	 * @param media_id (Require)
+	 * @param service_type (Optional)
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	List<MediaSync> getMediaSync(@Param("m_id") long media_id,
 			@Param("service_type") ServiceType service_type);
+	
+	/**
+	 * Get media synchronize
+	 * @param media_ids
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	List<MediaSync> getMediaSyncs(long[] media_ids);
 	
 	/**
 	 * update media
 	 * @param media
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int updateMedia(Media media);
 	
 	/**
@@ -78,6 +95,7 @@ public interface MediaRepository {
 	 * @param limit
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	List<Media> list(@Param("cust_id") int cust_id,
 			@Param("display_name") String display_name,
 			@Param("start") int start, @Param("limit") int limit);
@@ -88,6 +106,7 @@ public interface MediaRepository {
 	 * @param display_name
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	int mediaCount(@Param("cust_id") int cust_id,
 			@Param("display_name") String display_name);
 }

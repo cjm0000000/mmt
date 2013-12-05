@@ -3,8 +3,10 @@ package lemon.web.interfaces.action;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -96,6 +98,7 @@ public final class MediaAction extends AdminNavAction {
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
 		List<Media> mediaList = mediaRepository.list(user.getCust_id(),key,(page - 1) * PAGESIZE, PAGESIZE);
+		processSync(mediaList);
 		Pagination pg = new Pagination(page, PAGESIZE,
 				mediaRepository.mediaCount(user.getCust_id(), key),
 				(key == null || "".equals(key)) ? null : "k=" + key);
@@ -193,7 +196,7 @@ public final class MediaAction extends AdminNavAction {
 				return sendJSONError("与微信服务器同步出错。");
 			//存到同步表
 			MediaSync ms = new MediaSync();
-			ms.setCreated_at(resObj.getLong("created_at"));
+			ms.setCreated_at(resObj.getInt("created_at"));
 			ms.setCust_id(user.getCust_id());
 			//微信文件过期时间是三天
 			ms.setExpire_time(ms.getCreated_at() + 3 * 24 * 3600);
@@ -247,7 +250,7 @@ public final class MediaAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 
+	 * 处理文件名
 	 * @param file
 	 * @return
 	 */
@@ -257,5 +260,38 @@ public final class MediaAction extends AdminNavAction {
 		} catch (UnsupportedEncodingException e1) {
 			return file.getOriginalFilename();
 		}
+	}
+	
+	/**
+	 * 合并同步信息到Media
+	 * @param list
+	 */
+	private void processSync(final List<Media> list){
+		if(list == null || list.size() == 0)
+			return;
+		final long[] media_ids = new long[list.size()];
+		for (int i = 0; i < list.size(); i++) 
+			media_ids[i] = list.get(i).getId();
+		
+		List<MediaSync> syncList = mediaRepository.getMediaSyncs(media_ids);
+		
+		for (Media media : list) 
+			for (MediaSync mediaSync : syncList) 
+				if(media.getId() == mediaSync.getM_id())
+					processMediaDetails(media, mediaSync);
+	}
+	
+	/**
+	 * 处理Detail字段
+	 * @param m
+	 * @param ms
+	 */
+	private void processMediaDetails(Media m, MediaSync ms){
+		Set<MediaSync> set = m.getSyncDetails();
+		if(set == null)
+			set = new HashSet<>(4);
+		set.add(ms);
+		if(m.getSyncDetails() == null)
+			m.setSyncDetails(set);
 	}
 }
