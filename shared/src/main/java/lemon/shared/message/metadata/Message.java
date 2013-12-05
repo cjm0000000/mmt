@@ -34,6 +34,8 @@ public class Message extends BaseService {
 	@XStreamAlias("MsgId")
 	protected Long msgId;
 	
+	public Message(){}
+	
 	public Message(String msgType) {
 		this.msgType = msgType;
 	}

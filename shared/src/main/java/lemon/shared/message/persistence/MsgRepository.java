@@ -15,6 +15,7 @@ import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
+import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
@@ -29,6 +30,20 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MsgRepository {
+	/**
+	 * get receive detail message
+	 * @param cust_id
+	 * @param service_type
+	 * @param msgType
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	List<Message> getRecvMsgList(@Param("cust_id") int cust_id,
+			@Param("service_type") ServiceType service_type,
+			@Param("msgType") String msgType, @Param("start") int start,
+			@Param("limit") int limit);
+
 	/**
 	 * get receive text message
 	 * @param id

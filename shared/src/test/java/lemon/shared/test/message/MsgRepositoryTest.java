@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.UUID;
 
 import lemon.shared.message.metadata.Message;
@@ -43,6 +44,18 @@ public class MsgRepositoryTest {
 		acx = new ClassPathXmlApplicationContext(resource);
 		msgRepository = acx.getBean(MsgRepository.class);
 		assertNotNull(msgRepository);
+	}
+	
+	@Test
+	public void getRecvMsgList(){
+		List<Message> list = msgRepository.getRecvMsgList(CUST_ID, null, null, 0, 10);
+		assertNotNull(list);
+		list = msgRepository.getRecvMsgList(CUST_ID, ServiceType.WEIXIN, null, 0, 10);
+		assertNotNull(list);
+		list = msgRepository.getRecvMsgList(CUST_ID, ServiceType.WEIXIN, "image", 0, 10);
+		assertNotNull(list);
+		list = msgRepository.getRecvMsgList(CUST_ID, null, "image", 0, 10);
+		assertNotNull(list);
 	}
 
 	@Test
