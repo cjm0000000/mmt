@@ -1,5 +1,7 @@
 package lemon.web.global;
 
+import lemon.shared.MmtException;
+
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +21,7 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
 	@ExceptionHandler
-	public ModelAndView handleMMTException(MMTException ex) {
+	public ModelAndView handleMMTException(MmtException ex) {
 		return new ModelAndView("error","msg",ex.getMessage());
 	}
 	

@@ -4,8 +4,8 @@ import net.sf.json.JSONObject;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import lemon.shared.MmtException;
 import lemon.web.global.JSONResult;
-import lemon.web.global.MMTException;
 import lemon.web.ui.BS3UI;
 
 /**
@@ -48,7 +48,7 @@ public class MMTAction {
 	 * @param error
 	 */
 	protected void sendError(String error){
-		throw new MMTException(error);
+		throw new MmtException(error);
 	}
 	
 	/**

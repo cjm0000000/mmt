@@ -7,11 +7,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import lemon.shared.MmtException;
 import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
-import lemon.web.global.MMTException;
 import lemon.web.security.MMTSecurityMetadataSource;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
@@ -165,7 +165,7 @@ public class RoleAction extends AdminNavAction {
 	@RequestMapping(value = "authority-list-page", method = RequestMethod.GET)
 	public ModelAndView authorityListPage(int role_id) {
 		if(role_id == 0)
-			throw new MMTException("角色不存在。");
+			throw new MmtException("角色不存在。");
 		List<Menu> list = roleMapper.getAuthority(role_id);
 		list = obtainAuthorityTree(list);
 		Map<String, Object> result = new HashMap<>();
