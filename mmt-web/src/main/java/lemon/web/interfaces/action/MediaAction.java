@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import lemon.shared.MmtException;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTCharset;
 import lemon.shared.file.FileManager;
@@ -186,32 +187,39 @@ public final class MediaAction extends AdminNavAction {
 		//保存到本地
 		fileManager.writeFile(MMT.getUploadFileRoot() + media.getMedia_path(), media.getReal_name(), bytes);
 		if(wxSync != null){
-			WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
-			if(cfg  == null)
-				return sendJSONError("请先配置微信接口。");
-			JSONObject resObj = weixinApi.uploadMedia(cfg, media_type, bytes, fileName);
-			if(resObj.get("errcode") != null)
-				return sendJSONError("上传到微信服务器出错[errcode="+resObj.get("errcode")+",errmsg="+resObj.get("errmsg")+"]");
-			if(!media_type.equals(resObj.get("type")))
-				return sendJSONError("与微信服务器同步出错。");
-			//存到同步表
-			MediaSync ms = new MediaSync();
-			ms.setCreated_at(resObj.getInt("created_at"));
-			ms.setCust_id(user.getCust_id());
-			//微信文件过期时间是三天
-			ms.setExpire_time(ms.getCreated_at() + 3 * 24 * 3600);
-			ms.setId(IdWorkerManager.getIdWorker(MediaSync.class).getId());
-			ms.setM_id(media.getId());
-			if("thumb".equals(media_type))
-				ms.setMedia_id(resObj.getString("thumb_media_id"));
-			else
-				ms.setMedia_id(resObj.getString("media_id"));
-			ms.setService_type(ServiceType.WEIXIN);
-			result = mediaRepository.addMediaSync(ms);
-			if(result == 0)
-				return sendJSONError("文件上传成功，但是同步到微信服务器失败。");
+			String res = syncFile2APIServer(user, media, bytes);
+			if(res != null)
+				return res;
 		}
 		return sendJSONMsg("上传成功。");
+	}
+	
+	/**
+	 * 把服务器上的多媒体同步到API server
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "sync", method = RequestMethod.POST, produces="text/html;charset=UTF-8")
+	public String syncFile(@RequestParam(defaultValue="0")long media_id, ServiceType service_type,
+			ModelMap model) {
+		if(media_id <=0 || service_type == null)
+			return sendJSONError("参数错误。");
+		Media media = mediaRepository.getMedia(media_id);
+		if(media == null)
+			return sendJSONError("多媒体资源不存在。");
+		//读取磁盘文件
+		byte[] bytes;
+		try {
+			bytes = fileManager.readFile(MMT.getUploadFileRoot() + media.getMedia_path(), media.getReal_name());
+		} catch (MmtException e) {
+			return sendJSONError("无法读取多媒体文件。");
+		}
+		//同步
+		User user = (User) model.get(TOKEN);
+		String res = syncFile2APIServer(user, media, bytes);
+		if(res != null)
+			return res;
+		return sendJSONMsg("同步成功。");
 	}
 
 	@Override
@@ -289,9 +297,48 @@ public final class MediaAction extends AdminNavAction {
 	private void processMediaDetails(Media m, MediaSync ms){
 		Set<MediaSync> set = m.getSyncDetails();
 		if(set == null)
-			set = new HashSet<>(4);
+			set = new HashSet<>(4);//注意：当service_type增加的时候需要修改这个初始化参数
 		set.add(ms);
 		if(m.getSyncDetails() == null)
 			m.setSyncDetails(set);
 	}
+	
+	/**
+	 * Sync file to API server
+	 * @param user
+	 * @param media
+	 * @param bytes
+	 * @return
+	 */
+	private String syncFile2APIServer(User user, Media media, byte[] bytes){
+		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
+		if(cfg  == null)
+			return sendJSONError("请先配置微信接口。");
+		JSONObject resObj = weixinApi.uploadMedia(cfg, media.getMedia_type(), bytes, media.getDisplay_name());
+		if(resObj.get("errcode") != null)
+			return sendJSONError("上传到微信服务器出错[errcode=" + resObj.get("errcode")
+					+ ",errmsg=" + resObj.get("errmsg") + "]");
+		if(!media.getMedia_type().equals(resObj.get("type")))
+			return sendJSONError("与微信服务器同步出错。");
+		//存到同步表
+		MediaSync ms = new MediaSync();
+		ms.setCreated_at(resObj.getInt("created_at"));
+		ms.setCust_id(user.getCust_id());
+		//微信文件过期时间是三天
+		ms.setExpire_time(ms.getCreated_at() + 3 * 24 * 3600);
+		ms.setId(IdWorkerManager.getIdWorker(MediaSync.class).getId());
+		ms.setM_id(media.getId());
+		if("thumb".equals(media.getMedia_type()))
+			ms.setMedia_id(resObj.getString("thumb_media_id"));
+		else
+			ms.setMedia_id(resObj.getString("media_id"));
+		ms.setService_type(ServiceType.WEIXIN);
+		//清理Sync
+		int result = mediaRepository.deleteMediaSync(media.getId(), ServiceType.WEIXIN);
+		result = mediaRepository.addMediaSync(ms);
+		if(result == 0)
+			return sendJSONError("文件上传成功，但是同步到微信服务器失败。");
+		return null;//success
+	}
+	
 }

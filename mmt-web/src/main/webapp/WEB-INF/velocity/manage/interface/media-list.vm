@@ -13,6 +13,12 @@
 			<button id="media-delete" type="button" disabled class="btn btn-danger btn-md" >
 				<span class="glyphicon glyphicon-trash"></span> 删 除
 			</button>
+			<button id="media-sync-wx" type="button" disabled class="media-sync btn btn-warning btn-md" >
+				<span class="glyphicon glyphicon-transfer"></span> 同步到微信
+			</button>
+			<button id="media-sync-yx" type="button" disabled class="media-sync btn btn-warning btn-md" >
+				<span class="glyphicon glyphicon-transfer"></span> 同步到易信
+			</button>
 			</form>
 		</div>
 			
@@ -30,7 +36,7 @@
 			<tbody>
 			#foreach($media in $list)
 				<tr>
-		    		<td><input type="checkbox" value="$!media.id" name="id" onclick="btnListener(this.name, $('#media-update'),$('#media-delete'));"/></td>
+		    		<td><input type="checkbox" value="$!media.id" name="id" onclick="btnListener(this.name, $('.media-sync'),$('#media-delete'),true,this);"/></td>
 		       		<td>$!media.display_name</td>
 		  			<td>$!media.media_type</td>
 		  			<td>$!media.media_size</td>
@@ -67,7 +73,7 @@
 <script src="#{getContextPath}js/manage/interface/media.js"></script>
 <script type="text/javascript">
 var url_showPage 	= "#{getContextPath}webservices/interface/media/add-page";
-var url_save 		= "#{getContextPath}webservices/interface/media/save";
+var url_sync 		= "#{getContextPath}webservices/interface/media/sync";
 var url_delete 		= "#{getContextPath}webservices/interface/media/delete";
 $('a').tooltip();
 </script>
