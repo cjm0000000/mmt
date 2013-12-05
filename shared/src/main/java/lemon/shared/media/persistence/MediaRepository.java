@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
+import lemon.shared.media.MediaSyncLog;
 import lemon.shared.service.ServiceType;
 
 /**
@@ -34,6 +35,14 @@ public interface MediaRepository {
 	 */
 	@Lang(RawLanguageDriver.class)
 	int addMediaSync(MediaSync ms);
+	
+	/**
+	 * add media sync log
+	 * @param log
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	int addMediaSyncLog(MediaSyncLog log);
 	
 	/**
 	 * delete media synchronize 

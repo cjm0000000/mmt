@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
+import lemon.shared.media.MediaSyncLog;
 import lemon.shared.media.persistence.MediaRepository;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.EqualsUtil;
@@ -114,6 +115,22 @@ public class MediaRepoTest {
 		List<MediaSync> list = mediaRepository.getMediaSyncs(media_ids);
 		assertNotNull(list);
 		assertEquals(list.size(), 4);
+	}
+	
+	/**
+	 * Test for method addMediaSyncLog
+	 */
+	@Test
+	public void addMediaSyncLog(){
+		Media media = newMedia("log.jpg", "/www/ear", "image", 100, UUID.randomUUID()+".jpg");
+		assertNotEquals(0, mediaRepository.addMedia(media));
+		MediaSyncLog log = new MediaSyncLog();
+		log.setCust_id(CUST_ID);
+		log.setId(IdWorkerManager.getIdWorker(MediaSyncLog.class).getId());
+		log.setMedia_id(media.getId());
+		log.setResult("{\"type\":\"thumb\",\"thumb_media_id\":\"lWtZrS9a3ucVshCTFC3bGYDVoMgpiHGGjzhch0jeM7zQneNy2AR9HENU4U1EUf9_\",\"created_at\":1386227649}");
+		log.setService_type(ServiceType.WEIXIN);
+		assertNotEquals(0, mediaRepository.addMediaSyncLog(log));
 	}
 	
 	/**

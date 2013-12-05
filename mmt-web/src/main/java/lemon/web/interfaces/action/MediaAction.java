@@ -17,6 +17,7 @@ import lemon.shared.config.MMTCharset;
 import lemon.shared.file.FileManager;
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
+import lemon.shared.media.MediaSyncLog;
 import lemon.shared.media.persistence.MediaRepository;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
@@ -34,6 +35,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -310,11 +312,22 @@ public final class MediaAction extends AdminNavAction {
 	 * @param bytes
 	 * @return
 	 */
+	@Transactional
 	private String syncFile2APIServer(User user, Media media, byte[] bytes){
 		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
 		if(cfg  == null)
 			return sendJSONError("请先配置微信接口。");
-		JSONObject resObj = weixinApi.uploadMedia(cfg, media.getMedia_type(), bytes, media.getDisplay_name());
+		String res = weixinApi.uploadMedia(cfg, media.getMedia_type(), bytes, media.getDisplay_name());
+		//save media sync log
+		MediaSyncLog log = new MediaSyncLog();
+		log.setCust_id(media.getCust_id());
+		log.setId(IdWorkerManager.getIdWorker(MediaSyncLog.class).getId());
+		log.setMedia_id(media.getId());
+		log.setResult(res);
+		log.setService_type(ServiceType.WEIXIN);
+		mediaRepository.addMediaSyncLog(log);
+		
+		JSONObject resObj = JSONObject.fromObject(res);
 		if(resObj.get("errcode") != null)
 			return sendJSONError("上传到微信服务器出错[errcode=" + resObj.get("errcode")
 					+ ",errmsg=" + resObj.get("errmsg") + "]");

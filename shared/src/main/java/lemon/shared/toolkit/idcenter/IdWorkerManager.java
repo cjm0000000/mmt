@@ -13,6 +13,7 @@ import lemon.shared.fans.Fans;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
+import lemon.shared.media.MediaSyncLog;
 import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.metadata.Message;
@@ -48,6 +49,7 @@ public class IdWorkerManager {
 		
 		idRepos.put(Media.class, 			generateIdWorker(13));
 		idRepos.put(MediaSync.class, 		generateIdWorker(14));
+		idRepos.put(MediaSyncLog.class, 	generateIdWorker(15));
 	}
 	
 	/**

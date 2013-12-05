@@ -9,6 +9,10 @@
 		INSERT INTO media_sync(id,m_id,cust_id,service_type,media_id,created_at,expire_time)
 			VALUES(#{id},#{m_id},#{cust_id},#{service_type},#{media_id},#{created_at},#{expire_time})
 	</insert>
+	<insert id="addMediaSyncLog" parameterType="lemon.shared.media.MediaSyncLog">
+		INSERT INTO media_sync_log(id,cust_id,service_type,media_id,result)
+			VALUES(#{id},#{cust_id},#{service_type},#{media_id},#{result})
+	</insert>
 	<delete id="deleteMedia">
 		DELETE FROM media 
 			WHERE id IN

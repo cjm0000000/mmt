@@ -246,6 +246,18 @@ CREATE TABLE `media_sync` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多媒体同步表';
+#
+# 多媒体同步日志表
+#
+CREATE TABLE `media_sync_log` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `service_type` char(8) NOT NULL DEFAULT '' COMMENT '服务类型',
+  `media_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '多媒体文件ID',
+  `result` varchar(1024) NOT NULL DEFAULT '' COMMENT '请求结果',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多媒体同步日志';
 #############################  FANS   #############################
 #
 # 粉丝表

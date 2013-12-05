@@ -3,8 +3,6 @@ package lemon.yixin;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -100,7 +98,7 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public JSONObject uploadMedia(MMTConfig config, String type, byte[] file,
+	public String uploadMedia(MMTConfig config, String type, byte[] file,
 			String fileName) {
 		//Nothing to do
 		return null;
