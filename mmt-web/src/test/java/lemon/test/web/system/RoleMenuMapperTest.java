@@ -4,36 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.mapper.RoleMenuMapper;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class RoleMenuMapperTest {
-	private AbstractApplicationContext acx;
+//FIXME 修改RoleMenu测试用例
+public class RoleMenuMapperTest extends BaseWebTest {
+	@Autowired
 	private RoleMenuMapper roleMenuMapper;
 	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		roleMenuMapper = acx.getBean(RoleMenuMapper.class);
-		assertNotNull(roleMenuMapper);
-	}
-	
-	@After
-	public void destory(){
-		acx.close();
-	}
 	
 	@Test
 	@Ignore

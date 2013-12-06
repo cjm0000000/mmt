@@ -7,41 +7,24 @@ import java.util.List;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.RoleMapper;
 import lemon.web.system.mapper.UserMapper;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class UserMapperTest {
-	private ApplicationContext acx;
+public class UserMapperTest extends BaseWebTest{
+	@Autowired
 	private UserMapper userMapper;
+	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
 	private CustomerRepository customerMapper;
 	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		userMapper = acx.getBean(UserMapper.class);
-		roleMapper = acx.getBean(RoleMapper.class);
-		customerMapper = acx.getBean(CustomerRepository.class);
-		assertNotNull(userMapper);
-		assertNotNull(roleMapper);
-		assertNotNull(customerMapper);
-	}
-	
 	@Test
-	@Ignore
 	public void testUser(){
 		User user = addUser();
 		assertNotEquals(0, user.getUser_id());
@@ -65,7 +48,6 @@ public class UserMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void getUserIdByName(){
 		User u1 = addUser();
 		assertNotNull(u1);
@@ -74,7 +56,6 @@ public class UserMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void getUserById(){
 		User u1 = addUser();
 		assertNotNull(u1);
@@ -83,7 +64,6 @@ public class UserMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void deleteUser(){
 		User u1 = addUser();
 		User u2 = addUser();

@@ -7,31 +7,16 @@ import java.util.UUID;
 
 import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
+import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class LocalMsgBeanRepositoryTest {
+public class LocalMsgBeanRepositoryTest extends BaseMmtTest{
+	@Autowired
 	private LocalMsgBeanRepository msgBeanMapper;
-	private ApplicationContext acx;
-	
-	private static final int CUST_ID = -5743;
-	
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		msgBeanMapper = acx.getBean(LocalMsgBeanRepository.class);
-		assertNotNull(msgBeanMapper);
-	}
 	
 	@Test
 	public void addL1Msg(){

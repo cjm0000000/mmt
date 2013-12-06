@@ -4,28 +4,14 @@ import static org.junit.Assert.*;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class MsgLogManagerTest {
-	private ApplicationContext acx;
+public class MsgLogManagerTest extends BaseMmtTest {
+	@Autowired
 	private MsgLogManager msgLogManager;
-	private static final int CUST_ID = -5743;
-	
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		msgLogManager = acx.getBean(MsgLogManager.class);
-		assertNotNull(msgLogManager);
-	}
 	
 	@Test
 	public void saveRecvLog(){

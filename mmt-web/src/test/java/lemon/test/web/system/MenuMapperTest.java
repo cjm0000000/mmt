@@ -4,55 +4,29 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.mapper.MenuMapper;
 import lemon.web.system.mapper.RoleMapper;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class MenuMapperTest {
-	private AbstractApplicationContext acx;
+//FIXME 修改MENU测试用例
+public class MenuMapperTest extends BaseWebTest {
+	@Autowired
 	private MenuMapper menuMapper;
+	@Autowired
 	private RoleMapper roleMapper;
-	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		menuMapper = acx.getBean(MenuMapper.class);
-		roleMapper = acx.getBean(RoleMapper.class);
-		assertNotNull(menuMapper);
-		assertNotNull(roleMapper);
-//		List<Menu> list = menuMapper.getMenuList();
-//		for (Menu menu : list) {
-//			if(menu.getMenu_id() != 1)
-//				menuMapper.deleteMenu(menu.getMenu_id());
-//		}
-	}
-	
-	@After
-	public void destory(){
-//		List<Menu> list = menuMapper.getMenuList();
-//		for (Menu menu : list) {
-//			if(menu.getMenu_id() != 1)
-//				menuMapper.deleteMenu(menu.getMenu_id());
-//		}
-		acx.close();
-	}
+	private static final String LEVEL1 = "11";
+	private static final String LEVEL2 = "12";
+	private static final String LEVEL3 = "13";
 	
 	@Test
 	@Ignore
 	public void deleteMenu(){
-		Menu menu = addMenu("2",1);
+		Menu menu = addMenu(LEVEL2,1);
 		assertNotNull(menu);
 		assertNotEquals(0, menu.getMenu_id());
 		menuMapper.deleteMenu(new String[]{"2"});

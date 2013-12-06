@@ -9,57 +9,40 @@ import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
+import lemon.yixin.test.base.BaseYiXinTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class YiXinConfigMapperTest {
+public class YiXinConfigMapperTest extends BaseYiXinTest {
+	@Autowired
 	private YXConfigMapper configMapper;
+	@Autowired
 	private CustomerRepository custMapper;
-	private AbstractApplicationContext acx;
 	private static Log logger = LogFactory.getLog(YiXinConfigMapperTest.class);
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		configMapper = (YXConfigMapper) acx.getBean(YXConfigMapper.class);
-		custMapper = (CustomerRepository) acx.getBean(CustomerRepository.class);
-		assertNotNull(configMapper);
-		assertNotNull(custMapper);
-	}
-	@After
-	public void destory(){
-		acx.close();
-	}
+	private int CUST_ID = -5745;
+	
 	@Test
 	public void crud(){
-		int cust_id = 10;
-		Customer cust = custMapper.getCustomer(cust_id);
+		Customer cust = custMapper.getCustomer(CUST_ID);
 		if(null == cust){
 			cust = new Customer();
 			cust.setCust_name("JUnit Test Customer");
 			cust.setMemo("JUnit Test");
 			cust.setStatus(Status.AVAILABLE);
 			custMapper.addCustomer(cust);
-			cust_id = cust.getCust_id();
+			CUST_ID = cust.getCust_id();
 		}
-		assertNotEquals(0, cust_id);
+		assertNotEquals(0, CUST_ID);
 		
-		YiXinConfig cfg = configMapper.get(cust_id);
+		YiXinConfig cfg = configMapper.get(CUST_ID);
 		if(null != cfg){
-			configMapper.delete(cust_id);
+			configMapper.delete(CUST_ID);
 		}
 		cfg = new YiXinConfig();
-		cfg.setCust_id(cust_id);
+		cfg.setCust_id(CUST_ID);
 		cfg.setToken("Junit Test Token");
 		cfg.setYx_account("Junit Test YiXin Account");
 		cfg.setSubscribe_msg("Welcome to subscribe Junit Test");

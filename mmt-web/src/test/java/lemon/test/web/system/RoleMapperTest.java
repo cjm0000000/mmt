@@ -5,35 +5,20 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import lemon.shared.config.Status;
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
 import lemon.web.system.mapper.RoleMapper;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class RoleMapperTest {
-	private ApplicationContext acx;
+public class RoleMapperTest extends BaseWebTest {
+	@Autowired
 	private RoleMapper roleMapper;
 	private final String role_name = "R123456R";
 	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		roleMapper = acx.getBean(RoleMapper.class);
-		assertNotNull(roleMapper);
-	}
-	
 	@Test
-	@Ignore
 	public void testAddRole(){
 		Role role = addRole();
 		assertNotEquals(0, role.getRole_id());
@@ -49,15 +34,14 @@ public class RoleMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void roleList(){
 		List<Role> list = roleMapper.getRoleList(0,5);
 		for (Role role : list) {
 			System.out.println(role.getRole_id());
 		}
 	}
+	
 	@Test
-	@Ignore
 	public void testCheckRoleName(){
 		Role r1 = addRole();
 		int matchers = roleMapper.checkRoleName(r1.getRole_name());
@@ -66,7 +50,6 @@ public class RoleMapperTest {
 		roleMapper.batchDelete(new String[]{String.valueOf(r1.getRole_id())});
 	}
 	@Test
-	@Ignore
 	public void testBatchDelete(){
 		Role r1 = addRole();
 		Role r2 = addRole();
@@ -74,7 +57,6 @@ public class RoleMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void testoleAuthority(){
 		Role role = addRole();
 		String[] menus = {"1","2"};
@@ -84,7 +66,6 @@ public class RoleMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void testGetAuthority(){
 		Role role = addRole();
 		String[] menus = {"1","2"};
@@ -94,7 +75,6 @@ public class RoleMapperTest {
 	}
 	
 	@Test
-	@Ignore
 	public void setReloadFlag(){
 		roleMapper.setReloadFlag(1);
 	}

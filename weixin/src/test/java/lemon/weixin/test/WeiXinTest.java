@@ -1,21 +1,19 @@
 package lemon.weixin.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import lemon.weixin.config.WeiXin;
+import lemon.weixin.test.base.BaseWeiXinTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-@RunWith(JUnit4.class)
-public class WeiXinTest {
+public class WeiXinTest extends BaseWeiXinTest {
 	
 	@Before
 	public void init(){
 		WeiXin.init();
-		
 	}
+	
 	@Test
 	public void testWeiXinProperties() {
 		assertEquals("https://api.weixin.qq.com/cgi-bin/token", WeiXin.getCommonUrl());

@@ -3,32 +3,17 @@ package lemon.yixin.test;
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.toolkit.secure.SecureUtil;
+import lemon.yixin.test.base.BaseYiXinTest;
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-@RunWith(JUnit4.class)
-public class YiXinAPITest {
+public class YiXinAPITest extends BaseYiXinTest {
+	@Autowired @Qualifier("yiXinAPI")
 	private MmtAPI api;
-	private AbstractApplicationContext acx;
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		api = (MmtAPI) acx.getBean(MmtAPI.class);
-		assertNotNull(api);
-	}
-	@After
-	public void destory(){
-		acx.close();
-	}
+
 	@Test
 	public void testSignature() {
 		Access sa = new Access();

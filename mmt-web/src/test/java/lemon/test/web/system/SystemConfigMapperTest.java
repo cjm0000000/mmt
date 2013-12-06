@@ -4,30 +4,16 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.mapper.SystemConfigMapper;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class SystemConfigMapperTest {
-	private AbstractApplicationContext acx;
+public class SystemConfigMapperTest extends BaseWebTest{
+	@Autowired
 	private SystemConfigMapper systemConfigMapper;
-	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		systemConfigMapper = acx.getBean(SystemConfigMapper.class);
-		assertNotNull(systemConfigMapper);
-	}
 	
 	@Test
 	public void testAll(){
@@ -47,11 +33,6 @@ public class SystemConfigMapperTest {
 		assertNotEquals(0, result);
 		list = systemConfigMapper.getItems(group);
 		assertEquals(0, list.size());
-	}
-	
-	@After
-	public void destory(){
-		acx.close();
 	}
 	
 	private SystemConfig addItem(String group, String key,String value){

@@ -3,30 +3,17 @@ package lemon.test.web.log;
 import java.util.List;
 
 import lemon.shared.config.Status;
+import lemon.test.web.base.BaseWebTest;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.log.mapper.SystemLogManager;
-
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@RunWith(JUnit4.class)
-public class SystemLogTest {
-	private ApplicationContext acx;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class SystemLogTest extends BaseWebTest{
+	@Autowired
 	private SystemLogManager logManager;
-	
-	@Before
-	public void init(){
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		logManager = acx.getBean(SystemLogManager.class);
-		assertNotNull(logManager);
-	}
 	
 	@Test
 	public void testLoginLog(){

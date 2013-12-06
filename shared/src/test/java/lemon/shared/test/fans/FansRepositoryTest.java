@@ -1,35 +1,22 @@
 package lemon.shared.test.fans;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import lemon.shared.config.Status;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class FansRepositoryTest {
+public class FansRepositoryTest extends BaseMmtTest {
+	@Autowired
 	private FansManager fansManager;
-	private ApplicationContext acx;
-	private static final int CUST_ID = -5743;
-	
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		fansManager = acx.getBean(FansManager.class);
-		assertNotNull(fansManager);
-	}
 	
 	@Test
 	public void addFans(){
+		assertNotNull(fansManager);
 		String user_id = "ot9x4jpm4x_rBrqacQ8hzikL9D-M";
 		//save
 		Fans fans = new Fans();

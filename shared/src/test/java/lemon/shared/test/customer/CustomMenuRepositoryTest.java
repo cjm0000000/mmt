@@ -10,30 +10,16 @@ import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class CustomMenuRepositoryTest {
+public class CustomMenuRepositoryTest extends BaseMmtTest {
 	private static final byte LEVEL = 9;
-	private static final int CUST_ID = -5743;
-	private ApplicationContext acx;
+	@Autowired
 	private CustomMenuRepository customMenuMapper;
-
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		customMenuMapper = acx.getBean(CustomMenuRepository.class);
-		assertNotNull(customMenuMapper);
-	}
 
 	@Test
 	public void add() {

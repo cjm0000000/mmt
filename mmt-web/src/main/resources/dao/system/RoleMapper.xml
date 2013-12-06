@@ -24,10 +24,10 @@
 			SET A.role_name=#{role_name}, 
 				A.role_desc=#{role_desc}, 
 				<if test="status != null">
-				A.`status`=#{status}
+				A.`status`=#{status},
 				</if>
 				<if test="reloadable != null">
-				A.reloadable=#{reloadable}
+				A.reloadable=#{reloadable},
 				</if>
 				A.sort=#{sort}
 			WHERE A.role_id=#{role_id}

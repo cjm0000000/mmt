@@ -22,28 +22,14 @@ import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class MsgManagerTest {
-	private ApplicationContext acx;
+public class MsgManagerTest extends BaseMmtTest {
+	@Autowired
 	private MsgManager msgManager;
-	private static final int CUST_ID = -5743;
-
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		msgManager = acx.getBean(MsgManager.class);
-		assertNotNull(msgManager);
-	}
 
 	@Test
 	public void saveRecvAudioMsg() {

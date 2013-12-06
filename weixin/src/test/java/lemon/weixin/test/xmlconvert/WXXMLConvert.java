@@ -6,8 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import lemon.shared.event.EventType;
 import lemon.shared.message.metadata.TextMessage;
@@ -19,6 +17,7 @@ import lemon.shared.message.metadata.send.Article;
 import lemon.shared.message.metadata.send.NewsMessage;
 import lemon.shared.message.metadata.specific.weixin.WXMusicMessage;
 import lemon.shared.toolkit.xstream.XStreamHelper;
+import lemon.weixin.test.base.BaseWeiXinTest;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -30,8 +29,7 @@ import static org.junit.Assert.*;
  * @author lemon
  * 
  */
-@RunWith(JUnit4.class)
-public class WXXMLConvert {
+public class WXXMLConvert extends BaseWeiXinTest {
 	private static Log logger = LogFactory.getLog(WXXMLConvert.class);
 	private XStream xStream;
 	

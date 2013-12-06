@@ -6,30 +6,15 @@ import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.persistence.AccessRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class AccessRepositoryTest {
-	private ApplicationContext acx;
+public class AccessRepositoryTest extends BaseMmtTest {
+	@Autowired
 	private AccessRepository accessRepository;
-	private static final int CUST_ID = -5743;
-	
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		accessRepository = acx.getBean(AccessRepository.class);
-		assertNotNull(accessRepository);
-	}
-	
 	
 	/**
 	 * business: access
@@ -79,6 +64,11 @@ public class AccessRepositoryTest {
 		log.setId(IdWorkerManager.getIdWorker(AccessTokenLog.class).getId());
 		accessRepository.saveAccessTokenLog(log);
 		assertNotEquals(0, log.getId());
+	}
+	
+	public static void main(String[] args){
+		AccessRepositoryTest as = new AccessRepositoryTest();
+		System.out.println(as.getClass().getClassLoader());
 	}
 	
 }

@@ -5,60 +5,47 @@ import lemon.shared.api.MmtAPI;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.weixin.WeiXinAPI;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
+import lemon.weixin.test.base.BaseWeiXinTest;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-@RunWith(JUnit4.class)
-public class WeiXinAPITest {
+public class WeiXinAPITest extends BaseWeiXinTest {
+	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
 	private final String Welcome_msg = "Welcome";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
 	private final String MMT_TOKEN = "lemonxoewfnvowensofcewniasdmfo";
 	private final String bizClass = "lemon.weixin.biz.customer.SimpleWeiXinMsgProcessor";
-	private final int cust_id = 100;
-	private ApplicationContext acx;
+	@Autowired
 	private CustomerRepository customerMapper;
+	@Autowired
 	private WXConfigMapper	wxConfigMapper;
 	@Before
 	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		api = acx.getBean(WeiXinAPI.class);
-		customerMapper = acx.getBean(CustomerRepository.class);
-		wxConfigMapper = acx.getBean(WXConfigMapper.class);
-		assertNotNull(api);
-		assertNotNull(customerMapper);
-		assertNotNull(wxConfigMapper);
-		
-		Customer cust = customerMapper.getCustomer(cust_id);
+		Customer cust = customerMapper.getCustomer(CUST_ID);
 		if(cust == null){
 			cust = new Customer();
-			cust.setCust_id(cust_id);
+			cust.setCust_id(CUST_ID);
 			cust.setCust_name("Test");
 			cust.setMemo("");
 			cust.setStatus(Status.AVAILABLE);
 			customerMapper.addCustomer(cust);
 			assertNotEquals(cust.getCust_id(), 0);
 		}
-		
 		//add WeiXin configure
-		WeiXinConfig cfg = wxConfigMapper.get(cust_id);
+		WeiXinConfig cfg = wxConfigMapper.get(CUST_ID);
 		if(null == cfg){
 			cfg = new WeiXinConfig();
-			cfg.setCust_id(cust_id);
+			cfg.setCust_id(CUST_ID);
 			cfg.setToken(TOKEN);
 			cfg.setApi_url(MMT_TOKEN);
 			cfg.setWx_account("lemon_test");
@@ -92,8 +79,8 @@ public class WeiXinAPITest {
 	@Test
 	@Ignore
 	public void getAcessToken(){
-		String ss = api.getAcessToken(wxConfigMapper.get(cust_id));
-		System.out.println(ss);
+		String ss = api.getAcessToken(wxConfigMapper.get(CUST_ID));
+		assertNotNull(ss);
 	}
 	
 }

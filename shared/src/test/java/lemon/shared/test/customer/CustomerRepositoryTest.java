@@ -2,6 +2,8 @@ package lemon.shared.test.customer;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,30 +12,18 @@ import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.service.ServiceType;
+import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class CustomerRepositoryTest {
-	private ApplicationContext acx;
+public class CustomerRepositoryTest extends BaseMmtTest {
+	@Autowired
 	private CustomerRepository custMapper;
-	private int CUST_ID = -5743;
+	private int CUST_ID_ = -5743;
+	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 	 
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		custMapper = acx.getBean(CustomerRepository.class);
-		assertNotNull(custMapper);
-	}
-	
 	/**
 	 * customer CRUD test
 	 */
@@ -46,14 +36,14 @@ public class CustomerRepositoryTest {
 		String memo = UUID.randomUUID().toString();
 		String name = "CUSTOMER By JUnit 4 Modified";
 		updateCustomer(cust, name, memo);
-		cust = custMapper.getCustomer(CUST_ID);
+		cust = custMapper.getCustomer(CUST_ID_);
 		assertEquals(name, cust.getCust_name());
 		assertEquals(memo, cust.getMemo());
 		//Select
 		assertNotEquals(0, list().size());
 		//Delete
-		assertNotEquals(0,custMapper.delete(CUST_ID));
-		cust = custMapper.getCustomer(CUST_ID);
+		assertNotEquals(0,custMapper.delete(CUST_ID_));
+		cust = custMapper.getCustomer(CUST_ID_);
 		assertEquals(cust.getStatus(), Status.UNAVAILABLE);
 	}
 	
@@ -62,7 +52,7 @@ public class CustomerRepositoryTest {
 		Customer cust = addCustomer(UUID.randomUUID().toString());
 		CustomerService service = addService(cust.getCust_id());
 		assertNotNull(service);
-		assertEquals(service.getExpire_time(), "0000-00-00 00:00");
+		assertEquals(SDF.format(new Date()), SDF.format(service.getExpire_time()));
 		assertEquals(service.getStatus(), Status.AVAILABLE);
 		
 		CustomerService s1 = custMapper.getServiceById(service.getId());
@@ -98,7 +88,7 @@ public class CustomerRepositoryTest {
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
 		service.setService_type(ServiceType.WEIXIN);
-		service.setExpire_time("0000-00-00 00:00");
+		service.setExpire_time(new Date());
 		service.setStatus(Status.AVAILABLE);
 		service.setId(IdWorkerManager.getIdWorker(CustomerService.class).getId());
 		int result = custMapper.addService(service);
@@ -113,7 +103,7 @@ public class CustomerRepositoryTest {
 		cust.setStatus(Status.AVAILABLE);
 		int result = custMapper.addCustomer(cust);
 		assertNotEquals(0, result);
-		this.CUST_ID = cust.getCust_id();
+		this.CUST_ID_ = cust.getCust_id();
 		return cust;
 	}
 	

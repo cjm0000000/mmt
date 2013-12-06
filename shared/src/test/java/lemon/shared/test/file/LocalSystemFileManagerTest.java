@@ -3,21 +3,20 @@ package lemon.shared.test.file;
 import java.io.File;
 
 import lemon.shared.file.FileManager;
-import lemon.shared.file.LocalSystemFileManager;
-
+import lemon.shared.test.base.BaseMmtTest;
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-@RunWith(JUnit4.class)
-public class LocalSystemFileManagerTest {
-	private static final String ROOT = "C:\\TEMPS";
+public class LocalSystemFileManagerTest extends BaseMmtTest {
+	private static final String ROOT = LocalSystemFileManagerTest.class.getResource("/").getPath();
 	private static final String PATH = "\\usr";
 	private static final String FILENAME = "balabala.tmp";
-	
+	@Autowired @Qualifier("localSystemFileManager")
 	private FileManager fileManager;
 	
 	@Before
@@ -25,7 +24,6 @@ public class LocalSystemFileManagerTest {
 		File file = new File(ROOT);
 		if(!file.exists())
 			file.mkdirs();
-		fileManager = new LocalSystemFileManager();
 	}
 	
 	@After
@@ -59,5 +57,5 @@ public class LocalSystemFileManagerTest {
 	private byte[] read(){
 		return fileManager.readFile(ROOT+PATH, FILENAME);
 	}
-
+	
 }

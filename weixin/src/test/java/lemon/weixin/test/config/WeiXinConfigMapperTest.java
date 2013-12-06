@@ -13,30 +13,16 @@ import lemon.weixin.config.bean.AccountType;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.config.mapper.WXConfigMapper;
 import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
+import lemon.weixin.test.base.BaseWeiXinTest;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RunWith(JUnit4.class)
-public class WeiXinConfigMapperTest {
+public class WeiXinConfigMapperTest extends BaseWeiXinTest {
+	@Autowired
 	private WXConfigMapper configMapper;
+	@Autowired
 	private CustomerRepository custMapper;
-	private ApplicationContext acx;
-	private static final int CUST_ID = -5743;
-	@Before
-	public void init() {
-		String[] resource = { "classpath:spring-db.xml",
-				"classpath:spring-dao.xml", "classpath:spring-service.xml" };
-		acx = new ClassPathXmlApplicationContext(resource);
-		configMapper = (WXConfigMapper) acx.getBean(WXConfigMapper.class);
-		custMapper = (CustomerRepository) acx.getBean(CustomerRepository.class);
-		assertNotNull(configMapper);
-		assertNotNull(custMapper);
-	}
 	
 	@Test
 	public void crud(){
