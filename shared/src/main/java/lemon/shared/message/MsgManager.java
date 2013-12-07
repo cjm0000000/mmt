@@ -21,6 +21,7 @@ import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 import lemon.shared.message.persistence.MsgRepository;
+import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,33 @@ import org.springframework.transaction.annotation.Transactional;
 public class MsgManager {
 	@Autowired
 	private MsgRepository msgRepository;
+	
+	/**
+	 * get receive detail message
+	 * @param cust_id
+	 * @param service_type
+	 * @param msgType
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<Message> getRecvMsgList(int cust_id, ServiceType service_type,
+			String msgType, int start, int limit) {
+		return msgRepository.getRecvMsgList(cust_id, service_type, msgType,
+				start, limit);
+	}
+	
+	/**
+	 * get receive detail message count
+	 * @param cust_id
+	 * @param service_type
+	 * @param msgType
+	 * @return
+	 */
+	public int getRecvMsgCnt(int cust_id, ServiceType service_type,
+			String msgType) {
+		return msgRepository.getRecvMsgCnt(cust_id, service_type, msgType);
+	}
 	
 	/**
 	 * get receive text message by message id

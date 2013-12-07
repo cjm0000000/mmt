@@ -13,6 +13,17 @@
 			</if>
 			LIMIT #{start},#{limit}
 	</select>
+	<select id="getRecvMsgCnt" resultType="int">
+		SELECT COUNT(1)
+			FROM msg_recv_detail A
+		WHERE A.cust_id=#{cust_id}
+			<if test="service_type!=null and service_type!=''">
+				AND A.service_type=#{service_type}
+			</if>
+			<if test="msgType!=null and msgType!=''">
+				AND A.msgType=#{msgType}
+			</if>
+	</select>
 	<select id="getRecvTextMsg" parameterType="long" resultType="lemon.shared.message.metadata.TextMessage">
 		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.content 
 			FROM msg_recv_detail A, msg_recv_text B 

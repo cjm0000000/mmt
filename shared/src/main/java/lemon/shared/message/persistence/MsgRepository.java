@@ -39,10 +39,23 @@ public interface MsgRepository {
 	 * @param limit
 	 * @return
 	 */
+	@Lang(RawLanguageDriver.class)
 	List<Message> getRecvMsgList(@Param("cust_id") int cust_id,
 			@Param("service_type") ServiceType service_type,
 			@Param("msgType") String msgType, @Param("start") int start,
 			@Param("limit") int limit);
+	
+	/**
+	 * get receive detail message count
+	 * @param cust_id
+	 * @param service_type
+	 * @param msgType
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	int getRecvMsgCnt(@Param("cust_id") int cust_id,
+			@Param("service_type") ServiceType service_type,
+			@Param("msgType") String msgType);
 
 	/**
 	 * get receive text message

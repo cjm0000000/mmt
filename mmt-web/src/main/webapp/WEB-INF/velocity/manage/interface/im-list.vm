@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="#{getContextPath}bootstrap/plugins/select/css/bootstrap-select.min.css">
+<div class="col-md-9" role="main">
+	<div class="panel panel-info">
+		### 顶部按钮栏
+		<div class="panel-heading">
+			<form class="form-inline" role="form" method="get" action="../list/1">
+				<div class="form-group">
+				    <label class="sr-only" for="service_type">消息类型</label>
+				    <select class="selectpicker" id="service_type" name="service_type" data-width="100">
+				    	<option value="">全部</option>
+						<option value="WEIXIN">微信</option>
+						<option value="YIXIN">易信</option>
+					</select>
+				</div>
+		    	<div class="form-group">
+				    <label class="sr-only" for="msgType">信息类型</label>
+				    <select class="selectpicker" id="msgType" name="msgType" data-width="100">
+				    	<option value="">全部</option>
+						<option value="image">图片</option>
+						<option value="text">文字</option>
+						<option value="video">视频</option>
+					</select>
+				</div>
+		    	<input type="submit" class="btn btn-success btn-md" value="查 询" />
+			</form>
+		</div>
+			
+		### 数据表
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th width="65%">发起人</th>
+		            <th width="15%">时间</th>
+		            <th width="10%">信息类型</th>
+		            <th width="10%" style="text-align:center;">#</th>
+				</tr>
+			</thead>
+			<tbody>
+			#foreach($msg in $list)
+				<tr>
+		  			<td>$!msg.fromUserName</td>
+		  			<td>$!msg.createTime</td>
+		  			<td>$!msg.service_type</td>
+		  			<td style="text-align:center;">
+						
+		  			</td>
+		   		</tr>
+			#end
+			</tbody>
+		</table>
+		### 分页栏
+		#createPagination($pg.currentPage,$pg.pageSize,$pg.resCount,$!pg.filters)
+	</div>
+</div>
+<script src="#{getContextPath}js/mmt.js"></script>
+<script src="#{getContextPath}bootstrap/plugins/select/js/bootstrap-select.min.js"></script>
+<script src="#{getContextPath}js/manage/interface/media.js"></script>
+<script type="text/javascript">
+var url_showPage 	= "#{getContextPath}webservices/interface/media/add-page";
+var url_sync 		= "#{getContextPath}webservices/interface/media/sync";
+var url_delete 		= "#{getContextPath}webservices/interface/media/delete";
+$('select').selectpicker();
+</script>

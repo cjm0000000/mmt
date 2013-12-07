@@ -12,11 +12,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-//FIXME 修改RoleMenu测试用例
 public class RoleMenuMapperTest extends BaseWebTest {
 	@Autowired
 	private RoleMenuMapper roleMenuMapper;
-	
 	
 	@Test
 	@Ignore
