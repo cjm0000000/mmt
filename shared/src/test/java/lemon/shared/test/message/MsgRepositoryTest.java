@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.UUID;
 
+import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.event.EventMessage;
@@ -25,6 +26,7 @@ import lemon.shared.service.ServiceType;
 import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,8 +35,9 @@ public class MsgRepositoryTest extends BaseMmtTest {
 	private MsgRepository msgRepository;
 
 	@Test
+	@Ignore /** Because H2 does't support MYSQL function: FROM_UNIXTIME */
 	public void getRecvMsgList(){
-		List<Message> list = msgRepository.getRecvMsgList(CUST_ID, null, null, 0, 10);
+		List<IMessage> list = msgRepository.getRecvMsgList(CUST_ID, null, null, 0, 10);
 		assertNotNull(list);
 		list = msgRepository.getRecvMsgList(CUST_ID, ServiceType.WEIXIN, null, 0, 10);
 		assertNotNull(list);
@@ -42,6 +45,19 @@ public class MsgRepositoryTest extends BaseMmtTest {
 		assertNotNull(list);
 		list = msgRepository.getRecvMsgList(CUST_ID, null, "image", 0, 10);
 		assertNotNull(list);
+	}
+	
+	@Test
+	public void getRecvTextMsgList(){
+		TextMessage msg = new TextMessage();
+		prepareMsg(msg);
+		msg.setContent(UUID.randomUUID().toString());
+		assertNotEquals(0, msgRepository.saveRecvTextMsg(msg));
+		long[] ids = {msg.getId()};
+		List<TextMessage> list = msgRepository.getRecvTextMsgList(ids);
+		assertNotNull(list);
+		assertEquals(1, list.size());
+		assertEquals(list.get(0).getContent(), msg.getContent());
 	}
 
 	@Test

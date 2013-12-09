@@ -4,6 +4,7 @@ import java.util.List;
 
 import lemon.shared.MmtException;
 import lemon.shared.message.metadata.AudioMessage;
+import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.VideoMessage;
@@ -49,10 +50,19 @@ public class MsgManager {
 	 * @param limit
 	 * @return
 	 */
-	public List<Message> getRecvMsgList(int cust_id, ServiceType service_type,
+	public List<IMessage> getRecvMsgList(int cust_id, ServiceType service_type,
 			String msgType, int start, int limit) {
 		return msgRepository.getRecvMsgList(cust_id, service_type, msgType,
 				start, limit);
+	}
+	
+	/**
+	 * get receive text message
+	 * @param ids
+	 * @return
+	 */
+	public List<TextMessage> getRecvTextMsgList(long[] ids){
+		return msgRepository.getRecvTextMsgList(ids);
 	}
 	
 	/**

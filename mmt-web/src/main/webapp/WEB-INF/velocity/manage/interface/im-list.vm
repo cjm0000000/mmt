@@ -30,9 +30,9 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th width="5%" style="text-align:center;">#</th>
-					<th width="65%">发起人</th>
-		            <th width="15%" style="text-align:center;">时间</th>
+					<th width="3%" style="text-align:right;"></th>
+					<th width="67%">发起人</th>
+		            <th width="13%" style="text-align:center;">时间</th>
 		            <th width="15%" style="text-align:center;">操作</th>
 				</tr>
 			</thead>
@@ -41,20 +41,20 @@
 				<tr>
 					<td>
 		  				#if($msg.service_type == 'WEIXIN')
-		  					<img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" />
+		  					<img width="48" height="48" src="#{getContextPath}images/weixin-icon.png" />
 		  				#elseif($msg.service_type == 'YIXIN')
-		  					<img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" />
+		  					<img width="48" height="48" src="#{getContextPath}images/yixin-icon.jpg" />
 		  				#else
 		  					&nbsp;&nbsp;&nbsp;
 		  				#end
 		  			</td>
 		  			<td>
 		  				$!msg.fromUserName<br>
-		  				<span style="color:#DDDDDD;">
+		  				<span style="color:#AAA;">
 		  					$!msg.content
 		  				</span>
 		  			</td>
-		  			<td>$!msg.createTime4display</td>
+		  			<td style="text-align:center;">$!msg.createTime4display</td>
 		  			<td style="text-align:center;">
 						<button type="button" class="btn btn-primary btn-sm" >
 							<span class="glyphicon glyphicon-share-alt"></span>

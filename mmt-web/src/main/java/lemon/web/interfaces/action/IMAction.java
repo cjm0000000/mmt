@@ -1,12 +1,13 @@
 package lemon.web.interfaces.action;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import lemon.shared.message.MsgManager;
-import lemon.shared.message.metadata.Message;
+import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.MsgType;
+import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.service.ServiceType;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -66,15 +67,13 @@ public class IMAction extends AdminNavAction {
 		//获取Main视图名称
 		String operation = Thread.currentThread().getStackTrace()[1].getMethodName();
 		//获取Main数据
-		List<Message> list = msgManager.getRecvMsgList(user.getCust_id(),
+		List<IMessage> list = msgManager.getRecvMsgList(user.getCust_id(),
 				service_type, convertMsgType(service_type, msgType), (page - 1) * PAGESIZE, PAGESIZE);
-		List<IMessage> result = processCreateTime(list);
-		list = null;
-		processMsgContent(result);
+		processMsgContent(list);
 		Pagination pg = new Pagination(page, PAGESIZE,
 				msgManager.getRecvMsgCnt(user.getCust_id(), service_type,
 						convertMsgType(service_type, msgType)), generateFilterString(service_type, msgType));
-		ModelAndView mv = getListResultByPagination(pg, user.getRole_id(), operation, result);
+		ModelAndView mv = getListResultByPagination(pg, user.getRole_id(), operation, list);
 		mv.addObject("serviceTypes", systemConfigMapper.getItems(GROUP_FOR_SERVICE_TYPE));
 		mv.addObject("msgTypes", 	 systemConfigMapper.getItems(GROUP_FOR_MSG_TYPE));
 		mv.addObject("service_type", service_type);
@@ -127,26 +126,57 @@ public class IMAction extends AdminNavAction {
 	}
 	
 	/**
-	 * 处理创建时间
-	 * @param list
-	 */
-	private List<IMessage> processCreateTime(List<Message> list){
-		if(list == null || list.size() == 0)
-			return null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		for (Message iMessage : list) {
-			IMessage iMsg = (IMessage) iMessage;
-			iMsg.setCreateTime4display(sdf.format(new Date(iMessage.getCreateTime() * 1000)));
-		}
-		return null;
-	}
-	
-	/**
 	 * 处理消息内容
 	 * @param list
 	 */
 	private void processMsgContent(List<IMessage> list){
-		//TODO 处理消息内容
+		Set<String> msgTypes = new HashSet<>(8);
+		long[] msgIds = new long[list.size()];
+		IMessage tempMsg;
+		for (int i=0; i < list.size(); i++) {
+			tempMsg = list.get(i);
+			if(tempMsg == null)
+				continue;
+			msgTypes.add(tempMsg.getMsgType());//提取类型
+			msgIds[i] = tempMsg.getId();//提取ID
+		}
+		//获取内容
+		for (String msgType : msgTypes) {
+			if(null == msgType)
+				continue;
+			switch (msgType) {
+			case MsgType.IMAGE:
+
+				break;
+			case MsgType.LINK:
+
+				break;
+			case MsgType.LOCATION:
+
+				break;
+			case MsgType.TEXT:
+				List<TextMessage> textMsgList = msgManager.getRecvTextMsgList(msgIds);
+				for (int i=0; i<list.size(); i++) {
+					Outer:
+					for (TextMessage textMessage : textMsgList) {
+						if(list.get(i).getId() == textMessage.getId()){
+							list.get(i).setContent(textMessage.getContent());
+							break Outer;
+						}
+					}
+				}
+				break;
+			case MsgType.VIDEO:
+
+				break;
+			case MsgType.AUDIO:
+
+				break;
+			case MsgType.VOICE:
+
+				break;
+			}
+		}
 	}
 	
 }

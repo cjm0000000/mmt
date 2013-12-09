@@ -2,6 +2,7 @@ package lemon.shared.message.persistence;
 
 import java.util.List;
 
+import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.event.EventMessage;
@@ -40,10 +41,17 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	List<Message> getRecvMsgList(@Param("cust_id") int cust_id,
+	List<IMessage> getRecvMsgList(@Param("cust_id") int cust_id,
 			@Param("service_type") ServiceType service_type,
 			@Param("msgType") String msgType, @Param("start") int start,
 			@Param("limit") int limit);
+	
+	/**
+	 * get receive text message
+	 * @param ids
+	 * @return
+	 */
+	List<TextMessage> getRecvTextMsgList(long[] ids);
 	
 	/**
 	 * get receive detail message count

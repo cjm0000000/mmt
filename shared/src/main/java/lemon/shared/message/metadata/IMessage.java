@@ -1,6 +1,5 @@
-package lemon.web.interfaces.action;
+package lemon.shared.message.metadata;
 
-import lemon.shared.message.metadata.Message;
 
 /**
  * 用于显示的消息类

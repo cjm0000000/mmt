@@ -57,7 +57,7 @@ public class Message extends BaseService {
 	public void setCreateTime(int createTime) {
 		this.createTime = createTime;
 	}
-	protected String getMsgType() {
+	public String getMsgType() {
 		return msgType;
 	}
 	protected void setMsgType(String msgType) {
