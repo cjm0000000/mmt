@@ -37,7 +37,16 @@ VALUES ('CUSTOM_MENU_TYPE','click','事件','2013-10-22 00:16:33'),
 ('MEDIA_TYPE','image','图片','2013-11-28 21:00:05'),
 ('MEDIA_TYPE','thumb','缩略图','2013-11-28 23:43:39'),
 ('MEDIA_TYPE','video','视频','2013-11-28 23:43:45'),
-('MEDIA_TYPE','voice','语音[微信]','2013-11-28 23:44:11');
+('MEDIA_TYPE','voice','语音[微信]','2013-11-28 23:44:11'),
+('MESSAGE_TYPE','image','图片消息','2013-12-09 13:37:15'),
+('MESSAGE_TYPE','link','链接消息','2013-12-09 13:38:28'),
+('MESSAGE_TYPE','location','地理位置消息','2013-12-09 13:38:04'),
+('MESSAGE_TYPE','text','文本消息','2013-12-09 13:36:20'),
+('MESSAGE_TYPE','video','视频消息','2013-12-09 13:41:53'),
+('MESSAGE_TYPE','yuyin','语音消息','2013-12-09 15:33:37'),
+('SERVICE_TYPE','OTHER','其它','2013-12-09 13:35:59'),
+('SERVICE_TYPE','WEIXIN','微信','2013-12-09 13:35:10'),
+('SERVICE_TYPE','YIXIN','易信','2013-12-09 13:35:35');
 
 #用户配置信息
 INSERT INTO `system_user_config` (`user_id`,`key`,`value`,`timestamp`) 

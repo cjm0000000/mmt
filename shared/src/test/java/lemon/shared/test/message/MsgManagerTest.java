@@ -213,7 +213,7 @@ public class MsgManagerTest extends BaseMmtTest {
 	}
 
 	private void prepareMsg(Message msg) {
-		msg.setCreateTime(System.currentTimeMillis() / 1000);
+		msg.setCreateTime((int) (System.currentTimeMillis() / 1000));
 		msg.setCust_id(CUST_ID);
 		msg.setFromUserName("fromUserName");
 		msg.setMsgId(System.currentTimeMillis());

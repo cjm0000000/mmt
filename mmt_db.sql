@@ -308,7 +308,7 @@ CREATE TABLE `msg_recv_detail` (
   `service_type` char(8) NOT NULL DEFAULT 'OTHER' COMMENT '服务类型',
   `toUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '接受者ID',
   `fromUserName` varchar(255) NOT NULL DEFAULT '' COMMENT '发送者ID',
-  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '服务器创建时间',
+  `createTime` int(11) NOT NULL DEFAULT '0' COMMENT '服务器创建时间',
   `msgType` varchar(10) NOT NULL DEFAULT '' COMMENT '信息类型',
   `msgId` bigint(20) DEFAULT '0' COMMENT '信息ID',
   `timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '接收时间',

@@ -5,21 +5,22 @@
 		<div class="panel-heading">
 			<form class="form-inline" role="form" method="get" action="../list/1">
 				<div class="form-group">
-				    <label class="sr-only" for="service_type">消息类型</label>
-				    <select class="selectpicker" id="service_type" name="service_type" data-width="100">
-				    	<option value="">全部</option>
-						<option value="WEIXIN">微信</option>
-						<option value="YIXIN">易信</option>
-					</select>
+				    <label  for="service_type">消息类型： </label>
+				    <select class="selectpicker" data-style="btn-info" id="service_type" name="service_type" data-width="100">
+				    	<option data-icon="glyphicon glyphicon-star-empty" value="">全部</option>
+						#foreach($serviceType in $serviceTypes)
+							<option data-icon="glyphicon glyphicon-star" value="$!serviceType.key">$!serviceType.value</option>
+						#end
+					</select>&nbsp;&nbsp;
 				</div>
 		    	<div class="form-group">
 				    <label class="sr-only" for="msgType">信息类型</label>
-				    <select class="selectpicker" id="msgType" name="msgType" data-width="100">
+				    <select class="selectpicker" data-style="btn-info" id="msgType" name="msgType" data-width="100">
 				    	<option value="">全部</option>
-						<option value="image">图片</option>
-						<option value="text">文字</option>
-						<option value="video">视频</option>
-					</select>
+						#foreach($msgType in $msgTypes)
+							<option value="$!msgType.key">$!msgType.value</option>
+						#end
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 		    	<input type="submit" class="btn btn-success btn-md" value="查 询" />
 			</form>
@@ -29,20 +30,35 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th width="5%" style="text-align:center;">#</th>
 					<th width="65%">发起人</th>
-		            <th width="15%">时间</th>
-		            <th width="10%">信息类型</th>
-		            <th width="10%" style="text-align:center;">#</th>
+		            <th width="15%" style="text-align:center;">时间</th>
+		            <th width="15%" style="text-align:center;">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 			#foreach($msg in $list)
 				<tr>
-		  			<td>$!msg.fromUserName</td>
-		  			<td>$!msg.createTime</td>
-		  			<td>$!msg.service_type</td>
+					<td>
+		  				#if($msg.service_type == 'WEIXIN')
+		  					<img width="25" height="25" src="#{getContextPath}images/weixin-icon.png" />
+		  				#elseif($msg.service_type == 'YIXIN')
+		  					<img width="25" height="25" src="#{getContextPath}images/yixin-icon.jpg" />
+		  				#else
+		  					&nbsp;&nbsp;&nbsp;
+		  				#end
+		  			</td>
+		  			<td>
+		  				$!msg.fromUserName<br>
+		  				<span style="color:#DDDDDD;">
+		  					$!msg.content
+		  				</span>
+		  			</td>
+		  			<td>$!msg.createTime4display</td>
 		  			<td style="text-align:center;">
-						
+						<button type="button" class="btn btn-primary btn-sm" >
+							<span class="glyphicon glyphicon-share-alt"></span>
+						</button>
 		  			</td>
 		   		</tr>
 			#end
@@ -60,4 +76,10 @@ var url_showPage 	= "#{getContextPath}webservices/interface/media/add-page";
 var url_sync 		= "#{getContextPath}webservices/interface/media/sync";
 var url_delete 		= "#{getContextPath}webservices/interface/media/delete";
 $('select').selectpicker();
+#if($service_type)
+	$('#service_type').selectpicker('val', '$!service_type');
+#end
+#if($msgType)
+	$('#msgType').selectpicker('val', '$!msgType');
+#end
 </script>

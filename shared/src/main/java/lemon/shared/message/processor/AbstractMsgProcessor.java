@@ -224,7 +224,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	protected void buildReplyMsg(Message recvMsg, Message replyMsg){
 		replyMsg.setToUserName(recvMsg.getFromUserName());
 		replyMsg.setFromUserName(recvMsg.getToUserName());
-		replyMsg.setCreateTime(System.currentTimeMillis());
+		replyMsg.setCreateTime((int) System.currentTimeMillis());
 		replyMsg.setMsgId(null);
 	}
 	

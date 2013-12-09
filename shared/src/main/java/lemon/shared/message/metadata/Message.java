@@ -25,7 +25,7 @@ public class Message extends BaseService {
 	protected String fromUserName;
 	/** CreateTime */
 	@XStreamAlias("CreateTime")
-	protected long createTime;
+	protected int createTime;
 	/** MsgType */
 	@XStreamAlias("MsgType")
 	@XStreamCDATA
@@ -51,10 +51,10 @@ public class Message extends BaseService {
 	public void setFromUserName(String fromUserName) {
 		this.fromUserName = fromUserName;
 	}
-	public long getCreateTime() {
+	public int getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(long createTime) {
+	public void setCreateTime(int createTime) {
 		this.createTime = createTime;
 	}
 	protected String getMsgType() {

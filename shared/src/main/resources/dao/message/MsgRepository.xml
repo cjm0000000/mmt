@@ -9,7 +9,14 @@
 				AND A.service_type=#{service_type}
 			</if>
 			<if test="msgType!=null and msgType!=''">
-				AND A.msgType=#{msgType}
+				<choose>
+					<when test="msgType =='ALL'">
+				      AND A.msgType IN ('voice','audio')
+				    </when>
+				    <when test="msgType != 'All'">
+				    	AND A.msgType=#{msgType}
+				    </when>
+				</choose>
 			</if>
 			LIMIT #{start},#{limit}
 	</select>
@@ -21,7 +28,14 @@
 				AND A.service_type=#{service_type}
 			</if>
 			<if test="msgType!=null and msgType!=''">
-				AND A.msgType=#{msgType}
+				<choose>
+					<when test="msgType =='ALL'">
+				      AND A.msgType IN ('voice','audio')
+				    </when>
+				    <when test="msgType != 'All'">
+				    	AND A.msgType=#{msgType}
+				    </when>
+				</choose>
 			</if>
 	</select>
 	<select id="getRecvTextMsg" parameterType="long" resultType="lemon.shared.message.metadata.TextMessage">

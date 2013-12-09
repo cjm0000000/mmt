@@ -34,7 +34,9 @@ $root##
 	#end
 	### 判断是否需要加过滤条件
 	#if($filters)
-		#set($filters = "?" + $filters)
+		#if($filters != '' && $filters != 'null')
+			#set($filters = "?" + $filters)
+		#end
 	#end
 	### 输出模板
 	<ul class="pagination" style="float:right;">
