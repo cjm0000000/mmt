@@ -19,7 +19,7 @@ VALUES (1,'MMT消息服务平台','1',0,' ',' ',0),
 (16,'通用消息设置','3',15,'message/level3','glyphicon glyphicon-leaf',3),
 (17,'系统配置','3',2,'system/sysconfig','glyphicon glyphicon-cog',4),
 (19,'多媒体管理','3',3,'interface/media','glyphicon glyphicon-film',4),
-(20,'实时消息','3',3,'interface/chat','glyphicon glyphicon-envelope',5);
+(20,'实时消息','3',3,'interface/im','glyphicon glyphicon-envelope',5);
 
 --角色初始化
 INSERT INTO `system_role` (`role_id`,`role_name`,`role_desc`,`status`,`sort`,`reloadable`) 
