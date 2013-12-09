@@ -156,7 +156,7 @@ CREATE TABLE `customer_service` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `service_type` char(10) NOT NULL DEFAULT '' COMMENT '服务',
   `status` char(11) NOT NULL DEFAULT 'AVAILABLE' COMMENT '状态',
-  `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '服务到期时间（0000-00-00表示永久有效）',
+  `expire_time` int NOT NULL DEFAULT '0' COMMENT '服务到期时间（0表示永久有效）',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户服务开通情况表';

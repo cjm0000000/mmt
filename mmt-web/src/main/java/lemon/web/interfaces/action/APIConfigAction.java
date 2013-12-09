@@ -1,9 +1,5 @@
 package lemon.web.interfaces.action;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import lemon.shared.MmtException;
 import lemon.shared.config.MMTConfig;
 import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
@@ -43,7 +39,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 	private CustomerRepository customerMapper;
 	@Autowired
 	private SystemConfigMapper systemConfigMapper;
-	private static final String NO_EXPIRE_TIME = "0000-00-00 00:00";
+	private static final int NO_EXPIRE_TIME = 0;
 	
 	/**
 	 * 获取API服务类型
@@ -212,15 +208,10 @@ public abstract class APIConfigAction extends AdminNavAction {
 	 * @param expireTime
 	 * @return
 	 */
-	private int addService(int cust_id, String expireTime){
+	private int addService(int cust_id, int expireTime){
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		try {
-			service.setExpire_time(sdf.parse(expireTime));
-		} catch (ParseException e) {
-			throw new MmtException("过期时间格式不正确。", e.getCause());
-		}
+		service.setExpire_time(expireTime);
 		service.setService_type(getServiceType());
 		service.setStatus(Status.AVAILABLE);
 		service.setId(IdWorkerManager.getIdWorker(CustomerService.class).getId());

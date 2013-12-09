@@ -2,8 +2,6 @@ package lemon.shared.test.customer;
 
 import static org.junit.Assert.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +20,6 @@ public class CustomerRepositoryTest extends BaseMmtTest {
 	@Autowired
 	private CustomerRepository custMapper;
 	private int CUST_ID_ = -5743;
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 	 
 	/**
 	 * customer CRUD test
@@ -52,7 +49,7 @@ public class CustomerRepositoryTest extends BaseMmtTest {
 		Customer cust = addCustomer(UUID.randomUUID().toString());
 		CustomerService service = addService(cust.getCust_id());
 		assertNotNull(service);
-		assertEquals(SDF.format(new Date()), SDF.format(service.getExpire_time()));
+		assertEquals(System.currentTimeMillis()/1000 + 3600, service.getExpire_time());
 		assertEquals(service.getStatus(), Status.AVAILABLE);
 		
 		CustomerService s1 = custMapper.getServiceById(service.getId());
@@ -88,7 +85,7 @@ public class CustomerRepositoryTest extends BaseMmtTest {
 		CustomerService service = new CustomerService();
 		service.setCust_id(cust_id);
 		service.setService_type(ServiceType.WEIXIN);
-		service.setExpire_time(new Date());
+		service.setExpire_time((int) (System.currentTimeMillis()/1000) + 3600);
 		service.setStatus(Status.AVAILABLE);
 		service.setId(IdWorkerManager.getIdWorker(CustomerService.class).getId());
 		int result = custMapper.addService(service);
