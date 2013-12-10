@@ -30,6 +30,8 @@ public class WeiXin {
 	private static String MEDIA_UPLOAD_URL;
 	/** 下载多媒体文件URL */
 	private static String MEDIA_DOWNLOAD_URL;
+	/** 发送客服消息的URL */
+	private static String CUSTOM_MSG_URL;
 	
 	static{
 		loadWeiXinProperties();
@@ -118,6 +120,10 @@ public class WeiXin {
 		return MEDIA_DOWNLOAD_URL;
 	}
 	
+	public static String getCustomMsgUrl(){
+		return CUSTOM_MSG_URL;
+	}
+	
 	/**
 	 * load WeiXin's configures
 	 */
@@ -131,6 +137,7 @@ public class WeiXin {
 			MENU_DELETE_URL = p.getProperty("menu-delete-url");
 			MEDIA_UPLOAD_URL = p.getProperty("media-upload-url");
 			MEDIA_DOWNLOAD_URL = p.getProperty("media-download-url");
+			CUSTOM_MSG_URL = p.getProperty("custom-msg-url");
 		} catch (IOException e) {
 			throw new WeiXinException("Load weixin properties faild: "+ e.getCause());
 		}

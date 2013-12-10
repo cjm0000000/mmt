@@ -68,6 +68,12 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	public String getCommonUrl() {
 		return YiXin.getCommonUrl();
 	}
+	
+	@Override
+	public String getCustomMsgUrl() {
+		// TODO 易信客服消息预留接口
+		return null;
+	}
 
 	@Override
 	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {

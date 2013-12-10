@@ -72,6 +72,12 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	public abstract String getDeleteMenuUrl();
 	
 	/**
+	 * 获取发送客服消息的URL
+	 * @return
+	 */
+	public abstract String getCustomMsgUrl();
+	
+	/**
 	 * 获取AccessToken请求的参数
 	 * @param mmt_token
 	 * @return
@@ -188,6 +194,19 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		// compare
 		logger.debug("signature:" + sa.getSignature());
 		return sha1str.equalsIgnoreCase(sa.getSignature());
+	}
+	
+	@Override
+	public ReturnCode sendMsg(MMTConfig config, String msg) {
+		// 发送请求
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", getAcessToken(config));
+		String result = HttpConnector.post(getCustomMsgUrl(), msg, params);
+		//TODO save log
+		
+		// parser result
+		JSONObject json = JSONObject.fromObject(result);
+		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
 	}
 	
 	/**

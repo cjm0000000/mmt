@@ -64,6 +64,13 @@ public interface MsgRepository {
 	int getRecvMsgCnt(@Param("cust_id") int cust_id,
 			@Param("service_type") ServiceType service_type,
 			@Param("msgType") String msgType);
+	
+	/**
+	 * get receive message detail
+	 * @param id
+	 * @return
+	 */
+	Message getRecvMsgDetail(long id);
 
 	/**
 	 * get receive text message

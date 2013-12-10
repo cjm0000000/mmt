@@ -59,6 +59,18 @@ public class MsgRepositoryTest extends BaseMmtTest {
 		assertEquals(1, list.size());
 		assertEquals(list.get(0).getContent(), msg.getContent());
 	}
+	
+	@Test
+	public void getRecvMsgDetail(){
+		TextMessage msg = new TextMessage();
+		prepareMsg(msg);
+		msg.setContent(UUID.randomUUID().toString());
+		assertNotEquals(0, msgRepository.saveRecvMsgDetail(msg));
+		long msgId = msg.getId();
+		Message msgDetail = msgRepository.getRecvMsgDetail(msgId);
+		assertNotNull(msgDetail);
+		assertEquals(msgDetail.getMsgType(), msg.getMsgType());
+	}
 
 	@Test
 	public void saveRecvYXAudioMsg() {

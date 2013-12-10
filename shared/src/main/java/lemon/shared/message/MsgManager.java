@@ -78,6 +78,15 @@ public class MsgManager {
 	}
 	
 	/**
+	 * get receive message detail
+	 * @param msgId
+	 * @return
+	 */
+	public Message getRecvMsgDetail(long msgId){
+		return msgRepository.getRecvMsgDetail(msgId);
+	}
+	
+	/**
 	 * get receive text message by message id
 	 * @param msg_id
 	 * @return

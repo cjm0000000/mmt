@@ -47,6 +47,11 @@
 				</choose>
 			</if>
 	</select>
+	<select id="getRecvMsgDetail" parameterType="long" resultType="lemon.shared.message.metadata.Message">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId
+			FROM msg_recv_detail A
+		WHERE A.id=#{id}
+	</select>
 	<select id="getRecvTextMsg" parameterType="long" resultType="lemon.shared.message.metadata.TextMessage">
 		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.content 
 			FROM msg_recv_detail A, msg_recv_text B 

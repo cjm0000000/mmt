@@ -70,6 +70,11 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	public String getDeleteMenuUrl() {
 		return WeiXin.getDeleteMenuUrl();
 	}
+	
+	@Override
+	public String getCustomMsgUrl() {
+		return WeiXin.getCustomMsgUrl();
+	}
 
 	@Override
 	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {

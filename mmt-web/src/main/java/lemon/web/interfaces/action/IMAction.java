@@ -4,8 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lemon.shared.access.ReturnCode;
+import lemon.shared.api.MmtAPI;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.IMessage;
+import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.MsgType;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.service.ServiceType;
@@ -14,14 +17,18 @@ import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
+import lemon.weixin.config.mapper.WXConfigMapper;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 /**
@@ -39,6 +46,10 @@ public class IMAction extends AdminNavAction {
 	private MsgManager msgManager;
 	@Autowired
 	private SystemConfigMapper systemConfigMapper;
+	@Autowired @Qualifier("weiXinAPI")
+	private MmtAPI wxAPI;
+	@Autowired
+	private WXConfigMapper wxConfigMapper;
 	private static final String GROUP_FOR_SERVICE_TYPE 	= "SERVICE_TYPE";
 	private static final String GROUP_FOR_MSG_TYPE 		= "MESSAGE_TYPE";
 	
@@ -59,7 +70,7 @@ public class IMAction extends AdminNavAction {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="list/{page}",method=RequestMethod.GET)
+	@RequestMapping(value="list/{page}", method=RequestMethod.GET)
 	public ModelAndView list(@PathVariable("page") int page,
 			@RequestParam(required = false) ServiceType service_type,
 			@RequestParam(required = false) String msgType, ModelMap model) {
@@ -79,6 +90,34 @@ public class IMAction extends AdminNavAction {
 		mv.addObject("service_type", service_type);
 		mv.addObject("msgType",		 msgType);
 		return mv;
+	}
+	
+	
+	/**
+	 * 回复消息
+	 * @param msgId
+	 * @param repMsgType
+	 * @param content
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="send", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	public String sendMsg(long msgId, String repMsgType, String content,ModelMap model){
+		if (msgId == 0 || StringUtils.isBlank(repMsgType)
+				|| StringUtils.isBlank(content))
+			return sendJSONError("请求参数不正确。");
+		Message msg = msgManager.getRecvMsgDetail(msgId);
+		if(msg == null)
+			return sendJSONError("消息不存在。");
+		if(ServiceType.YIXIN.equals(msg.getService_type()))
+			return sendJSONError("暂时不支持易信消息回复.");
+		String sendMsg = generateFormattedMsg(msg.getService_type(),
+				repMsgType, content);
+		User user = (User) model.get(TOKEN);
+		ReturnCode rCode = wxAPI.sendMsg(wxConfigMapper.get(user.getCust_id()), sendMsg);
+		if(rCode.getErrcode() == 0)
+			return sendJSONMsg("发送成功。");
+		return sendJSONError("发送失败：" + rCode.getErrmsg());
 	}
 
 	@Override
@@ -177,6 +216,21 @@ public class IMAction extends AdminNavAction {
 				break;
 			}
 		}
+	}
+	
+	/**
+	 * 生成格式化的消息(用户主动消息)
+	 * @param service_type
+	 * @param msgType
+	 * @param content
+	 * @return
+	 */
+	private String generateFormattedMsg(ServiceType service_type, String msgType, String content){
+		if (service_type == null || ServiceType.YIXIN.equals(service_type)
+				|| ServiceType.OTHER.equals(service_type))
+			return null;
+		//TODO 实现生成微信客服消息
+		return null;
 	}
 	
 }

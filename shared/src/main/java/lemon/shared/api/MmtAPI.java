@@ -67,4 +67,12 @@ public interface MmtAPI {
 	 */
 	String uploadMedia(MMTConfig config, String type, byte[] file,
 			String fileName);
+	
+	/**
+	 * Send message(active)
+	 * @param config
+	 * @param msg
+	 * @return
+	 */
+	ReturnCode sendMsg(MMTConfig config, String msg);
 }
