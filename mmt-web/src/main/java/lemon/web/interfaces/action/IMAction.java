@@ -109,10 +109,7 @@ public class IMAction extends AdminNavAction {
 		Message msg = msgManager.getRecvMsgDetail(msgId);
 		if(msg == null)
 			return sendJSONError("消息不存在。");
-		if(ServiceType.YIXIN.equals(msg.getService_type()))
-			return sendJSONError("暂时不支持易信消息回复.");
-		String sendMsg = generateFormattedMsg(msg.getService_type(),
-				repMsgType, content);
+		Message sendMsg = generateFormattedMsg(repMsgType, content, msg.getFromUserName());
 		User user = (User) model.get(TOKEN);
 		ReturnCode rCode = wxAPI.sendMsg(wxConfigMapper.get(user.getCust_id()), sendMsg);
 		if(rCode.getErrcode() == 0)
@@ -225,11 +222,16 @@ public class IMAction extends AdminNavAction {
 	 * @param content
 	 * @return
 	 */
-	private String generateFormattedMsg(ServiceType service_type, String msgType, String content){
-		if (service_type == null || ServiceType.YIXIN.equals(service_type)
-				|| ServiceType.OTHER.equals(service_type))
-			return null;
-		//TODO 实现生成微信客服消息
+	private Message generateFormattedMsg(String msgType, String content, String toUser){
+		switch (msgType) {
+		case MsgType.TEXT:
+			TextMessage msg = new TextMessage();
+			msg.setToUserName(toUser);
+			msg.setContent(content);
+			return msg;
+		default:
+			break;
+		}
 		return null;
 	}
 	

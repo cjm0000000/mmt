@@ -3,6 +3,7 @@ package lemon.shared.api;
 import lemon.shared.access.ReturnCode;
 import lemon.shared.access.Access;
 import lemon.shared.config.MMTConfig;
+import lemon.shared.message.metadata.Message;
 
 /**
  * MMT message API
@@ -74,5 +75,5 @@ public interface MmtAPI {
 	 * @param msg
 	 * @return
 	 */
-	ReturnCode sendMsg(MMTConfig config, String msg);
+	ReturnCode sendMsg(MMTConfig config, Message msg);
 }

@@ -26,6 +26,7 @@ import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
+import lemon.shared.message.metadata.Message;
 import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
@@ -95,6 +96,13 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @return
 	 */
 	public abstract ServiceType getServiceType();
+	
+	/**
+	 * 生成消息详情
+	 * @param msg
+	 * @return
+	 */
+	public abstract JSONObject generateMsgDetail(Message msg);
 	
 	@Override
 	public final ReturnCode createMenus(MMTConfig config, String menuJson) {
@@ -197,11 +205,12 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	}
 	
 	@Override
-	public ReturnCode sendMsg(MMTConfig config, String msg) {
+	public final ReturnCode sendMsg(MMTConfig config, Message msg) {
 		// 发送请求
 		Map<String, Object> params = new HashMap<>();
 		params.put("access_token", getAcessToken(config));
-		String result = HttpConnector.post(getCustomMsgUrl(), msg, params);
+		String msgJson = processSendMsg(msg);
+		String result = HttpConnector.post(getCustomMsgUrl(), msgJson, params);
 		//TODO save log
 		
 		// parser result
@@ -262,6 +271,28 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		log.setService_type(getServiceType());
 		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
 		return log;
+	}
+	
+	/**
+	 * 处理要发送的消息
+	 * @param msg
+	 * @return
+	 */
+	private String processSendMsg(Message msg){
+		if(msg == null)
+			throw new MmtException("发送消息不能为空。");
+		if(msg.getService_type() == null || ServiceType.OTHER.equals(msg.getService_type()))
+			throw new MmtException("不合法的接口服务类型。");
+		if(msg.getMsgType() == null || "".equals(msg.getMsgType()))
+			throw new MmtException("消息类型不正确。");
+		if(msg.getToUserName() == null || "".equals(msg.getToUserName()))
+			throw new MmtException("消息接收方不能为空。");
+		//process message
+		JSONObject json = new JSONObject();
+		json.put("touser", msg.getToUserName());
+		json.put("msgtype", msg.getMsgType());
+		json.put(msg.getMsgType(),generateMsgDetail(msg));
+		return JSONObject.fromObject(json).toString();
 	}
 
 }

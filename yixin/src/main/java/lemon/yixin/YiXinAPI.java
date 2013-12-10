@@ -3,12 +3,15 @@ package lemon.yixin;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import lemon.shared.api.AbstractMmtAPI;
 import lemon.shared.config.MMTConfig;
+import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.service.ServiceType;
@@ -107,6 +110,12 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	public String uploadMedia(MMTConfig config, String type, byte[] file,
 			String fileName) {
 		//Nothing to do
+		return null;
+	}
+
+	@Override
+	public JSONObject generateMsgDetail(Message msg) {
+		// 易信暂时不需要实现
 		return null;
 	}
 

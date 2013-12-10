@@ -3,12 +3,17 @@ package lemon.weixin;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import lemon.shared.api.AbstractMmtAPI;
 import lemon.shared.config.MMTConfig;
+import lemon.shared.message.metadata.Message;
+import lemon.shared.message.metadata.MsgType;
+import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.service.ServiceType;
@@ -118,4 +123,19 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 		return result;
 	}
 
+	@Override
+	public JSONObject generateMsgDetail(Message msg) {
+		//TODO 实现其他类型的消息转换
+		switch (msg.getMsgType()) {
+		case MsgType.TEXT:
+			TextMessage txtMsg = (TextMessage) msg;
+			JSONObject content = new JSONObject();
+			content.put("content", txtMsg.getContent());
+			return content;
+		default:
+			break;
+		}
+		return null;
+	}
+	
 }
