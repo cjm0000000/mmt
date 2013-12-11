@@ -211,8 +211,13 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		params.put("access_token", getAcessToken(config));
 		String msgJson = processSendMsg(msg);
 		String result = HttpConnector.post(getCustomMsgUrl(), msgJson, params);
-		//TODO save log
-		
+		//save log
+		MsgLog log = new MsgLog();
+		log.setCust_id(config.getCust_id());
+		log.setId(IdWorkerManager.getIdWorker(MsgLog.class).getId());
+		log.setMsg(msgJson);
+		log.setService_type(getServiceType());
+		msgLogManager.saveSendLog(log);
 		// parser result
 		JSONObject json = JSONObject.fromObject(result);
 		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);

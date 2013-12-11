@@ -8,7 +8,7 @@ package lemon.test.web;
  */
 public abstract class IncomingTasks {
 	//TODO [2013-11-22] Using JSR 330 Standard Annotations
-	//TODO [2013-11-23] Spring Test加入
+	// [2013-11-23] Spring Test加入
 	
 	/****************************************************
 	 * 													*	

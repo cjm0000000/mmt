@@ -14,6 +14,8 @@ import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.MsgType;
 import lemon.shared.message.metadata.TextMessage;
+import lemon.shared.message.metadata.specific.weixin.MediaMessage;
+import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.service.ServiceType;
@@ -125,17 +127,28 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 
 	@Override
 	public JSONObject generateMsgDetail(Message msg) {
-		//TODO 实现其他类型的消息转换
+		JSONObject detail = new JSONObject();
 		switch (msg.getMsgType()) {
 		case MsgType.TEXT:
 			TextMessage txtMsg = (TextMessage) msg;
-			JSONObject content = new JSONObject();
-			content.put("content", txtMsg.getContent());
-			return content;
+			detail.put("content", txtMsg.getContent());
+			break;
+		case MsgType.IMAGE:
+		case MsgType.VOICE:
+		case MsgType.VIDEO:
+			MediaMessage imgMsg = (MediaMessage) msg;
+			detail.put("media_id", imgMsg.getMediaId());
+			if(MsgType.VIDEO.equals(msg.getMsgType())){
+				WXVideoMessage videoMsg = (WXVideoMessage) msg;
+				detail.put("thumb_media_id", videoMsg.getThumbMediaId());
+			}
+			break;
+		case MsgType.MUSIC:
+			break;
 		default:
 			break;
 		}
-		return null;
+		return detail;
 	}
 	
 }
