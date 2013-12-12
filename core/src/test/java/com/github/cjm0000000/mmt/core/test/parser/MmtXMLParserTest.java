@@ -12,6 +12,7 @@ import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.message.Message;
+import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
@@ -25,13 +26,23 @@ import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
 public class MmtXMLParserTest extends MmtTestBase {
 
 	/**
-	 * The test for text message
+	 * The unit testes for text message
 	 */
 	@Test
 	public void testParserTextMsg(){
 		ServiceType[] services = ServiceType.values();
 		for (ServiceType serviceType : services) 
 			parserTextMsg(serviceType);
+	}
+	
+	/**
+	 * The unit tests for image message
+	 */
+	@Test
+	public void testParserImageMsg(){
+		ServiceType[] services = ServiceType.values();
+		for (ServiceType serviceType : services) 
+			parserImageMsg(serviceType);
 	}
 	
 	/**
@@ -60,6 +71,39 @@ public class MmtXMLParserTest extends MmtTestBase {
 		TextMessage after = (TextMessage) MmtXMLParser.fromXML(service_type, is);
 		verifyBaseMsg(after, original);
 		assertEquals(after.getContent(), original.getContent());
+	}
+	
+	/**
+	 * parser image message to ImageMessage
+	 * @param service_type
+	 */
+	private void parserImageMsg(ServiceType service_type){
+		ImageMessage original = new ImageMessage();
+		original.setCreateTime(String.valueOf(System.currentTimeMillis()/1000));
+		original.setCust_id(CUST_ID);
+		original.setFromUserName("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
+		original.setId(0);
+		original.setMsgId(5939685126051988740L);
+		original.setService_type(service_type);
+		original.setToUserName("gh_de370ad657cf");
+		original.setPicUrl("http://mmbiz.qpic.cn/mmbiz/QXd6JDcZQ1kNscXWUKkI4ZuLcZQQZtPIicAOB2ic5iaXKzxWytwobOXQKjiaGYFO9aO2wCGJWLyuuyhicaUqictyOibNQ/0");
+		if(ServiceType.WEIXIN.equals(service_type))
+			original.setMediaId("Okq_aCQbG0iFQ6b89SAB2pP3-1jqAHehh2QSiPihKB6-Uwp6VlB24KbKsmX1sqVl");
+		String msg = "<xml>"
+				+ "<ToUserName><![CDATA["+original.getToUserName()+"]]></ToUserName>"
+				+ "<FromUserName><![CDATA["+original.getFromUserName()+"]]></FromUserName>"
+				+ "<CreateTime>"+original.getCreateTime()+"</CreateTime>"
+				+ "<MsgType><![CDATA["+original.getMsgType()+"]]></MsgType>"
+				+ "<PicUrl><![CDATA["+original.getPicUrl()+"]]></PicUrl>"
+				+ "<MsgId>"+original.getMsgId()+"</MsgId>"
+				+ "<MediaId><![CDATA["+original.getMediaId()+"]]></MediaId>"
+				+ "</xml>";
+		InputStream is = makeIS(msg);
+		ImageMessage after = (ImageMessage) MmtXMLParser.fromXML(service_type, is);
+		verifyBaseMsg(after, original);
+		assertEquals(after.getPicUrl(), original.getPicUrl());
+		if(ServiceType.WEIXIN.equals(service_type))
+			assertEquals(after.getMediaId(), original.getMediaId());
 	}
 	
 	/**

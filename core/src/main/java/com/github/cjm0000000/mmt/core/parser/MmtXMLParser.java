@@ -20,6 +20,7 @@ import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
+import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
@@ -145,6 +146,9 @@ public final class MmtXMLParser {
 		switch (msgType) {
 		case MsgType.TEXT:
 			msg = new TextMessage();
+			break;
+		case MsgType.IMAGE:
+			msg = new ImageMessage();
 			break;
 		default:
 			msg = new Message();
