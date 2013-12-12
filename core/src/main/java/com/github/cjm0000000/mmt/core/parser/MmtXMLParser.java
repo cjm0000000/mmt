@@ -22,6 +22,7 @@ import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
+import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
 /**
@@ -149,6 +150,9 @@ public final class MmtXMLParser {
 			break;
 		case MsgType.IMAGE:
 			msg = new ImageMessage();
+			break;
+		case MsgType.VOICE:
+			msg = new VoiceMessage();
 			break;
 		default:
 			msg = new Message();
