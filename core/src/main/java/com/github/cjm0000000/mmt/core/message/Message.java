@@ -65,9 +65,11 @@ public class Message extends BaseService {
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("toUserName=" + toUserName);
-		sb.append(", fromUserName=" + fromUserName);
-		sb.append(", createTime=" + createTime);
+		sb.append("[toUserName=").append(toUserName);
+		sb.append(", fromUserName=").append(fromUserName);
+		sb.append(", createTime=").append(createTime);
+		sb.append(", msgType=").append(msgType);
+		sb.append(", msgId=").append(msgId).append("]");
 		return sb.toString();
 	}
 
