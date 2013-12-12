@@ -122,7 +122,7 @@ public final class MmtXMLParser {
 		} else if (long.class.equals(fieldType)) {
 			field.setLong(msg, parserLong(value));
 		} else if(Long.class.equals(fieldType)){
-			field.setLong(msg, parserLong(value));
+			field.set(msg, new Long(parserLong(value)));
 		}else if (float.class.equals(fieldType)) {
 			field.setFloat(msg, parserFloat(value));
 		} else if (double.class.equals(fieldType)) {

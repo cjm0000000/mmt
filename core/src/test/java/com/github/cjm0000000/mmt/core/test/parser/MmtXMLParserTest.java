@@ -41,7 +41,7 @@ public class MmtXMLParserTest extends MmtTestBase {
 	private void parserTextMsg(ServiceType service_type){
 		TextMessage original = new TextMessage();
 		original.setContent("Hello W 你好");
-		original.setCreateTime((int) (System.currentTimeMillis()/1000));
+		original.setCreateTime(String.valueOf(System.currentTimeMillis()/1000));
 		original.setCust_id(CUST_ID);
 		original.setFromUserName("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
 		original.setId(0);
@@ -56,10 +56,8 @@ public class MmtXMLParserTest extends MmtTestBase {
 				+ "<Content><![CDATA[" + original.getContent() + "]]></Content>"
 				+ "<MsgId>"+original.getMsgId()+"</MsgId>"
 				+ "</xml>";
-		System.out.println(msg);
 		InputStream is = makeIS(msg);
 		TextMessage after = (TextMessage) MmtXMLParser.fromXML(service_type, is);
-		System.out.println(after);
 		verifyBaseMsg(after, original);
 		assertEquals(after.getContent(), original.getContent());
 	}
@@ -89,8 +87,6 @@ public class MmtXMLParserTest extends MmtTestBase {
 		assertEquals(after.getFromUserName(), before.getFromUserName());
 		assertEquals(after.getMsgId(), before.getMsgId());
 		assertEquals(after.getMsgType(), before.getMsgType());
-		assertEquals(after.getId(), before.getId());
-		assertEquals(after.getService_type(), before.getService_type());
 		assertEquals(after.getToUserName(), before.getToUserName());
 	}
 }

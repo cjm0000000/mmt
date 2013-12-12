@@ -19,7 +19,7 @@ public class Message extends BaseService {
 	protected String fromUserName;
 	/** CreateTime */
 	@MmtAlias("CreateTime")
-	protected int createTime;
+	protected String createTime;
 	/** MsgType */
 	@MmtAlias("MsgType")
 	protected String msgType;
@@ -44,10 +44,10 @@ public class Message extends BaseService {
 	public void setFromUserName(String fromUserName) {
 		this.fromUserName = fromUserName;
 	}
-	public int getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(int createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 	public String getMsgType() {
