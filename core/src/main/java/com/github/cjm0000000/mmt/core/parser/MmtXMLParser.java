@@ -2,23 +2,20 @@ package com.github.cjm0000000.mmt.core.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Field;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
@@ -40,6 +37,12 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 public final class MmtXMLParser {
 	private static final String ELEMENT_FOR_MESSAGE_TYPE = "MsgType";
 	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	private static final Logger logger = Logger.getLogger(MmtXMLParser.class);
+	private static DocumentBuilder builder;
+	
+	static{
+		initDocumentBuilder();
+	}
 	/**
 	 * Parser XML to SimpleMessageService
 	 * @param xml
@@ -47,27 +50,23 @@ public final class MmtXMLParser {
 	 */
 	public static SimpleMessageService fromXML(ServiceType service_type,
 			InputStream is) {
-		//get builder
-		DocumentBuilder builder = null;
-		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new MmtException("Build XML parser faild.", e.getCause());
-		}
 		if(builder == null)
-			return null;
+			initDocumentBuilder();
 		//parser to Document
 		Document doc = null;
-		try (Reader reader = new InputStreamReader(is, MmtCharset.LOCAL_CHARSET)){
-			InputSource source = new InputSource(reader);
-			doc = builder.parse(source);
+		try (InputStream inputStream = is){
+			doc = builder.parse(inputStream);
+			if(logger.isDebugEnabled())
+				logger.debug("Parse document successfully!!!");
 		} catch (SAXException | IOException e) {
-			e.printStackTrace();
+			throw new MmtException("Can't parse xml to document." ,e.getCause());
 		}
 		if(doc == null)
 			return null;
 		// parser document to Message
 		String msgType = getValue(doc, ELEMENT_FOR_MESSAGE_TYPE);
+		if(logger.isDebugEnabled())
+			logger.debug("Message type is: " + msgType);
 		return newMessage(doc, service_type, msgType);
 	}
 	
@@ -83,7 +82,20 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * 将document的值注入Message
+	 * Initialize document builder
+	 */
+	private static void initDocumentBuilder(){
+		try {
+			builder = factory.newDocumentBuilder();
+			if(logger.isDebugEnabled())
+				logger.debug("DocumentBuilder initialize successfully!!!");
+		} catch (ParserConfigurationException e) {
+			throw new MmtException("Build XML parser faild.", e.getCause());
+		}
+	}
+	
+	/**
+	 * Inject values to Message
 	 * @param msg
 	 * @param doc
 	 */
@@ -122,6 +134,8 @@ public final class MmtXMLParser {
 	private static void injectValue2Field(SimpleMessageService msg,
 			Field field, String value) throws IllegalArgumentException,
 			IllegalAccessException {
+		if(logger.isDebugEnabled())
+			logger.debug("try inject value[" + value + "] to field[" + field.getName() + "]");
 		if(field == null || value == null)
 			return;
 		field.setAccessible(true);
@@ -142,7 +156,7 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * 生成一个SimpleMessageService对象
+	 * generate a SimpleMessageService object
 	 * @param doc
 	 * @param service_type
 	 * @param msgType
@@ -191,7 +205,7 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * Parser to int
+	 * Parse to int
 	 * @param v
 	 * @return
 	 */
@@ -206,7 +220,7 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * Parser to long
+	 * Parse to long
 	 * @param v
 	 * @return
 	 */
@@ -221,7 +235,7 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * Parser to float
+	 * Parse to float
 	 * @param v
 	 * @return
 	 */
@@ -236,7 +250,7 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * Parser to double
+	 * Parse to double
 	 * @param v
 	 * @return
 	 */

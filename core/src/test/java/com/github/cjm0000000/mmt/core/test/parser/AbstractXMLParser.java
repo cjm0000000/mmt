@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,7 +23,7 @@ import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
  *
  */
 public abstract class AbstractXMLParser extends MmtTestBase {
-
+	private static final Logger logger = Logger.getLogger(AbstractXMLParser.class);
 	/**
 	 * make specific nodes
 	 * @param sb
@@ -66,6 +67,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 		makeCommonNodes(sb, original);
 		makeSpecNodes(sb, original);
 		sb.append("</xml>");
+		logger.debug("generate XML string: " + sb.toString());
 		//parser
 		InputStream is = toInputStream(sb.toString());
 		SimpleMessageService after = MmtXMLParser.fromXML(service_type, is);
