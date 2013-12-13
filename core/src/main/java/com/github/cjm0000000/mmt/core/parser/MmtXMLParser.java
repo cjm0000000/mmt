@@ -21,6 +21,7 @@ import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
@@ -165,6 +166,9 @@ public final class MmtXMLParser {
 			else if(ServiceType.YIXIN.equals(service_type))
 				msg = new Message();//TODO 易信VideoMessage fromXML
 			else msg = new Message();
+			break;
+		case MsgType.LOCATION:
+			msg = new LocationMessage();
 			break;
 		default:
 			msg = new Message();
