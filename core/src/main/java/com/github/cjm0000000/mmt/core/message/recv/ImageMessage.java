@@ -1,6 +1,7 @@
 package com.github.cjm0000000.mmt.core.message.recv;
 
 import com.github.cjm0000000.mmt.core.message.MsgType;
+import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
 /**

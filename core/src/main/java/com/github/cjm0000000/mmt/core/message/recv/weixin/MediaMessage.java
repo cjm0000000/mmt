@@ -1,10 +1,10 @@
-package com.github.cjm0000000.mmt.core.message.recv;
+package com.github.cjm0000000.mmt.core.message.recv.weixin;
 
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
 /**
- * media message<br>
+ * WeiXin media message<br>
  * such as: image, voice, video
  * @author lemon
  * @version 1.0
