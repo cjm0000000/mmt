@@ -15,7 +15,7 @@ import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
 public final class VoiceMessageParser_Test extends MediaMessageParser {
 
 	@Override
-	protected void generateSpecXMLNodesWithoutMediaId(StringBuilder sb,
+	protected void makeSpecNodesWithoutMediaId(StringBuilder sb,
 			Message original) {
 		VoiceMessage msg = (VoiceMessage) original;
 		sb.append("<Format><![CDATA[" + msg.getFormat()+"]]></Format>");

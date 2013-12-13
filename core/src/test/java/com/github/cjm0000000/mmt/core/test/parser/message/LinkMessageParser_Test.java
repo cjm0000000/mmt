@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
-import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
 
 /**
  * Unit test cases for link message
@@ -14,10 +13,10 @@ import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
  * @version 2.0
  *
  */
-public class LinkMessageParser_Test extends AbstractMmtXMLParser {
+public class LinkMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void generateSpecXMLNodes(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
 		LinkMessage msg = (LinkMessage) original;
 		sb.append("<Title><![CDATA[" + msg.getTitle() + "]]></Title>");
 		sb.append("<Description><![CDATA[" + msg.getDescription() + "]]></Description>");
@@ -25,7 +24,7 @@ public class LinkMessageParser_Test extends AbstractMmtXMLParser {
 	}
 
 	@Override
-	protected void verifySpecFields(Message after, Message before) {
+	protected void verifySpecFieldsWithoutMsgId(Message after, Message before) {
 		LinkMessage l_before = (LinkMessage) before;
 		LinkMessage l_after = (LinkMessage) after;
 		assertEquals(l_after.getTitle(), l_before.getTitle());
@@ -34,7 +33,7 @@ public class LinkMessageParser_Test extends AbstractMmtXMLParser {
 	}
 
 	@Override
-	protected Message getMsgInstance() {
+	protected Message getMsgInstanceWithoutMsgId() {
 		LinkMessage original = new LinkMessage();
 		original.setTitle(UUID.randomUUID().toString());
 		original.setDescription("中文" + UUID.randomUUID().toString());

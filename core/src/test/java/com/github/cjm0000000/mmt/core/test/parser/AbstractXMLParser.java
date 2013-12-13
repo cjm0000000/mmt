@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
-import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
 
@@ -21,30 +21,30 @@ import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
  * @version 2.0
  *
  */
-public abstract class AbstractMmtXMLParser extends MmtTestBase {
+public abstract class AbstractXMLParser extends MmtTestBase {
 
 	/**
-	 * generate specific XML node
+	 * make specific nodes
 	 * @param sb
 	 * @param original
 	 */
-	protected abstract void generateSpecXMLNodes(StringBuilder sb, Message original);
+	protected abstract void makeSpecNodes(StringBuilder sb, SimpleMessageService original);
 	
 	/**
 	 * verify specific fields
 	 * @param after
 	 * @param before
 	 */
-	protected abstract void verifySpecFields(Message after, Message before);
+	protected abstract void verifySpecFields(SimpleMessageService after, SimpleMessageService before);
 	
 	/**
 	 * get message instance and set specific fields
 	 * @return
 	 */
-	protected abstract Message getMsgInstance();
+	protected abstract SimpleMessageService getMsgInstance();
 	
 	/**
-	 * Run the test suite
+	 * Default Runner for the test suite
 	 */
 	@Test
 	public void run(){
@@ -58,17 +58,17 @@ public abstract class AbstractMmtXMLParser extends MmtTestBase {
 	 * @param service_type
 	 */
 	protected final void parser(ServiceType service_type){
-		Message original = getMsgInstance();
+		SimpleMessageService original = getMsgInstance();
 		//set common values
 		setCommonFields(service_type, original);
 		//build XML string
 		StringBuilder sb = new StringBuilder();
-		generateCommonXMLNodes(sb, original);
-		generateSpecXMLNodes(sb, original);
+		makeCommonNodes(sb, original);
+		makeSpecNodes(sb, original);
 		sb.append("</xml>");
 		//parser
-		InputStream is = makeIS(sb.toString());
-		Message after = MmtXMLParser.fromXML(service_type, is);
+		InputStream is = toInputStream(sb.toString());
+		SimpleMessageService after = MmtXMLParser.fromXML(service_type, is);
 		//verify
 		verifyCommonFields(after, original);
 		verifySpecFields(after, original);
@@ -79,7 +79,7 @@ public abstract class AbstractMmtXMLParser extends MmtTestBase {
 	 * @param msg
 	 * @return
 	 */
-	private InputStream makeIS(String msg){
+	private InputStream toInputStream(String msg){
 		try {
 			return new ByteArrayInputStream(msg.getBytes(MmtCharset.LOCAL_CHARSET));
 		} catch (UnsupportedEncodingException e) {
@@ -92,12 +92,11 @@ public abstract class AbstractMmtXMLParser extends MmtTestBase {
 	 * @param after the message after parser
 	 * @param before the original message
 	 */
-	private void verifyCommonFields(Message after, Message before){
+	private void verifyCommonFields(SimpleMessageService after, SimpleMessageService before){
 		assertNotNull(after);
 		assertNotNull(before);
 		assertEquals(after.getCreateTime(), before.getCreateTime());
 		assertEquals(after.getFromUserName(), before.getFromUserName());
-		assertEquals(after.getMsgId(), before.getMsgId());
 		assertEquals(after.getMsgType(), before.getMsgType());
 		assertEquals(after.getToUserName(), before.getToUserName());
 	}
@@ -107,27 +106,25 @@ public abstract class AbstractMmtXMLParser extends MmtTestBase {
 	 * @param service_type
 	 * @param original
 	 */
-	private void setCommonFields(ServiceType service_type, Message original){
+	private void setCommonFields(ServiceType service_type, SimpleMessageService original){
 		original.setCreateTime(String.valueOf(System.currentTimeMillis()/1000));
 		original.setCust_id(CUST_ID);
 		original.setFromUserName("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
 		original.setId(0);
-		original.setMsgId(5939685126051988740L);
 		original.setService_type(service_type);
 		original.setToUserName("gh_de370ad657cf");
 	}
 	
 	/**
-	 * generate common XML nodes
+	 * make common nodes
 	 * @param sb
 	 * @param original
 	 */
-	private void generateCommonXMLNodes(StringBuilder sb, Message original){
+	private void makeCommonNodes(StringBuilder sb, SimpleMessageService original){
 		sb.append("<xml>");
 		sb.append("<ToUserName><![CDATA["+original.getToUserName()+"]]></ToUserName>");
 		sb.append("<FromUserName><![CDATA["+original.getFromUserName()+"]]></FromUserName>");
 		sb.append("<CreateTime>"+original.getCreateTime()+"</CreateTime>");
 		sb.append("<MsgType><![CDATA["+original.getMsgType()+"]]></MsgType>");
-		sb.append("<MsgId>"+original.getMsgId()+"</MsgId>");
 	}
 }

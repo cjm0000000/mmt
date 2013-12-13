@@ -17,7 +17,9 @@ import org.xml.sax.SAXException;
 import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
@@ -39,11 +41,12 @@ public final class MmtXMLParser {
 	private static final String ELEMENT_FOR_MESSAGE_TYPE = "MsgType";
 	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	/**
-	 * Parser XML
+	 * Parser XML to SimpleMessageService
 	 * @param xml
 	 * @return
 	 */
-	public static Message fromXML(ServiceType service_type, InputStream is){
+	public static SimpleMessageService fromXML(ServiceType service_type,
+			InputStream is) {
 		//get builder
 		DocumentBuilder builder = null;
 		try {
@@ -84,7 +87,7 @@ public final class MmtXMLParser {
 	 * @param msg
 	 * @param doc
 	 */
-	private static void injectValues(Message msg, Document doc){
+	private static void injectValues(SimpleMessageService msg, Document doc) {
 		if(doc == null || msg == null)
 			return;
 		Class<?> superClass = msg.getClass();
@@ -116,7 +119,9 @@ public final class MmtXMLParser {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	private static void injectValue2Field(Message msg, Field field, String value) throws IllegalArgumentException, IllegalAccessException{
+	private static void injectValue2Field(SimpleMessageService msg,
+			Field field, String value) throws IllegalArgumentException,
+			IllegalAccessException {
 		if(field == null || value == null)
 			return;
 		field.setAccessible(true);
@@ -137,17 +142,17 @@ public final class MmtXMLParser {
 	}
 	
 	/**
-	 * 生成一个Message对象
+	 * 生成一个SimpleMessageService对象
 	 * @param doc
 	 * @param service_type
 	 * @param msgType
 	 * @return
 	 */
-	private static Message newMessage(Document doc, ServiceType service_type,
-			String msgType) {
+	private static SimpleMessageService newMessage(Document doc,
+			ServiceType service_type, String msgType) {
 		if (service_type == null || msgType == null)
 			return null;
-		Message msg;
+		SimpleMessageService msg;
 		switch (msgType) {
 		case MsgType.TEXT:
 			msg = new TextMessage();
@@ -173,6 +178,9 @@ public final class MmtXMLParser {
 			break;
 		case MsgType.LINK:
 			msg = new LinkMessage();
+			break;
+		case MsgType.EVENT:
+			msg = new SimpleEvent();
 			break;
 		default:
 			msg = new Message();

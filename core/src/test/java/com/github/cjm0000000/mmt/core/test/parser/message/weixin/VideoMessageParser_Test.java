@@ -23,7 +23,7 @@ public final class VideoMessageParser_Test extends MediaMessageParser {
 	}
 
 	@Override
-	protected void generateSpecXMLNodesWithoutMediaId(StringBuilder sb,
+	protected void makeSpecNodesWithoutMediaId(StringBuilder sb,
 			Message original) {
 		VideoMessage msg = (VideoMessage) original;
 		sb.append("<ThumbMediaId><![CDATA[" + msg.getThumbMediaId()+"]]></ThumbMediaId>");

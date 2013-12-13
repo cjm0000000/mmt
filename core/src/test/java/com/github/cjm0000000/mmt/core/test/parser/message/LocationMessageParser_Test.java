@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
-import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
 
 /**
  * Unit test cases for location message parse
@@ -12,10 +11,10 @@ import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
  * @version 2.0
  *
  */
-public class LocationMessageParser_Test extends AbstractMmtXMLParser {
+public class LocationMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void generateSpecXMLNodes(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
 		LocationMessage msg = (LocationMessage) original;
 		sb.append("<Location_X>" + msg.getLocation_X() + "</Location_X>");
 		sb.append("<Location_Y>" + msg.getLocation_Y() + "</Location_Y>");
@@ -24,7 +23,7 @@ public class LocationMessageParser_Test extends AbstractMmtXMLParser {
 	}
 
 	@Override
-	protected void verifySpecFields(Message after, Message before) {
+	protected void verifySpecFieldsWithoutMsgId(Message after, Message before) {
 		LocationMessage l_before = (LocationMessage) before;
 		LocationMessage l_after = (LocationMessage) after;
 		final double delta = 0.000001D;
@@ -35,7 +34,7 @@ public class LocationMessageParser_Test extends AbstractMmtXMLParser {
 	}
 
 	@Override
-	protected Message getMsgInstance() {
+	protected Message getMsgInstanceWithoutMsgId() {
 		LocationMessage original = new LocationMessage();
 		original.setLocation_X(30.278740D);
 		original.setLocation_Y(120.145300D);
