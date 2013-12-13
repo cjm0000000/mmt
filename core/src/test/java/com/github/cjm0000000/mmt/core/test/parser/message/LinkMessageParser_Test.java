@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.parser;
+package com.github.cjm0000000.mmt.core.test.parser.message;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
 
 /**
  * Unit test cases for link message

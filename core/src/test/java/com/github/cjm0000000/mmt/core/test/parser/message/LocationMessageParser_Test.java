@@ -1,9 +1,10 @@
-package com.github.cjm0000000.mmt.core.test.parser;
+package com.github.cjm0000000.mmt.core.test.parser.message;
 
 import static org.junit.Assert.assertEquals;
 
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
+import com.github.cjm0000000.mmt.core.test.parser.AbstractMmtXMLParser;
 
 /**
  * Unit test cases for location message parse

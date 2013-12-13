@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.parser.yixin;
+package com.github.cjm0000000.mmt.core.test.parser.message.yixin;
 
 import static org.junit.Assert.assertEquals;
 
