@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>lemon</groupId>
+	<groupId>com.github.cjm0000000</groupId>
 	<artifactId>mmt</artifactId>
 	<name>mmt</name>
-	<description>MMT Smart Robot</description>
+	<description>微信、易信接入 </description>
 	<packaging>pom</packaging>
 	<version>2.0-SNAPSHOT</version>
 	<modules>
+		<module>core</module>
 		<module>shared</module>
 		<module>weixin</module>
 		<module>yixin</module>
     	<module>mmt-web</module>
-    <module>core</module>
-  </modules>
+	</modules>
 	<properties>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,7 +28,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -59,5 +57,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
