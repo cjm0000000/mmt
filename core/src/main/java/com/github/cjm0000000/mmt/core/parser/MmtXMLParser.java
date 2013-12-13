@@ -21,6 +21,7 @@ import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
 import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage;
@@ -169,6 +170,9 @@ public final class MmtXMLParser {
 			break;
 		case MsgType.LOCATION:
 			msg = new LocationMessage();
+			break;
+		case MsgType.LINK:
+			msg = new LinkMessage();
 			break;
 		default:
 			msg = new Message();
