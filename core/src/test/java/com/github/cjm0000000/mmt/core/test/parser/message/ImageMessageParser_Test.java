@@ -14,7 +14,7 @@ import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 public final class ImageMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		ImageMessage msg = (ImageMessage) original;
 		sb.append("<PicUrl><![CDATA["+msg.getPicUrl()+"]]></PicUrl>");
 		sb.append("<MediaId><![CDATA["+msg.getMediaId()+"]]></MediaId>");

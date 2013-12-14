@@ -16,7 +16,7 @@ import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
 public class LinkMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		LinkMessage msg = (LinkMessage) original;
 		sb.append("<Title><![CDATA[" + msg.getTitle() + "]]></Title>");
 		sb.append("<Description><![CDATA[" + msg.getDescription() + "]]></Description>");

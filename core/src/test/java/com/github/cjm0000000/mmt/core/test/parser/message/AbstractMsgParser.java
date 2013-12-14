@@ -19,7 +19,7 @@ public abstract class AbstractMsgParser extends AbstractXMLParser {
 	 * @param sb
 	 * @param original
 	 */
-	protected abstract void makeSpecNodesWithouMsgId(StringBuilder sb,
+	protected abstract void makeSpecNodesWithoutMsgId(StringBuilder sb,
 			Message original);
 	
 	/**
@@ -40,7 +40,7 @@ public abstract class AbstractMsgParser extends AbstractXMLParser {
 			SimpleMessageService original) {
 		Message msg = (Message) original;
 		sb.append("<MsgId>" + msg.getMsgId() + "</MsgId>");
-		makeSpecNodesWithouMsgId(sb, msg);
+		makeSpecNodesWithoutMsgId(sb, msg);
 	}
 
 	@Override

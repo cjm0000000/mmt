@@ -35,7 +35,7 @@ public abstract class MediaMessageParser extends AbstractMsgParser {
 	protected abstract MediaMessage getMsgInstanceWithoutMediaId();
 
 	@Override
-	protected final void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected final void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		MediaMessage msg = (MediaMessage) original;
 		sb.append("<MediaId><![CDATA[" + msg.getMediaId() + "]]></MediaId>");
 		makeSpecNodesWithoutMediaId(sb, original);

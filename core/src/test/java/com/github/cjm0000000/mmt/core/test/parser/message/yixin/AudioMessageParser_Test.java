@@ -17,7 +17,7 @@ import com.github.cjm0000000.mmt.core.test.parser.message.AbstractMsgParser;
 public final class AudioMessageParser_Test extends AbstractMsgParser {
 	
 	@Override
-	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		AudioMessage msg = (AudioMessage) original;
 		sb.append("<url><![CDATA["+msg.getUrl()+"]]></url>");
 		sb.append("<name><![CDATA["+msg.getName()+"]]></name>");

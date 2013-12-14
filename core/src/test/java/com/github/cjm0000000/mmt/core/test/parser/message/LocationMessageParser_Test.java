@@ -14,7 +14,7 @@ import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
 public class LocationMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		LocationMessage msg = (LocationMessage) original;
 		sb.append("<Location_X>" + msg.getLocation_X() + "</Location_X>");
 		sb.append("<Location_Y>" + msg.getLocation_Y() + "</Location_Y>");

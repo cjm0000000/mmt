@@ -14,7 +14,7 @@ import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 public final class TextMessageParser_Test extends AbstractMsgParser {
 	
 	@Override
-	protected void makeSpecNodesWithouMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
 		TextMessage msg = (TextMessage) original;
 		sb.append("<Content><![CDATA["+msg.getContent()+"]]></Content>");
 	}
