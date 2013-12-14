@@ -1,38 +1,31 @@
 package com.github.cjm0000000.mmt.core.test.parser.event;
 
-import static org.junit.Assert.assertEquals;
-
 import com.github.cjm0000000.mmt.core.EventType;
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.event.SimpleEvent;
-import com.github.cjm0000000.mmt.core.test.parser.AbstractXMLParser;
 
 /**
  * Unit test cases
  * @author lemon
+ * @version 2.0
  *
  */
-public class SimpleEventParser_Test extends AbstractXMLParser {
+public class SimpleEventParser_Test extends AbstractEventParser {
 
 	@Override
-	protected void makeSpecNodes(StringBuilder sb, SimpleMessageService original) {
-		SimpleEvent event = (SimpleEvent) original;
-		sb.append("<Event><![CDATA[" + event.getEventType() + "]]></Event>");
+	protected void makeSpecNodesWithoutEventType(StringBuilder sb,
+			SimpleEvent original) {
 	}
 
 	@Override
-	protected void verifySpecFields(SimpleMessageService after,
-			SimpleMessageService before) {
-		SimpleEvent s_before = (SimpleEvent) before;
-		SimpleEvent s_after = (SimpleEvent) after;
-		assertEquals(s_after.getEventType(), s_before.getEventType());
+	protected SimpleEvent getEventInstance() {
+		SimpleEvent event = new SimpleEvent();
+		event.setEventType(EventType.subscribe);
+		return event;
 	}
 
 	@Override
-	protected SimpleMessageService getMsgInstance() {
-		SimpleEvent original = new SimpleEvent();
-		original.setEventType(EventType.subscribe.toString());
-		return original;
+	protected void verifySpecFieldsWithoutEventType(SimpleEvent after,
+			SimpleEvent before) {
 	}
 
 }

@@ -13,9 +13,13 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.github.cjm0000000.mmt.core.BaseService;
+import com.github.cjm0000000.mmt.core.EventType;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.event.KeyEvent;
+import com.github.cjm0000000.mmt.core.event.LocationEvent;
+import com.github.cjm0000000.mmt.core.event.ScanEvent;
 import com.github.cjm0000000.mmt.core.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
@@ -131,6 +135,7 @@ public final class MmtXMLParser {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void injectValue2Field(SimpleMessageService msg,
 			Field field, String value) throws IllegalArgumentException,
 			IllegalAccessException {
@@ -152,11 +157,40 @@ public final class MmtXMLParser {
 			field.setFloat(msg, parserFloat(value));
 		} else if (double.class.equals(fieldType)) {
 			field.setDouble(msg, parserDouble(value));
+		}else{
+			if(fieldType.isEnum()){
+				field.set(msg, Enum.valueOf((Class<Enum>)fieldType, value));
+			}else
+				field.set(msg, value);
 		}
 	}
 	
 	/**
-	 * generate a SimpleMessageService object
+	 * generate a new SimpleEvent object
+	 * @param doc
+	 * @param service_type
+	 * @return
+	 */
+	private static SimpleEvent newEvent(Document doc, ServiceType service_type) {
+		String eventType = getValue(doc, "Event");
+		if(eventType == null || "null".equals(eventType))
+			throw new MmtException("Can't new event, event type is null.");
+		EventType eType = EventType.valueOf(eventType);
+		if(eType == null)
+			throw new MmtException(eventType + "is not a valid EventType.");
+		if(EventType.subscribe.equals(eType) || EventType.unsubscribe.equals(eType))
+			return new SimpleEvent();
+		else if(EventType.CLICK.equals(eType))
+			return new KeyEvent();
+		else if(EventType.scan.equals(eType))
+			return new ScanEvent();
+		else if(EventType.LOCATION.equals(eType))
+			return new LocationEvent();
+		return null;
+	}
+	
+	/**
+	 * generate a new  SimpleMessageService object
 	 * @param doc
 	 * @param service_type
 	 * @param msgType
@@ -194,7 +228,7 @@ public final class MmtXMLParser {
 			msg = new LinkMessage();
 			break;
 		case MsgType.EVENT:
-			msg = new SimpleEvent();
+			msg = newEvent(doc, service_type);
 			break;
 		default:
 			msg = new Message();

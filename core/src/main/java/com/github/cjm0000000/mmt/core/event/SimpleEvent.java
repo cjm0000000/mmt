@@ -1,11 +1,12 @@
 package com.github.cjm0000000.mmt.core.event;
 
+import com.github.cjm0000000.mmt.core.EventType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
 /**
- * Event message
+ * simple event
  * @author lemon
  * @version 1.0
  *
@@ -14,15 +15,15 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 public class SimpleEvent extends SimpleMessageService {
 	/** Event */
 	@MmtAlias("Event")
-	private String eventType; 
+	private EventType eventType; 
 	
 	public SimpleEvent(){
 		super(MsgType.EVENT);
 	}
-	public String getEventType() {
+	public EventType getEventType() {
 		return eventType;
 	}
-	public void setEventType(String eventType) {
+	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
 }
