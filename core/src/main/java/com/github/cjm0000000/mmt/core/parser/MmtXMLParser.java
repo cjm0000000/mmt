@@ -47,8 +47,58 @@ public final class MmtXMLParser {
 	static{
 		initDocumentBuilder();
 	}
+	
+	abstract static class Itr{
+		abstract void doAction();
+		
+		void itrClassFamily(final SimpleMessageService msg, final Document doc) {
+			if(doc == null || msg == null)
+				return;
+			Class<?> superClass = msg.getClass();
+			Field[] fields;
+			MmtAlias alias;
+			String itemName;
+			try {
+				while (!superClass.equals(BaseService.class)) {
+					fields = superClass.getDeclaredFields();
+					for (Field field : fields) {
+						alias = field.getAnnotation(MmtAlias.class);
+						if (alias != null)
+							itemName = alias.value();
+						else
+							itemName = field.getName();
+						//TODO 
+						doAction();
+					}
+					superClass = superClass.getSuperclass();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new MmtException("Can't Convert XML to Message.", e.getCause());
+			}
+		}
+	}
+	
+	static class ItrForInjectField extends Itr{
+
+		@Override
+		void doAction() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	static class ItrForParseField extends Itr{
+
+		@Override
+		void doAction() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	/**
-	 * Parser XML to SimpleMessageService
+	 * parse XML to SimpleMessageService
 	 * @param xml
 	 * @return
 	 */
@@ -72,6 +122,20 @@ public final class MmtXMLParser {
 		if(logger.isDebugEnabled())
 			logger.debug("Message type is: " + msgType);
 		return newMessage(doc, service_type, msgType);
+	}
+	
+	/**
+	 * parse SimpleMessageService to XML string
+	 * @param msg
+	 * @return
+	 */
+	public static String toXML(SimpleMessageService msg){
+		if(msg == null)
+			throw new MmtException("Can't convert object to XML: msg is null.");
+		
+		//TODO parser object to XML
+		
+		return null;
 	}
 	
 	/**
