@@ -2,12 +2,16 @@ package com.github.cjm0000000.mmt.core.test.parser.message.weixin;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
+
 import org.junit.Test;
 
 import com.github.cjm0000000.mmt.core.ServiceType;
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for video message parse
@@ -41,6 +45,11 @@ public final class VideoMessageParser_Test extends MediaMessageParser {
 		VideoMessage original = new VideoMessage();
 		original.setThumbMediaId("Okq_aCQbG0iFq1Q6b89SAB2pP3-1jqAHehh2QSiPihKB6-Uwp6VlB24KbKsmX1sqVl");
 		return original;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, VideoMessage.class);
 	}
 
 }

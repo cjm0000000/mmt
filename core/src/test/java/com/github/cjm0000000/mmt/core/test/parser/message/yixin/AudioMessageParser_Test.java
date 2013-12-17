@@ -2,10 +2,13 @@ package com.github.cjm0000000.mmt.core.test.parser.message.yixin;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
 import java.util.UUID;
 
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.test.parser.message.AbstractMsgParser;
 
 /**
@@ -39,6 +42,11 @@ public final class AudioMessageParser_Test extends AbstractMsgParser {
 		original.setUrl("http://mmbiz.qpic.cn/mmbiz/QXd6JDcZQ1kNscXWUKkI4ZuLcZQQZtPIicAOB2ic5iaXKzxWytwobOXQKjiaGYFO9aO2wCGJWLyuuyhicaUqictyOibNQ/0");
 		original.setName(UUID.randomUUID().toString());
 		return original;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, AudioMessage.class);
 	}
 
 }

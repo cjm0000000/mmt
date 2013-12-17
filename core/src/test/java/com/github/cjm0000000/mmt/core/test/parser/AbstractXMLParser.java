@@ -13,7 +13,6 @@ import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
-import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
 
 /**
@@ -45,6 +44,13 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	protected abstract SimpleMessageService getMsgInstance();
 	
 	/**
+	 * parse from inputStream
+	 * @param is
+	 * @return
+	 */
+	protected abstract SimpleMessageService fromXML(InputStream is);
+	
+	/**
 	 * Default Runner for the test suite
 	 */
 	@Test
@@ -70,7 +76,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 		logger.debug("generate XML string: " + sb.toString());
 		//parser
 		InputStream is = toInputStream(sb.toString());
-		SimpleMessageService after = MmtXMLParser.fromXML(service_type, is);
+		SimpleMessageService after = fromXML(is);
 		//verify
 		verifyCommonFields(after, original);
 		verifySpecFields(after, original);

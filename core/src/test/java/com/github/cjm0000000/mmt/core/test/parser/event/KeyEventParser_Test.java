@@ -2,11 +2,14 @@ package com.github.cjm0000000.mmt.core.test.parser.event;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 import com.github.cjm0000000.mmt.core.EventType;
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.event.KeyEvent;
 import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for key event
@@ -37,6 +40,11 @@ public class KeyEventParser_Test extends AbstractEventParser {
 		event.setEventType(EventType.CLICK);
 		event.setEventKey(UUID.randomUUID().toString());
 		return event;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, KeyEvent.class);
 	}
 
 }

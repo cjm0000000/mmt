@@ -2,8 +2,12 @@ package com.github.cjm0000000.mmt.core.test.parser.message;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
+
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for text message parse
@@ -31,6 +35,11 @@ public final class TextMessageParser_Test extends AbstractMsgParser {
 		TextMessage msg = new TextMessage();
 		msg.setContent("中文 Hello");
 		return msg;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, TextMessage.class);
 	}
 
 }

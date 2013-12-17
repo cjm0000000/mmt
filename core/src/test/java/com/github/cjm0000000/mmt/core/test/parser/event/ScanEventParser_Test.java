@@ -2,11 +2,14 @@ package com.github.cjm0000000.mmt.core.test.parser.event;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 import com.github.cjm0000000.mmt.core.EventType;
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.event.ScanEvent;
 import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for scan event
@@ -40,6 +43,11 @@ public class ScanEventParser_Test extends AbstractEventParser {
 		ScanEvent l_after = (ScanEvent) after;
 		assertEquals(l_after.getEventKey(), l_before.getEventKey());
 		assertEquals(l_after.getTicket(), l_before.getTicket());
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, ScanEvent.class);
 	}
 
 }

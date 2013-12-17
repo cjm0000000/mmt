@@ -2,10 +2,13 @@ package com.github.cjm0000000.mmt.core.test.parser.message;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
 import java.util.UUID;
 
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test cases for link message
@@ -39,6 +42,11 @@ public class LinkMessageParser_Test extends AbstractMsgParser {
 		original.setDescription("中文" + UUID.randomUUID().toString());
 		original.setUrl("http://www.baidu.com/asd/asd/a.html");
 		return original;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, LinkMessage.class);
 	}
 
 }

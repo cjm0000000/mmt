@@ -2,9 +2,13 @@ package com.github.cjm0000000.mmt.core.test.parser.message.weixin;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
+
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for voice message parse
@@ -33,6 +37,11 @@ public final class VoiceMessageParser_Test extends MediaMessageParser {
 		VoiceMessage original = new VoiceMessage();
 		original.setFormat("amr");
 		return original;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, VoiceMessage.class);
 	}
 
 }

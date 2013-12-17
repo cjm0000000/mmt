@@ -2,8 +2,12 @@ package com.github.cjm0000000.mmt.core.test.parser.message;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.InputStream;
+
+import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for image message parse
@@ -34,6 +38,11 @@ public final class ImageMessageParser_Test extends AbstractMsgParser {
 		msg.setPicUrl("http://mmbiz.qpic.cn/mmbiz/QXd6JDcZQ1kNscXWUKkI4ZuLcZQQZtPIicAOB2ic5iaXKzxWytwobOXQKjiaGYFO9aO2wCGJWLyuuyhicaUqictyOibNQ/0");
 		msg.setMediaId("Okq_aCQbG0iFQ6b89SAB2pP3-1jqAHehh2QSiPihKB6-Uwp6VlB24KbKsmX1sqVl");
 		return msg;
+	}
+
+	@Override
+	protected SimpleMessageService fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, ImageMessage.class);
 	}
 
 }
