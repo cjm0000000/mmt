@@ -44,7 +44,7 @@ public final class SimpleXMLDriver {
 	 */
 	abstract static class Itr{
 		/**
-		 * do action such as inject values or parse field to xml
+		 * do action such as inject values or parse field to XML
 		 * @param msg
 		 * @param field
 		 * @param value
@@ -61,35 +61,44 @@ public final class SimpleXMLDriver {
 				return;
 			Class<?> superClass = msg.getClass();
 			Field[] fields;
-			MmtAlias alias;
-			String itemName;
 			try {
 				while (!superClass.equals(BaseService.class)) {
 					fields = superClass.getDeclaredFields();
-					for (Field field : fields) {
-						alias = field.getAnnotation(MmtAlias.class);
-						if (alias != null)
-							itemName = alias.value();
-						else
-							itemName = field.getName();
-						doAction(msg, field, getValue(doc, itemName));
-					}
+					traverseFields(msg, doc, fields);
 					superClass = superClass.getSuperclass();
 				}
 			} catch (IllegalArgumentException e) {
 				throw new MmtException("Can't Convert XML to Message.", e.getCause());
 			}
 		}
+		
+		/**
+		 * iterate for fields
+		 * @param msg
+		 * @param doc
+		 * @param fields
+		 */
+		private void traverseFields(SimpleMessageService msg, Document doc,Field[] fields){
+			MmtAlias alias;
+			String itemName;
+			for (Field field : fields) {
+				alias = field.getAnnotation(MmtAlias.class);
+				itemName = (alias == null) ? field.getName() : alias.value();
+				doAction(msg, field, getValue(doc, itemName));
+			}
+		}
 	}
 	
 	static class ItrForInject extends Itr{
+		
 		@Override
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		void doAction(SimpleMessageService msg, Field field, String value) {
 			if(field == null || value == null)
 				return;
 			field.setAccessible(true);
 			Class<?> fieldType = field.getType();
+			if(fieldType.isPrimitive())
+				parsePrimitiveType(fieldType);
 			try {
 				if (String.class.equals(fieldType)) {
 					field.set(msg, value);
@@ -103,17 +112,50 @@ public final class SimpleXMLDriver {
 					field.setFloat(msg, parserFloat(value));
 				} else if (double.class.equals(fieldType)) {
 					field.setDouble(msg, parserDouble(value));
-				}else{
-					if(fieldType.isEnum()){
-						field.set(msg, Enum.valueOf((Class<Enum>)fieldType, value));
-					}else
-						field.set(msg, value);
-				}
+				}else
+					field.set(msg, fieldType.isEnum() ? getEnumValue(fieldType, value) : value);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new MmtException("Can't Convert XML to Message.", e.getCause());
 			}
 			if(logger.isDebugEnabled())
 				logger.debug("inject value[" + value + "] to field[" + field.getName() + "]");
+		}
+		
+		/**
+		 * get enum value
+		 * @param enumType
+		 * @param value
+		 * @return
+		 */
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private Enum getEnumValue(Class<?> enumType, String value){
+			return Enum.valueOf((Class<Enum>)enumType, value);
+		}
+		
+		/**
+		 * Judge whether primitive type or not
+		 * @param fieldType
+		 * @return
+		 */
+		private void parsePrimitiveType(Class<?> fieldType){
+			
+		}
+		
+		/**
+		 * Judge whether boxed primitive type or not
+		 * @param fieldType
+		 * @return
+		 */
+		private boolean isBoxedPrimitiveType(Class<?> fieldType){
+			if(Integer.class.equals(fieldType)) 	return true;
+			if(Short.class.equals(fieldType)) 		return true;
+			if(Long.class.equals(fieldType)) 		return true;
+			if(Byte.class.equals(fieldType)) 		return true;
+			if(Character.class.equals(fieldType)) 	return true;
+			if(Float.class.equals(fieldType)) 		return true;
+			if(Double.class.equals(fieldType)) 		return true;
+			if(Boolean.class.equals(fieldType)) 	return true;
+			return false;
 		}
 		
 		/**
@@ -191,20 +233,6 @@ public final class SimpleXMLDriver {
 	}
 	
 	/**
-	 * Initialize document builder
-	 */
-	private static void initDocumentBuilder(){
-		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			builder = factory.newDocumentBuilder();
-			if(logger.isDebugEnabled())
-				logger.debug("DocumentBuilder initialize successfully!!!");
-		} catch (ParserConfigurationException e) {
-			throw new MmtException("Build XML parser faild.", e.getCause());
-		}
-	}
-	
-	/**
 	 * parse from XML
 	 * @param is
 	 * @param type
@@ -262,10 +290,23 @@ public final class SimpleXMLDriver {
 	}
 	
 	/**
+	 * Initialize document builder
+	 */
+	private static void initDocumentBuilder(){
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			builder = factory.newDocumentBuilder();
+			logDebug("DocumentBuilder initialize successfully!!!");
+		} catch (ParserConfigurationException e) {
+			throw new MmtException("Build XML parser faild.", e.getCause());
+		}
+	}
+	
+	/**
 	 * print debug log
 	 * @param log
 	 */
-	private void logDebug(Object log){
+	private static void logDebug(Object log){
 		if(logger.isDebugEnabled())
 			logger.debug(log);
 	}
