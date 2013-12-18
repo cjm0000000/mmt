@@ -97,23 +97,26 @@ public final class SimpleXMLDriver {
 				return;
 			field.setAccessible(true);
 			Class<?> fieldType = field.getType();
-			if(fieldType.isPrimitive())
-				parsePrimitiveType(fieldType);
 			try {
-				if (String.class.equals(fieldType)) {
+				//most useful
+				if(String.class.equals(fieldType)){
 					field.set(msg, value);
-				} else if (int.class.equals(fieldType)) {
-					field.setInt(msg, parserInt(value));
-				} else if (long.class.equals(fieldType)) {
-					field.setLong(msg, parserLong(value));
-				} else if(Long.class.equals(fieldType)){
-					field.set(msg, new Long(parserLong(value)));
-				}else if (float.class.equals(fieldType)) {
-					field.setFloat(msg, parserFloat(value));
-				} else if (double.class.equals(fieldType)) {
-					field.setDouble(msg, parserDouble(value));
-				}else
-					field.set(msg, fieldType.isEnum() ? getEnumValue(fieldType, value) : value);
+					return;
+				}
+				//is primitive type
+				if(fieldType.isPrimitive()){
+					parsePrimitiveType(msg, field, value, fieldType);
+					return;
+				}
+				//is boxed type
+				if(!parseBoxedPrimitiveType(msg, field, fieldType, value)){
+					if(fieldType.isEnum()){
+						field.set(msg, getEnumValue(fieldType, value));
+						return;
+					}
+					//TODO complex object
+					processComplexObject(fieldType, value);
+				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new MmtException("Can't Convert XML to Message.", e.getCause());
 			}
@@ -133,89 +136,109 @@ public final class SimpleXMLDriver {
 		}
 		
 		/**
-		 * Judge whether primitive type or not
-		 * @param fieldType
-		 * @return
+		 * deal with complex object
 		 */
-		private void parsePrimitiveType(Class<?> fieldType){
+		private void processComplexObject(Class<?> type, String value){
 			
 		}
 		
 		/**
-		 * Judge whether boxed primitive type or not
+		 * parse to primitive type
 		 * @param fieldType
 		 * @return
+		 * @throws IllegalAccessException 
+		 * @throws IllegalArgumentException 
 		 */
-		private boolean isBoxedPrimitiveType(Class<?> fieldType){
-			if(Integer.class.equals(fieldType)) 	return true;
-			if(Short.class.equals(fieldType)) 		return true;
-			if(Long.class.equals(fieldType)) 		return true;
-			if(Byte.class.equals(fieldType)) 		return true;
-			if(Character.class.equals(fieldType)) 	return true;
-			if(Float.class.equals(fieldType)) 		return true;
-			if(Double.class.equals(fieldType)) 		return true;
-			if(Boolean.class.equals(fieldType)) 	return true;
+		private void parsePrimitiveType(SimpleMessageService msg, Field field,
+				String value, Class<?> fieldType)
+				throws IllegalArgumentException, IllegalAccessException {
+			field.set(msg, toPrimitiveValue(fieldType, value, getDefaultValue(fieldType)));
+		}
+		
+		/**
+		 * parse to boxed primitive type
+		 * @param msg
+		 * @param field
+		 * @param fieldType
+		 * @param value
+		 * @return
+		 * @throws IllegalAccessException 
+		 * @throws IllegalArgumentException 
+		 */
+		private boolean parseBoxedPrimitiveType(SimpleMessageService msg,
+				Field field, Class<?> fieldType, String value)
+				throws IllegalArgumentException, IllegalAccessException {
+			if(Integer.class.equals(fieldType)){
+				field.setInt(msg, new Integer((int) toPrimitiveValue(int.class, value, 0)));
+				return true;
+			}
+			if(Short.class.equals(fieldType)){
+				field.setShort(msg, new Short((short) toPrimitiveValue(short.class, value, 0b0)));
+				return true;
+			}
+			if(Long.class.equals(fieldType)){
+				field.setLong(msg, new Long((long) toPrimitiveValue(long.class, value, 0)));
+				return true;
+			}
+			if(Byte.class.equals(fieldType)){
+				field.setByte(msg, new Byte((byte) toPrimitiveValue(byte.class, value, 0b0)));
+				return true;
+			}
+			if(Float.class.equals(fieldType)){
+				field.setFloat(msg, new Float((float) toPrimitiveValue(float.class, value, 0.0F)));
+				return true;
+			}
+			if(Double.class.equals(fieldType)){
+				field.setDouble(msg, (double) toPrimitiveValue(double.class, value, 0.0D));
+				return true;
+			}
+			if(Boolean.class.equals(fieldType)){
+				field.setBoolean(msg, new Boolean((boolean) toPrimitiveValue(boolean.class, value, false)));
+				return true;
+			}
 			return false;
 		}
 		
 		/**
-		 * Parse to int
-		 * @param v
+		 * parse to primitive type
+		 * @param fieldType
+		 * @param value
+		 * @param defaultValue
 		 * @return
 		 */
-		private static int parserInt(String v) {
-			if (v == null || "".equals(v.trim()))
-				return 0;
-			try {
-				return Integer.parseInt(v);
-			} catch (NumberFormatException e) {
-				return 0;
+		private <fieldType> Object toPrimitiveValue(Class<?> fieldType, String value,
+				Object defaultValue) {
+			if (value == null || "".equals(value.trim()))
+				return defaultValue;
+			try{
+				if(int.class.equals(fieldType))		return Integer.parseInt(value);
+				if(short.class.equals(fieldType)) 	return Short.parseShort(value);
+				if(long.class.equals(fieldType))	return Long.parseLong(value);
+				if(byte.class.equals(fieldType))	return Byte.parseByte(value);
+				if(float.class.equals(fieldType)) 	return Float.parseFloat(value);
+				if(double.class.equals(fieldType)) 	return Double.parseDouble(value);
+				if(boolean.class.equals(fieldType)) return Boolean.parseBoolean(value);
+			}catch(NumberFormatException e){
+				if(logger.isDebugEnabled())
+					logger.debug("Can't convert to primitive type, return default value " + defaultValue);
 			}
+			return defaultValue == null ? value : defaultValue;
 		}
 		
 		/**
-		 * Parse to long
-		 * @param v
+		 * get default value
+		 * @param fieldType
 		 * @return
 		 */
-		private static long parserLong(String v){
-			if (v == null || "".equals(v.trim()))
-				return 0;
-			try {
-				return Long.parseLong(v);
-			} catch (NumberFormatException e) {
-				return 0;
-			}
-		}
-		
-		/**
-		 * Parse to float
-		 * @param v
-		 * @return
-		 */
-		private static float parserFloat(String v){
-			if (v == null || "".equals(v.trim()))
-				return 0.0F;
-			try {
-				return Float.parseFloat(v);
-			} catch (NumberFormatException e) {
-				return 0.0F;
-			}
-		}
-		
-		/**
-		 * Parse to double
-		 * @param v
-		 * @return
-		 */
-		private static double parserDouble(String v){
-			if (v == null || "".equals(v.trim()))
-				return 0.0D;
-			try {
-				return Double.parseDouble(v);
-			} catch (NumberFormatException e) {
-				return 0.0D;
-			}
+		private Object getDefaultValue(Class<?> fieldType){
+			if(int.class.equals(fieldType))	return 0;
+			if(short.class.equals(fieldType)) return 0;
+			if(long.class.equals(fieldType))return 0L;
+			if(byte.class.equals(fieldType))return 0b0;
+			if(float.class.equals(fieldType)) return 0.0F;
+			if(double.class.equals(fieldType)) return 0.0D;
+			if(boolean.class.equals(fieldType)) return false;
+			return "";
 		}
 	}
 	
@@ -243,7 +266,8 @@ public final class SimpleXMLDriver {
 		Document doc = null;
 		try (InputStream inputStream = is){
 			doc = builder.parse(inputStream);
-			logDebug("Parse document successfully!!!");
+			if(logger.isDebugEnabled())
+				logger.debug("Parse document successfully!!!");
 		} catch (SAXException | IOException e) {
 			throw new MmtException("Can't parse xml to document.", e.getCause());
 		}
@@ -263,7 +287,8 @@ public final class SimpleXMLDriver {
 			return null;
 		if(msg.getMsgType() == null || !msg.getMsgType().equals(msgType))
 			throw new MmtException("message does' exists. message type is " + msgType);
-		logDebug("Message type is: " + msgType);
+		if(logger.isDebugEnabled())
+			logger.debug("Message type is: " + msgType);
 		classItr.traverseClass(msg, doc);
 		return msg;
 	}
@@ -296,18 +321,10 @@ public final class SimpleXMLDriver {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
-			logDebug("DocumentBuilder initialize successfully!!!");
+			if(logger.isDebugEnabled())
+				logger.debug("DocumentBuilder initialize successfully!!!");
 		} catch (ParserConfigurationException e) {
 			throw new MmtException("Build XML parser faild.", e.getCause());
 		}
-	}
-	
-	/**
-	 * print debug log
-	 * @param log
-	 */
-	private static void logDebug(Object log){
-		if(logger.isDebugEnabled())
-			logger.debug(log);
 	}
 }
