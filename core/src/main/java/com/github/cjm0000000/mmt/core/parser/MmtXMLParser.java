@@ -13,8 +13,7 @@ import com.github.cjm0000000.mmt.core.parser.driver.SimpleXMLDriver;
  *
  */
 public final class MmtXMLParser {
-	private static final SimpleXMLDriver injectDriver = new SimpleXMLDriver(true);
-	private static final SimpleXMLDriver parseDriver = new SimpleXMLDriver(false);
+	private static final SimpleXMLDriver simpleDriver = new SimpleXMLDriver();
 	
 	/**
 	 * parse XML to SimpleMessageService
@@ -23,7 +22,7 @@ public final class MmtXMLParser {
 	 * @return
 	 */
 	public static <T> SimpleMessageService fromXML(InputStream is, Class<T> type) {
-		return injectDriver.fromXML(is, type);
+		return simpleDriver.fromXML(is, type);
 	}
 	
 	/**
@@ -32,7 +31,7 @@ public final class MmtXMLParser {
 	 * @return
 	 */
 	public static String toXML(Object obj){
-		return parseDriver.toXML(obj);
+		return simpleDriver.toXML(obj);
 	}
 	
 }

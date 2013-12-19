@@ -12,11 +12,15 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import static com.github.cjm0000000.mmt.core.tookit.convert.PrimitiveTypeConvert.*;
+
 import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
 
 /**
  * Simple XML driver implement
@@ -28,43 +32,32 @@ public final class SimpleXMLDriver {
 	private static final String ELEMENT_FOR_MESSAGE_TYPE = "MsgType";
 	private static final Logger logger = Logger.getLogger(MmtXMLParser.class);
 	private static DocumentBuilder builder;
-	private final Itr classItr;
+	private static InternalParserForInject ipfi;
+	private static ItrForParse ifp;
+	private static final String TAG_NAME = "#NODE#";
+	private static final String START_TAG = "<" + TAG_NAME + ">";
+	private static final String END_TAG = "</" + TAG_NAME + ">";
+	/** CDATA prefix */
+	private static final String PREFIX_CDATA = "<![CDATA[";
+	/** CDATA suffix */
+	private static final String SUFFIX_CDATA = "]]>";
 	
-	public SimpleXMLDriver(boolean inject){
-		classItr = inject ? new ItrForInject() : new ItrForParse();
-	}
-	
-	static{
-		initDocumentBuilder();
-	}
-	
-	/**
-	 * Iterate for class
-	 *
-	 */
-	abstract static class Itr{
-		/**
-		 * do action such as inject values or parse field to XML
-		 * @param msg
-		 * @param field
-		 * @param value
-		 */
-		abstract void doAction(SimpleMessageService msg, Field field, String value);
+	static class InternalParserForInject{
 		
 		/**
-		 * Iterate class fields
-		 * @param msg
-		 * @param doc
+		 * data transfer
+		 * @param clzObj	类结构对象
+		 * @param dataObj	存放数据的对象
 		 */
-		final void traverseClass(final SimpleMessageService msg, final Document doc){
-			if(doc == null || msg == null)
+		final void traverseClass(final Object clzObj, final Document doc){
+			if(doc == null || clzObj == null)
 				return;
-			Class<?> superClass = msg.getClass();
+			Class<?> superClass = clzObj.getClass();
 			Field[] fields;
 			try {
-				while (!superClass.equals(BaseService.class)) {
+				while (!superClass.equals(BaseService.class) && !Object.class.equals(superClass)) {
 					fields = superClass.getDeclaredFields();
-					traverseFields(msg, doc, fields);
+					traverseFields(clzObj, doc, fields);
 					superClass = superClass.getSuperclass();
 				}
 			} catch (IllegalArgumentException e) {
@@ -73,28 +66,17 @@ public final class SimpleXMLDriver {
 		}
 		
 		/**
-		 * iterate for fields
-		 * @param msg
-		 * @param doc
-		 * @param fields
+		 * inject value to field
+		 * @param obj
+		 * @param field
+		 * @param value
 		 */
-		private void traverseFields(SimpleMessageService msg, Document doc,Field[] fields){
-			MmtAlias alias;
-			String itemName;
-			for (Field field : fields) {
-				alias = field.getAnnotation(MmtAlias.class);
-				itemName = (alias == null) ? field.getName() : alias.value();
-				doAction(msg, field, getValue(doc, itemName));
-			}
-		}
-	}
-	
-	static class ItrForInject extends Itr{
-		
-		@Override
-		void doAction(SimpleMessageService msg, Field field, String value) {
+		private void doInject(Object obj, Field field, String value) {
+			if(!(obj instanceof SimpleMessageService))
+				return;
 			if(field == null || value == null)
 				return;
+			SimpleMessageService msg = (SimpleMessageService) obj;
 			field.setAccessible(true);
 			Class<?> fieldType = field.getType();
 			try {
@@ -125,6 +107,22 @@ public final class SimpleXMLDriver {
 		}
 		
 		/**
+		 * iterate for fields
+		 * @param clzObj
+		 * @param dataObj
+		 * @param fields
+		 */
+		private void traverseFields(Object clzObj, Document dataObj, Field[] fields) {
+			MmtAlias alias;
+			String itemName;
+			for (Field field : fields) {
+				alias = field.getAnnotation(MmtAlias.class);
+				itemName = (alias == null) ? field.getName() : alias.value();
+				doInject(clzObj, field, getValue(dataObj, itemName));
+			}
+		}
+		
+		/**
 		 * get enum value
 		 * @param enumType
 		 * @param value
@@ -149,108 +147,112 @@ public final class SimpleXMLDriver {
 		 * @throws IllegalAccessException 
 		 * @throws IllegalArgumentException 
 		 */
-		private void parsePrimitiveType(SimpleMessageService msg, Field field,
-				String value, Class<?> fieldType)
+		private void parsePrimitiveType(SimpleMessageService msg, Field field, String value, Class<?> fieldType)
 				throws IllegalArgumentException, IllegalAccessException {
 			field.set(msg, toPrimitiveValue(fieldType, value, getDefaultValue(fieldType)));
 		}
 		
-		/**
-		 * parse to boxed primitive type
-		 * @param msg
-		 * @param field
-		 * @param fieldType
-		 * @param value
-		 * @return
-		 * @throws IllegalAccessException 
-		 * @throws IllegalArgumentException 
-		 */
-		private boolean parseBoxedPrimitiveType(SimpleMessageService msg,
-				Field field, Class<?> fieldType, String value)
-				throws IllegalArgumentException, IllegalAccessException {
-			if(Integer.class.equals(fieldType)){
-				field.setInt(msg, new Integer((int) toPrimitiveValue(int.class, value, 0)));
-				return true;
-			}
-			if(Short.class.equals(fieldType)){
-				field.setShort(msg, new Short((short) toPrimitiveValue(short.class, value, 0b0)));
-				return true;
-			}
-			if(Long.class.equals(fieldType)){
-				field.setLong(msg, new Long((long) toPrimitiveValue(long.class, value, 0)));
-				return true;
-			}
-			if(Byte.class.equals(fieldType)){
-				field.setByte(msg, new Byte((byte) toPrimitiveValue(byte.class, value, 0b0)));
-				return true;
-			}
-			if(Float.class.equals(fieldType)){
-				field.setFloat(msg, new Float((float) toPrimitiveValue(float.class, value, 0.0F)));
-				return true;
-			}
-			if(Double.class.equals(fieldType)){
-				field.setDouble(msg, (double) toPrimitiveValue(double.class, value, 0.0D));
-				return true;
-			}
-			if(Boolean.class.equals(fieldType)){
-				field.setBoolean(msg, new Boolean((boolean) toPrimitiveValue(boolean.class, value, false)));
-				return true;
-			}
-			return false;
-		}
-		
-		/**
-		 * parse to primitive type
-		 * @param fieldType
-		 * @param value
-		 * @param defaultValue
-		 * @return
-		 */
-		private <fieldType> Object toPrimitiveValue(Class<?> fieldType, String value,
-				Object defaultValue) {
-			if (value == null || "".equals(value.trim()))
-				return defaultValue;
-			try{
-				if(int.class.equals(fieldType))		return Integer.parseInt(value);
-				if(short.class.equals(fieldType)) 	return Short.parseShort(value);
-				if(long.class.equals(fieldType))	return Long.parseLong(value);
-				if(byte.class.equals(fieldType))	return Byte.parseByte(value);
-				if(float.class.equals(fieldType)) 	return Float.parseFloat(value);
-				if(double.class.equals(fieldType)) 	return Double.parseDouble(value);
-				if(boolean.class.equals(fieldType)) return Boolean.parseBoolean(value);
-			}catch(NumberFormatException e){
-				if(logger.isDebugEnabled())
-					logger.debug("Can't convert to primitive type, return default value " + defaultValue);
-			}
-			return defaultValue == null ? value : defaultValue;
-		}
-		
-		/**
-		 * get default value
-		 * @param fieldType
-		 * @return
-		 */
-		private Object getDefaultValue(Class<?> fieldType){
-			if(int.class.equals(fieldType))	return 0;
-			if(short.class.equals(fieldType)) return 0;
-			if(long.class.equals(fieldType))return 0L;
-			if(byte.class.equals(fieldType))return 0b0;
-			if(float.class.equals(fieldType)) return 0.0F;
-			if(double.class.equals(fieldType)) return 0.0D;
-			if(boolean.class.equals(fieldType)) return false;
-			return "";
-		}
 	}
 	
 	/**
 	 * class iterate for parse
 	 *
 	 */
-	static class ItrForParse extends Itr{
+	static class ItrForParse {
+		
+		/**
+		 * data transfer
+		 * @param clzObj
+		 * @param sb
+		 * @param endTags
+		 */
+		final void traverseClass(final Object dataObj, final StringBuilder sb) {
+			if(sb == null || dataObj == null)
+				return;
+			Class<?> superClass = dataObj.getClass();
+			//add class start tag
+			MmtAlias alias = superClass.getAnnotation(MmtAlias.class);
+			String tagName = alias == null ? superClass.getName() : alias.value();
+			sb.append(getStartTag(tagName));
+			//process fields
+			Field[] fields;
+			try {
+				while (!Object.class.equals(superClass)) {
+					fields = superClass.getDeclaredFields();
+					traverseFields(dataObj, fields, sb);
+					superClass = superClass.getSuperclass();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new MmtException("Can't Convert XML to Message.", e.getCause());
+			}
+			//add class end tag
+			sb.append(getEndTag(tagName));
+		}
+		
+		/**
+		 * iterate for fields
+		 * @param fields
+		 * @param sb
+		 * @throws IllegalAccessException 
+		 * @throws IllegalArgumentException 
+		 */
+		private void traverseFields(Object data, Field[] fields, StringBuilder sb){
+			MmtAlias alias;
+			String itemName;
+			try {
+				for (Field field : fields) {
+					if(field.getAnnotation(MmtOmitField.class) != null)
+						continue;
+					alias = field.getAnnotation(MmtAlias.class);
+					itemName = (alias == null) ? field.getName() : alias.value();
+					field.setAccessible(true);
+					processLeaf(itemName, field.get(data), sb, field.getAnnotation(MmtCDATA.class) != null);
+				}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throw new MmtException(e.getMessage(), e.getCause());
+			}
+		}
 
-		@Override
-		void doAction(SimpleMessageService msg, Field field, String value) {
-			//TODO implement class iterate for parse
+		/**
+		 * process leaf node
+		 * @param tagName
+		 * @param value
+		 * @param sb
+		 * @param needCDATA
+		 */
+		private void processLeaf(String tagName, Object value,
+				StringBuilder sb, boolean needCDATA) {
+			sb.append(getStartTag(tagName));
+			if (value != null)
+				sb.append(needCDATA ? toCDATA(value) : value);
+			sb.append(getEndTag(tagName));
+		}
+		
+		/**
+		 * get start tag
+		 * @param nodeName
+		 * @return
+		 */
+		private String getStartTag(String nodeName){
+			return START_TAG.replaceAll(TAG_NAME, nodeName);
+		}
+		
+		/**
+		 * get end tag
+		 * @param nodeName
+		 * @return
+		 */
+		private String getEndTag(String nodeName){
+			return END_TAG.replaceAll(TAG_NAME, nodeName);
+		}
+		
+		/**
+		 * to CDATA string
+		 * @param value
+		 * @return
+		 */
+		private String toCDATA(Object value){
+			return PREFIX_CDATA + value + SUFFIX_CDATA;
 		}
 		
 	}
@@ -265,6 +267,8 @@ public final class SimpleXMLDriver {
 		//parser to Document
 		Document doc = null;
 		try (InputStream inputStream = is){
+			if(builder == null)
+				initDocumentBuilder();
 			doc = builder.parse(inputStream);
 			if(logger.isDebugEnabled())
 				logger.debug("Parse document successfully!!!");
@@ -289,18 +293,25 @@ public final class SimpleXMLDriver {
 			throw new MmtException("message does' exists. message type is " + msgType);
 		if(logger.isDebugEnabled())
 			logger.debug("Message type is: " + msgType);
-		classItr.traverseClass(msg, doc);
+		if (ipfi == null)
+			ipfi = new InternalParserForInject();
+		ipfi.traverseClass(msg, doc);
 		return msg;
 	}
 	
 	/**
 	 * parse to XML
-	 * @param msg
+	 * @param obj
 	 * @return
 	 */
-	public String toXML(Object msg){
-		
-		return null;
+	public String toXML(Object obj){
+		if(obj == null)
+			return null;
+		if(ifp == null)
+			ifp = new ItrForParse();
+		StringBuilder sb = new StringBuilder();
+		ifp.traverseClass(obj, sb);
+		return sb.toString();
 	}
 	
 	/**
@@ -317,7 +328,7 @@ public final class SimpleXMLDriver {
 	/**
 	 * Initialize document builder
 	 */
-	private static void initDocumentBuilder(){
+	private void initDocumentBuilder(){
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
