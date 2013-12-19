@@ -222,9 +222,10 @@ public final class SimpleXMLDriver {
 		 */
 		private void processLeaf(String tagName, Object value,
 				StringBuilder sb, boolean needCDATA) {
+			if (value == null)
+				return;
 			sb.append(getStartTag(tagName));
-			if (value != null)
-				sb.append(needCDATA ? toCDATA(value) : value);
+			sb.append(needCDATA ? toCDATA(value) : value);
 			sb.append(getEndTag(tagName));
 		}
 		
