@@ -1,6 +1,7 @@
 package com.github.cjm0000000.mmt.core.event;
 
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
  * event with key
@@ -10,6 +11,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  */
 @MmtAlias("xml")
 public class KeyEvent extends SimpleEvent {
+	@MmtCDATA
 	@MmtAlias("EventKey")
 	protected String eventKey;
 

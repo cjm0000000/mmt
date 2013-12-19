@@ -4,6 +4,7 @@ import com.github.cjm0000000.mmt.core.EventType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
  * simple event
@@ -14,6 +15,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 @MmtAlias("xml")
 public class SimpleEvent extends SimpleMessageService {
 	/** Event */
+	@MmtCDATA
 	@MmtAlias("Event")
 	private EventType eventType; 
 	

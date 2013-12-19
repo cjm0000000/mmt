@@ -2,6 +2,7 @@ package com.github.cjm0000000.mmt.core;
 
 import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
  * Simple message entity
@@ -12,15 +13,18 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  */
 public class SimpleMessageService extends BaseService {
 	/** ToUserName */
+	@MmtCDATA
 	@MmtAlias("ToUserName")
 	protected String toUserName;
 	/** FromUserName */
+	@MmtCDATA
 	@MmtAlias("FromUserName")
 	protected String fromUserName;
 	/** CreateTime */
 	@MmtAlias("CreateTime")
 	protected String createTime;
 	/** MsgType */
+	@MmtCDATA
 	@MmtAlias("MsgType")
 	protected String msgType;
 	
