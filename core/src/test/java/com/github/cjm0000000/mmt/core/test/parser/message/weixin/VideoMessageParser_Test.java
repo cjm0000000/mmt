@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.Message;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
@@ -28,13 +28,13 @@ public final class VideoMessageParser_Test extends MediaMessageParser {
 
 	@Override
 	protected void makeSpecNodesWithoutMediaId(StringBuilder sb,
-			Message original) {
+			SimpleRecvMessage original) {
 		VideoMessage msg = (VideoMessage) original;
 		sb.append("<ThumbMediaId><![CDATA[" + msg.getThumbMediaId()+"]]></ThumbMediaId>");
 	}
 
 	@Override
-	protected void verifySpecFieldsWithoutMediaId(Message after, Message before) {
+	protected void verifySpecFieldsWithoutMediaId(SimpleRecvMessage after, SimpleRecvMessage before) {
 		VideoMessage v_before = (VideoMessage) before;
 		VideoMessage v_after = (VideoMessage) after;
 		assertEquals(v_after.getThumbMediaId(), v_before.getThumbMediaId());

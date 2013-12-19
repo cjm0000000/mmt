@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.InputStream;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
@@ -18,7 +18,7 @@ import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 public class LocationMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, SimpleRecvMessage original) {
 		LocationMessage msg = (LocationMessage) original;
 		sb.append("<Location_X>" + msg.getLocation_X() + "</Location_X>");
 		sb.append("<Location_Y>" + msg.getLocation_Y() + "</Location_Y>");
@@ -27,7 +27,7 @@ public class LocationMessageParser_Test extends AbstractMsgParser {
 	}
 
 	@Override
-	protected void verifySpecFieldsWithoutMsgId(Message after, Message before) {
+	protected void verifySpecFieldsWithoutMsgId(SimpleRecvMessage after, SimpleRecvMessage before) {
 		LocationMessage l_before = (LocationMessage) before;
 		LocationMessage l_after = (LocationMessage) after;
 		final double delta = 0.000001D;
@@ -38,7 +38,7 @@ public class LocationMessageParser_Test extends AbstractMsgParser {
 	}
 
 	@Override
-	protected Message getMsgInstanceWithoutMsgId() {
+	protected SimpleRecvMessage getMsgInstanceWithoutMsgId() {
 		LocationMessage original = new LocationMessage();
 		original.setLocation_X(30.278740D);
 		original.setLocation_Y(120.145300D);

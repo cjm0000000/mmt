@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.message.recv.yixin;
 
-import com.github.cjm0000000.mmt.core.message.Message;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 
 /**
  * YiXin media message<br>
@@ -9,7 +9,7 @@ import com.github.cjm0000000.mmt.core.message.Message;
  * @version 1.0
  *
  */
-public class MediaMessage extends Message {
+public class MediaMessage extends SimpleRecvMessage {
 	protected String url;
 	protected String name;
 	protected String mimeType;

@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.message;
+package com.github.cjm0000000.mmt.core.message.recv;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
@@ -10,14 +10,14 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  * @version 1.0
  * 
  */
-public class Message extends SimpleMessageService {
+public class SimpleRecvMessage extends SimpleMessageService {
 	/** MsgId */
 	@MmtAlias("MsgId")
 	protected long msgId;
 	
-	public Message(){}
+	public SimpleRecvMessage(){}
 	
-	public Message(String msgType) {
+	public SimpleRecvMessage(String msgType) {
 		this.msgType = msgType;
 	}
 	

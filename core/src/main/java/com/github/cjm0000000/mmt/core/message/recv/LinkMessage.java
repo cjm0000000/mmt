@@ -1,6 +1,5 @@
 package com.github.cjm0000000.mmt.core.message.recv;
 
-import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
@@ -12,7 +11,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
  *
  */
 @MmtAlias("xml")
-public class LinkMessage extends Message {
+public class LinkMessage extends SimpleRecvMessage {
 	/** Title */
 	@MmtCDATA
 	@MmtAlias("Title")

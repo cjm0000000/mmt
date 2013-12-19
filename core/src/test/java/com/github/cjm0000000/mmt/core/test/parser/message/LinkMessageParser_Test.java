@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.util.UUID;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
@@ -19,7 +19,7 @@ import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 public class LinkMessageParser_Test extends AbstractMsgParser {
 
 	@Override
-	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, Message original) {
+	protected void makeSpecNodesWithoutMsgId(StringBuilder sb, SimpleRecvMessage original) {
 		LinkMessage msg = (LinkMessage) original;
 		sb.append("<Title><![CDATA[" + msg.getTitle() + "]]></Title>");
 		sb.append("<Description><![CDATA[" + msg.getDescription() + "]]></Description>");
@@ -27,7 +27,7 @@ public class LinkMessageParser_Test extends AbstractMsgParser {
 	}
 
 	@Override
-	protected void verifySpecFieldsWithoutMsgId(Message after, Message before) {
+	protected void verifySpecFieldsWithoutMsgId(SimpleRecvMessage after, SimpleRecvMessage before) {
 		LinkMessage l_before = (LinkMessage) before;
 		LinkMessage l_after = (LinkMessage) after;
 		assertEquals(l_after.getTitle(), l_before.getTitle());
@@ -36,7 +36,7 @@ public class LinkMessageParser_Test extends AbstractMsgParser {
 	}
 
 	@Override
-	protected Message getMsgInstanceWithoutMsgId() {
+	protected SimpleRecvMessage getMsgInstanceWithoutMsgId() {
 		LinkMessage original = new LinkMessage();
 		original.setTitle(UUID.randomUUID().toString());
 		original.setDescription("中文" + UUID.randomUUID().toString());
