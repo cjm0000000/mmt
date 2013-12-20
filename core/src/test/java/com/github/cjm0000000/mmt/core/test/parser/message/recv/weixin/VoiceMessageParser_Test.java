@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.parser.message.weixin;
+package com.github.cjm0000000.mmt.core.test.parser.message.recv.weixin;
 
 import static org.junit.Assert.assertEquals;
 

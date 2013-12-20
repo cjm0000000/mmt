@@ -1,10 +1,10 @@
-package com.github.cjm0000000.mmt.core.test.parser.message.weixin;
+package com.github.cjm0000000.mmt.core.test.parser.message.recv.weixin;
 
 import static org.junit.Assert.assertEquals;
 
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
-import com.github.cjm0000000.mmt.core.test.parser.message.AbstractMsgParser;
+import com.github.cjm0000000.mmt.core.test.parser.message.recv.AbstractMsgParser;
 
 /**
  * Media message test template

@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.parser.message.yixin;
+package com.github.cjm0000000.mmt.core.test.parser.message.recv.yixin;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,7 +9,7 @@ import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
-import com.github.cjm0000000.mmt.core.test.parser.message.AbstractMsgParser;
+import com.github.cjm0000000.mmt.core.test.parser.message.recv.AbstractMsgParser;
 
 /**
  * Unit test cases for audio message parse
