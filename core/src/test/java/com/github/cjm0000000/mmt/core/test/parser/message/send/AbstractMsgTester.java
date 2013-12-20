@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
-import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
+import com.github.cjm0000000.mmt.core.test.MmtTestBase;
 
 /**
  * template unit tester

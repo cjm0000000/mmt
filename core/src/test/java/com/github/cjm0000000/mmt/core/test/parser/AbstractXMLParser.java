@@ -13,7 +13,7 @@ import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.ServiceType;
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
-import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
+import com.github.cjm0000000.mmt.core.test.MmtTestBase;
 
 /**
  * XML Tester template

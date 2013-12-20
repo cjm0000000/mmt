@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.base;
+package com.github.cjm0000000.mmt.core.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
