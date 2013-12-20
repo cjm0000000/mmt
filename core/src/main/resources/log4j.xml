@@ -12,6 +12,9 @@
 	<logger name="com.github.cjm0000000.mmt.core">
 		<level value="DEBUG" />
 	</logger>
+	<logger name="com.alibaba.fastjson">
+		<level value="DEBUG" />
+	</logger>
 	<root>
 		<priority value="DEBUG" />
 		<appender-ref ref="CONSOLE" />
