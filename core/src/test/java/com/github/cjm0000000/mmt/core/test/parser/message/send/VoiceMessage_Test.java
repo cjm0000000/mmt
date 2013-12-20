@@ -1,7 +1,7 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.send.VoiceMessage;
+import com.github.cjm0000000.mmt.core.message.send.passive.VoiceMessage;
 
 /**
  * Unit test case for send voice message

@@ -1,7 +1,7 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.send.TextMessage;
+import com.github.cjm0000000.mmt.core.message.send.passive.TextMessage;
 
 /**
  * Unit test case for send text message

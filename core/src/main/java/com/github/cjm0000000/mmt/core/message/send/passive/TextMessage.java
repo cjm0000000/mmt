@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.message.send;
+package com.github.cjm0000000.mmt.core.message.send.passive;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.message.MsgType;

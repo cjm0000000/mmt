@@ -1,8 +1,8 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.send.NewsMessage;
-import com.github.cjm0000000.mmt.core.message.send.NewsNode;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsNode;
 
 /**
  * Unit test case for send news message
