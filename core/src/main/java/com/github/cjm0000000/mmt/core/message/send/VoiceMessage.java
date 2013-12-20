@@ -13,7 +13,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 @MmtAlias("xml")
 public class VoiceMessage extends SimpleMessageService{
 	@MmtAlias("Voice")
-	private MediaMessage voice;
+	private MediaNode voice;
 	
 	public VoiceMessage(){}
 	
@@ -22,12 +22,12 @@ public class VoiceMessage extends SimpleMessageService{
 		setVoice(mediaId);
 	}
 
-	public MediaMessage getVoice() {
+	public MediaNode getVoice() {
 		return voice;
 	}
 
 	public void setVoice(String mediaId) {
-		this.voice = new MediaMessage(mediaId);
+		this.voice = new MediaNode(mediaId);
 	}
 	
 }

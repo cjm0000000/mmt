@@ -4,18 +4,18 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
- * Simple media message for send
+ * Media node for send
  * @author lemon
  * @version 2.0
  *
  */
-public class MediaMessage {
+public class MediaNode {
 	/** MediaId */
 	@MmtCDATA
 	@MmtAlias("MediaId")
 	protected String mediaId;
 	
-	MediaMessage(String mediaId){
+	MediaNode(String mediaId){
 		this.mediaId = mediaId;
 	}
 
