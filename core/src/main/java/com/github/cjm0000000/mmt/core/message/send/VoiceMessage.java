@@ -15,7 +15,7 @@ public class VoiceMessage extends SimpleMessageService{
 	@MmtAlias("Voice")
 	private MediaNode voice;
 	
-	public VoiceMessage(){}
+	public VoiceMessage(){super(MsgType.VOICE);}
 	
 	public VoiceMessage(String mediaId){
 		super(MsgType.VOICE);

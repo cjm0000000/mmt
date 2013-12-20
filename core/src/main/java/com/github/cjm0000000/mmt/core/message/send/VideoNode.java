@@ -12,10 +12,10 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 public class VideoNode extends MediaNode {
 	@MmtCDATA
 	@MmtAlias("Title")
-	private String title;
+	protected String title;
 	@MmtCDATA
 	@MmtAlias("Description")
-	private String description;
+	protected String description;
 	
 	VideoNode(String mediaId, String title, String description) {
 		super(mediaId);

@@ -15,7 +15,7 @@ public class VideoMessage extends SimpleMessageService {
 	@MmtAlias("Video")
 	private VideoNode video;
 	
-	public VideoMessage(){}
+	public VideoMessage(){super(MsgType.VIDEO);}
 	
 	public VideoMessage(String mediaId, String title, String description){
 		super(MsgType.VIDEO);
