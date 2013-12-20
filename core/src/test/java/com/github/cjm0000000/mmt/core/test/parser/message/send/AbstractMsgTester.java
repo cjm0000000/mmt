@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.send.TextMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
 
@@ -18,7 +17,18 @@ import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
  */
 public abstract class AbstractMsgTester extends MmtTestBase {
 	private static final Logger logger = Logger.getLogger(MmtXMLParser.class);
-	protected abstract void setSpecFields(SimpleMessageService msg);
+	
+	/**
+	 * set special field values
+	 * @param msg
+	 */
+	protected abstract void setSpecFields(SimpleMessageService original);
+	
+	/**
+	 * get message instance
+	 * @return
+	 */
+	protected abstract SimpleMessageService getMsgInstance();
 
 	@Test
 	public void run(){
@@ -26,7 +36,7 @@ public abstract class AbstractMsgTester extends MmtTestBase {
 	}
 	
 	private final void test(){
-		TextMessage original = new TextMessage();
+		SimpleMessageService original = getMsgInstance();
 		setCommonFields(original);
 		setSpecFields(original);
 		String xml = MmtXMLParser.toXML(original);

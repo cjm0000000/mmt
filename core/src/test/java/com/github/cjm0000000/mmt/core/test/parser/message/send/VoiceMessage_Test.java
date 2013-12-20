@@ -1,25 +1,25 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send;
 
 import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.message.send.TextMessage;
+import com.github.cjm0000000.mmt.core.message.send.VoiceMessage;
 
 /**
- * Unit test case for send text message
+ * Unit test case for send voice message
  * @author lemon
  * @version 2.0
  *
  */
-public class TextMessage_Test extends AbstractMsgTester{
+public class VoiceMessage_Test extends AbstractMsgTester {
 
 	@Override
 	protected void setSpecFields(SimpleMessageService original) {
-		TextMessage msg = (TextMessage) original;
-		msg.setContent("测试中文。Test EN");
+		VoiceMessage msg = (VoiceMessage) original;
+		msg.setVoice("Okq_aCQbG0iFQ6b89SAB2pP3-1jqAHehh2QSiPihKB6-Uwp6VlB24KbKsmX1sqVl");
 	}
 
 	@Override
 	protected SimpleMessageService getMsgInstance() {
-		return new TextMessage();
+		return new VoiceMessage();
 	}
-
+	
 }

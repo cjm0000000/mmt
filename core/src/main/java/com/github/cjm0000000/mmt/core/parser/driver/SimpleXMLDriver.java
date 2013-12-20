@@ -162,18 +162,22 @@ public final class SimpleXMLDriver {
 		
 		/**
 		 * data transfer
-		 * @param clzObj
+		 * @param dataObj
 		 * @param sb
-		 * @param endTags
+		 * @param dealWithClass
 		 */
-		final void traverseClass(final Object dataObj, final StringBuilder sb) {
+		final void traverseClass(final Object dataObj, final StringBuilder sb, final boolean dealWithClass) {
 			if(sb == null || dataObj == null)
 				return;
 			Class<?> superClass = dataObj.getClass();
+			
 			//add class start tag
-			MmtAlias alias = superClass.getAnnotation(MmtAlias.class);
-			String tagName = alias == null ? superClass.getName() : alias.value();
-			sb.append(getStartTag(tagName));
+			String tagName = null;
+			if(dealWithClass){
+				MmtAlias alias = superClass.getAnnotation(MmtAlias.class);
+				tagName = alias == null ? superClass.getName() : alias.value();
+				sb.append(getStartTag(tagName));
+			}
 			//process fields
 			Field[] fields;
 			try {
@@ -186,7 +190,8 @@ public final class SimpleXMLDriver {
 				throw new MmtException("Can't Convert XML to Message.", e.getCause());
 			}
 			//add class end tag
-			sb.append(getEndTag(tagName));
+			if(dealWithClass)
+				sb.append(getEndTag(tagName));
 		}
 		
 		/**
@@ -225,8 +230,34 @@ public final class SimpleXMLDriver {
 			if (value == null)
 				return;
 			sb.append(getStartTag(tagName));
-			sb.append(needCDATA ? toCDATA(value) : value);
+			//Judge value type
+			if(needParse(value))
+				traverseClass(value, sb, false);
+			else
+				sb.append(needCDATA ? toCDATA(value) : value);
 			sb.append(getEndTag(tagName));
+		}
+		
+		/**
+		 * Judge if need parse again
+		 * @param value
+		 * @return
+		 */
+		private boolean needParse(Object value){
+			if(value == null)
+				return  false;
+			Class<?> targetClass = value.getClass();
+			if(String.class.equals(targetClass))
+				return false;
+			if(targetClass.isEnum() || targetClass.isPrimitive())
+				return false;
+			if(value instanceof Number)
+				return false;
+			if(Boolean.class.equals(targetClass))
+				return false;
+			if(Object.class.equals(targetClass))
+				return false;
+			return true;
 		}
 		
 		/**
@@ -311,7 +342,7 @@ public final class SimpleXMLDriver {
 		if(ifp == null)
 			ifp = new ItrForParse();
 		StringBuilder sb = new StringBuilder();
-		ifp.traverseClass(obj, sb);
+		ifp.traverseClass(obj, sb, true);
 		return sb.toString();
 	}
 	
