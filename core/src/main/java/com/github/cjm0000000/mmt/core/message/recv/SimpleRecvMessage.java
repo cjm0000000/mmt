@@ -15,10 +15,8 @@ public class SimpleRecvMessage extends SimpleMessageService {
 	@MmtAlias("MsgId")
 	protected long msgId;
 	
-	public SimpleRecvMessage(){}
-	
 	public SimpleRecvMessage(String msgType) {
-		this.msgType = msgType;
+		super(msgType);
 	}
 	
 	public long getMsgId() {

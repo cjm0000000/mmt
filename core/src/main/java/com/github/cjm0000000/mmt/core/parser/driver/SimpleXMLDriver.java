@@ -2,6 +2,7 @@ package com.github.cjm0000000.mmt.core.parser.driver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -231,9 +232,14 @@ public final class SimpleXMLDriver {
 				return;
 			sb.append(getStartTag(tagName));
 			//Judge value type
-			if(needParse(value))
-				traverseClass(value, sb, false);
-			else
+			if(needParse(value)){
+				if(value.getClass().isArray()){
+					int len = Array.getLength(value);
+					for (int i = 0; i < len; i++) 
+						traverseClass(Array.get(value, i), sb, true);
+				}else
+					traverseClass(value, sb, false);
+			}else
 				sb.append(needCDATA ? toCDATA(value) : value);
 			sb.append(getEndTag(tagName));
 		}
