@@ -5,7 +5,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
- * Text message
+ * Text message for receive
  * 
  * @author lemon
  * @version 1.0
