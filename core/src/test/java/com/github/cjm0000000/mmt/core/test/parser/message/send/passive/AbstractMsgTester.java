@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.test.parser.message.send;
+package com.github.cjm0000000.mmt.core.test.parser.message.send.passive;
 
 import static org.junit.Assert.*;
 
