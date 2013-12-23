@@ -3,7 +3,7 @@ package com.github.cjm0000000.mmt.core;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
 
 /**
- * Base element of Log
+ * Base element for customer
  * @author lemon
  * @version 1.0
  */

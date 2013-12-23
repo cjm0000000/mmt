@@ -16,7 +16,7 @@ import com.github.cjm0000000.mmt.core.test.MmtTestBase;
  *
  */
 public abstract class AbstractMsgTester extends MmtTestBase {
-	private static final Logger logger = Logger.getLogger(MmtXMLParser.class);
+	private static final Logger logger = Logger.getLogger(AbstractMsgTester.class);
 	
 	/**
 	 * set special field values

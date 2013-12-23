@@ -1,7 +1,7 @@
 package com.github.cjm0000000.mmt.core.message.send.initiative;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.BaseService;
-import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 
 /**
  * simple message for send initiative
@@ -10,9 +10,9 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  *
  */
 public class SimpleMessage extends BaseService {
-	@MmtAlias("touser")
+	@JSONField(name = "touser")
 	protected String toUser;
-	@MmtAlias("msgtype")
+	@JSONField(name = "msgtype")
 	protected String msgType;
 	
 	SimpleMessage(String msgType){
@@ -28,7 +28,7 @@ public class SimpleMessage extends BaseService {
 	public String getMsgType() {
 		return msgType;
 	}
-	public void setMsgType(String msgType) {
+	protected void setMsgType(String msgType) {
 		this.msgType = msgType;
 	}
 	

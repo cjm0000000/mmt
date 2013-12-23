@@ -1,5 +1,6 @@
 package com.github.cjm0000000.mmt.core.message.send.initiative;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 
 /**
@@ -9,10 +10,24 @@ import com.github.cjm0000000.mmt.core.message.MsgType;
  *
  */
 public class TextMessage extends SimpleMessage {
-	//TODO private String content;
+	@JSONField(name = MsgType.TEXT)
+	private TextNode textNode;
 	
-	public TextMessage() {
+	public TextMessage(){
 		super(MsgType.TEXT);
+	}
+	
+	public TextMessage(String content) {
+		this();
+		this.textNode = new TextNode(content);
+	}
+
+	public TextNode getTextNode() {
+		return textNode;
+	}
+
+	public void setTextNode(TextNode textNode) {
+		this.textNode = textNode;
 	}
 
 }
