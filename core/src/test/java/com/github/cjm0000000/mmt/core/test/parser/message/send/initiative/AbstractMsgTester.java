@@ -2,6 +2,7 @@ package com.github.cjm0000000.mmt.core.test.parser.message.send.initiative;
 
 import static org.junit.Assert.*;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.github.cjm0000000.mmt.core.message.send.initiative.SimpleMessage;
@@ -15,6 +16,7 @@ import com.github.cjm0000000.mmt.core.test.MmtTestBase;
  *
  */
 public abstract class AbstractMsgTester extends MmtTestBase {
+	private static Logger logger = Logger.getLogger(AbstractMsgTester.class);
 	/**
 	 * get message instance
 	 * @return
@@ -58,6 +60,7 @@ public abstract class AbstractMsgTester extends MmtTestBase {
 		setCommonFields(original);
 		setSpecFields(original);
 		String json = MmtJSONParser.toJSON(original);
+		logger.debug("Generate JSON string: " + json);
 		//verify special field
 		SimpleMessage after = verifySpecFields(original, json);
 		//verify common field

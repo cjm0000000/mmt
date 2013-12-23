@@ -4,20 +4,20 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 
 /**
- * image message for initiative send
+ * audio message for initiative send
  * @author lemon
  * @version 2.0
  *
  */
-public class ImageMessage extends SimpleMessage {
-	@JSONField(name = MsgType.IMAGE)
+public class VoiceMessage extends SimpleMessage {
+	@JSONField(name = MsgType.VOICE)
 	private MediaNode media;
-	
-	public ImageMessage() {
-		super(MsgType.IMAGE);
+
+	public VoiceMessage() {
+		super(MsgType.VOICE);
 	}
 	
-	public ImageMessage(String media_id){
+	public VoiceMessage(String media_id){
 		this();
 		this.media = new MediaNode(media_id);
 	}
