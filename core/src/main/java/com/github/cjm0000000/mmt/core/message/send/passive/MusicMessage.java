@@ -19,7 +19,7 @@ public class MusicMessage extends SimpleMessageService {
 	
 	public MusicMessage(String title, String description, String musicUrl,
 			String HQMusicUrl, String thumbMediaId){
-		super(MsgType.MUSIC);
+		this();
 		setMusic(title, description, musicUrl, HQMusicUrl, thumbMediaId);
 	}
 

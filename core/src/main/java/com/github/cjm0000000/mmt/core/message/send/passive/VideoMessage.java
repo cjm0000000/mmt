@@ -18,7 +18,7 @@ public class VideoMessage extends SimpleMessageService {
 	public VideoMessage(){super(MsgType.VIDEO);}
 	
 	public VideoMessage(String mediaId, String title, String description){
-		super(MsgType.VIDEO);
+		this();
 		setVideo(mediaId, title, description);
 	}
 

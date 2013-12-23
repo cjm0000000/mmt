@@ -17,7 +17,8 @@ public class NewsMessage extends SimpleMessageService {
 	public NewsMessage() { super(MsgType.NEWS); }
 	
 	public NewsMessage(String title, String description, String picUrl, String url) {
-		super(MsgType.NEWS);
+		this();
+		this.news = new NewsNode[]{new NewsNode(title, description, picUrl, url)};
 	}
 
 	public NewsNode[] getNews() {

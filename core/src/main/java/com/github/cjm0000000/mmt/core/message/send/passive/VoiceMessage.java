@@ -18,7 +18,7 @@ public class VoiceMessage extends SimpleMessageService{
 	public VoiceMessage(){super(MsgType.VOICE);}
 	
 	public VoiceMessage(String mediaId){
-		super(MsgType.VOICE);
+		this();
 		setVoice(mediaId);
 	}
 
