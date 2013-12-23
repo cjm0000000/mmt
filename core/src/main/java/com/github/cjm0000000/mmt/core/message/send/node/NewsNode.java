@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.message.send.passive;
+package com.github.cjm0000000.mmt.core.message.send.node;
 
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;

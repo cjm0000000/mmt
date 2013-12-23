@@ -1,5 +1,6 @@
-package com.github.cjm0000000.mmt.core.message.send.passive;
+package com.github.cjm0000000.mmt.core.message.send.node;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
@@ -12,19 +13,24 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 public class MusicNode extends VideoNode{
 	@MmtCDATA
 	@MmtAlias("MusicUrl")
+	@JSONField(name = "musicurl")
 	private String musicUrl;
 	@MmtCDATA
 	@MmtAlias("HQMusicUrl")
-	private String HQMusicUrl;
+	@JSONField(name = "hqmusicurl")
+	private String hqMusicUrl;
 	@MmtCDATA
 	@MmtAlias("ThumbMediaId")
+	@JSONField(name = "thumb_media_id")
 	private String thumbMediaId;
 	
-	MusicNode(String title, String description, String musicUrl,
-			String HQMusicUrl, String thumbMediaId) {
+	MusicNode(){}
+	
+	public MusicNode(String title, String description, String musicUrl,
+			String hqMusicUrl, String thumbMediaId) {
 		super(null, title, description);
 		this.musicUrl = musicUrl;
-		this.HQMusicUrl = HQMusicUrl;
+		this.hqMusicUrl = hqMusicUrl;
 		this.thumbMediaId = thumbMediaId;
 	}
 
@@ -35,13 +41,13 @@ public class MusicNode extends VideoNode{
 	public void setMusicUrl(String musicUrl) {
 		this.musicUrl = musicUrl;
 	}
-
-	public String getHQMusicUrl() {
-		return HQMusicUrl;
+	
+	public String getHqMusicUrl() {
+		return hqMusicUrl;
 	}
 
-	public void setHQMusicUrl(String hQMusicUrl) {
-		this.HQMusicUrl = hQMusicUrl;
+	public void setHqMusicUrl(String hqMusicUrl) {
+		this.hqMusicUrl = hqMusicUrl;
 	}
 
 	public String getThumbMediaId() {

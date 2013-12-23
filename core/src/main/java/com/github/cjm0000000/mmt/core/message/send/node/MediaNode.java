@@ -1,5 +1,6 @@
-package com.github.cjm0000000.mmt.core.message.send.passive;
+package com.github.cjm0000000.mmt.core.message.send.node;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
@@ -13,9 +14,10 @@ public class MediaNode {
 	/** MediaId */
 	@MmtCDATA
 	@MmtAlias("MediaId")
+	@JSONField(name = "media_id")
 	protected String mediaId;
 	
-	MediaNode(String mediaId){
+	public MediaNode(String mediaId){
 		this.mediaId = mediaId;
 	}
 

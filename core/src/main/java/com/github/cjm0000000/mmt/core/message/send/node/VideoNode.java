@@ -1,5 +1,6 @@
-package com.github.cjm0000000.mmt.core.message.send.passive;
+package com.github.cjm0000000.mmt.core.message.send.node;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
@@ -12,12 +13,16 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 public class VideoNode extends MediaNode {
 	@MmtCDATA
 	@MmtAlias("Title")
+	@JSONField(name = "title")
 	protected String title;
 	@MmtCDATA
 	@MmtAlias("Description")
+	@JSONField(name = "description")
 	protected String description;
 	
-	VideoNode(String mediaId, String title, String description) {
+	VideoNode(){super(null);}
+	
+	public VideoNode(String mediaId, String title, String description) {
 		super(mediaId);
 		this.title = title;
 		this.description = description;
