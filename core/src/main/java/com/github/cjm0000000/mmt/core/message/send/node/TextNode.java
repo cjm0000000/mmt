@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.message.send.initiative;
+package com.github.cjm0000000.mmt.core.message.send.node;
 
 /**
  * Text node

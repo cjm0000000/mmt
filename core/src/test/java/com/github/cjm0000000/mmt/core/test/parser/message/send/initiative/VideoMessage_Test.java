@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.github.cjm0000000.mmt.core.message.send.initiative.SimpleMessage;
 import com.github.cjm0000000.mmt.core.message.send.initiative.VideoMessage;
-import com.github.cjm0000000.mmt.core.message.send.initiative.VideoNode;
+import com.github.cjm0000000.mmt.core.message.send.node.VideoNode;
 import com.github.cjm0000000.mmt.core.parser.MmtJSONParser;
 
 /**

@@ -17,6 +17,8 @@ public class MediaNode {
 	@JSONField(name = "media_id")
 	protected String mediaId;
 	
+	MediaNode(){}
+	
 	public MediaNode(String mediaId){
 		this.mediaId = mediaId;
 	}

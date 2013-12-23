@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.github.cjm0000000.mmt.core.message.send.initiative.SimpleMessage;
 import com.github.cjm0000000.mmt.core.message.send.initiative.TextMessage;
-import com.github.cjm0000000.mmt.core.message.send.initiative.TextNode;
+import com.github.cjm0000000.mmt.core.message.send.node.TextNode;
 import com.github.cjm0000000.mmt.core.parser.MmtJSONParser;
 
 /**

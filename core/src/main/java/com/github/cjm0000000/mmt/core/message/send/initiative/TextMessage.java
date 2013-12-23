@@ -2,6 +2,7 @@ package com.github.cjm0000000.mmt.core.message.send.initiative;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.github.cjm0000000.mmt.core.message.MsgType;
+import com.github.cjm0000000.mmt.core.message.send.node.TextNode;
 
 /**
  * Text message for initiative send
