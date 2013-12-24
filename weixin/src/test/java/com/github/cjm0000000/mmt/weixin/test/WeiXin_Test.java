@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 
-import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+import com.github.cjm0000000.mmt.weixin.WeiXin;
 
 public class WeiXin_Test extends AbstractWeiXinTester {
 	

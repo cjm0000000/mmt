@@ -1,4 +1,4 @@
-package lemon.yixin.test.config;
+package com.github.cjm0000000.mmt.yixin.test.config;
 
 import static org.junit.Assert.*;
 
@@ -6,27 +6,25 @@ import java.util.List;
 
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.config.mapper.YXConfigMapper;
-import lemon.yixin.test.base.BaseYiXinTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
+import com.github.cjm0000000.mmt.yixin.test.AbstractYiXinTester;
 
-public class YiXinConfigMapperTest extends BaseYiXinTest {
+public class YiXinConfigRepo_Test extends AbstractYiXinTester {
 	@Autowired
-	private YXConfigMapper configMapper;
+	private YiXinConfigRepository configMapper;
 	@Autowired
 	private CustomerRepository custMapper;
-	private static Log logger = LogFactory.getLog(YiXinConfigMapperTest.class);
+	private static Log logger = LogFactory.getLog(YiXinConfigRepo_Test.class);
 	private int CUST_ID = -5745;
-	
-	@Test
-	public void crud(){
+	@Override
+	protected void defaultCase() {
 		Customer cust = custMapper.getCustomer(CUST_ID);
 		if(null == cust){
 			cust = new Customer();
@@ -59,4 +57,5 @@ public class YiXinConfigMapperTest extends BaseYiXinTest {
 			logger.debug(yiXinConfig);
 		}
 	}
+	
 }

@@ -20,8 +20,6 @@ import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
-import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.config.mapper.YXConfigMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -42,6 +40,8 @@ import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
 
 /**
  * 自定义菜单管理
@@ -65,7 +65,7 @@ public final class CustomMenuAction extends AdminNavAction {
 	@Autowired
 	private WeiXinConfigRepository wxConfigMapper;
 	@Autowired
-	private YXConfigMapper yxConfigMapper;
+	private YiXinConfigRepository yxConfigMapper;
 	@Resource(name="weiXinAPI")
 	private MmtAPI weixinApi;
 	@Resource(name="yiXinAPI")

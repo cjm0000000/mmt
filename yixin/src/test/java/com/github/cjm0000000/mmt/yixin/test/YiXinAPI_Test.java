@@ -1,20 +1,18 @@
-package lemon.yixin.test;
+package com.github.cjm0000000.mmt.yixin.test;
 
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.toolkit.secure.SecureUtil;
-import lemon.yixin.test.base.BaseYiXinTest;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class YiXinAPITest extends BaseYiXinTest {
+public class YiXinAPI_Test extends AbstractYiXinTester {
 	@Autowired @Qualifier("yiXinAPI")
 	private MmtAPI api;
 
-	@Test
 	public void testSignature() {
 		Access sa = new Access();
 		sa.setEchostr("5921940693384818207");
@@ -34,5 +32,10 @@ public class YiXinAPITest extends BaseYiXinTest {
 		String result = "e9d71f5ee7c92d6dc9e92ffdad17b8bd49418f98";
 		String afterHSA1 = SecureUtil.sha1(str);
 		assertTrue(afterHSA1.equals(result));
+	}
+
+	@Override
+	protected void defaultCase() {
+		testSignature();
 	}
 }

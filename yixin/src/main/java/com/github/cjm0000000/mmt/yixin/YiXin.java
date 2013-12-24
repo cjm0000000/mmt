@@ -1,4 +1,4 @@
-package lemon.yixin.config;
+package com.github.cjm0000000.mmt.yixin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,9 +6,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.github.cjm0000000.mmt.yixin.YiXinException;
-
-import lemon.yixin.config.bean.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 
 /**
  * YiXin configures
@@ -17,6 +15,7 @@ import lemon.yixin.config.bean.YiXinConfig;
  * @version 1.0
  * 
  */
+//TODO 抽取URL到独立class
 public class YiXin {
 	private static ConcurrentMap<String, YiXinConfig> configs;
 	/** 通用接口URL */

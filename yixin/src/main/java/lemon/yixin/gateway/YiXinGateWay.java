@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.gateway.AbstractGateWay;
-import lemon.yixin.config.YiXin;
-import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.config.mapper.YXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.yixin.YiXin;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
 
 /**
  * YiXin gateway
@@ -33,7 +33,7 @@ public final class YiXinGateWay extends AbstractGateWay {
 	@Resource(name="yiXinAPI")
 	private MmtAPI yxAPI;
 	@Autowired
-	private YXConfigMapper yiXinConfigMapper;
+	private YiXinConfigRepository yiXinConfigMapper;
 	@Override
 	public void destroy() {
 		YiXin.destory();

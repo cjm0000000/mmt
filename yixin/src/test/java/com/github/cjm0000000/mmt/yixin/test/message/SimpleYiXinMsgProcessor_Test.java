@@ -1,4 +1,4 @@
-package lemon.yixin.test.message;
+package com.github.cjm0000000.mmt.yixin.test.message;
 
 import static org.junit.Assert.*;
 
@@ -12,11 +12,7 @@ import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.TextMsgParser;
-import lemon.yixin.config.YiXin;
-import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.config.mapper.YXConfigMapper;
 import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
-import lemon.yixin.test.base.BaseYiXinTest;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -30,8 +26,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.yixin.YiXin;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
+import com.github.cjm0000000.mmt.yixin.test.AbstractYiXinTester;
 
-public class SimpleYiXinMsgProcessorTest extends BaseYiXinTest {
+public class SimpleYiXinMsgProcessor_Test extends AbstractYiXinTester {
 	@Autowired @Qualifier("yiXinAPI")
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
@@ -45,7 +45,7 @@ public class SimpleYiXinMsgProcessorTest extends BaseYiXinTest {
 	@Autowired
 	private CustomerRepository customerMapper;
 	@Autowired
-	private YXConfigMapper	yxConfigMapper;
+	private YiXinConfigRepository	yxConfigMapper;
 	@Autowired @Qualifier("MMT_text")
 	private TextMsgParser textMsgParser;
 	
@@ -159,6 +159,10 @@ public class SimpleYiXinMsgProcessorTest extends BaseYiXinTest {
 		String result = api.processMsg(MMT_TOKEN, recvMsg);
 		TextMessage msg = textMsgParser.toMsg(result);
 		assertEquals(msg.getContent(),"亲，我暂时无法识别音乐哦，您可以给我发文字消息。");
+	}
+	@Override
+	protected void defaultCase() {
+		
 	}
 	
 }

@@ -1,8 +1,6 @@
-package lemon.yixin.config.mapper;
+package com.github.cjm0000000.mmt.yixin.config.persistence;
 
 import java.util.List;
-
-import lemon.yixin.config.bean.YiXinConfig;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -12,6 +10,8 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+
 /**
  * Repository of YiXin configures
  * @author lemon
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface YXConfigMapper {
+public interface YiXinConfigRepository {
 	
 	/**
 	 * Get a YiXin configure

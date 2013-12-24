@@ -1,4 +1,4 @@
-package lemon.yixin.config.bean;
+package com.github.cjm0000000.mmt.yixin.config;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 

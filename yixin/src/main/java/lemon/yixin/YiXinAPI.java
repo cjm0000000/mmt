@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 
 import lemon.shared.api.AbstractMmtAPI;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
-import lemon.yixin.config.YiXin;
-import lemon.yixin.config.bean.YiXinConfig;
 
 /**
  * The YiXin API for message

@@ -33,8 +33,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
-import com.github.cjm0000000.mmt.weixin.config.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 import com.github.cjm0000000.mmt.weixin.test.AbstractWeiXinTester;

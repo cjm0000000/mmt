@@ -1,9 +1,6 @@
 package lemon.web.interfaces.action;
 
 import lemon.web.system.bean.User;
-import lemon.yixin.config.YiXin;
-import lemon.yixin.config.bean.YiXinConfig;
-import lemon.yixin.config.mapper.YXConfigMapper;
 import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.yixin.YiXin;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
+import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
 
 /**
  * 易信接口配置
@@ -27,7 +27,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 @RequestMapping("/interface/yixinconfig")
 public class YiXinAction extends APIConfigAction {
 	@Autowired
-	private YXConfigMapper yxConfigMapper;
+	private YiXinConfigRepository yxConfigMapper;
 
 	/**
 	 * 保存易信配置信息

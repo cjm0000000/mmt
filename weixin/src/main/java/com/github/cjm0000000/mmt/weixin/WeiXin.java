@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.weixin.config;
+package com.github.cjm0000000.mmt.weixin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.github.cjm0000000.mmt.weixin.WeiXinException;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 
 /**
  * WeiXin configures
@@ -15,6 +15,7 @@ import com.github.cjm0000000.mmt.weixin.WeiXinException;
  * @version 1.0
  * 
  */
+//TODO 抽取各种URL到独立class
 public class WeiXin {
 	private static ConcurrentMap<String, WeiXinConfig> configs;
 	/** 通用接口URL */
