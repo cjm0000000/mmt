@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.send.node.MusicNode;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
@@ -12,7 +12,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  *
  */
 @MmtAlias("xml")
-public class MusicMessage extends SimpleMessageService {
+public class MusicMessage extends BaseMessage {
 	@MmtAlias("Music")
 	private MusicNode music;
 	

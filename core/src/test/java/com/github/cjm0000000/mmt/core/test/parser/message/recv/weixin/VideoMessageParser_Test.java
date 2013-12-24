@@ -6,12 +6,12 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import com.github.cjm0000000.mmt.core.ServiceType;
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Unit test case for video message parse
@@ -48,7 +48,7 @@ public final class VideoMessageParser_Test extends MediaMessageParser {
 	}
 
 	@Override
-	protected SimpleMessageService fromXML(InputStream is) {
+	protected BaseMessage fromXML(InputStream is) {
 		return MmtXMLParser.fromXML(is, VideoMessage.class);
 	}
 

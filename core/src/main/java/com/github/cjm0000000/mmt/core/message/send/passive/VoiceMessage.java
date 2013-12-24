@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.send.node.MediaNode;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
@@ -12,7 +12,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  *
  */
 @MmtAlias("xml")
-public class VoiceMessage extends SimpleMessageService{
+public class VoiceMessage extends BaseMessage{
 	@MmtAlias("Voice")
 	private MediaNode voice;
 	

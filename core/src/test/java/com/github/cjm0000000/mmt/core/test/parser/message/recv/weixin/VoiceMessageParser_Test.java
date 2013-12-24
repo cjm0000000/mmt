@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
@@ -40,7 +40,7 @@ public final class VoiceMessageParser_Test extends MediaMessageParser {
 	}
 
 	@Override
-	protected SimpleMessageService fromXML(InputStream is) {
+	protected BaseMessage fromXML(InputStream is) {
 		return MmtXMLParser.fromXML(is, VoiceMessage.class);
 	}
 

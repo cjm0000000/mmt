@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.io.InputStream;
 import java.util.UUID;
 
-import com.github.cjm0000000.mmt.core.EventType;
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.event.KeyEvent;
-import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.EventType;
+import com.github.cjm0000000.mmt.core.message.event.KeyEvent;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
@@ -43,7 +43,7 @@ public class KeyEventParser_Test extends AbstractEventParser {
 	}
 
 	@Override
-	protected SimpleMessageService fromXML(InputStream is) {
+	protected BaseMessage fromXML(InputStream is) {
 		return MmtXMLParser.fromXML(is, KeyEvent.class);
 	}
 

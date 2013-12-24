@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.send.passive.MusicMessage;
 
 /**
@@ -12,7 +12,7 @@ import com.github.cjm0000000.mmt.core.message.send.passive.MusicMessage;
 public class MusicMessage_Test extends AbstractMsgTester {
 
 	@Override
-	protected void setSpecFields(SimpleMessageService original) {
+	protected void setSpecFields(BaseMessage original) {
 		MusicMessage msg = (MusicMessage) original;
 		final String title = "吻别——张学友";
 		final String description = "这是一首老歌";
@@ -23,7 +23,7 @@ public class MusicMessage_Test extends AbstractMsgTester {
 	}
 
 	@Override
-	protected SimpleMessageService getMsgInstance() {
+	protected BaseMessage getMsgInstance() {
 		return new MusicMessage();
 	}
 

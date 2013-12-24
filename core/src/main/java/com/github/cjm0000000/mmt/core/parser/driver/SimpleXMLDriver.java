@@ -15,13 +15,13 @@ import org.xml.sax.SAXException;
 
 import static com.github.cjm0000000.mmt.core.tookit.convert.PrimitiveTypeConvert.*;
 
-import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.MmtException;
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Simple XML driver implement
@@ -56,7 +56,7 @@ public final class SimpleXMLDriver {
 			Class<?> superClass = clzObj.getClass();
 			Field[] fields;
 			try {
-				while (!superClass.equals(BaseService.class) && !Object.class.equals(superClass)) {
+				while (!superClass.equals(MmtService.class) && !Object.class.equals(superClass)) {
 					fields = superClass.getDeclaredFields();
 					traverseFields(clzObj, doc, fields);
 					superClass = superClass.getSuperclass();
@@ -73,11 +73,11 @@ public final class SimpleXMLDriver {
 		 * @param value
 		 */
 		private void doInject(Object obj, Field field, String value) {
-			if(!(obj instanceof SimpleMessageService))
+			if(!(obj instanceof BaseMessage))
 				return;
 			if(field == null || value == null)
 				return;
-			SimpleMessageService msg = (SimpleMessageService) obj;
+			BaseMessage msg = (BaseMessage) obj;
 			field.setAccessible(true);
 			Class<?> fieldType = field.getType();
 			try {
@@ -148,7 +148,7 @@ public final class SimpleXMLDriver {
 		 * @throws IllegalAccessException 
 		 * @throws IllegalArgumentException 
 		 */
-		private void parsePrimitiveType(SimpleMessageService msg, Field field, String value, Class<?> fieldType)
+		private void parsePrimitiveType(BaseMessage msg, Field field, String value, Class<?> fieldType)
 				throws IllegalArgumentException, IllegalAccessException {
 			field.set(msg, toPrimitiveValue(fieldType, value, getDefaultValue(fieldType)));
 		}
@@ -301,7 +301,7 @@ public final class SimpleXMLDriver {
 	 * @param type
 	 * @return
 	 */
-	public <T> SimpleMessageService fromXML(InputStream is, Class<T> type) {
+	public <T> BaseMessage fromXML(InputStream is, Class<T> type) {
 		//parser to Document
 		Document doc = null;
 		try (InputStream inputStream = is){
@@ -317,9 +317,9 @@ public final class SimpleXMLDriver {
 			return null;
 		// parser document to Message
 		String msgType = getValue(doc, ELEMENT_FOR_MESSAGE_TYPE);
-		SimpleMessageService msg;
+		BaseMessage msg;
 		try {
-			msg = (SimpleMessageService) type.newInstance();
+			msg = (BaseMessage) type.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new MmtException(
 					"Can't new message instance: message type is " + type, e.getCause());

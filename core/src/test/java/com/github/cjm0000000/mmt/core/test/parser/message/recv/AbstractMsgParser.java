@@ -2,7 +2,7 @@ package com.github.cjm0000000.mmt.core.test.parser.message.recv;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.test.parser.AbstractXMLParser;
 
@@ -37,14 +37,14 @@ public abstract class AbstractMsgParser extends AbstractXMLParser {
 
 	@Override
 	protected final void makeSpecNodes(StringBuilder sb,
-			SimpleMessageService original) {
+			BaseMessage original) {
 		SimpleRecvMessage msg = (SimpleRecvMessage) original;
 		sb.append("<MsgId>" + msg.getMsgId() + "</MsgId>");
 		makeSpecNodesWithoutMsgId(sb, msg);
 	}
 
 	@Override
-	protected final void verifySpecFields(SimpleMessageService after, SimpleMessageService before) {
+	protected final void verifySpecFields(BaseMessage after, BaseMessage before) {
 		SimpleRecvMessage m_before = (SimpleRecvMessage) before;
 		SimpleRecvMessage m_after = (SimpleRecvMessage) after;
 		assertEquals(m_after.getMsgId(), m_before.getMsgId());
@@ -52,7 +52,7 @@ public abstract class AbstractMsgParser extends AbstractXMLParser {
 	}
 
 	@Override
-	protected final SimpleMessageService getMsgInstance() {
+	protected final BaseMessage getMsgInstance() {
 		SimpleRecvMessage original = getMsgInstanceWithoutMsgId();
 		original.setMsgId(5939685126051988740L);
 		return original;

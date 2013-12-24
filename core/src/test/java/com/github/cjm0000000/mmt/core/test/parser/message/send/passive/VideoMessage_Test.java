@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.send.passive.VideoMessage;
 
 /**
@@ -12,12 +12,12 @@ import com.github.cjm0000000.mmt.core.message.send.passive.VideoMessage;
 public class VideoMessage_Test extends AbstractMsgTester {
 
 	@Override
-	protected void setSpecFields(SimpleMessageService original) {
+	protected void setSpecFields(BaseMessage original) {
 
 	}
 
 	@Override
-	protected SimpleMessageService getMsgInstance() {
+	protected BaseMessage getMsgInstance() {
 		String mediaId = "Okq_aCQbG0iFQ6b89SAB2pP3-1jqAHehh2QSiPihKB6-Uwp6VlB24KbKsmX1sqVl";
 		return new VideoMessage(mediaId, "标题", "Desc");
 	}

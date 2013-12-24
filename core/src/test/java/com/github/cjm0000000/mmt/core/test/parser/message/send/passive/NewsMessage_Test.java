@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 
@@ -13,7 +13,7 @@ import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 public class NewsMessage_Test extends AbstractMsgTester {
 
 	@Override
-	protected void setSpecFields(SimpleMessageService original) {
+	protected void setSpecFields(BaseMessage original) {
 		NewsMessage msg = (NewsMessage) original;
 		String picUrl = "http://www.piccom/images/a.jpg";
 		String url = "http://www.163.com/artic/17173.html";
@@ -26,7 +26,7 @@ public class NewsMessage_Test extends AbstractMsgTester {
 	}
 
 	@Override
-	protected SimpleMessageService getMsgInstance() {
+	protected BaseMessage getMsgInstance() {
 		return new NewsMessage();
 	}
 

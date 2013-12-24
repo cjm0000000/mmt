@@ -2,8 +2,8 @@ package com.github.cjm0000000.mmt.core.test.parser.event;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
-import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.test.parser.AbstractXMLParser;
 
 /**
@@ -37,14 +37,14 @@ public abstract class AbstractEventParser extends AbstractXMLParser {
 
 	@Override
 	protected final void makeSpecNodes(StringBuilder sb,
-			SimpleMessageService original) {
+			BaseMessage original) {
 		SimpleEvent msg = (SimpleEvent) original;
 		sb.append("<Event><![CDATA[" + msg.getEventType() + "]]></Event>");
 		makeSpecNodesWithoutEventType(sb, msg);
 	}
 
 	@Override
-	protected final void verifySpecFields(SimpleMessageService after, SimpleMessageService before) {
+	protected final void verifySpecFields(BaseMessage after, BaseMessage before) {
 		SimpleEvent s_before = (SimpleEvent) before;
 		SimpleEvent s_after = (SimpleEvent) after;
 		assertEquals(s_after.getEventType(), s_before.getEventType());
@@ -52,7 +52,7 @@ public abstract class AbstractEventParser extends AbstractXMLParser {
 	}
 
 	@Override
-	protected final SimpleMessageService getMsgInstance() {
+	protected final BaseMessage getMsgInstance() {
 		return getEventInstance();
 	}
 

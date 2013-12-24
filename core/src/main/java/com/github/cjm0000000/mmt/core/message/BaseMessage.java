@@ -1,8 +1,8 @@
-package com.github.cjm0000000.mmt.core;
+package com.github.cjm0000000.mmt.core.message;
 
-import com.github.cjm0000000.mmt.core.BaseService;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Simple message entity
@@ -11,7 +11,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
  * @version 2.0
  * 
  */
-public class SimpleMessageService extends BaseService {
+public class BaseMessage extends MmtService {
 	/** ToUserName */
 	@MmtCDATA
 	@MmtAlias("ToUserName")
@@ -28,7 +28,7 @@ public class SimpleMessageService extends BaseService {
 	@MmtAlias("MsgType")
 	protected String msgType;
 	
-	public SimpleMessageService(String msgType) {
+	public BaseMessage(String msgType) {
 		this.msgType = msgType;
 	}
 	public String getToUserName() {

@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.test.parser.message.send.passive;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.send.passive.TextMessage;
 
 /**
@@ -12,13 +12,13 @@ import com.github.cjm0000000.mmt.core.message.send.passive.TextMessage;
 public class TextMessage_Test extends AbstractMsgTester{
 
 	@Override
-	protected void setSpecFields(SimpleMessageService original) {
+	protected void setSpecFields(BaseMessage original) {
 		TextMessage msg = (TextMessage) original;
 		msg.setContent("测试中文。Test EN");
 	}
 
 	@Override
-	protected SimpleMessageService getMsgInstance() {
+	protected BaseMessage getMsgInstance() {
 		return new TextMessage();
 	}
 

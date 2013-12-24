@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core;
+package com.github.cjm0000000.mmt.core.service;
 
 /**
  * MMT customer service type

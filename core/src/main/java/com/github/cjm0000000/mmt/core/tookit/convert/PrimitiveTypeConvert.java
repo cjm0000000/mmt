@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 
 /**
  * convert of primitive types
@@ -26,7 +26,7 @@ public class PrimitiveTypeConvert {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public static boolean parseBoxedPrimitiveType(SimpleMessageService msg,
+	public static boolean parseBoxedPrimitiveType(BaseMessage msg,
 			Field field, Class<?> fieldType, String value)
 			throws IllegalArgumentException, IllegalAccessException {
 		if(Integer.class.equals(fieldType)){

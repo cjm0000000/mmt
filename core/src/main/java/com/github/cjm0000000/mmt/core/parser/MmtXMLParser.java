@@ -3,7 +3,7 @@ package com.github.cjm0000000.mmt.core.parser;
 
 import java.io.InputStream;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.parser.driver.SimpleXMLDriver;
 
 /**
@@ -21,7 +21,7 @@ public final class MmtXMLParser {
 	 * @param type
 	 * @return
 	 */
-	public static <T> SimpleMessageService fromXML(InputStream is, Class<T> type) {
+	public static <T> BaseMessage fromXML(InputStream is, Class<T> type) {
 		return simpleDriver.fromXML(is, type);
 	}
 	

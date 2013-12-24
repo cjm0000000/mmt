@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core;
+package com.github.cjm0000000.mmt.core.message.event;
 
 /**
  * Event types

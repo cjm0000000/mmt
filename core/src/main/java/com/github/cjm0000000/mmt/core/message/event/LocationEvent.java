@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.core.event;
+package com.github.cjm0000000.mmt.core.message.event;
 
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 

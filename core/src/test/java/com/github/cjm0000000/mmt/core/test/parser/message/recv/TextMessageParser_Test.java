@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
 
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
@@ -38,7 +38,7 @@ public final class TextMessageParser_Test extends AbstractMsgParser {
 	}
 
 	@Override
-	protected SimpleMessageService fromXML(InputStream is) {
+	protected BaseMessage fromXML(InputStream is) {
 		return MmtXMLParser.fromXML(is, TextMessage.class);
 	}
 
