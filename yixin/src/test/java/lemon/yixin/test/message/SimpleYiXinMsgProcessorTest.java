@@ -7,13 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.TextMsgParser;
-import lemon.shared.service.ServiceType;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 import lemon.yixin.config.mapper.YXConfigMapper;
@@ -29,6 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 public class SimpleYiXinMsgProcessorTest extends BaseYiXinTest {
 	@Autowired @Qualifier("yiXinAPI")

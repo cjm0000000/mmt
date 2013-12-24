@@ -11,7 +11,6 @@ import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.MsgType;
 import lemon.shared.message.metadata.TextMessage;
-import lemon.shared.service.ServiceType;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -31,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 /**
  * 即时消息管理
  * 

@@ -1,7 +1,5 @@
 package lemon.web.interfaces.action;
 
-import lemon.shared.config.MMTConfig;
-import lemon.shared.service.ServiceType;
 import lemon.web.system.bean.User;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
@@ -14,6 +12,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 易信接口配置
@@ -53,7 +54,7 @@ public class YiXinAction extends APIConfigAction {
 	}
 
 	@Override
-	protected MMTConfig getConfig(int cust_id) {
+	protected MmtConfig getConfig(int cust_id) {
 		return yxConfigMapper.get(cust_id);
 	}
 
@@ -73,25 +74,25 @@ public class YiXinAction extends APIConfigAction {
 	}
 
 	@Override
-	protected String getAPIAccount(MMTConfig cfg) {
+	protected String getAPIAccount(MmtConfig cfg) {
 		YiXinConfig config = (YiXinConfig) cfg;
 		return config.getYx_account();
 	}
 
 	@Override
-	protected int saveConfig(MMTConfig cfg) {
+	protected int saveConfig(MmtConfig cfg) {
 		YiXinConfig config = (YiXinConfig) cfg;
 		return yxConfigMapper.save(config);
 	}
 
 	@Override
-	protected int updateConfig(MMTConfig cfg) {
+	protected int updateConfig(MmtConfig cfg) {
 		YiXinConfig config = (YiXinConfig) cfg;
 		return yxConfigMapper.update(config);
 	}
 
 	@Override
-	protected void flushCache(MMTConfig cfg) {
+	protected void flushCache(MmtConfig cfg) {
 		YiXinConfig config = (YiXinConfig) cfg;
 		YiXin.setConfig(config);
 	}

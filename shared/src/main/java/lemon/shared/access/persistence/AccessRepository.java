@@ -3,7 +3,6 @@ package lemon.shared.access.persistence;
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.Access;
-import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -12,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Access repository

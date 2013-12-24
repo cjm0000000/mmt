@@ -1,7 +1,11 @@
 package com.github.cjm0000000.mmt.core.test.parser.event;
 
-import com.github.cjm0000000.mmt.core.EventType;
-import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import java.io.InputStream;
+
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.EventType;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test cases
@@ -26,6 +30,11 @@ public class SimpleEventParser_Test extends AbstractEventParser {
 	@Override
 	protected void verifySpecFieldsWithoutEventType(SimpleEvent after,
 			SimpleEvent before) {
+	}
+
+	@Override
+	protected BaseMessage fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, SimpleEvent.class);
 	}
 
 }

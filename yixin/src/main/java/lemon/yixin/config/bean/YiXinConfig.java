@@ -1,6 +1,6 @@
 package lemon.yixin.config.bean;
 
-import lemon.shared.config.MMTConfig;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 /**
  * Customer's configures of YiXin
@@ -8,7 +8,7 @@ import lemon.shared.config.MMTConfig;
  * @version 1.0
  *
  */
-public class YiXinConfig extends MMTConfig {
+public class YiXinConfig extends MmtConfig {
 	/** MMT客户易信号 */
 	private String yx_account;
 	/** 客户在易信的第三方用户唯一凭证 */

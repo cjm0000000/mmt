@@ -3,7 +3,6 @@ package lemon.web.security;
 import java.util.HashSet;
 import java.util.Set;
 
-import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Role;
@@ -21,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 /**
  * 用户细节管理
@@ -53,7 +54,7 @@ public class MMTUserDetailsService implements UserDetailsService {
 		boolean enables = true;  
         boolean accountNonExpired = true;  
         boolean credentialsNonExpired = true;  
-        boolean accountNonLocked = user.getIslock().equals(Status.UNAVAILABLE);
+        boolean accountNonLocked = Status.UNAVAILABLE.equals(user.getIslock());
         //需要解密用户名
         UserConfig cfg = userConfigMapper.getItem(user.getUser_id(), MMTAction.ENCRYPY_KEY);
         if(cfg == null)

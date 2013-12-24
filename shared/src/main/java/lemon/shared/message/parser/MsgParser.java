@@ -1,6 +1,6 @@
 package lemon.shared.message.parser;
 
-import lemon.shared.config.MMTConfig;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 /**
  * Message parser
@@ -15,6 +15,6 @@ public interface MsgParser {
 	 * @param msg
 	 * @return
 	 */
-	String parseMessage(MMTConfig cfg, String msg);
+	String parseMessage(MmtConfig cfg, String msg);
 	
 }

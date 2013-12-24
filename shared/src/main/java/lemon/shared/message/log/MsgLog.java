@@ -1,6 +1,6 @@
 package lemon.shared.message.log;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Message log
@@ -9,7 +9,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  * 
  */
-public class MsgLog extends BaseService{
+public class MsgLog extends MmtService{
 	private String msg;
 
 	public String getMsg() {

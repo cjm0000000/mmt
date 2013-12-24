@@ -9,12 +9,13 @@ import lemon.shared.customer.Action;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.persistence.CustomMenuRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 public class CustomMenuRepositoryTest extends BaseMmtTest {
 	private static final byte LEVEL = 9;

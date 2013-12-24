@@ -2,9 +2,10 @@ package lemon.shared.message.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lemon.shared.MmtException;
-import lemon.shared.config.MMTConfig;
-import lemon.shared.config.Status;
+import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.config.Status;
+
 import lemon.shared.event.EventType;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;
@@ -40,7 +41,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 		if(msg == null)
 			throw new MmtException("receive a null message.");
 		//save receive message
-		MMTConfig cfg = getConfig(mmt_token);
+		MmtConfig cfg = getConfig(mmt_token);
 		msg.setCust_id(cfg.getCust_id());
 		msg.setService_type(getServiceType());
 		if(msg instanceof EventMessage){
@@ -107,7 +108,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 * @param mmt_token
 	 * @return
 	 */
-	public abstract MMTConfig getConfig(String mmt_token);
+	public abstract MmtConfig getConfig(String mmt_token);
 	
 	/**
 	 * process image message
@@ -191,7 +192,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 * @param msg
 	 * @return
 	 */
-	protected String subscribe(MMTConfig cfg, EventMessage msg){
+	protected String subscribe(MmtConfig cfg, EventMessage msg){
 		//get customer's configure
 		TextMessage replyMsg = new TextMessage();
 		buildReplyMsg(msg, replyMsg);
@@ -209,7 +210,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 */
 	protected String unsubscribe(String mmt_token, EventMessage msg){
 		//get customer's configure
-		MMTConfig cfg = getConfig(mmt_token);
+		MmtConfig cfg = getConfig(mmt_token);
 		//update fans information
 		fansManager.disableFans(cfg.getCust_id(), getServiceType(), msg.getFromUserName());
 		return null;
@@ -233,7 +234,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 * @param cfg
 	 * @return
 	 */
-	protected String getWelcome(MMTConfig cfg){
+	protected String getWelcome(MmtConfig cfg){
 		return cfg.getWelcome_msg();
 	}
 	
@@ -260,7 +261,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 * @return
 	 */
 	private final String preSubscribe(String mmt_token, EventMessage msg){
-		MMTConfig cfg = getConfig(mmt_token);
+		MmtConfig cfg = getConfig(mmt_token);
 		//save fans
 		Fans fans = obtainFans(cfg, msg.getFromUserName());
 		fansManager.saveFans(fans);
@@ -274,7 +275,7 @@ public abstract class AbstractMsgProcessor implements MsgProcessor {
 	 * @param user_id
 	 * @return
 	 */
-	private Fans obtainFans(MMTConfig cfg, String user_id) {
+	private Fans obtainFans(MmtConfig cfg, String user_id) {
 		Fans fans = new Fans();
 		fans.setCust_id(cfg.getCust_id());
 		fans.setService_type(getServiceType());

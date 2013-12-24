@@ -1,8 +1,9 @@
 package lemon.shared.api;
 
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+
 import lemon.shared.access.ReturnCode;
 import lemon.shared.access.Access;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 
 /**
@@ -33,7 +34,7 @@ public interface MmtAPI {
 	 * @param config
 	 * @return access token
 	 */
-	String getAcessToken(MMTConfig config);
+	String getAcessToken(MmtConfig config);
 	
 	/**
 	 * Third part create menus
@@ -41,7 +42,7 @@ public interface MmtAPI {
 	 * @param menuJson
 	 * @return
 	 */
-	ReturnCode createMenus(MMTConfig config, String menuJson);
+	ReturnCode createMenus(MmtConfig config, String menuJson);
 	
 	
 	/**
@@ -49,14 +50,14 @@ public interface MmtAPI {
 	 * @param config
 	 * @return
 	 */
-	String getMenus(MMTConfig config);
+	String getMenus(MmtConfig config);
 	
 	/**
 	 * Third part delete menus
 	 * @param config
 	 * @return
 	 */
-	ReturnCode deleteMenus(MMTConfig config);
+	ReturnCode deleteMenus(MmtConfig config);
 	
 	/**
 	 * Upload media to API server
@@ -66,7 +67,7 @@ public interface MmtAPI {
 	 * @param fileName
 	 * @return
 	 */
-	String uploadMedia(MMTConfig config, String type, byte[] file,
+	String uploadMedia(MmtConfig config, String type, byte[] file,
 			String fileName);
 	
 	/**
@@ -75,5 +76,5 @@ public interface MmtAPI {
 	 * @param msg
 	 * @return
 	 */
-	ReturnCode sendMsg(MMTConfig config, Message msg);
+	ReturnCode sendMsg(MmtConfig config, Message msg);
 }

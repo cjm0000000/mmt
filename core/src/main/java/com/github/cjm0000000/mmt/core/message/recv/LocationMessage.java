@@ -1,8 +1,8 @@
 package com.github.cjm0000000.mmt.core.message.recv;
 
-import com.github.cjm0000000.mmt.core.message.Message;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
  * Location message
@@ -11,7 +11,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
  *
  */
 @MmtAlias("xml")
-public class LocationMessage extends Message {
+public class LocationMessage extends SimpleRecvMessage {
 	/** Location_X */
 	@MmtAlias("Location_X")
 	private double location_X;
@@ -22,6 +22,7 @@ public class LocationMessage extends Message {
 	@MmtAlias("Scale")
 	private int scale;
 	/** Label */
+	@MmtCDATA
 	@MmtAlias("Label")
 	private String label;
 	

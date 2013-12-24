@@ -8,8 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.MMTCharset;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.gateway.AbstractGateWay;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
@@ -19,6 +17,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 /**
  * YiXin gateway
@@ -50,7 +51,7 @@ public final class YiXinGateWay extends AbstractGateWay {
 	}
 
 	@Override
-	public MMTConfig getConfig(String mmt_token) {
+	public MmtConfig getConfig(String mmt_token) {
 		return YiXin.getConfig(mmt_token);
 	}
 
@@ -61,11 +62,11 @@ public final class YiXinGateWay extends AbstractGateWay {
 
 	@Override
 	protected String getTargetCharset() {
-		return MMTCharset.YIXIN_CHARSET;
+		return MmtCharset.YIXIN_CHARSET;
 	}
 
 	@Override
-	protected void preProcessMsg(MMTConfig cfg, HttpServletRequest req) {
+	protected void preProcessMsg(MmtConfig cfg, HttpServletRequest req) {
 		// 易信暂时不需要实现，API没有相关说明，如果加了验证，很可能消息处理会失败
 	}
 	

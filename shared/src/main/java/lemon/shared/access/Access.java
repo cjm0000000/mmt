@@ -1,6 +1,6 @@
 package lemon.shared.access;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Site access object
@@ -8,7 +8,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  *
  */
-public class Access extends BaseService {
+public class Access extends MmtService {
 	private String signature;
 	private String timestamp_api;
 	private String nonce;

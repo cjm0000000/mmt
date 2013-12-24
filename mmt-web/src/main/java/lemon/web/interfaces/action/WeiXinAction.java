@@ -1,7 +1,5 @@
 package lemon.web.interfaces.action;
 
-import lemon.shared.config.MMTConfig;
-import lemon.shared.service.ServiceType;
 import lemon.web.system.bean.User;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -14,6 +12,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 微信接口配置
@@ -53,7 +54,7 @@ public class WeiXinAction extends APIConfigAction {
 	}
 
 	@Override
-	protected MMTConfig getConfig(int cust_id) {
+	protected MmtConfig getConfig(int cust_id) {
 		return weiXinConfigMapper.get(cust_id);
 	}
 
@@ -73,25 +74,25 @@ public class WeiXinAction extends APIConfigAction {
 	}
 
 	@Override
-	protected String getAPIAccount(MMTConfig cfg) {
+	protected String getAPIAccount(MmtConfig cfg) {
 		WeiXinConfig config = (WeiXinConfig)cfg;
 		return config.getWx_account();
 	}
 
 	@Override
-	protected int saveConfig(MMTConfig cfg) {
+	protected int saveConfig(MmtConfig cfg) {
 		WeiXinConfig config = (WeiXinConfig)cfg;
 		return weiXinConfigMapper.save(config);
 	}
 
 	@Override
-	protected int updateConfig(MMTConfig cfg) {
+	protected int updateConfig(MmtConfig cfg) {
 		WeiXinConfig config = (WeiXinConfig)cfg;
 		return weiXinConfigMapper.update(config);
 	}
 
 	@Override
-	protected void flushCache(MMTConfig cfg) {
+	protected void flushCache(MmtConfig cfg) {
 		WeiXinConfig config = (WeiXinConfig)cfg;
 		WeiXin.setConfig(config);
 	}

@@ -1,6 +1,6 @@
 package lemon.shared.access;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Access token log entity
@@ -8,7 +8,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  *
  */
-public class AccessTokenLog extends BaseService {
+public class AccessTokenLog extends MmtService {
 	private String appid;
 	private String secret;
 	private String grant_type;

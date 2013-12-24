@@ -10,11 +10,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.github.cjm0000000.mmt.core.MmtException;
-import com.github.cjm0000000.mmt.core.ServiceType;
-import com.github.cjm0000000.mmt.core.SimpleMessageService;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
-import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
-import com.github.cjm0000000.mmt.core.test.base.MmtTestBase;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.core.test.MmtTestBase;
 
 /**
  * XML Tester template
@@ -29,20 +28,27 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	 * @param sb
 	 * @param original
 	 */
-	protected abstract void makeSpecNodes(StringBuilder sb, SimpleMessageService original);
+	protected abstract void makeSpecNodes(StringBuilder sb, BaseMessage original);
 	
 	/**
 	 * verify specific fields
 	 * @param after
 	 * @param before
 	 */
-	protected abstract void verifySpecFields(SimpleMessageService after, SimpleMessageService before);
+	protected abstract void verifySpecFields(BaseMessage after, BaseMessage before);
 	
 	/**
 	 * get message instance and set specific fields
 	 * @return
 	 */
-	protected abstract SimpleMessageService getMsgInstance();
+	protected abstract BaseMessage getMsgInstance();
+	
+	/**
+	 * parse from inputStream
+	 * @param is
+	 * @return
+	 */
+	protected abstract BaseMessage fromXML(InputStream is);
 	
 	/**
 	 * Default Runner for the test suite
@@ -59,7 +65,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	 * @param service_type
 	 */
 	protected final void parser(ServiceType service_type){
-		SimpleMessageService original = getMsgInstance();
+		BaseMessage original = getMsgInstance();
 		//set common values
 		setCommonFields(service_type, original);
 		//build XML string
@@ -70,7 +76,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 		logger.debug("generate XML string: " + sb.toString());
 		//parser
 		InputStream is = toInputStream(sb.toString());
-		SimpleMessageService after = MmtXMLParser.fromXML(service_type, is);
+		BaseMessage after = fromXML(is);
 		//verify
 		verifyCommonFields(after, original);
 		verifySpecFields(after, original);
@@ -94,7 +100,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	 * @param after the message after parser
 	 * @param before the original message
 	 */
-	private void verifyCommonFields(SimpleMessageService after, SimpleMessageService before){
+	private void verifyCommonFields(BaseMessage after, BaseMessage before){
 		assertNotNull(after);
 		assertNotNull(before);
 		assertEquals(after.getCreateTime(), before.getCreateTime());
@@ -108,7 +114,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	 * @param service_type
 	 * @param original
 	 */
-	private void setCommonFields(ServiceType service_type, SimpleMessageService original){
+	private void setCommonFields(ServiceType service_type, BaseMessage original){
 		original.setCreateTime(String.valueOf(System.currentTimeMillis()/1000));
 		original.setCust_id(CUST_ID);
 		original.setFromUserName("ot9x4jpm4x_rBrqacQ8hzikL9D-M");
@@ -122,7 +128,7 @@ public abstract class AbstractXMLParser extends MmtTestBase {
 	 * @param sb
 	 * @param original
 	 */
-	private void makeCommonNodes(StringBuilder sb, SimpleMessageService original){
+	private void makeCommonNodes(StringBuilder sb, BaseMessage original){
 		sb.append("<xml>");
 		sb.append("<ToUserName><![CDATA["+original.getToUserName()+"]]></ToUserName>");
 		sb.append("<FromUserName><![CDATA["+original.getFromUserName()+"]]></FromUserName>");

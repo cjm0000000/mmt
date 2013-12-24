@@ -14,20 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
+
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.ReturnCode;
 import lemon.shared.access.Access;
 import lemon.shared.access.persistence.AccessRepository;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.customer.Action;
 import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.message.metadata.Message;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.secure.SecureUtil;
@@ -52,7 +53,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @param config
 	 * @return
 	 */
-	public abstract void verifyConfig(MMTConfig config);
+	public abstract void verifyConfig(MmtConfig config);
 	
 	/**
 	 * 获取通用接口URL
@@ -83,7 +84,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @param mmt_token
 	 * @return
 	 */
-	public abstract Map<String, Object> getAccessTokenRequestParams(MMTConfig config);
+	public abstract Map<String, Object> getAccessTokenRequestParams(MmtConfig config);
 	
 	/**
 	 * 发送错误信息
@@ -105,7 +106,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	public abstract JSONObject generateMsgDetail(Message msg);
 	
 	@Override
-	public final ReturnCode createMenus(MMTConfig config, String menuJson) {
+	public final ReturnCode createMenus(MmtConfig config, String menuJson) {
 		//验证配置
 		verifyConfig(config);
 		//发送请求
@@ -122,7 +123,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	}
 	
 	@Override
-	public final ReturnCode deleteMenus(MMTConfig config) {
+	public final ReturnCode deleteMenus(MmtConfig config) {
 		if(config == null)
 			throw new MmtException("客户接口配置信息不存在。");
 		//发送请求
@@ -139,7 +140,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public final String getAcessToken(MMTConfig config) {
+	public final String getAcessToken(MmtConfig config) {
 		//从数据库读取Access Token
 		AccessToken token = accessRepository.getAccessToken(config.getCust_id(), getServiceType());
 		if (token != null && token.getExpire_time() >= (System.currentTimeMillis() / 1000))
@@ -205,7 +206,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	}
 	
 	@Override
-	public final ReturnCode sendMsg(MMTConfig config, Message msg) {
+	public final ReturnCode sendMsg(MmtConfig config, Message msg) {
 		// 发送请求
 		Map<String, Object> params = new HashMap<>();
 		params.put("access_token", getAcessToken(config));

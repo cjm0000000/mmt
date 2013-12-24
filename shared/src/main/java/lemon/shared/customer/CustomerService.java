@@ -1,7 +1,7 @@
 package lemon.shared.customer;
 
-import lemon.shared.config.Status;
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * MMT customer service entity
@@ -9,7 +9,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  *
  */
-public class CustomerService extends BaseService {
+public class CustomerService extends MmtService {
 	private Status status;
 	private int expire_time;
 	

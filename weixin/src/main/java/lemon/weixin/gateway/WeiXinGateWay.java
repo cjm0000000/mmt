@@ -8,8 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.MMTCharset;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.gateway.AbstractGateWay;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -19,6 +17,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 /**
  * MicroChat gateway
@@ -52,7 +53,7 @@ public final class WeiXinGateWay extends AbstractGateWay {
 	
 
 	@Override
-	public MMTConfig getConfig(String mmt_token) {
+	public MmtConfig getConfig(String mmt_token) {
 		return WeiXin.getConfig(mmt_token);
 	}
 
@@ -63,12 +64,12 @@ public final class WeiXinGateWay extends AbstractGateWay {
 
 	@Override
 	protected String getTargetCharset() {
-		return MMTCharset.WEIXIN_CHARSET;
+		return MmtCharset.WEIXIN_CHARSET;
 	}
 
 
 	@Override
-	protected void preProcessMsg(MMTConfig cfg, HttpServletRequest req) {
+	protected void preProcessMsg(MmtConfig cfg, HttpServletRequest req) {
 		super.doAuthentication(cfg, req);
 	}
 	

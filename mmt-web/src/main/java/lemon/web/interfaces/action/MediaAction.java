@@ -11,15 +11,12 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import lemon.shared.MmtException;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.MMTCharset;
 import lemon.shared.file.FileManager;
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;
 import lemon.shared.media.persistence.MediaRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -45,6 +42,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 多媒体管理
@@ -266,7 +267,7 @@ public final class MediaAction extends AdminNavAction {
 	 */
 	private String obtainFileName(MultipartFile file){
 		try {
-			return new String(file.getOriginalFilename().getBytes("iso-8859-1"), MMTCharset.LOCAL_CHARSET);
+			return new String(file.getOriginalFilename().getBytes("iso-8859-1"), MmtCharset.LOCAL_CHARSET);
 		} catch (UnsupportedEncodingException e1) {
 			return file.getOriginalFilename();
 		}

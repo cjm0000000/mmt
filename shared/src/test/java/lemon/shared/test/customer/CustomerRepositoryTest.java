@@ -5,16 +5,17 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 public class CustomerRepositoryTest extends BaseMmtTest {
 	@Autowired

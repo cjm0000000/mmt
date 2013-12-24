@@ -1,16 +1,17 @@
 package lemon.shared.fans;
 
-import lemon.shared.MmtException;
-import lemon.shared.config.Status;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.fans.persistence.FansRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * manager for fans

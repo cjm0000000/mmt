@@ -3,7 +3,10 @@ package lemon.weixin.message.processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.config.MMTConfig;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.WeiXinException;
+
 import lemon.shared.message.MMTRobot;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.AudioMessage;
@@ -21,8 +24,6 @@ import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.processor.AbstractMsgProcessor;
-import lemon.shared.service.ServiceType;
-import lemon.weixin.WeiXinException;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.toolkit.WeatherAdapter;
@@ -48,7 +49,7 @@ public final class SimpleWeiXinMsgProcessor extends AbstractMsgProcessor {
 	private WeatherAdapter weatherAdapter;
 	
 	@Override
-	public MMTConfig getConfig(String mmt_token) {
+	public MmtConfig getConfig(String mmt_token) {
 		return WeiXin.getConfig(mmt_token);
 	}
 	

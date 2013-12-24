@@ -1,6 +1,6 @@
 package lemon.web.log.bean;
 
-import lemon.shared.config.Status;
+import com.github.cjm0000000.mmt.core.config.Status;
 
 /**
  * login log entity

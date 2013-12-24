@@ -3,6 +3,7 @@ package com.github.cjm0000000.mmt.core.message.recv;
 import com.github.cjm0000000.mmt.core.message.MsgType;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
+import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
 /**
  * Image message
@@ -13,6 +14,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 @MmtAlias("xml")
 public class ImageMessage extends MediaMessage {
 	/** PicUrl */
+	@MmtCDATA
 	@MmtAlias("PicUrl")
 	private String picUrl;
 

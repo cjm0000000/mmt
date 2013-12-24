@@ -2,9 +2,13 @@ package com.github.cjm0000000.mmt.core.test.parser.event;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.cjm0000000.mmt.core.EventType;
-import com.github.cjm0000000.mmt.core.event.LocationEvent;
-import com.github.cjm0000000.mmt.core.event.SimpleEvent;
+import java.io.InputStream;
+
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.EventType;
+import com.github.cjm0000000.mmt.core.message.event.LocationEvent;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
  * Unit test case for location event
@@ -42,6 +46,11 @@ public class LocationEventParser_Test extends AbstractEventParser {
 		assertEquals(l_after.getLatitude(), l_before.getLatitude(), delta);
 		assertEquals(l_after.getLongitude(), l_before.getLongitude(), delta);
 		assertEquals(l_after.getPrecision(), l_before.getPrecision(), delta);
+	}
+
+	@Override
+	protected BaseMessage fromXML(InputStream is) {
+		return MmtXMLParser.fromXML(is, LocationEvent.class);
 	}
 
 }

@@ -12,16 +12,16 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.MMTContext;
-import lemon.shared.MmtException;
-import lemon.shared.config.MMTCharset;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.message.processor.MsgProcessor;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.xstream.XStreamHelper;
 
 /**
@@ -56,7 +56,7 @@ public abstract class AbstractMsgParser implements MsgParser {
 	 * @param msg
 	 * @return
 	 */
-	public final String parseMessage(MMTConfig cfg, String msg){
+	public final String parseMessage(MmtConfig cfg, String msg){
 		Message message = toMsg(msg);
 		// process business
 		String retMsg = process(cfg, message);
@@ -85,7 +85,7 @@ public abstract class AbstractMsgParser implements MsgParser {
 	 * @param msg
 	 * @return an string message
 	 */
-	private String process(MMTConfig cfg, Message msg){
+	private String process(MmtConfig cfg, Message msg){
 		if(null == cfg)
 			throw new MmtException("No customer's configure find.");
 		MsgProcessor processor = null;
@@ -104,7 +104,7 @@ public abstract class AbstractMsgParser implements MsgParser {
 	 * @return
 	 */
 	private static String getMsgType(String msg) {
-		try(InputStream is = new ByteArrayInputStream(msg.getBytes(MMTCharset.LOCAL_CHARSET))) {
+		try(InputStream is = new ByteArrayInputStream(msg.getBytes(MmtCharset.LOCAL_CHARSET))) {
 			Document doc = new SAXBuilder().build(is);
 			Element e = doc.getRootElement().getChild("MsgType");
 			return e.getValue();

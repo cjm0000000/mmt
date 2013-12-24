@@ -1,7 +1,8 @@
 package lemon.shared.fans.log;
 
+import com.github.cjm0000000.mmt.core.service.MmtService;
+
 import lemon.shared.fans.Actions;
-import lemon.shared.service.BaseService;
 
 /**
  * 粉丝操作日志
@@ -10,7 +11,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  * 
  */
-public class FansLog extends BaseService {
+public class FansLog extends MmtService {
 	private Actions action;
 	private String user_id;
 

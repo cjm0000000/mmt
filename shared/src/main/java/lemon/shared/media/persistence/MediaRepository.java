@@ -7,10 +7,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.core.service.ServiceType;
+
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;
-import lemon.shared.service.ServiceType;
 
 /**
  * Media repository
