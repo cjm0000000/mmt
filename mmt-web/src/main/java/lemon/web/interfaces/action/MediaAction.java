@@ -26,8 +26,6 @@ import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.toolkit.ArchiveManager;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +44,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
 /**
  * 多媒体管理
@@ -69,7 +69,7 @@ public final class MediaAction extends AdminNavAction {
 	@Resource(name="localSystemFileManager")
 	private FileManager fileManager;
 	@Autowired
-	private WXConfigMapper wxConfigMapper;
+	private WeiXinConfigRepository wxConfigMapper;
 	@Resource(name="weiXinAPI")
 	private MmtAPI weixinApi;
 	

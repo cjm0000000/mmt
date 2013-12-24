@@ -1,5 +1,6 @@
-package lemon.weixin.test.base;
+package com.github.cjm0000000.mmt.weixin.test;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,6 +17,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 		"file:../shared/src/test/resources/spring-db.xml",
 		"file:../shared/src/test/resources/spring-dao.xml",
 		"file:../shared/src/test/resources/spring-service.xml" })
-public abstract class BaseWeiXinTest {
+public abstract class AbstractWeiXinTester {
 	protected static final int CUST_ID = -5743;
+	
+	/**
+	 * default test case
+	 */
+	protected abstract void defaultCase();
+	
+	@Test
+	public void run(){
+		defaultCase();
+	}
 }

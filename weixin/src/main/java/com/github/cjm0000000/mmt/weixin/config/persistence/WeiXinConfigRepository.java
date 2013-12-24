@@ -1,8 +1,6 @@
-package lemon.weixin.config.mapper;
+package com.github.cjm0000000.mmt.weixin.config.persistence;
 
 import java.util.List;
-
-import lemon.weixin.config.bean.WeiXinConfig;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -12,6 +10,8 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+
 /**
  * Repository of WeiXin configures
  * @author lemon
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface WXConfigMapper {
+public interface WeiXinConfigRepository {
 	
 	/**
 	 * Get a WeiXin configure

@@ -16,7 +16,6 @@ import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
-import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 /**
  * 即时消息管理
  * 
@@ -50,7 +50,7 @@ public class IMAction extends AdminNavAction {
 	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI wxAPI;
 	@Autowired
-	private WXConfigMapper wxConfigMapper;
+	private WeiXinConfigRepository wxConfigMapper;
 	private static final String GROUP_FOR_SERVICE_TYPE 	= "SERVICE_TYPE";
 	private static final String GROUP_FOR_MSG_TYPE 		= "MESSAGE_TYPE";
 	

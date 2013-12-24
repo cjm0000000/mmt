@@ -1,4 +1,4 @@
-package lemon.weixin.test.config;
+package com.github.cjm0000000.mmt.weixin.test.config;
 
 import static org.junit.Assert.*;
 
@@ -8,25 +8,24 @@ import java.util.UUID;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.toolkit.EqualsUtil;
-import lemon.weixin.config.bean.AccountType;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
-import lemon.weixin.test.base.BaseWeiXinTest;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.weixin.config.AccountType;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+import com.github.cjm0000000.mmt.weixin.test.AbstractWeiXinTester;
 
-public class WeiXinConfigMapperTest extends BaseWeiXinTest {
+public class WeiXinConfigRepo_Test extends AbstractWeiXinTester {
 	@Autowired
-	private WXConfigMapper configMapper;
+	private WeiXinConfigRepository configMapper;
 	@Autowired
 	private CustomerRepository custMapper;
 	
-	@Test
-	public void crud(){
+	@Override
+	protected void defaultCase() {
 		Customer cust = custMapper.getCustomer(CUST_ID);
 		if(null == cust){
 			cust = new Customer();

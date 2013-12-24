@@ -3,19 +3,20 @@ package lemon.test.web.interfaces;
 import lemon.shared.access.ReturnCode;
 import lemon.shared.api.MmtAPI;
 import lemon.test.web.base.BaseWebTest;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+
 public class WeiXinTest extends BaseWebTest {
 	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI wxApi;
 	@Autowired
-	private WXConfigMapper wxConfigMapper;
+	private WeiXinConfigRepository wxConfigMapper;
 	
 	@Test
 	@Ignore

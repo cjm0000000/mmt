@@ -1,4 +1,4 @@
-package lemon.weixin.config;
+package com.github.cjm0000000.mmt.weixin.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
-
-import lemon.weixin.config.bean.WeiXinConfig;
 
 /**
  * WeiXin configures

@@ -1,4 +1,4 @@
-package lemon.weixin.test.message;
+package com.github.cjm0000000.mmt.weixin.test.message;
 
 import static org.junit.Assert.*;
 
@@ -18,12 +18,7 @@ import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.parser.weixin.VideoMsgParser;
 import lemon.shared.message.parser.weixin.VoiceMsgParser;
-import lemon.weixin.config.WeiXin;
-import lemon.weixin.config.bean.AccountType;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
-import lemon.weixin.test.base.BaseWeiXinTest;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -38,8 +33,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.config.AccountType;
+import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+import com.github.cjm0000000.mmt.weixin.test.AbstractWeiXinTester;
 
-public class SimpleWeiXinMsgProcessorTest extends BaseWeiXinTest {
+public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
 	private final String Welcome_msg = "Welcome";
 	private final String TOKEN = "1230!)*!)*#)!*Q)@)!*";
@@ -51,7 +51,7 @@ public class SimpleWeiXinMsgProcessorTest extends BaseWeiXinTest {
 	@Autowired
 	private CustomerRepository customerMapper;
 	@Autowired
-	private WXConfigMapper	wxConfigMapper;
+	private WeiXinConfigRepository	wxConfigMapper;
 	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI api;
 	@Autowired @Qualifier("MMT_text")
@@ -172,6 +172,11 @@ public class SimpleWeiXinMsgProcessorTest extends BaseWeiXinTest {
 		assertEquals(msg.getFormat(), "amr");
 		assertEquals(msg.getMediaId(), "PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj");
 		assertEquals(msg.getRecognition(), "");
+	}
+	
+	@Override
+	protected void defaultCase() {
+		
 	}
 	
 }

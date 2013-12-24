@@ -1,13 +1,9 @@
-package lemon.weixin.test;
+package com.github.cjm0000000.mmt.weixin.test;
 
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.weixin.config.WeiXin;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
-import lemon.weixin.test.base.BaseWeiXinTest;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -17,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
-public class WeiXinAPITest extends BaseWeiXinTest {
+public class WeiXinAPI_Test extends AbstractWeiXinTester {
 	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";
@@ -29,7 +28,7 @@ public class WeiXinAPITest extends BaseWeiXinTest {
 	@Autowired
 	private CustomerRepository customerMapper;
 	@Autowired
-	private WXConfigMapper	wxConfigMapper;
+	private WeiXinConfigRepository	wxConfigMapper;
 	@Before
 	public void init() {
 		Customer cust = customerMapper.getCustomer(CUST_ID);
@@ -63,7 +62,6 @@ public class WeiXinAPITest extends BaseWeiXinTest {
 	}
 	
 	@Test
-	@Ignore
 	public void verifySignature() {
 		Access log = new Access();
 		log.setEchostr("5921940693384818207");
@@ -82,6 +80,12 @@ public class WeiXinAPITest extends BaseWeiXinTest {
 	public void getAcessToken(){
 		String ss = api.getAcessToken(wxConfigMapper.get(CUST_ID));
 		assertNotNull(ss);
+	}
+
+	@Override
+	protected void defaultCase() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

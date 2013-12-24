@@ -1,9 +1,6 @@
 package lemon.web.interfaces.action;
 
 import lemon.web.system.bean.User;
-import lemon.weixin.config.WeiXin;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
 /**
  * 微信接口配置
@@ -27,7 +27,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 @RequestMapping("/interface/weixinconfig")
 public class WeiXinAction extends APIConfigAction {
 	@Autowired
-	private WXConfigMapper weiXinConfigMapper;
+	private WeiXinConfigRepository weiXinConfigMapper;
 	
 	/**
 	 * 保存微信配置信息

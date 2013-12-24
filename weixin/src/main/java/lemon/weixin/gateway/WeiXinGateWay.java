@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
 import lemon.shared.gateway.AbstractGateWay;
-import lemon.weixin.config.WeiXin;
-import lemon.weixin.config.bean.WeiXinConfig;
-import lemon.weixin.config.mapper.WXConfigMapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
 /**
  * MicroChat gateway
@@ -33,7 +33,7 @@ public final class WeiXinGateWay extends AbstractGateWay {
 	@Resource(name="weiXinAPI")
 	private MmtAPI wxAPI;
 	@Autowired
-	private WXConfigMapper weiXinConfigMapper;
+	private WeiXinConfigRepository weiXinConfigMapper;
 	@Override
 	public void destroy() {
 		WeiXin.destory();

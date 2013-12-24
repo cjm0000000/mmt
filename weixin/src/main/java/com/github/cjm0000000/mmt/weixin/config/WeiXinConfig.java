@@ -1,4 +1,4 @@
-package lemon.weixin.config.bean;
+package com.github.cjm0000000.mmt.weixin.config;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
@@ -45,20 +45,12 @@ public class WeiXinConfig extends MmtConfig {
 	
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
-		sb.append("cust_id=");
-		sb.append(cust_id);
-		sb.append(",token=");
-		sb.append(token);
-		sb.append(",wx_account=");
-		sb.append(wx_account);
-		sb.append(",timestamp=");
-		sb.append(timestamp);
-		sb.append(",bizClass=");
-		sb.append(biz_class);
-		sb.append(",subscribe_msg=");
-		sb.append(subscribe_msg);
-		sb.append(",welcome_msg=");
-		sb.append(welcome_msg);
+		sb.append("[");
+		sb.append(super.toString());
+		sb.append(", account_type=").append(account_type);
+		sb.append(", appid=").append(appid);
+		sb.append(", secret=").append(secret);
+		sb.append("]");
 		return sb.toString();
 	}
 }

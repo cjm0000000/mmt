@@ -1,4 +1,4 @@
-package lemon.weixin.config.bean;
+package com.github.cjm0000000.mmt.weixin.config;
 
 /**
  * 账户类别

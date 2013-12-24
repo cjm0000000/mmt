@@ -1,21 +1,20 @@
-package lemon.weixin.test;
+package com.github.cjm0000000.mmt.weixin.test;
 
 import static org.junit.Assert.assertEquals;
-import lemon.weixin.config.WeiXin;
-import lemon.weixin.test.base.BaseWeiXinTest;
 
 import org.junit.Before;
-import org.junit.Test;
 
-public class WeiXinTest extends BaseWeiXinTest {
+import com.github.cjm0000000.mmt.weixin.config.WeiXin;
+
+public class WeiXin_Test extends AbstractWeiXinTester {
 	
 	@Before
 	public void init(){
 		WeiXin.init();
 	}
-	
-	@Test
-	public void testWeiXinProperties() {
+
+	@Override
+	protected void defaultCase() {
 		assertEquals("https://api.weixin.qq.com/cgi-bin/token", WeiXin.getCommonUrl());
 		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/create", WeiXin.getCreateMenuUrl());
 		assertEquals("https://api.weixin.qq.com/cgi-bin/menu/get", WeiXin.getSearchMenuUrl());
