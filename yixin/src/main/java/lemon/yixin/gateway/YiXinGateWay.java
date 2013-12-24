@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.MMTCharset;
 import lemon.shared.config.MMTConfig;
 import lemon.shared.gateway.AbstractGateWay;
 import lemon.yixin.config.YiXin;
@@ -19,6 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
 
 /**
  * YiXin gateway
@@ -61,7 +62,7 @@ public final class YiXinGateWay extends AbstractGateWay {
 
 	@Override
 	protected String getTargetCharset() {
-		return MMTCharset.YIXIN_CHARSET;
+		return MmtCharset.YIXIN_CHARSET;
 	}
 
 	@Override

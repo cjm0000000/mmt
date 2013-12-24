@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import static com.github.cjm0000000.mmt.core.config.MmtCharset.*;
+
 import com.github.cjm0000000.mmt.core.MmtException;
 
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTConfig;
-import static lemon.shared.config.MMTCharset.*;
 
 /**
  * MMT通用消息网关

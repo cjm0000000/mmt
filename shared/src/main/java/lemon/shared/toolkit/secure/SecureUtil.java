@@ -14,10 +14,10 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import lemon.shared.config.MMTCharset;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
 
 /**
  * Secure Util for MMT
@@ -49,7 +49,7 @@ public final class SecureUtil {
 			byte[] enCodeFormat = secretKey.getEncoded();
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
 			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-			byte[] byteContent = content.getBytes(MMTCharset.LOCAL_CHARSET);
+			byte[] byteContent = content.getBytes(MmtCharset.LOCAL_CHARSET);
 			cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
 			byte[] result = cipher.doFinal(byteContent);
 			return parseByte2HexStr(result); // 加密

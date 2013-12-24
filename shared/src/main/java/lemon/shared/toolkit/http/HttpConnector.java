@@ -10,8 +10,7 @@ import java.net.URL;
 import java.util.Map;
 
 import com.github.cjm0000000.mmt.core.MmtException;
-
-import lemon.shared.config.MMTCharset;
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
 
 /**
  * HTTP 消息管理器
@@ -194,7 +193,7 @@ public final class HttpConnector {
 				con.setDoOutput(true);
 				// send message
 				if(null != sendMsg)
-					sendBytes(con, sendMsg.getBytes(MMTCharset.LOCAL_CHARSET));
+					sendBytes(con, sendMsg.getBytes(MmtCharset.LOCAL_CHARSET));
 			} else
 				con.setDoOutput(false);
 			// get reply message
@@ -229,7 +228,7 @@ public final class HttpConnector {
 	 */
 	private static String getReceive(HttpURLConnection con) throws IOException {
 		try (InputStream is = con.getInputStream()){
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, MMTCharset.LOCAL_CHARSET));
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, MmtCharset.LOCAL_CHARSET));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null)
