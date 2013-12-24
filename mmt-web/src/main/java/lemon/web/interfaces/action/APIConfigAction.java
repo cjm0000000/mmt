@@ -3,7 +3,6 @@ package lemon.web.interfaces.action;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
@@ -26,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 接口配置

@@ -3,11 +3,12 @@ package lemon.shared.test.message.log;
 import static org.junit.Assert.*;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
-import lemon.shared.service.ServiceType;
 import lemon.shared.test.base.BaseMmtTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 public class MsgLogManagerTest extends BaseMmtTest {
 	@Autowired

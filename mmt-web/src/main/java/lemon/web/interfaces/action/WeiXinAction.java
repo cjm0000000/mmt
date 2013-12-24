@@ -1,6 +1,5 @@
 package lemon.web.interfaces.action;
 
-import lemon.shared.service.ServiceType;
 import lemon.web.system.bean.User;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 微信接口配置

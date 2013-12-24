@@ -1,5 +1,6 @@
 package lemon.shared.service;
 
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**

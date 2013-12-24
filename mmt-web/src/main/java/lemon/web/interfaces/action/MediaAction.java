@@ -17,7 +17,6 @@ import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;
 import lemon.shared.media.persistence.MediaRepository;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -46,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * 多媒体管理

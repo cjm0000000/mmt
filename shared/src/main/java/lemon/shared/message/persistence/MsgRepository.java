@@ -16,12 +16,13 @@ import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
-import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * message repository

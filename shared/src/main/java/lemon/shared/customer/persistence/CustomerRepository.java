@@ -4,12 +4,13 @@ import java.util.List;
 
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
-import lemon.shared.service.ServiceType;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
+
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Customer repository

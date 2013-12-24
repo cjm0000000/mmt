@@ -1,7 +1,8 @@
 package lemon.shared.message.processor;
 
+import com.github.cjm0000000.mmt.core.service.ServiceProperty;
+
 import lemon.shared.message.metadata.Message;
-import lemon.shared.service.ServiceProperty;
 
 /**
  * WeiXin customer message business interface

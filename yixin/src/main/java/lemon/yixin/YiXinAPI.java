@@ -10,13 +10,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
 
 import lemon.shared.api.AbstractMmtAPI;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
-import lemon.shared.service.ServiceType;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 

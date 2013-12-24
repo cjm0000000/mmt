@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
 
 import lemon.shared.api.AbstractMmtAPI;
@@ -20,7 +21,6 @@ import lemon.shared.message.metadata.specific.weixin.MediaMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.AccountType;

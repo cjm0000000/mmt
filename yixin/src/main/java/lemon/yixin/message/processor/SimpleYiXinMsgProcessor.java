@@ -15,7 +15,6 @@ import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.processor.AbstractMsgProcessor;
-import lemon.shared.service.ServiceType;
 import lemon.yixin.config.YiXin;
 import lemon.yixin.config.bean.YiXinConfig;
 
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
 
 @Service

@@ -15,13 +15,13 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.MMTContext;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.MsgParser;
 import lemon.shared.message.processor.MsgProcessor;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.xstream.XStreamHelper;
 
 /**

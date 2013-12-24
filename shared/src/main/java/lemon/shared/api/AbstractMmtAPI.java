@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
@@ -28,7 +29,6 @@ import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.message.metadata.Message;
-import lemon.shared.service.ServiceType;
 import lemon.shared.toolkit.http.HttpConnector;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.secure.SecureUtil;
