@@ -9,10 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
 
 import lemon.shared.api.AbstractMmtAPI;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.MsgType;
 import lemon.shared.message.metadata.TextMessage;
@@ -60,7 +60,7 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	}
 	
 	@Override
-	public String getMenus(MMTConfig config) {
+	public String getMenus(MmtConfig config) {
 		// TODO 获取微信自定义菜单【暂时可以不实现】
 		return null;
 	}
@@ -86,7 +86,7 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {
+	public Map<String, Object> getAccessTokenRequestParams(MmtConfig config) {
 		WeiXinConfig cfg = (WeiXinConfig) config;
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
@@ -107,7 +107,7 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public void verifyConfig(MMTConfig config) {
+	public void verifyConfig(MmtConfig config) {
 		WeiXinConfig cfg = (WeiXinConfig) config;
 		if(cfg == null)
 			sendError("客户微信配置信息不存在。");
@@ -116,7 +116,7 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public String uploadMedia(MMTConfig config, String type, byte[] file, String fileName) {
+	public String uploadMedia(MmtConfig config, String type, byte[] file, String fileName) {
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
 		params.put("access_token", getAcessToken(config));

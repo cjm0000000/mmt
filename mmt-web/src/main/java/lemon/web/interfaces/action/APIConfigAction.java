@@ -1,6 +1,5 @@
 package lemon.web.interfaces.action;
 
-import lemon.shared.config.MMTConfig;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.config.Status;
 
 /**
@@ -59,7 +59,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 	 * @param cust_id
 	 * @return
 	 */
-	protected abstract MMTConfig getConfig(int cust_id);
+	protected abstract MmtConfig getConfig(int cust_id);
 	
 	/**
 	 * 获取API过滤器路径
@@ -84,27 +84,27 @@ public abstract class APIConfigAction extends AdminNavAction {
 	 * 获取接口账号
 	 * @return
 	 */
-	protected abstract String getAPIAccount(MMTConfig cfg);
+	protected abstract String getAPIAccount(MmtConfig cfg);
 	
 	/**
 	 * 保存配置
 	 * @param cfg
 	 * @return
 	 */
-	protected abstract int saveConfig(MMTConfig cfg);
+	protected abstract int saveConfig(MmtConfig cfg);
 	
 	/**
 	 * 更新配置
 	 * @param cfg
 	 * @return
 	 */
-	protected abstract int updateConfig(MMTConfig cfg);
+	protected abstract int updateConfig(MmtConfig cfg);
 	
 	/**
 	 * 更新缓存
 	 * @param cfg
 	 */
-	protected abstract void flushCache(MMTConfig cfg);
+	protected abstract void flushCache(MmtConfig cfg);
 	
 	/**
 	 * 获取接口显示名称
@@ -129,7 +129,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	public final String processSave(User user, MMTConfig cfg, boolean apiStatus) {
+	public final String processSave(User user, MmtConfig cfg, boolean apiStatus) {
 		if(cfg == null)
 			return BS3UI.warning("保存失败：信息不全。");
 		if(!apiStatus && cfg.getCust_id() <= 0)
@@ -189,7 +189,7 @@ public abstract class APIConfigAction extends AdminNavAction {
 		// 获取Main数据
 		Customer cust = customerMapper.getCustomer(cust_id);
 		// 获取MMTConfig
-		MMTConfig mmtcfg = getConfig(cust_id);
+		MmtConfig mmtcfg = getConfig(cust_id);
 		if(mmtcfg != null)
 			mmtcfg.setApi_url(syscfg.getValue().trim() + MMT.getContextRoot() + getFilterURL() + mmtcfg.getApi_url());
 		// 获取服务类型

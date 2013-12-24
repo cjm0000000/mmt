@@ -9,10 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
 
 import lemon.shared.api.AbstractMmtAPI;
-import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
@@ -54,7 +54,7 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	}
 	
 	@Override
-	public String getMenus(MMTConfig config) {
+	public String getMenus(MmtConfig config) {
 		// TODO 获取易信自定义菜单【暂时可以不实现】
 		return null;
 	}
@@ -81,7 +81,7 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public Map<String, Object> getAccessTokenRequestParams(MMTConfig config) {
+	public Map<String, Object> getAccessTokenRequestParams(MmtConfig config) {
 		YiXinConfig cfg = (YiXinConfig) config;
 		// 请求参数
 		Map<String, Object> params = new HashMap<>();
@@ -102,14 +102,14 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	}
 
 	@Override
-	public void verifyConfig(MMTConfig config) {
+	public void verifyConfig(MmtConfig config) {
 		YiXinConfig cfg = (YiXinConfig) config;
 		if (cfg == null)
 			sendError("客户易信配置信息不存在。");
 	}
 
 	@Override
-	public String uploadMedia(MMTConfig config, String type, byte[] file,
+	public String uploadMedia(MmtConfig config, String type, byte[] file,
 			String fileName) {
 		//Nothing to do
 		return null;

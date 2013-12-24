@@ -20,10 +20,10 @@ import org.apache.commons.logging.LogFactory;
 import static com.github.cjm0000000.mmt.core.config.MmtCharset.*;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.MMTConfig;
 
 /**
  * MMT通用消息网关
@@ -40,7 +40,7 @@ public abstract class AbstractGateWay implements Filter {
 	 * @param mmt_token
 	 * @return
 	 */
-	public abstract MMTConfig getConfig(String mmt_token);
+	public abstract MmtConfig getConfig(String mmt_token);
 	
 	/**
 	 * 获取API实现
@@ -60,14 +60,14 @@ public abstract class AbstractGateWay implements Filter {
 	 * @param cfg
 	 * @param req
 	 */
-	protected abstract void preProcessMsg(MMTConfig cfg, HttpServletRequest req);
+	protected abstract void preProcessMsg(MmtConfig cfg, HttpServletRequest req);
 	
 	/**
 	 * 身份认证
 	 * @param cfg
 	 * @param req
 	 */
-	protected void doAuthentication(MMTConfig cfg, HttpServletRequest req){
+	protected void doAuthentication(MmtConfig cfg, HttpServletRequest req){
 		// 加密签名
 		String signature = req.getParameter("signature");
 		// 时间戳
@@ -98,7 +98,7 @@ public abstract class AbstractGateWay implements Filter {
 		//获取客户令牌
 		String mmt_token = getMMTToken(req.getServletPath());
 		//获取配置信息
-		MMTConfig cfg = getConfig(mmt_token);
+		MmtConfig cfg = getConfig(mmt_token);
 		if(null == cfg){
 			resp.getWriter().print("No matchers.");
 			logger.error("the URL["+mmt_token+"] have no matcher.");
@@ -119,7 +119,7 @@ public abstract class AbstractGateWay implements Filter {
 	 * @param resp
 	 * @throws IOException 
 	 */
-	private final void access(MMTConfig cfg, HttpServletRequest req,
+	private final void access(MmtConfig cfg, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
 		//身份认证
 		doAuthentication(cfg, req);
@@ -166,7 +166,7 @@ public abstract class AbstractGateWay implements Filter {
 	 * @param req
 	 * @param resp
 	 */
-	private void processMsg(MMTConfig cfg, HttpServletRequest request,
+	private void processMsg(MmtConfig cfg, HttpServletRequest request,
 			HttpServletResponse response) {
 		response.setCharacterEncoding(LOCAL_CHARSET);
 		preProcessMsg(cfg, request);

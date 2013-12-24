@@ -1,6 +1,6 @@
 package lemon.weixin.config.bean;
 
-import lemon.shared.config.MMTConfig;
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 
 /**
  * Customer's configures of WeiXin
@@ -8,7 +8,7 @@ import lemon.shared.config.MMTConfig;
  * @version 1.0
  *
  */
-public class WeiXinConfig extends MMTConfig {
+public class WeiXinConfig extends MmtConfig {
 	/** MMT客户微信号 */
 	private String wx_account;
 	/** 账户类别 */

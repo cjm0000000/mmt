@@ -1,6 +1,5 @@
 package lemon.yixin.message.processor;
 
-import lemon.shared.config.MMTConfig;
 import lemon.shared.message.MMTRobot;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.TextMessage;
@@ -23,6 +22,7 @@ import lemon.yixin.config.bean.YiXinConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
 
 @Service
@@ -91,7 +91,7 @@ public class SimpleYiXinMsgProcessor extends AbstractMsgProcessor {
 	}
 
 	@Override
-	public MMTConfig getConfig(String mmt_token) {
+	public MmtConfig getConfig(String mmt_token) {
 		return YiXin.getConfig(mmt_token);
 	}
 
