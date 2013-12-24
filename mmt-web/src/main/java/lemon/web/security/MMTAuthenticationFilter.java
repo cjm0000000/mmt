@@ -3,7 +3,6 @@ package lemon.web.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lemon.shared.MmtException;
 import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
@@ -20,6 +19,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+
+import com.github.cjm0000000.mmt.web.WebException;
 
 /**
  * 用户授权管理
@@ -133,6 +134,6 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		else
 			log.setLoginstatus(Status.UNAVAILABLE);
 		if(systemLogManager.saveLoginLog(log) == 0)
-			throw new MmtException("登录日志保存失败。");
+			throw new WebException("登录日志保存失败。");
 	}
 }

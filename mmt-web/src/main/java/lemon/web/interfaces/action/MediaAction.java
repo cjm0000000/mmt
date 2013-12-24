@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import lemon.shared.MmtException;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTCharset;
 import lemon.shared.file.FileManager;
@@ -45,6 +44,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * 多媒体管理

@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
+
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.config.MMTConfig;

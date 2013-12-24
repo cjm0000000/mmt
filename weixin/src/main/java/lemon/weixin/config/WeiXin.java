@@ -6,7 +6,8 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import lemon.weixin.WeiXinException;
+import com.github.cjm0000000.mmt.weixin.WeiXinException;
+
 import lemon.weixin.config.bean.WeiXinConfig;
 
 /**

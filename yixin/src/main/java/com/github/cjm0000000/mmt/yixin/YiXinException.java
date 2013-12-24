@@ -1,6 +1,6 @@
-package lemon.yixin;
+package com.github.cjm0000000.mmt.yixin;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * YiXinException

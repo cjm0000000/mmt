@@ -9,7 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
+
 import lemon.shared.config.MMTCharset;
 
 /**

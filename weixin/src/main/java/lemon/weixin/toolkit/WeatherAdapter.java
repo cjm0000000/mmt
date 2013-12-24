@@ -16,12 +16,13 @@ import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.weixin.WeiXinException;
+
 import lemon.shared.config.MMTCharset;
 import lemon.shared.message.metadata.send.NewsMessage;
 import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.toolkit.weather.Weather;
 import lemon.shared.toolkit.weather.bean.WeatherInfo;
-import lemon.weixin.WeiXinException;
 
 @Service
 public class WeatherAdapter {

@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 import org.springframework.stereotype.Service;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * Local system file manager

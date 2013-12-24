@@ -2,7 +2,8 @@ package lemon.shared.message.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
+
 import lemon.shared.config.MMTConfig;
 import lemon.shared.config.Status;
 import lemon.shared.event.EventType;

@@ -1,15 +1,16 @@
-package lemon.weixin;
+package com.github.cjm0000000.mmt.weixin;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * WeiXinException
+ * 
  * @author lemon
  * @version 1.0
- *
+ * 
  */
 public class WeiXinException extends MmtException {
-	static final long serialVersionUID = 1662900257135756746L;
+	private static final long serialVersionUID = 7389653752728366688L;
 
 	/**
 	 * Constructs an {@code WeiXinException} with {@code null} as its error detail

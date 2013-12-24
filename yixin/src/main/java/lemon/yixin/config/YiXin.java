@@ -6,7 +6,8 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import lemon.yixin.YiXinException;
+import com.github.cjm0000000.mmt.yixin.YiXinException;
+
 import lemon.yixin.config.bean.YiXinConfig;
 
 /**

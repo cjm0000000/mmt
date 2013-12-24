@@ -2,9 +2,9 @@ package lemon.shared.message.local.persistence.sqlprovider;
 
 import java.util.Map;
 
-import lemon.shared.MmtException;
-
 import org.apache.ibatis.jdbc.SQL;
+
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * MsgBean动态SQL生成器

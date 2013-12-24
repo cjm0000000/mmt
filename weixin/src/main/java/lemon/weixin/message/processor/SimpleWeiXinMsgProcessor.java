@@ -3,6 +3,8 @@ package lemon.weixin.message.processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.weixin.WeiXinException;
+
 import lemon.shared.config.MMTConfig;
 import lemon.shared.message.MMTRobot;
 import lemon.shared.message.MsgManager;
@@ -22,7 +24,6 @@ import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.processor.AbstractMsgProcessor;
 import lemon.shared.service.ServiceType;
-import lemon.weixin.WeiXinException;
 import lemon.weixin.config.WeiXin;
 import lemon.weixin.config.bean.WeiXinConfig;
 import lemon.weixin.toolkit.WeatherAdapter;

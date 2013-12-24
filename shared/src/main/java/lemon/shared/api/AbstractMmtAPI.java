@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import lemon.shared.MmtException;
+import com.github.cjm0000000.mmt.core.MmtException;
+
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.access.ReturnCode;

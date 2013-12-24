@@ -2,7 +2,6 @@ package lemon.shared.message;
 
 import java.util.List;
 
-import lemon.shared.MmtException;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
@@ -29,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.github.cjm0000000.mmt.core.MmtException;
 
 /**
  * Message manager

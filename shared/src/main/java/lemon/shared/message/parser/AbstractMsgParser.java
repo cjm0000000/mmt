@@ -12,10 +12,10 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import com.github.cjm0000000.mmt.core.MmtException;
 import com.thoughtworks.xstream.XStream;
 
 import lemon.shared.MMTContext;
-import lemon.shared.MmtException;
 import lemon.shared.config.MMTCharset;
 import lemon.shared.config.MMTConfig;
 import lemon.shared.message.metadata.Message;
