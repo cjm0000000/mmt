@@ -1,9 +1,9 @@
 package lemon.shared.message.metadata;
 
-import lemon.shared.service.BaseService;
 import lemon.shared.toolkit.xstream.annotations.XStreamCDATA;
 import lemon.shared.toolkit.xstream.annotations.XStreamProcessCDATA;
 
+import com.github.cjm0000000.mmt.core.service.MmtService;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -14,7 +14,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 
  */
 @XStreamProcessCDATA
-public class Message extends BaseService {
+public class Message extends MmtService {
 	/** ToUserName */
 	@XStreamAlias("ToUserName")
 	@XStreamCDATA

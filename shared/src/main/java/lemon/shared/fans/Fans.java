@@ -1,15 +1,14 @@
 package lemon.shared.fans;
 
 import com.github.cjm0000000.mmt.core.config.Status;
-
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Bean for fans
  * @author lemon
  * @version 1.0
  */
-public class Fans extends BaseService {
+public class Fans extends MmtService {
 	private String user_id;
 	private String nick_name;
 	private Status status;

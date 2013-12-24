@@ -1,6 +1,6 @@
 package lemon.shared.access;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * API返回的Token
@@ -8,7 +8,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  *
  */
-public class AccessToken extends BaseService {
+public class AccessToken extends MmtService {
 	private String access_token;
 	private int expires_in;
 	private int expire_time;

@@ -1,6 +1,6 @@
 package lemon.shared.customer;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * custom menu log
@@ -8,7 +8,7 @@ import lemon.shared.service.BaseService;
  * @version 1.0
  *
  */
-public class CustomMenuLog extends BaseService {
+public class CustomMenuLog extends MmtService {
 	private Action action;
 	private String access_token;
 	private String msg;

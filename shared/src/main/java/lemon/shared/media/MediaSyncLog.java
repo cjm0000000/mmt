@@ -1,6 +1,6 @@
 package lemon.shared.media;
 
-import lemon.shared.service.BaseService;
+import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Media synchronize log
@@ -8,7 +8,7 @@ import lemon.shared.service.BaseService;
  * @version 1.1
  *
  */
-public class MediaSyncLog extends BaseService{
+public class MediaSyncLog extends MmtService{
 	private long media_id;
 	private String result;
 	
