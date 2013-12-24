@@ -3,9 +3,9 @@ package lemon.shared.message.processor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.Status;
 
 import lemon.shared.config.MMTConfig;
-import lemon.shared.config.Status;
 import lemon.shared.event.EventType;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;

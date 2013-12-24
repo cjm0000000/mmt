@@ -2,7 +2,6 @@ package lemon.weixin.test;
 
 import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.weixin.config.WeiXin;
@@ -16,6 +15,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class WeiXinAPITest extends BaseWeiXinTest {
 	@Autowired @Qualifier("weiXinAPI")

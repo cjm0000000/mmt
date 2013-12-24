@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
@@ -15,6 +14,8 @@ import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class CustomerRepositoryTest extends BaseMmtTest {
 	@Autowired

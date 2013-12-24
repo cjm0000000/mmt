@@ -3,7 +3,6 @@ package lemon.web.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lemon.shared.config.Status;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.log.bean.LoginLog;
@@ -20,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.web.WebException;
 
 /**

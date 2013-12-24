@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.message.MsgManager;
@@ -37,6 +36,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class SimpleWeiXinMsgProcessorTest extends BaseWeiXinTest {
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";

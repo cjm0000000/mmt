@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.yixin.config.bean.YiXinConfig;
@@ -15,6 +14,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class YiXinConfigMapperTest extends BaseYiXinTest {
 	@Autowired

@@ -1,7 +1,6 @@
 package lemon.web.interfaces.action;
 
 import lemon.shared.config.MMTConfig;
-import lemon.shared.config.Status;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
@@ -25,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 /**
  * 接口配置

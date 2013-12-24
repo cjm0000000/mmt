@@ -2,7 +2,6 @@ package lemon.test.web.log;
 
 import java.util.List;
 
-import lemon.shared.config.Status;
 import lemon.test.web.base.BaseWebTest;
 import lemon.web.log.bean.LoginLog;
 import lemon.web.log.mapper.SystemLogManager;
@@ -10,6 +9,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class SystemLogTest extends BaseWebTest{
 	@Autowired

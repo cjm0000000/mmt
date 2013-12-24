@@ -1,6 +1,5 @@
 package lemon.shared.fans;
 
-import lemon.shared.config.Status;
 import lemon.shared.fans.log.FansLog;
 import lemon.shared.fans.persistence.FansRepository;
 import lemon.shared.service.ServiceType;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.config.Status;
 
 /**
  * manager for fans

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.config.Status;
 import lemon.test.web.base.BaseWebTest;
 import lemon.web.system.bean.Menu;
 import lemon.web.system.bean.Role;
@@ -12,6 +11,8 @@ import lemon.web.system.mapper.RoleMapper;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class RoleMapperTest extends BaseWebTest {
 	@Autowired

@@ -1,7 +1,6 @@
 package lemon.shared.test.fans;
 
 import static org.junit.Assert.*;
-import lemon.shared.config.Status;
 import lemon.shared.fans.Fans;
 import lemon.shared.fans.FansManager;
 import lemon.shared.service.ServiceType;
@@ -9,6 +8,8 @@ import lemon.shared.test.base.BaseMmtTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.cjm0000000.mmt.core.config.Status;
 
 public class FansRepositoryTest extends BaseMmtTest {
 	@Autowired

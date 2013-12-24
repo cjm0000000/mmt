@@ -1,6 +1,7 @@
 package lemon.shared.fans;
 
-import lemon.shared.config.Status;
+import com.github.cjm0000000.mmt.core.config.Status;
+
 import lemon.shared.service.BaseService;
 
 /**

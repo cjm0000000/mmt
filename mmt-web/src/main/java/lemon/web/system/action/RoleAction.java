@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import lemon.shared.config.Status;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.web.WebException;
 /**
  * 角色管理
