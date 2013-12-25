@@ -49,7 +49,7 @@ public class LocationMessageParser_Test extends AbstractMsgParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, LocationMessage.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

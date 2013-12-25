@@ -44,7 +44,7 @@ public class KeyEventParser_Test extends AbstractEventParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, KeyEvent.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

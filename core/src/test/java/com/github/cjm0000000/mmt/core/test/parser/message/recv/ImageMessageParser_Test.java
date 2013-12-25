@@ -42,7 +42,7 @@ public final class ImageMessageParser_Test extends AbstractMsgParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, ImageMessage.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

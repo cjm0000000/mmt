@@ -9,6 +9,7 @@ import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.core.test.parser.message.recv.AbstractMsgParser;
 
 /**
@@ -46,7 +47,7 @@ public final class AudioMessageParser_Test extends AbstractMsgParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, AudioMessage.class);
+		return MmtXMLParser.fromXML(is, ServiceType.YIXIN);
 	}
 
 }

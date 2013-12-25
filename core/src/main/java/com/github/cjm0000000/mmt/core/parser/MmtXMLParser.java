@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.parser.driver.SimpleXMLDriver;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * MMT XML parser
@@ -18,11 +19,20 @@ public final class MmtXMLParser {
 	/**
 	 * parse XML to SimpleMessageService
 	 * @param is
-	 * @param type
+	 * @param service_type
 	 * @return
 	 */
-	public static <T> BaseMessage fromXML(InputStream is, Class<T> type) {
-		return simpleDriver.fromXML(is, type);
+	public static BaseMessage fromXML(InputStream is, ServiceType service_type) {
+		return simpleDriver.fromXML(is, service_type);
+	}
+	
+	/**
+	 * parse XML to SimpleMessageService
+	 * @param is
+	 * @return
+	 */
+	public static BaseMessage fromXML(InputStream is) {
+		return simpleDriver.fromXML(is, null);
 	}
 	
 	/**

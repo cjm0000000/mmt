@@ -8,8 +8,8 @@
 	<packaging>pom</packaging>
 	<version>2.0-SNAPSHOT</version>
 	<modules>
-		<module>core</module>
-		<module>shared</module>
+		<module>mmt-core</module>
+		<module>mmt-shared</module>
 		<module>weixin</module>
 		<module>yixin</module>
     	<module>mmt-web</module>

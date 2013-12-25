@@ -39,7 +39,7 @@ public final class TextMessageParser_Test extends AbstractMsgParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, TextMessage.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

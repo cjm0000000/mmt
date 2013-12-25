@@ -65,4 +65,13 @@ public class MmtConfig {
 		this.api_url = api_url;
 	}
 	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("cust_id=").append(cust_id);
+		sb.append(", token=").append(token);
+		sb.append(", api_url=").append(api_url);
+		sb.append(", implement_class=").append(biz_class);
+		return sb.toString();
+	}
+	
 }

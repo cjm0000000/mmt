@@ -34,7 +34,7 @@ public class SimpleEventParser_Test extends AbstractEventParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, SimpleEvent.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

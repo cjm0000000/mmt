@@ -46,7 +46,7 @@ public class LinkMessageParser_Test extends AbstractMsgParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, LinkMessage.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,11 +19,14 @@ import static com.github.cjm0000000.mmt.core.tookit.convert.PrimitiveTypeConvert
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.MsgType;
+import com.github.cjm0000000.mmt.core.message.event.EventType;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
 import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Simple XML driver implement
@@ -31,6 +36,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  */
 public final class SimpleXMLDriver {
 	private static final String ELEMENT_FOR_MESSAGE_TYPE = "MsgType";
+	private static final String ELEMENT_FOR_EVENT_TYPE 	= "Event";
 	private static final Logger logger = Logger.getLogger(MmtXMLParser.class);
 	private static DocumentBuilder builder;
 	private static InternalParserForInject ipfi;
@@ -43,7 +49,59 @@ public final class SimpleXMLDriver {
 	/** CDATA suffix */
 	private static final String SUFFIX_CDATA = "]]>";
 	
-	static class InternalParserForInject{
+	private static final Map<String, Class<?>> recvTypes = new HashMap<>(64);
+	
+	static{
+		// message
+		Class<?> text 		= com.github.cjm0000000.mmt.core.message.recv.TextMessage.class;
+		Class<?> image 		= com.github.cjm0000000.mmt.core.message.recv.ImageMessage.class;
+		Class<?> link 		= com.github.cjm0000000.mmt.core.message.recv.LinkMessage.class;
+		Class<?> location 	= com.github.cjm0000000.mmt.core.message.recv.LocationMessage.class;
+		// event
+		Class<?> sEvent		= com.github.cjm0000000.mmt.core.message.event.SimpleEvent.class;
+		Class<?> scan		= com.github.cjm0000000.mmt.core.message.event.ScanEvent.class;
+		Class<?> localEvent = com.github.cjm0000000.mmt.core.message.event.LocationEvent.class;
+		Class<?> click		= com.github.cjm0000000.mmt.core.message.event.KeyEvent.class;
+		//for WeiXin
+		recvTypes.put(ServiceType.WEIXIN + MsgType.TEXT, text);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.IMAGE, image);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.LINK, link);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.LOCATION, location);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.VIDEO, com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage.class);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.VOICE, com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage.class);
+		
+		recvTypes.put(ServiceType.WEIXIN + MsgType.EVENT + EventType.subscribe, sEvent);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.EVENT + EventType.unsubscribe, sEvent);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.EVENT + EventType.scan, scan);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.EVENT + EventType.LOCATION, localEvent);
+		recvTypes.put(ServiceType.WEIXIN + MsgType.EVENT + EventType.CLICK, click);
+		//for YiXin
+		recvTypes.put(ServiceType.YIXIN + MsgType.TEXT, text);
+		recvTypes.put(ServiceType.YIXIN + MsgType.IMAGE, image);
+		recvTypes.put(ServiceType.YIXIN + MsgType.LINK, link);
+		recvTypes.put(ServiceType.YIXIN + MsgType.LOCATION, location);
+		recvTypes.put(ServiceType.YIXIN + MsgType.AUDIO, com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage.class);
+		
+		recvTypes.put(ServiceType.YIXIN + MsgType.EVENT + EventType.subscribe, sEvent);
+		recvTypes.put(ServiceType.YIXIN + MsgType.EVENT + EventType.unsubscribe, sEvent);
+		recvTypes.put(ServiceType.YIXIN + MsgType.EVENT + EventType.scan, scan);
+		recvTypes.put(ServiceType.YIXIN + MsgType.EVENT + EventType.LOCATION, localEvent);
+		recvTypes.put(ServiceType.YIXIN + MsgType.EVENT + EventType.CLICK, click);
+		
+		//default
+		recvTypes.put(MsgType.TEXT, text);
+		recvTypes.put(MsgType.IMAGE, image);
+		recvTypes.put(MsgType.LINK, link);
+		recvTypes.put(MsgType.LOCATION, location);
+		
+		recvTypes.put(MsgType.EVENT + EventType.subscribe, sEvent);
+		recvTypes.put(MsgType.EVENT + EventType.unsubscribe, sEvent);
+		recvTypes.put(MsgType.EVENT + EventType.scan, scan);
+		recvTypes.put(MsgType.EVENT + EventType.LOCATION, localEvent);
+		recvTypes.put(MsgType.EVENT + EventType.CLICK, click);
+	}
+	
+	static class InternalParserForInject {
 		
 		/**
 		 * data transfer
@@ -298,10 +356,10 @@ public final class SimpleXMLDriver {
 	/**
 	 * parse from XML
 	 * @param is
-	 * @param type
+	 * @param service_type
 	 * @return
 	 */
-	public <T> BaseMessage fromXML(InputStream is, Class<T> type) {
+	public BaseMessage fromXML(InputStream is, ServiceType service_type) {
 		//parser to Document
 		Document doc = null;
 		try (InputStream inputStream = is){
@@ -319,10 +377,14 @@ public final class SimpleXMLDriver {
 		String msgType = getValue(doc, ELEMENT_FOR_MESSAGE_TYPE);
 		BaseMessage msg;
 		try {
-			msg = (BaseMessage) type.newInstance();
+			if(MsgType.EVENT.equals(msgType)){
+				String eventType = getValue(doc, ELEMENT_FOR_EVENT_TYPE);
+				msg = (BaseMessage) getEventClassType(EventType.valueOf(eventType), service_type).newInstance();
+			}else
+				msg = (BaseMessage) getMsgClassType(msgType, service_type).newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new MmtException(
-					"Can't new message instance: message type is " + type, e.getCause());
+					"Can't new message instance.", e.getCause());
 		}
 		//filter null
 		if(msg == null)
@@ -361,6 +423,28 @@ public final class SimpleXMLDriver {
 	private static String getValue(Document doc, String itemName) {
 		return doc.getElementsByTagName(itemName).item(0) == null ? null : doc
 				.getElementsByTagName(itemName).item(0).getTextContent().trim();
+	}
+	
+	/**
+	 * get event class type
+	 * @param eventType
+	 * @param service_type
+	 * @return
+	 */
+	private Class<?> getEventClassType(EventType eventType, ServiceType service_type){
+		return service_type == null ? recvTypes.get(MsgType.EVENT + eventType)
+				: recvTypes.get(service_type + MsgType.EVENT + eventType);
+	}
+	
+	/**
+	 * get message class type
+	 * @param msgType
+	 * @param service_type
+	 * @return
+	 */
+	private Class<?> getMsgClassType(String msgType, ServiceType service_type) {
+		return service_type == null ? recvTypes.get(msgType) : recvTypes
+				.get(service_type + msgType);
 	}
 	
 	/**

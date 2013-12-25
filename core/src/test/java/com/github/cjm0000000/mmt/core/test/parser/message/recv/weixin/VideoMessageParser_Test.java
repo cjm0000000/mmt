@@ -49,7 +49,7 @@ public final class VideoMessageParser_Test extends MediaMessageParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, VideoMessage.class);
+		return MmtXMLParser.fromXML(is, ServiceType.WEIXIN);
 	}
 
 }

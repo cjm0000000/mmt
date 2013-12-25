@@ -47,7 +47,7 @@ public class ScanEventParser_Test extends AbstractEventParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, ScanEvent.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }

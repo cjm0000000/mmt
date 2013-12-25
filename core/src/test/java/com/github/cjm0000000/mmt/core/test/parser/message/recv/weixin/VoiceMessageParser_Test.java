@@ -9,6 +9,7 @@ import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.MediaMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Unit test case for voice message parse
@@ -41,7 +42,7 @@ public final class VoiceMessageParser_Test extends MediaMessageParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, VoiceMessage.class);
+		return MmtXMLParser.fromXML(is, ServiceType.WEIXIN);
 	}
 
 }

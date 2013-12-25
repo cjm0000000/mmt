@@ -50,7 +50,7 @@ public class LocationEventParser_Test extends AbstractEventParser {
 
 	@Override
 	protected BaseMessage fromXML(InputStream is) {
-		return MmtXMLParser.fromXML(is, LocationEvent.class);
+		return MmtXMLParser.fromXML(is);
 	}
 
 }
