@@ -37,13 +37,12 @@
 		     		<td>$!user.idcard</td>
 		  			<td>$!user.mphone</td>
 		         	<td>
-		         		<div class="label-toggle-switch make-switch switch-small" data-on-label="正常" data-off-label="锁定" data-on="success" data-off="danger">
 						#if($user.islock == 'UNAVAILABLE')
-							<input type="checkbox" value="$!user.user_id" checked/>
+							#set($_islock='checked')
 						#else
-							<input type="checkbox" value="$!user.user_id"/>
+							#set($_islock='')
 						#end
-						</div>
+							<input type="checkbox" value="$!user.user_id" $!_islock class="switch" data-on-label="正常" data-off-label="锁定" data-on="success" data-off="danger"/>
 		       		</td>
 		   		</tr>
 			#end
@@ -74,4 +73,5 @@ var url_showPage 	= "#{getContextPath}webservices/system/user/add-edit-page";
 var url_save 		= "#{getContextPath}webservices/system/user/save";
 var url_delete 		= "#{getContextPath}webservices/system/user/delete";
 var url_change_lock	= "#{getContextPath}webservices/system/user/update-lock";
+$(".switch").bootstrapSwitch();
 </script>
