@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lemon.shared.message.persistence.MsgRepository">
+	<select id="getRecvMsgList" resultType="lemon.shared.message.metadata.IMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,FROM_UNIXTIME(A.createTime,'%m-%d %H:%i' ) createTime4display
+			FROM msg_recv_detail A
+		WHERE A.cust_id=#{cust_id}
+			<if test="service_type!=null and service_type!=''">
+				AND A.service_type=#{service_type}
+			</if>
+			<if test="msgType!=null and msgType!=''">
+				<choose>
+					<when test="msgType =='ALL'">
+				      AND A.msgType IN ('voice','audio')
+				    </when>
+				    <when test="msgType != 'All'">
+				    	AND A.msgType=#{msgType}
+				    </when>
+				</choose>
+			</if>
+			ORDER BY A.createTime DESC
+			LIMIT #{start},#{limit}
+	</select>
+	<select id="getRecvTextMsgList" resultType="lemon.shared.message.metadata.TextMessage">
+		SELECT A.content, A.detail_id id
+			FROM msg_recv_text A
+		WHERE A.detail_id IN
+		<foreach collection="array" item="ids" index="index" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+	</select>
+	<select id="getRecvMsgCnt" resultType="int">
+		SELECT COUNT(1)
+			FROM msg_recv_detail A
+		WHERE A.cust_id=#{cust_id}
+			<if test="service_type!=null and service_type!=''">
+				AND A.service_type=#{service_type}
+			</if>
+			<if test="msgType!=null and msgType!=''">
+				<choose>
+					<when test="msgType =='ALL'">
+				      AND A.msgType IN ('voice','audio')
+				    </when>
+				    <when test="msgType != 'All'">
+				    	AND A.msgType=#{msgType}
+				    </when>
+				</choose>
+			</if>
+	</select>
+	<select id="getRecvMsgDetail" parameterType="long" resultType="lemon.shared.message.metadata.Message">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId
+			FROM msg_recv_detail A
+		WHERE A.id=#{id}
+	</select>
+	<select id="getRecvTextMsg" parameterType="long" resultType="lemon.shared.message.metadata.TextMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.content 
+			FROM msg_recv_detail A, msg_recv_text B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='text' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvYXAudioMsg" parameterType="long" resultType="lemon.shared.message.metadata.specific.yixin.YXAudioMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.url,B.name,B.mimeType
+			FROM msg_recv_detail A, msg_recv_audio_yixin B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='audio' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvEventMsg" parameterType="long" resultType="lemon.shared.message.metadata.event.EventMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.eventType,B.eventKey
+			FROM msg_recv_detail A, msg_recv_event B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='event' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvImageMsg" parameterType="long" resultType="lemon.shared.message.metadata.recv.ImageMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.picUrl,B.mediaId
+			FROM msg_recv_detail A, msg_recv_image B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='image' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvLinkMsg" parameterType="long" resultType="lemon.shared.message.metadata.recv.LinkMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.title,B.description,B.url
+			FROM msg_recv_detail A, msg_recv_link B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='link' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvLocationMsg" parameterType="long" resultType="lemon.shared.message.metadata.recv.LocationMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.location_X,B.location_Y,B.scale,B.label
+			FROM msg_recv_detail A, msg_recv_location B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='location' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvWXVideoMsg" parameterType="long" resultType="lemon.shared.message.metadata.specific.weixin.WXVideoMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.mediaId,B.thumbMediaId
+			FROM msg_recv_detail A, msg_recv_video_weixin B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='video' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvYXVideoMsg" parameterType="long" resultType="lemon.shared.message.metadata.specific.yixin.YXVideoMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.url,B.name,B.mimeType
+			FROM msg_recv_detail A, msg_recv_video_yixin B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='video' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvWXVoiceMsg" parameterType="long" resultType="lemon.shared.message.metadata.specific.weixin.WXVoiceMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.mediaId,B.format,B.recognition
+			FROM msg_recv_detail A, msg_recv_voice_weixin B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='voice' 
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvYXMusicMsg" parameterType="long" resultType="lemon.shared.message.metadata.specific.yixin.YXMusicMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.url,B.`name`,B.mimeType,B.`desc`
+			FROM msg_recv_detail A, msg_recv_music_yixin B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='music' 
+			AND A.id=#{id}
+	</select>
+	<select id="getSendNewsMsg" parameterType="long" resultType="lemon.shared.message.metadata.send.NewsMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.articleCount
+			FROM msg_send_detail A, msg_send_news B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='news' 
+			AND A.id=#{id}
+	</select>
+	<select id="getArticlesByNews" parameterType="long" resultType="lemon.shared.message.metadata.send.Article">
+		SELECT A.id,A.cust_id,A.detail_id,A.title,A.description,A.picUrl,A.url
+			FROM msg_send_news_article A
+		WHERE A.detail_id=#{news_id}
+	</select>
+	<select id="getSendTextMsg" parameterType="long" resultType="lemon.shared.message.metadata.TextMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.content
+			FROM msg_send_detail A, msg_send_text B 
+		WHERE A.id=B.detail_id 
+			AND A.msgType='text' 
+			AND A.id=#{id}
+	</select>
+	<insert id="saveRecvYXAudioMsg" parameterType="lemon.shared.message.metadata.specific.yixin.YXAudioMessage" >
+		INSERT INTO msg_recv_audio_yixin(detail_id,cust_id,url,name,mimeType)
+			VALUES(#{id},#{cust_id},#{url},#{name},#{mimeType})
+	</insert>
+	<insert id="saveRecvEventMsg" parameterType="lemon.shared.message.metadata.event.EventMessage" >
+		INSERT INTO msg_recv_event(detail_id,cust_id,eventType,eventKey)
+			VALUES(#{id},#{cust_id},#{eventType},#{eventKey})
+	</insert>
+	<insert id="saveRecvImageMsg" parameterType="lemon.shared.message.metadata.recv.ImageMessage" >
+		INSERT INTO msg_recv_image(detail_id,cust_id,picUrl,mediaId)
+			VALUES (#{id},#{cust_id},#{picUrl},#{mediaId})
+	</insert>
+	<insert id="saveRecvLinkMsg" parameterType="lemon.shared.message.metadata.recv.LinkMessage" >
+		INSERT INTO msg_recv_link(detail_id,cust_id,title,description,url)
+			VALUES (#{id},#{cust_id},#{title},#{description},#{url})
+	</insert>
+	<insert id="saveRecvLocationMsg" parameterType="lemon.shared.message.metadata.recv.LocationMessage" >
+		INSERT INTO msg_recv_location(detail_id,cust_id,location_X,location_Y,scale,label)
+			VALUES (#{id},#{cust_id},#{location_X},#{location_Y},#{scale},#{label})
+	</insert>
+	<insert id="saveRecvMsgDetail" parameterType="lemon.shared.message.metadata.Message" >
+		INSERT INTO msg_recv_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) 
+			VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now())
+	</insert>
+	<insert id="saveRecvTextMsg" parameterType="lemon.shared.message.metadata.TextMessage" >
+		INSERT INTO msg_recv_text(detail_id,cust_id,content) 
+			VALUES (#{id},#{cust_id},#{content})
+	</insert>
+	<insert id="saveRecvWXVideoMessage" parameterType="lemon.shared.message.metadata.specific.weixin.WXVideoMessage" >
+		INSERT INTO msg_recv_video_weixin(detail_id,cust_id,mediaId,thumbMediaId) 
+			VALUES (#{id},#{cust_id},#{mediaId},#{thumbMediaId})
+	</insert>
+	<insert id="saveRecvYXVideoMessage" parameterType="lemon.shared.message.metadata.specific.yixin.YXVideoMessage" >
+		INSERT INTO msg_recv_video_yixin(detail_id,cust_id,url,name,mimeType) 
+			VALUES (#{id},#{cust_id},#{url},#{name},#{mimeType})
+	</insert>
+	<insert id="saveRecvWXVoiceMsg" parameterType="lemon.shared.message.metadata.specific.weixin.WXVoiceMessage" >
+		INSERT INTO msg_recv_voice_weixin(detail_id,cust_id,mediaId,format,recognition) 
+			VALUES (#{id},#{cust_id},#{mediaId},#{format},#{recognition})
+	</insert>
+	<insert id="saveRecvYXMusicMsg" parameterType="lemon.shared.message.metadata.specific.yixin.YXMusicMessage" >
+		INSERT INTO msg_recv_music_yixin(detail_id,cust_id,url,name,mimeType,`desc`) 
+			VALUES (#{id},#{cust_id},#{url},#{name},#{mimeType},#{desc})
+	</insert>
+	<insert id="saveSendMsgDetail" parameterType="lemon.shared.message.metadata.Message" >
+		INSERT INTO msg_send_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,timestamp) 
+			VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},now())
+	</insert>
+	<insert id="saveSendNewsArticles" >
+		INSERT INTO msg_send_news_article(id,cust_id,detail_id,title,description,picUrl,url) 
+			VALUES (#{article.id},#{cust_id},#{detail_id},#{article.title},#{article.description},#{article.picUrl},#{article.url})
+	</insert>
+	<insert id="saveSendNewsMsg" parameterType="lemon.shared.message.metadata.send.NewsMessage" >
+		INSERT INTO msg_send_news(detail_id,cust_id,articleCount) 
+			VALUES (#{id},#{cust_id},#{articleCount})
+	</insert>
+	<insert id="saveSendTextMsg" parameterType="lemon.shared.message.metadata.TextMessage" >
+		INSERT INTO msg_send_text(detail_id,cust_id,content) 
+			VALUES (#{id},#{cust_id},#{content})
+	</insert>
+</mapper>
