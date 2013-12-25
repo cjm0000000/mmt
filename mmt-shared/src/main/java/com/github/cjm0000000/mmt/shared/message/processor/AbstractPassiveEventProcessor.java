@@ -12,7 +12,6 @@ import com.github.cjm0000000.mmt.core.message.event.ScanEvent;
 import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.processor.PassiveMsgProcessor;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * passive event processor
@@ -24,13 +23,6 @@ abstract class AbstractPassiveEventProcessor implements PassiveMsgProcessor {
 	private static final Logger logger = Logger.getLogger(AbstractPassiveEventProcessor.class);
 	
 	/**
-	 * get MMT configure
-	 * @param mmt_token
-	 * @return
-	 */
-	protected abstract MmtConfig getConfig(String mmt_token);
-	
-	/**
 	 * process message
 	 * @param msg
 	 * @return
@@ -38,7 +30,7 @@ abstract class AbstractPassiveEventProcessor implements PassiveMsgProcessor {
 	protected abstract BaseMessage processMessage(SimpleRecvMessage msg);
 	
 	@Override
-	public final BaseMessage process(String mmt_token, MmtService recvMsg) {
+	public final BaseMessage process(String mmt_token, BaseMessage recvMsg) {
 		MmtConfig cfg = getConfig(mmt_token);
 		if(cfg == null)
 			throw new MmtException("MMT config is null.");

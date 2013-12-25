@@ -1,7 +1,7 @@
 package com.github.cjm0000000.mmt.core.message.processor;
 
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 import com.github.cjm0000000.mmt.core.service.ServiceProperty;
 
 /**
@@ -17,5 +17,12 @@ public interface PassiveMsgProcessor extends ServiceProperty {
 	 * @param msg
 	 * @return
 	 */
-	BaseMessage process(String mmt_token, MmtService msg);
+	BaseMessage process(String mmt_token, BaseMessage msg);
+	
+	/**
+	 * verify the signature
+	 * @param sa
+	 * @return if signature is valid return true, else return false.
+	 */
+	boolean verifySignature(Access sa);
 }
