@@ -1,6 +1,7 @@
 package com.github.cjm0000000.mmt.core.message.recv.weixin;
 
 import com.github.cjm0000000.mmt.core.message.MsgType;
+import com.github.cjm0000000.mmt.core.message.recv.IVideo;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 
@@ -11,7 +12,7 @@ import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
  *
  */
 @MmtAlias("xml")
-public class VideoMessage extends MediaMessage {
+public class VideoMessage extends MediaMessage implements IVideo{
 	/** ThumbMediaId */
 	@MmtCDATA
 	@MmtAlias("ThumbMediaId")
