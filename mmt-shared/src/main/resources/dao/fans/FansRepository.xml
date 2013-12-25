@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.shared.fans.persistence.FansRepository">
-	<insert id="saveFans" parameterType="lemon.shared.fans.Fans" >
+<mapper namespace="com.github.cjm0000000.mmt.shared.fans.persistence.FansRepository">
+	<insert id="saveFans" parameterType="com.github.cjm0000000.mmt.shared.fans.Fans" >
 		INSERT INTO fans(id,cust_id,service_type,user_id,nick_name,`status`) 
 			VALUES(#{id},#{cust_id},#{service_type},#{user_id},#{nick_name},#{status})
 	</insert>
-	<update id="updateFans" parameterType="lemon.shared.fans.Fans">
+	<update id="updateFans" parameterType="com.github.cjm0000000.mmt.shared.fans.Fans">
 		UPDATE fans A
 			<set>
 				<if test="nick_name != null and nick_name != ''">
@@ -17,14 +17,14 @@
 			</set>
 		WHERE A.id=#{id}
 	</update>
-	<select id="getFans" parameterType="lemon.shared.fans.Fans" resultType="lemon.shared.fans.Fans">
+	<select id="getFans" parameterType="com.github.cjm0000000.mmt.shared.fans.Fans" resultType="com.github.cjm0000000.mmt.shared.fans.Fans">
 		SELECT A.id,A.cust_id,A.service_type,A.user_id,A.nick_name,A.`status`,A.`timestamp`
 			FROM fans A
 		WHERE A.cust_id=#{cust_id}
 			AND A.user_id=#{user_id}
 			AND A.service_type=#{service_type}
 	</select>
-	<insert id="saveFansLog" parameterType="lemon.shared.fans.log.FansLog" >
+	<insert id="saveFansLog" parameterType="com.github.cjm0000000.mmt.shared.fans.Fans" >
 		INSERT INTO fans_log(id,cust_id,action,service_type,user_id) 
 			VALUES(#{id},#{cust_id},#{action},#{service_type},#{user_id})
 	</insert>

@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.shared.fans.Fans;
+import com.github.cjm0000000.mmt.shared.fans.FansManager;
 
 import lemon.shared.event.EventType;
-import lemon.shared.fans.Fans;
-import lemon.shared.fans.FansManager;
 import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.Message;

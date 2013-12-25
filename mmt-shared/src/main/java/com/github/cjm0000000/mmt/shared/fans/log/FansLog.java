@@ -1,8 +1,7 @@
-package lemon.shared.fans.log;
+package com.github.cjm0000000.mmt.shared.fans.log;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
-
-import lemon.shared.fans.Actions;
+import com.github.cjm0000000.mmt.shared.fans.Actions;
 
 /**
  * 粉丝操作日志

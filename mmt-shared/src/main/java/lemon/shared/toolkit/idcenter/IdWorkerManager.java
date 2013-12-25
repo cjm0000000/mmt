@@ -3,14 +3,15 @@ package lemon.shared.toolkit.idcenter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.cjm0000000.mmt.shared.fans.Fans;
+import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
+
 import lemon.shared.access.Access;
 import lemon.shared.access.AccessToken;
 import lemon.shared.access.AccessTokenLog;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.CustomerService;
-import lemon.shared.fans.Fans;
-import lemon.shared.fans.log.FansLog;
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;

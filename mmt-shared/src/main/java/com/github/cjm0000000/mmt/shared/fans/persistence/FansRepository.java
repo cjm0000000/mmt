@@ -1,7 +1,4 @@
-package lemon.shared.fans.persistence;
-
-import lemon.shared.fans.Fans;
-import lemon.shared.fans.log.FansLog;
+package com.github.cjm0000000.mmt.shared.fans.persistence;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
@@ -9,6 +6,8 @@ import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.fans.Fans;
+import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
 
 /**
  * Fans repository

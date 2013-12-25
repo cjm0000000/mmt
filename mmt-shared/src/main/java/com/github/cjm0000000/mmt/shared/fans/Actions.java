@@ -1,4 +1,4 @@
-package lemon.shared.fans;
+package com.github.cjm0000000.mmt.shared.fans;
 
 /**
  * 粉丝动作

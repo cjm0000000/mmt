@@ -1,5 +1,6 @@
-package lemon.shared.fans;
+package com.github.cjm0000000.mmt.shared.fans;
 
+import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.MmtService;
 
@@ -8,7 +9,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @author lemon
  * @version 1.0
  */
-public class Fans extends MmtService {
+public class Fans extends MmtService implements Cloneable {
 	private String user_id;
 	private String nick_name;
 	private Status status;
@@ -32,4 +33,11 @@ public class Fans extends MmtService {
 		this.status = status;
 	}
 	
+	public Fans clone(){
+		try {
+			return (Fans) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new MmtException("Can't clone Fans.", e.getCause());
+		}
+	}
 }

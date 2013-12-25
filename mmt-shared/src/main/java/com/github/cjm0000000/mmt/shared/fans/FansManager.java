@@ -1,7 +1,5 @@
-package lemon.shared.fans;
+package com.github.cjm0000000.mmt.shared.fans;
 
-import lemon.shared.fans.log.FansLog;
-import lemon.shared.fans.persistence.FansRepository;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
+import com.github.cjm0000000.mmt.shared.fans.persistence.FansRepository;
 
 /**
  * manager for fans
@@ -23,6 +23,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 public class FansManager {
 	@Autowired
 	private FansRepository fansMapper;
+	private Fans initFans;
 	
 	/**
 	 * save fans information
@@ -76,6 +77,25 @@ public class FansManager {
 	 */
 	public void saveUnSubscribeLog(Fans fans){
 		saveFansLog(fans, Actions.UNSUBSCRIBE);
+	}
+	
+	/**
+	 * New a fans object
+	 * @param cust_id
+	 * @param user_id
+	 * @param service_type
+	 * @return
+	 */
+	public Fans newFans(int cust_id, String user_id, ServiceType service_type){
+		if(initFans == null){
+			initFans = new Fans();
+			initFans.setStatus(Status.AVAILABLE);
+			initFans.setNick_name("");
+		}
+		initFans.setCust_id(cust_id);
+		initFans.setService_type(service_type);
+		initFans.setUser_id(user_id);
+		return initFans.clone();
 	}
 	
 	/**
