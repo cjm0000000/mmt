@@ -10,8 +10,8 @@
 	<modules>
 		<module>mmt-core</module>
 		<module>mmt-shared</module>
-		<module>weixin</module>
-		<module>yixin</module>
+		<module>mmt-weixin</module>
+		<module>mmt-yixin</module>
     	<module>mmt-web</module>
 	</modules>
 	<properties>

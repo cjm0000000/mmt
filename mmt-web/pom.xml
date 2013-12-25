@@ -167,12 +167,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.github.cjm0000000</groupId>
-			<artifactId>weixin</artifactId>
+			<artifactId>mmt-weixin</artifactId>
 			<version>2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.cjm0000000</groupId>
-			<artifactId>yixin</artifactId>
+			<artifactId>mmt-yixin</artifactId>
 			<version>2.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
