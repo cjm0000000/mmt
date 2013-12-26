@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
 import com.github.cjm0000000.mmt.shared.fans.persistence.FansRepository;
 
 /**
@@ -68,7 +67,7 @@ public class FansManager {
 	 * @param log
 	 */
 	public void saveSubscribeLog(Fans fans){
-		saveFansLog(fans, Actions.SUBSCRIBE);
+		saveFansLog(fans, FansLog.Actions.SUBSCRIBE);
 	}
 	
 	/**
@@ -76,7 +75,7 @@ public class FansManager {
 	 * @param log
 	 */
 	public void saveUnSubscribeLog(Fans fans){
-		saveFansLog(fans, Actions.UNSUBSCRIBE);
+		saveFansLog(fans, FansLog.Actions.UNSUBSCRIBE);
 	}
 	
 	/**
@@ -104,7 +103,7 @@ public class FansManager {
 	 * @param action
 	 * @return
 	 */
-	private int saveFansLog(Fans fans, Actions action){
+	private int saveFansLog(Fans fans, FansLog.Actions action){
 		FansLog log = new FansLog();
 		log.setAction(action);
 		log.setCust_id(fans.getCust_id());

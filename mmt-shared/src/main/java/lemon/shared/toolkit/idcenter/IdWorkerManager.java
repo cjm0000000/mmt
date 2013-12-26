@@ -7,7 +7,7 @@ import com.github.cjm0000000.mmt.shared.access.Access;
 import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.fans.Fans;
-import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
+import com.github.cjm0000000.mmt.shared.fans.FansLog;
 
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuLog;

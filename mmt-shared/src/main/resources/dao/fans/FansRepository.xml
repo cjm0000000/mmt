@@ -24,7 +24,7 @@
 			AND A.user_id=#{user_id}
 			AND A.service_type=#{service_type}
 	</select>
-	<insert id="saveFansLog" parameterType="com.github.cjm0000000.mmt.shared.fans.Fans" >
+	<insert id="saveFansLog" parameterType="com.github.cjm0000000.mmt.shared.fans.FansLog" >
 		INSERT INTO fans_log(id,cust_id,action,service_type,user_id) 
 			VALUES(#{id},#{cust_id},#{action},#{service_type},#{user_id})
 	</insert>

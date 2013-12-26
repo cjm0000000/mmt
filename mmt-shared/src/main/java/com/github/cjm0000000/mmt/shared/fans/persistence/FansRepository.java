@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.fans.Fans;
-import com.github.cjm0000000.mmt.shared.fans.log.FansLog;
+import com.github.cjm0000000.mmt.shared.fans.FansLog;
 
 /**
  * Fans repository

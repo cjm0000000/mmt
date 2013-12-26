@@ -1,7 +1,6 @@
-package com.github.cjm0000000.mmt.shared.fans.log;
+package com.github.cjm0000000.mmt.shared.fans;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
-import com.github.cjm0000000.mmt.shared.fans.Actions;
 
 /**
  * 粉丝操作日志
@@ -14,6 +13,13 @@ public class FansLog extends MmtService {
 	private Actions action;
 	private String user_id;
 
+	static enum Actions {
+		/** 订阅 */
+		SUBSCRIBE,
+		/** 退订 */
+		UNSUBSCRIBE
+	}
+	
 	public Actions getAction() {
 		return action;
 	}
