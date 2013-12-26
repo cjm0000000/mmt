@@ -2,13 +2,13 @@ package com.github.cjm0000000.mmt.shared.weather;
 
 import java.io.IOException;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
 import com.github.cjm0000000.mmt.shared.weather.persistence.CityRepository;
 
@@ -44,8 +44,8 @@ public class Weather {
 		if(city == null)
 			return null;
 		String weatherUrl = SEARCH_WEATHER_URL.replaceAll("#cityid#", city.getCitycode());
-		JSONObject json = JSONObject.fromObject(HttpConnector.get(weatherUrl));
-		return (WeatherInfo) JSONObject.toBean(json.getJSONObject("weatherinfo"), WeatherInfo.class);
+		JSONObject json = JSON.parseObject(HttpConnector.get(weatherUrl));
+		return (WeatherInfo) JSON.toJavaObject(json.getJSONObject("weatherinfo"), WeatherInfo.class);
 	}
 
 	/**

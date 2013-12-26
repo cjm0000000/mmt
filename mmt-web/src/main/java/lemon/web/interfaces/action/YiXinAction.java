@@ -1,7 +1,6 @@
 package lemon.web.interfaces.action;
 
 import lemon.web.system.bean.User;
-import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
+import com.github.cjm0000000.mmt.yixin.message.process.SimpleYiXinMsgProcessor;
 
 /**
  * 易信接口配置

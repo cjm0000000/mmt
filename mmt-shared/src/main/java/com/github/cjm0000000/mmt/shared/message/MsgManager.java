@@ -2,32 +2,27 @@ package com.github.cjm0000000.mmt.shared.message;
 
 import java.util.List;
 
-import lemon.shared.message.metadata.AudioMessage;
-import lemon.shared.message.metadata.IMessage;
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.metadata.TextMessage;
-import lemon.shared.message.metadata.VideoMessage;
-import lemon.shared.message.metadata.VoiceMessage;
-import lemon.shared.message.metadata.event.EventMessage;
-import lemon.shared.message.metadata.recv.ImageMessage;
-import lemon.shared.message.metadata.recv.LinkMessage;
-import lemon.shared.message.metadata.recv.LocationMessage;
-import lemon.shared.message.metadata.send.Article;
-import lemon.shared.message.metadata.send.MusicMessage;
-import lemon.shared.message.metadata.send.NewsMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
-import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
-import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
-import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.message.recv.IVideo;
+import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
+import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
+import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
+import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.message.event.EventDetail;
 import com.github.cjm0000000.mmt.shared.message.persistence.MsgRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -51,7 +46,7 @@ public class MsgManager {
 	 * @param limit
 	 * @return
 	 */
-	public List<IMessage> getRecvMsgList(int cust_id, ServiceType service_type,
+	public List<BaseMessage> getRecvMsgList(int cust_id, ServiceType service_type,
 			String msgType, int start, int limit) {
 		return msgRepository.getRecvMsgList(cust_id, service_type, msgType,
 				start, limit);
@@ -83,7 +78,7 @@ public class MsgManager {
 	 * @param msgId
 	 * @return
 	 */
-	public Message getRecvMsgDetail(long msgId){
+	public SimpleRecvMessage getRecvMsgDetail(long msgId){
 		return msgRepository.getRecvMsgDetail(msgId);
 	}
 	
@@ -101,8 +96,8 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public YXAudioMessage getRecvYXAudioMsg(long msg_id){
-		return msgRepository.getRecvYXAudioMsg(msg_id);
+	public AudioMessage getRecvYXAudioMsg(long msg_id){
+		return msgRepository.getRecvAudioMsg(msg_id);
 	}
 	
 	/**
@@ -110,8 +105,8 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public EventMessage getRecvEventMsg(long msg_id){
-		return msgRepository.getRecvEventMsg(msg_id);
+	public EventDetail getRecvEventMsg(long msg_id){
+		return msgRepository.getRecvEvent(msg_id);
 	}
 	
 	/**
@@ -146,7 +141,7 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public WXVideoMessage getRecvWXVideoMsg(long msg_id){
+	public com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage getRecvWXVideoMsg(long msg_id) {
 		return msgRepository.getRecvWXVideoMsg(msg_id);
 	}
 	
@@ -155,7 +150,7 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public YXVideoMessage getRecvYXVideoMsg(long msg_id){
+	public com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage getRecvYXVideoMsg(long msg_id){
 		return msgRepository.getRecvYXVideoMsg(msg_id);
 	}
 	
@@ -164,8 +159,8 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public WXVoiceMessage getRecvWXVoiceMsg(long msg_id){
-		return msgRepository.getRecvWXVoiceMsg(msg_id);
+	public VoiceMessage getRecvWXVoiceMsg(long msg_id){
+		return msgRepository.getRecvVoiceMsg(msg_id);
 	}
 	
 	/**
@@ -173,7 +168,7 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public YXMusicMessage getRecvYXMusicMsg(long msg_id){
+	public MusicMessage getRecvYXMusicMsg(long msg_id){
 		return msgRepository.getRecvYXMusicMsg(msg_id);
 	}
 	
@@ -191,7 +186,7 @@ public class MsgManager {
 	 * @param msg_id
 	 * @return
 	 */
-	public List<Article> getArticlesByNews(long msg_id){
+	public List<NewsNode> getArticlesByNews(long msg_id){
 		return msgRepository.getArticlesByNews(msg_id);
 	}
 	
@@ -210,10 +205,10 @@ public class MsgManager {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvAudioMsg(AudioMessage msg) {
-		if (!(msg instanceof YXAudioMessage))
+		if (!(msg instanceof AudioMessage))
 			throw new MmtException("不是YXAudioMessage类型，无法保存。");
-		saveRecvMsg((YXAudioMessage) msg);
-		msgRepository.saveRecvYXAudioMsg((YXAudioMessage)msg);
+		saveRecvMsg((AudioMessage) msg);
+		msgRepository.saveRecvAudioMsg((AudioMessage)msg);
 	}
 	
 	/**
@@ -221,9 +216,10 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveRecvEventMsg(EventMessage msg){
-		saveRecvMsg(msg);
-		msgRepository.saveRecvEventMsg(msg);
+	public void saveRecvEventMsg(SimpleEvent msg){
+		saveRecvEvent(msg);
+		//TODO save recv event detail
+		msgRepository.saveRecvEventMsg(null);
 	}
 	
 	/**
@@ -271,13 +267,13 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveRecvVideoMsg(VideoMessage msg){
-		if(msg instanceof WXVideoMessage){
-			WXVideoMessage wxMsg = (WXVideoMessage) msg;
+	public void saveRecvVideoMsg(IVideo msg) {
+		if (msg instanceof com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage) {
+			com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage wxMsg = (com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage) msg;
 			saveRecvMsg(wxMsg);
 			msgRepository.saveRecvWXVideoMessage(wxMsg);
-		}else if(msg instanceof YXVideoMessage){
-			YXVideoMessage yxMsg = (YXVideoMessage) msg;
+		} else if (msg instanceof com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage) {
+			com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage yxMsg = (com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage) msg;
 			saveRecvMsg(yxMsg);
 			msgRepository.saveRecvYXVideoMessage(yxMsg);
 		}
@@ -289,10 +285,8 @@ public class MsgManager {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRecvVoiceMsg(VoiceMessage msg) {
-		if (!(msg instanceof WXVoiceMessage))
-			throw new MmtException("不是WXVoiceMessage类型，无法保存。");
-		saveRecvMsg((WXVoiceMessage) msg);
-		msgRepository.saveRecvWXVoiceMsg((WXVoiceMessage) msg);
+		saveRecvMsg(msg);
+		msgRepository.saveRecvVoiceMsg(msg);
 	}
 	
 	/**
@@ -300,11 +294,9 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveRecvMusicMsg(MusicMessage msg){
-		if (!(msg instanceof YXMusicMessage))
-			throw new MmtException("不是YXMusicMessage类型，无法保存。");
-		saveRecvMsg((YXMusicMessage)msg);
-		msgRepository.saveRecvYXMusicMsg((YXMusicMessage)msg);
+	public void saveRecvMusicMsg(MusicMessage msg) {
+		saveRecvMsg(msg);
+		msgRepository.saveRecvYXMusicMsg(msg);
 	}
 	
 	/**
@@ -315,8 +307,8 @@ public class MsgManager {
 	public void saveSendNewsMsg(NewsMessage msg){
 		saveSendMsg(msg);
 		msgRepository.saveSendNewsMsg(msg);
-		for (Article article : msg.getArticles()) {
-			article.setId(IdWorkerManager.getIdWorker(Article.class).getId());
+		for (NewsNode article : msg.getNews()) {
+			article.setId(IdWorkerManager.getIdWorker(NewsNode.class).getId());
 			msgRepository.saveSendNewsArticles(msg.getCust_id(), msg.getId(), article);
 		}
 	}
@@ -326,9 +318,18 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveSendTextMsg(TextMessage msg){
+	public void saveSendTextMsg(
+			com.github.cjm0000000.mmt.core.message.send.passive.TextMessage msg) {
 		saveSendMsg(msg);
 		msgRepository.saveSendTextMsg(msg);
+	}
+	
+	/**
+	 * save common recv event
+	 * @param event
+	 */
+	private void saveRecvEvent(SimpleEvent event){
+		//TODO save common event
 	}
 	
 	/**
@@ -336,7 +337,7 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	private void saveRecvMsg(Message msg){
+	private void saveRecvMsg(SimpleRecvMessage msg){
 		prepareMsgId(msg);
 		msgRepository.saveRecvMsgDetail(msg);
 	}
@@ -346,7 +347,7 @@ public class MsgManager {
 	 * @param msg
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
-	private void saveSendMsg(Message msg){
+	private void saveSendMsg(BaseMessage msg){
 		prepareMsgId(msg);
 		msgRepository.saveSendMsgDetail(msg);
 	}
@@ -355,7 +356,7 @@ public class MsgManager {
 	 * 生成消息ID
 	 * @param msg
 	 */
-	private void prepareMsgId(Message msg){
-		msg.setId(IdWorkerManager.getIdWorker(Message.class).getId());
+	private void prepareMsgId(BaseMessage msg){
+		msg.setId(IdWorkerManager.getIdWorker(BaseMessage.class).getId());
 	}
 }

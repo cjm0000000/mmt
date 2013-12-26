@@ -25,7 +25,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
  * @version 2.0
  *
  */
-public abstract class AbstractPassiveProcessor implements PassiveProcessor {
+abstract class AbstractPassiveProcessor implements PassiveProcessor {
 	private static final Logger logger = Logger.getLogger(AbstractPassiveProcessor.class);
 	@Autowired
 	private AccessRepository accessRepository;

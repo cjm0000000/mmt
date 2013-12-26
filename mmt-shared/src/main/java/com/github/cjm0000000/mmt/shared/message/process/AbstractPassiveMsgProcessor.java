@@ -1,6 +1,7 @@
 package com.github.cjm0000000.mmt.shared.message.process;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
@@ -13,6 +14,7 @@ import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
 import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
+import com.github.cjm0000000.mmt.shared.message.MMTRobot;
 
 /**
  * passive message processor
@@ -22,6 +24,8 @@ import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
  */
 public abstract class AbstractPassiveMsgProcessor extends AbstractPassiveEventProcessor {
 	private static final Logger logger = Logger.getLogger(AbstractPassiveMsgProcessor.class);
+	@Autowired
+	private MMTRobot mmtRobot;
 	
 	/**
 	 * process message
@@ -47,6 +51,21 @@ public abstract class AbstractPassiveMsgProcessor extends AbstractPassiveEventPr
 			return processVoiceMsg(cfg, (VoiceMessage) msg);
 		logger.error("No message type found!!!");
 		throw new MmtException("无法处理消息：[msgType=" + msg.getMsgType() + "]");
+	}
+	
+	/**
+	 * 处理文本消息
+	 * @param cfg
+	 * @param msg
+	 * @return
+	 */
+	protected BaseMessage processTextMsg(MmtConfig cfg,
+			com.github.cjm0000000.mmt.core.message.recv.TextMessage msg) {
+		// 生成回复消息
+		String reply = mmtRobot.reply(cfg.getCust_id(), msg.getContent());
+		if (null == reply)
+			reply = cfg.getWelcome_msg();
+		return sendTextMessage(msg, reply);
 	}
 	
 	/**
@@ -80,14 +99,6 @@ public abstract class AbstractPassiveMsgProcessor extends AbstractPassiveEventPr
 	 * @return
 	 */
 	protected abstract BaseMessage processLocationMsg(MmtConfig cfg, LocationMessage msg);
-	
-	/**
-	 * 处理文本消息
-	 * @param cfg
-	 * @param msg
-	 * @return
-	 */
-	protected abstract BaseMessage processTextMsg(MmtConfig cfg, TextMessage msg);
 	
 	/**
 	 * 处理视频消息

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.TextMsgParser;
-import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -29,6 +28,7 @@ import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
+import com.github.cjm0000000.mmt.yixin.message.process.SimpleYiXinMsgProcessor;
 import com.github.cjm0000000.mmt.yixin.test.AbstractYiXinTester;
 
 public class SimpleYiXinMsgProcessor_Test extends AbstractYiXinTester {

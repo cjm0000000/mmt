@@ -1,4 +1,4 @@
-package lemon.shared;
+package com.github.cjm0000000.mmt.shared;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

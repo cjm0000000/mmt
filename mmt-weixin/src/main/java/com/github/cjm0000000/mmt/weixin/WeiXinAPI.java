@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.weixin;
+/*package com.github.cjm0000000.mmt.weixin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,22 +15,14 @@ import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 
-import lemon.shared.api.AbstractMmtAPI;
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.metadata.MsgType;
-import lemon.shared.message.metadata.TextMessage;
-import lemon.shared.message.metadata.specific.weixin.MediaMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
-import lemon.shared.message.parser.AbstractMsgParser;
-import lemon.shared.message.parser.MsgParser;
 
-/**
+*//**
  * The WeiXin API for message
  * 
  * @author lemon
  * @version 1.0
  * 
- */
+ *//*
 @Service("weiXinAPI")
 public final class WeiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(WeiXinAPI.class);
@@ -152,3 +144,4 @@ public final class WeiXinAPI extends AbstractMmtAPI {
 	}
 	
 }
+*/

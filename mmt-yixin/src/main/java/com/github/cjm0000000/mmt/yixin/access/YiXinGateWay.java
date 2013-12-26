@@ -1,22 +1,19 @@
-package lemon.yixin.gateway;
+package com.github.cjm0000000.mmt.yixin.access;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import lemon.shared.api.MmtAPI;
-import lemon.shared.gateway.AbstractGateWay;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
+import com.github.cjm0000000.mmt.shared.access.AbstractMsgGateWay;
 import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
@@ -28,41 +25,30 @@ import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
  *
  */
 @Service("yixinGW")
-public final class YiXinGateWay extends AbstractGateWay {
+public final class YiXinGateWay extends AbstractMsgGateWay {
 	private static Log logger = LogFactory.getLog(YiXinGateWay.class);
-	@Resource(name="yiXinAPI")
-	private MmtAPI yxAPI;
 	@Autowired
 	private YiXinConfigRepository yiXinConfigMapper;
+	
+	public YiXinGateWay(PassiveProcessor msgProcessor) {
+		super(msgProcessor);
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public void destroy() {
 		YiXin.destory();
-		logger.debug("YiXinGateWay destory...");
+		logger.info("易信网关销毁成功...");
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		YiXin.init();
 		List<YiXinConfig> list = yiXinConfigMapper.availableList();
-		for (YiXinConfig yxcfg : list) {
+		for (YiXinConfig yxcfg : list)
 			YiXin.setConfig(yxcfg);
-		}
+		
 		logger.info("易信网关初始化成功...");
-	}
-
-	@Override
-	public MmtConfig getConfig(String mmt_token) {
-		return YiXin.getConfig(mmt_token);
-	}
-
-	@Override
-	public MmtAPI getMMTAPI() {
-		return yxAPI;
-	}
-
-	@Override
-	protected String getTargetCharset() {
-		return MmtCharset.YIXIN_CHARSET;
 	}
 
 	@Override

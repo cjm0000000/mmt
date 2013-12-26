@@ -1,6 +1,5 @@
 package com.github.cjm0000000.mmt.weixin.test;
 
-import lemon.shared.api.MmtAPI;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -18,6 +17,12 @@ import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
 public class WeiXinAPI_Test extends AbstractWeiXinTester {
+
+	@Override
+	protected void defaultCase() {
+		// TODO Auto-generated method stub
+		
+	}
 	@Autowired @Qualifier("weiXinAPI")
 	private MmtAPI api;
 	private final String Subscribe_msg = "Welcome to Subscribe Lemon Test.";

@@ -1,14 +1,13 @@
-package lemon.shared.test;
+package com.github.cjm0000000.shared.test;
 
 import static org.junit.Assert.*;
-import lemon.shared.MMTContext;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
-import com.github.cjm0000000.shared.test.AbstractTester;
+import com.github.cjm0000000.mmt.shared.MMTContext;
 
-public class MMTContextTest extends AbstractTester {
+public class MMTContext_Test extends AbstractTester {
 	
 	@Test
 	public void testMMT(){

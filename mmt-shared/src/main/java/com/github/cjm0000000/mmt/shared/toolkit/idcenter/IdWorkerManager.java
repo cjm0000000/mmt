@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.cjm0000000.mmt.core.access.Access;
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
 import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
@@ -16,9 +18,6 @@ import com.github.cjm0000000.mmt.shared.media.MediaSync;
 import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
 import com.github.cjm0000000.mmt.shared.message.local.LocalMsgBean;
 import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
-
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.metadata.send.Article;
 
 /**
  * ID generator manager
@@ -44,8 +43,8 @@ public class IdWorkerManager {
 		idRepos.put(FansLog.class, 			generateIdWorker(8));
 		
 		idRepos.put(MsgLog.class, 			generateIdWorker(9));
-		idRepos.put(Message.class, 			generateIdWorker(10));
-		idRepos.put(Article.class, 			generateIdWorker(11));
+		idRepos.put(BaseMessage.class, 		generateIdWorker(10));
+		idRepos.put(NewsNode.class, 		generateIdWorker(11));
 		idRepos.put(LocalMsgBean.class, 	generateIdWorker(12));
 		
 		idRepos.put(Media.class, 			generateIdWorker(13));

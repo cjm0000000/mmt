@@ -2,21 +2,18 @@ package com.github.cjm0000000.mmt.weixin.access;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import lemon.shared.api.MmtAPI;
-import lemon.shared.gateway.AbstractGateWay;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
+import com.github.cjm0000000.mmt.shared.access.AbstractMsgGateWay;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
@@ -28,45 +25,29 @@ import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepositor
  *
  */
 @Service("weixinGW")
-public final class WeiXinGateWay extends AbstractGateWay {
+public final class WeiXinGateWay extends AbstractMsgGateWay {
 	private static Log logger = LogFactory.getLog(WeiXinGateWay.class);
-	@Resource(name="weiXinAPI")
-	private MmtAPI wxAPI;
 	@Autowired
-	private WeiXinConfigRepository weiXinConfigMapper;
+	private WeiXinConfigRepository weiXinConfigRepository;
+	
+	public WeiXinGateWay(PassiveProcessor msgProcessor) {
+		super(msgProcessor);
+	}
+	
 	@Override
 	public void destroy() {
 		WeiXin.destory();
-		logger.debug("MicroChatGateWay destory...");
+		logger.info("微信网销毁成功...");
 	}
-
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		WeiXin.init();
-		List<WeiXinConfig> list = weiXinConfigMapper.availableList();
-		for (WeiXinConfig wxcfg : list) {
+		List<WeiXinConfig> list = weiXinConfigRepository.availableList();
+		for (WeiXinConfig wxcfg : list)
 			WeiXin.setConfig(wxcfg);
-		}
 		logger.info("微信网关初始化成功...");
 	}
-	
-
-	@Override
-	public MmtConfig getConfig(String mmt_token) {
-		return WeiXin.getConfig(mmt_token);
-	}
-
-	@Override
-	public MmtAPI getMMTAPI() {
-		return wxAPI;
-	}
-
-	@Override
-	protected String getTargetCharset() {
-		return MmtCharset.WEIXIN_CHARSET;
-	}
-
 
 	@Override
 	protected void preProcessMsg(MmtConfig cfg, HttpServletRequest req) {

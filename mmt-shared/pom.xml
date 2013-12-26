@@ -13,11 +13,6 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.4.4</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
@@ -29,19 +24,6 @@
 			<version>4.3.1.Final</version>
 		</dependency>
 		<!-- validation configure end -->
-		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<version>2.4</version>
-			<classifier>jdk15</classifier>
-		</dependency>
-		<!-- ========== JDOM配置开始 ========== -->
-		<dependency>
-			<groupId>org.jdom</groupId>
-			<artifactId>jdom2</artifactId>
-			<version>2.0.5</version>
-		</dependency>
-		<!-- ========== JDOM配置结束 ========== -->
 		<dependency>
     		<groupId>com.h2database</groupId>
     		<artifactId>h2</artifactId>

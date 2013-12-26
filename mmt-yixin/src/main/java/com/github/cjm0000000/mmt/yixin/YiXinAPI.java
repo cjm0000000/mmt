@@ -1,4 +1,4 @@
-package lemon.yixin;
+/*package com.github.cjm0000000.mmt.yixin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,22 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.yixin.YiXin;
-import com.github.cjm0000000.mmt.yixin.YiXinException;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 
-import lemon.shared.api.AbstractMmtAPI;
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.parser.AbstractMsgParser;
-import lemon.shared.message.parser.MsgParser;
-
-/**
+*//**
  * The YiXin API for message
  * 
  * @author lemon
  * @version 1.0
  * 
- */
+ *//*
 @Service("yiXinAPI")
 public final class YiXinAPI extends AbstractMmtAPI {
 	private static Log logger = LogFactory.getLog(YiXinAPI.class);
@@ -122,3 +115,4 @@ public final class YiXinAPI extends AbstractMmtAPI {
 	}
 
 }
+*/

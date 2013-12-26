@@ -2,27 +2,24 @@ package com.github.cjm0000000.mmt.shared.message.persistence;
 
 import java.util.List;
 
-import lemon.shared.message.metadata.IMessage;
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.metadata.TextMessage;
-import lemon.shared.message.metadata.event.EventMessage;
-import lemon.shared.message.metadata.recv.ImageMessage;
-import lemon.shared.message.metadata.recv.LinkMessage;
-import lemon.shared.message.metadata.recv.LocationMessage;
-import lemon.shared.message.metadata.send.Article;
-import lemon.shared.message.metadata.send.NewsMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
-import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
-import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
-import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
-
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
+import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
+import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
+import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.message.event.EventDetail;
 
 /**
  * message repository
@@ -42,7 +39,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	List<IMessage> getRecvMsgList(@Param("cust_id") int cust_id,
+	List<BaseMessage> getRecvMsgList(@Param("cust_id") int cust_id,
 			@Param("service_type") ServiceType service_type,
 			@Param("msgType") String msgType, @Param("start") int start,
 			@Param("limit") int limit);
@@ -71,7 +68,7 @@ public interface MsgRepository {
 	 * @param id
 	 * @return
 	 */
-	Message getRecvMsgDetail(long id);
+	 SimpleRecvMessage getRecvMsgDetail(long id);
 
 	/**
 	 * get receive text message
@@ -87,7 +84,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	YXAudioMessage getRecvYXAudioMsg(long id);
+	AudioMessage getRecvAudioMsg(long id);
 	
 	/**
 	 * get receive event message
@@ -95,7 +92,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	EventMessage getRecvEventMsg(long id);
+	EventDetail getRecvEvent(long id);
 	
 	/**
 	 * get receive image message
@@ -127,7 +124,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	WXVideoMessage getRecvWXVideoMsg(long id);
+	com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage getRecvWXVideoMsg(long id);
 	
 	/**
 	 * get receive YiXin video message
@@ -135,7 +132,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	YXVideoMessage getRecvYXVideoMsg(long id);
+	com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage getRecvYXVideoMsg(long id);
 	
 	/**
 	 * get receive WeiXin voice message
@@ -143,7 +140,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	WXVoiceMessage getRecvWXVoiceMsg(long id);
+	VoiceMessage getRecvVoiceMsg(long id);
 	
 	/**
 	 * get receive YiXin music message
@@ -151,7 +148,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	YXMusicMessage getRecvYXMusicMsg(long id);
+	MusicMessage getRecvYXMusicMsg(long id);
 	
 	/**
 	 * get send news message
@@ -167,7 +164,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	List<Article> getArticlesByNews(long news_id);
+	List<NewsNode> getArticlesByNews(long news_id);
 	
 	/**
 	 * get send text message by message id
@@ -183,7 +180,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvYXAudioMsg(YXAudioMessage msg);
+	int saveRecvAudioMsg(AudioMessage msg);
 	
 	/**
 	 * save receive event message
@@ -191,7 +188,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvEventMsg(EventMessage msg);
+	int saveRecvEventMsg(EventDetail msg);
 	
 	/**
 	 * save receive image message
@@ -223,7 +220,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvMsgDetail(Message msg);
+	int saveRecvMsgDetail(SimpleRecvMessage msg);
 
 	/**
 	 * save receive text message
@@ -239,7 +236,7 @@ public interface MsgRepository {
 	 * @param msg
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvWXVideoMessage(WXVideoMessage msg);
+	int saveRecvWXVideoMessage(com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage msg);
 	
 	/**
 	 * save receive YiXin video message
@@ -247,7 +244,7 @@ public interface MsgRepository {
 	 * @param msg
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvYXVideoMessage(YXVideoMessage msg);
+	int saveRecvYXVideoMessage(com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage msg);
 
 	/**
 	 * save receive voice message
@@ -255,7 +252,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvWXVoiceMsg(WXVoiceMessage msg);
+	int saveRecvVoiceMsg(VoiceMessage msg);
 	
 	/**
 	 * save receive YiXin music message
@@ -263,7 +260,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveRecvYXMusicMsg(YXMusicMessage msg);
+	int saveRecvYXMusicMsg(MusicMessage msg);
 	
 	/**
 	 * save send message detail
@@ -271,7 +268,7 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveSendMsgDetail(Message msg);
+	int saveSendMsgDetail(BaseMessage msg);
 	
 	/**
 	 * save send news's articles
@@ -283,7 +280,7 @@ public interface MsgRepository {
 	@Lang(RawLanguageDriver.class)
 	int saveSendNewsArticles(@Param("cust_id") int cust_id,
 			@Param("detail_id") long detail_id,
-			@Param("article") Article article);
+			@Param("article") NewsNode article);
 	
 	/**
 	 * save send news message
@@ -299,5 +296,5 @@ public interface MsgRepository {
 	 * @return
 	 */
 	@Lang(RawLanguageDriver.class)
-	int saveSendTextMsg(TextMessage msg);
+	int saveSendTextMsg(com.github.cjm0000000.mmt.core.message.send.passive.TextMessage msg);
 }

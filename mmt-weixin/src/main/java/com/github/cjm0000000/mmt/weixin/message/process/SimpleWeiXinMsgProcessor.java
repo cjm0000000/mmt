@@ -8,7 +8,6 @@ import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.IVideo;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.message.MMTRobot;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.mmt.shared.message.process.AbstractPassiveMsgProcessor;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
@@ -26,8 +25,6 @@ import com.github.cjm0000000.mmt.weixin.weather.WeatherAdapter;
 public final class SimpleWeiXinMsgProcessor extends AbstractPassiveMsgProcessor {
 	@Autowired
 	private MsgManager msgManager;
-	@Autowired
-	private MMTRobot mmtRobot;
 	@Autowired
 	private WeatherAdapter weatherAdapter;
 	
@@ -73,16 +70,6 @@ public final class SimpleWeiXinMsgProcessor extends AbstractPassiveMsgProcessor 
 		replyMsg.setService_type(getServiceType());
 		// msgManager.saveSendNewsMsg(replyMsg);
 		return replyMsg;
-	}
-
-	@Override
-	protected BaseMessage processTextMsg(MmtConfig cfg,
-			com.github.cjm0000000.mmt.core.message.recv.TextMessage msg) {
-		// 生成回复消息
-		String reply = mmtRobot.reply(cfg.getCust_id(), msg.getContent());
-		if (null == reply)
-			reply = cfg.getWelcome_msg();
-		return sendTextMessage(msg, reply);
 	}
 
 	@Override

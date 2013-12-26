@@ -7,23 +7,22 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.message.metadata.Message;
-import lemon.shared.message.metadata.TextMessage;
-import lemon.shared.message.metadata.event.EventMessage;
-import lemon.shared.message.metadata.recv.ImageMessage;
-import lemon.shared.message.metadata.recv.LinkMessage;
-import lemon.shared.message.metadata.recv.LocationMessage;
-import lemon.shared.message.metadata.send.Article;
-import lemon.shared.message.metadata.send.NewsMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
-import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
-import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
-import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
-import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.EventType;
+import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
+import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
+import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
+import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
+import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
+import com.github.cjm0000000.mmt.core.message.recv.weixin.VoiceMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.AudioMessage;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
+import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
@@ -34,27 +33,26 @@ public class MsgManager_Test extends AbstractTester {
 
 	@Test
 	public void saveRecvAudioMsg() {
-		YXAudioMessage msg = new YXAudioMessage();
+		AudioMessage msg = new AudioMessage();
 		prepareMsg(msg);
 		msg.setName("JUnit Test Audio");
 		msg.setUrl("http://www.baidu.com/url");
 		msgManager.saveRecvAudioMsg(msg);
-		YXAudioMessage msg2 = msgManager.getRecvYXAudioMsg(msg.getId());
+		AudioMessage msg2 = msgManager.getRecvYXAudioMsg(msg.getId());
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getName(), msg2.getName());
 		assertEquals(msg.getUrl(), msg2.getUrl());
 	}
 
 	@Test
-	public void saveRecvEventMsg() {
-		EventMessage msg = new EventMessage();
+	public void saveRecvSimpleEvent() {
+		SimpleEvent msg = new SimpleEvent();
 		prepareMsg(msg);
-		msg.setEventKey(UUID.randomUUID().toString());
-		msg.setEventType("CLICK");
+		//msg.setEventKey(UUID.randomUUID().toString());
+		msg.setEventType(EventType.subscribe);
 		msgManager.saveRecvEventMsg(msg);
-		EventMessage msg2 = msgManager.getRecvEventMsg(msg.getId());
-		assertRecvMsg(msg, msg2);
-		assertEquals(msg.getEventKey(), msg2.getEventKey());
+		SimpleEvent msg2 = msgManager.getRecvEventMsg(msg.getId());
+		//assertRecvMsg(msg, msg2);
 		assertEquals(msg.getEventType(), msg2.getEventType());
 	}
 
@@ -119,12 +117,12 @@ public class MsgManager_Test extends AbstractTester {
 	
 	@Test
 	public void saveRecvWXVideoMessage(){
-		WXVideoMessage msg = new WXVideoMessage();
+		com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage msg = new com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage();
 		prepareMsg(msg);
 		msg.setMediaId(UUID.randomUUID().toString());
 		msg.setThumbMediaId(UUID.randomUUID().toString());
 		msgManager.saveRecvVideoMsg(msg);
-		WXVideoMessage msg2 = msgManager.getRecvWXVideoMsg(msg.getId());
+		com.github.cjm0000000.mmt.core.message.recv.weixin.VideoMessage msg2 = msgManager.getRecvWXVideoMsg(msg.getId());
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getMediaId(), msg2.getMediaId());
 		assertEquals(msg.getThumbMediaId(), msg2.getThumbMediaId());
@@ -132,12 +130,12 @@ public class MsgManager_Test extends AbstractTester {
 	
 	@Test
 	public void saveRecvYXVideoMessage(){
-		YXVideoMessage msg = new YXVideoMessage();
+		com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage msg = new com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage();
 		prepareMsg(msg);
 		msg.setUrl("http://www.163.com/" + UUID.randomUUID().toString());
 		msg.setName("Name " + UUID.randomUUID().toString());
 		msgManager.saveRecvVideoMsg(msg);
-		YXVideoMessage msg2 = msgManager.getRecvYXVideoMsg(msg.getId());
+		com.github.cjm0000000.mmt.core.message.recv.yixin.VideoMessage msg2 = msgManager.getRecvYXVideoMsg(msg.getId());
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getUrl(), msg2.getUrl());
 		assertEquals(msg.getName(), msg2.getName());
@@ -145,28 +143,26 @@ public class MsgManager_Test extends AbstractTester {
 	
 	@Test
 	public void saveRecvWXVoiceMsg(){
-		WXVoiceMessage msg = new WXVoiceMessage();
+		VoiceMessage msg = new VoiceMessage();
 		prepareMsg(msg);
 		msg.setMediaId(UUID.randomUUID().toString());
 		msg.setFormat("amr");
-		msg.setRecognition("Rec " + UUID.randomUUID().toString());
 		msgManager.saveRecvVoiceMsg(msg);
-		WXVoiceMessage msg2 = msgManager.getRecvWXVoiceMsg(msg.getId());
+		VoiceMessage msg2 = msgManager.getRecvWXVoiceMsg(msg.getId());
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getMediaId(), msg2.getMediaId());
 		assertEquals(msg.getFormat(), msg2.getFormat());
-		assertEquals(msg.getRecognition(), msg2.getRecognition());
 	}
 	
 	@Test
 	public void saveRecvYXMusicMsg(){
-		YXMusicMessage msg = new YXMusicMessage();
+		MusicMessage msg = new MusicMessage();
 		prepareMsg(msg);
 		msg.setUrl("http://music.yixin.im/" + UUID.randomUUID().toString());
 		msg.setName("Music Name " + UUID.randomUUID().toString());
 		msg.setDesc(UUID.randomUUID().toString());
 		msgManager.saveRecvMusicMsg(msg);
-		YXMusicMessage msg2 = msgManager.getRecvYXMusicMsg(msg.getId());
+		MusicMessage msg2 = msgManager.getRecvYXMusicMsg(msg.getId());
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getMimeType(), msg2.getMimeType());
 		assertEquals(msg.getUrl(), msg2.getUrl());
@@ -182,29 +178,28 @@ public class MsgManager_Test extends AbstractTester {
 		int count = new SecureRandom().nextInt(10);
 		while(count <= 0)
 			count = new SecureRandom().nextInt(10);
-		Article[] arts = new Article[count];
+		NewsNode[] arts = new NewsNode[count];
 		for (int i = 0; i < count; i++) {
-			Article art = new Article();
+			NewsNode art = new NewsNode();
 			art.setDescription("description"+i);
 			art.setPicUrl("http://pic.google.com/" + UUID.randomUUID().toString());
 			art.setTitle("Title " + i);
 			art.setUrl("http://www.google.com/" + UUID.randomUUID().toString());
 			arts[i] = art;
 		}
-		msg.setArticles(arts);
-		msg.setArticleCount(count);
+		msg.setNews(arts);
 		msgManager.saveSendNewsMsg(msg);
 		NewsMessage msg2 = msgManager.getSendNewsMsg(msg.getId());
 		assertMsg(msg, msg2);
 		assertEquals(msg.getArticleCount(), msg2.getArticleCount());
-		List<Article> arts2 = msgManager.getArticlesByNews(msg.getId());
+		List<NewsNode> arts2 = msgManager.getArticlesByNews(msg.getId());
 		assertNotNull(arts2);
 		assertTrue(arts2.containsAll(arts2));
 	}
 	
 	@Test
 	public void saveSendTextMsg(){
-		TextMessage msg = new TextMessage();
+		com.github.cjm0000000.mmt.core.message.send.passive.TextMessage msg = new com.github.cjm0000000.mmt.core.message.send.passive.TextMessage();
 		prepareMsg(msg);
 		msg.setContent(UUID.randomUUID().toString());
 		msgManager.saveSendTextMsg(msg);
@@ -213,11 +208,11 @@ public class MsgManager_Test extends AbstractTester {
 		assertEquals(msg.getContent(), msg2.getContent());
 	}
 
-	private void prepareMsg(Message msg) {
-		msg.setCreateTime((int) (System.currentTimeMillis() / 1000));
+	private void prepareMsg(BaseMessage msg) {
+		msg.setCreateTime(String.valueOf(System.currentTimeMillis() / 1000));
 		msg.setCust_id(CUST_ID);
 		msg.setFromUserName("fromUserName");
-		msg.setMsgId(System.currentTimeMillis());
+		//msg.setMsgId(System.currentTimeMillis());
 		msg.setService_type(ServiceType.OTHER);
 		msg.setToUserName("toUserName");
 	}
@@ -227,7 +222,7 @@ public class MsgManager_Test extends AbstractTester {
 	 * @param actual
 	 * @param expected
 	 */
-	private void assertMsg(Message actual, Message expected){
+	private void assertMsg(BaseMessage actual, BaseMessage expected){
 		assertNotNull(actual);
 		assertNotNull(expected);
 		assertEquals(expected.getCreateTime(), actual.getCreateTime());
@@ -239,7 +234,7 @@ public class MsgManager_Test extends AbstractTester {
 		assertEquals(expected.getToUserName(), actual.getToUserName());
 	}
 	
-	private void assertRecvMsg(Message actual, Message expected){
+	private void assertRecvMsg(SimpleRecvMessage actual, SimpleRecvMessage expected){
 		assertMsg(actual, expected);
 		assertEquals(expected.getMsgId(), actual.getMsgId());
 	}
