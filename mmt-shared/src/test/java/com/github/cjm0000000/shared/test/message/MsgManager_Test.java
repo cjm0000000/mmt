@@ -1,4 +1,4 @@
-package lemon.shared.test.message;
+package com.github.cjm0000000.shared.test.message;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.event.EventMessage;
@@ -26,9 +25,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MsgManagerTest extends AbstractTester {
+public class MsgManager_Test extends AbstractTester {
 	@Autowired
 	private MsgManager msgManager;
 

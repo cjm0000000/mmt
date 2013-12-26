@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.IMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.MsgType;
@@ -31,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
+import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 /**
  * 即时消息管理

@@ -1,10 +1,10 @@
-package lemon.shared.message.log.persistence;
-
-import lemon.shared.message.log.MsgLog;
+package com.github.cjm0000000.mmt.shared.message.log.persistence;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
 
 /**
  * Message log repository

@@ -1,21 +1,20 @@
-package lemon.shared.test.message.local;
+package com.github.cjm0000000.shared.test.message.local;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.message.local.LocalMsgBean;
-import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.cjm0000000.mmt.shared.message.local.LocalMsgBean;
+import com.github.cjm0000000.mmt.shared.message.local.persistence.LocalMsgBeanRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class LocalMsgBeanRepositoryTest extends AbstractTester{
+public class LocalMsgBeanRepo_Test extends AbstractTester{
 	@Autowired
 	private LocalMsgBeanRepository msgBeanMapper;
 	

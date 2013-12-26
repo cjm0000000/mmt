@@ -1,4 +1,4 @@
-package lemon.shared.message.local;
+package com.github.cjm0000000.mmt.shared.message.local;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;

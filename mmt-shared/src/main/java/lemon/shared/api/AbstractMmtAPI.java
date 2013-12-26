@@ -24,12 +24,12 @@ import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLogManager;
 import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
 
-import lemon.shared.message.log.MsgLog;
-import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.message.metadata.Message;
 
 /**

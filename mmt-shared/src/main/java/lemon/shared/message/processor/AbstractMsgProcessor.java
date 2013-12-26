@@ -7,9 +7,9 @@ import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.shared.fans.Fans;
 import com.github.cjm0000000.mmt.shared.fans.FansManager;
+import com.github.cjm0000000.mmt.shared.message.MsgManager;
 
 import lemon.shared.event.EventType;
-import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.TextMessage;

@@ -1,4 +1,4 @@
-package lemon.shared.message.log;
+package com.github.cjm0000000.mmt.shared.message.log;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
 

@@ -14,9 +14,9 @@ import com.github.cjm0000000.mmt.shared.fans.FansLog;
 import com.github.cjm0000000.mmt.shared.media.Media;
 import com.github.cjm0000000.mmt.shared.media.MediaSync;
 import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
+import com.github.cjm0000000.mmt.shared.message.local.LocalMsgBean;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
 
-import lemon.shared.message.local.LocalMsgBean;
-import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.metadata.Message;
 import lemon.shared.message.metadata.send.Article;
 

@@ -1,4 +1,4 @@
-package lemon.shared.message.local.persistence.sqlprovider;
+package com.github.cjm0000000.mmt.shared.message.local.persistence.sqlprovider;
 
 import java.util.Map;
 

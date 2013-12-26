@@ -1,9 +1,9 @@
-package lemon.shared.message;
+package com.github.cjm0000000.mmt.shared.message;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
+import com.github.cjm0000000.mmt.shared.message.local.persistence.LocalMsgBeanRepository;
 
 /**
  * 消息机器人

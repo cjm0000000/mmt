@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.message.MsgManager;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.yixin.message.processor.SimpleYiXinMsgProcessor;
@@ -26,6 +25,7 @@ import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.customer.Customer;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
+import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;

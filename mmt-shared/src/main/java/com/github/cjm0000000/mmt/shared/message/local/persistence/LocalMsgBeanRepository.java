@@ -1,4 +1,4 @@
-package lemon.shared.message.local.persistence;
+package com.github.cjm0000000.mmt.shared.message.local.persistence;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
-import lemon.shared.message.local.LocalMsgBean;
-import lemon.shared.message.local.persistence.sqlprovider.LocalMsgBeanSQLProvider;
+import com.github.cjm0000000.mmt.shared.message.local.LocalMsgBean;
+import com.github.cjm0000000.mmt.shared.message.local.persistence.sqlprovider.LocalMsgBeanSQLProvider;
 
 /**
  * Local message Repository

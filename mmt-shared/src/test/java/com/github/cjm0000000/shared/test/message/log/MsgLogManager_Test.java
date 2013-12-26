@@ -1,16 +1,16 @@
-package lemon.shared.test.message.log;
+package com.github.cjm0000000.shared.test.message.log;
 
 import static org.junit.Assert.*;
-import lemon.shared.message.log.MsgLog;
-import lemon.shared.message.log.MsgLogManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLogManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MsgLogManagerTest extends AbstractTester {
+public class MsgLogManager_Test extends AbstractTester {
 	@Autowired
 	private MsgLogManager msgLogManager;
 	

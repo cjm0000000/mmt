@@ -1,6 +1,5 @@
 package lemon.yixin.message.processor;
 
-import lemon.shared.message.MMTRobot;
 import lemon.shared.message.metadata.AudioMessage;
 import lemon.shared.message.metadata.TextMessage;
 import lemon.shared.message.metadata.VideoMessage;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.message.MMTRobot;
 import com.github.cjm0000000.mmt.yixin.YiXin;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;

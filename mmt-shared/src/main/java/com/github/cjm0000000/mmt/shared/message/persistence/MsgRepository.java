@@ -1,4 +1,4 @@
-package lemon.shared.message.persistence;
+package com.github.cjm0000000.mmt.shared.message.persistence;
 
 import java.util.List;
 
