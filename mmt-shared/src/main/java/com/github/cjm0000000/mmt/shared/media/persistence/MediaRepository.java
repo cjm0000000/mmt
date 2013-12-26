@@ -1,4 +1,4 @@
-package lemon.shared.media.persistence;
+package com.github.cjm0000000.mmt.shared.media.persistence;
 
 import java.util.List;
 
@@ -8,10 +8,9 @@ import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-
-import lemon.shared.media.Media;
-import lemon.shared.media.MediaSync;
-import lemon.shared.media.MediaSyncLog;
+import com.github.cjm0000000.mmt.shared.media.Media;
+import com.github.cjm0000000.mmt.shared.media.MediaSync;
+import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
 
 /**
  * Media repository

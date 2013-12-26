@@ -1,14 +1,10 @@
-package lemon.shared.test.media;
+package com.github.cjm0000000.shared.test.media;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.media.Media;
-import lemon.shared.media.MediaSync;
-import lemon.shared.media.MediaSyncLog;
-import lemon.shared.media.persistence.MediaRepository;
 import lemon.shared.toolkit.EqualsUtil;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -16,9 +12,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.media.Media;
+import com.github.cjm0000000.mmt.shared.media.MediaSync;
+import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
+import com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MediaRepoTest extends AbstractTester {
+public class MediaRepo_Test extends AbstractTester {
 	@Autowired
 	private MediaRepository mediaRepository;
 

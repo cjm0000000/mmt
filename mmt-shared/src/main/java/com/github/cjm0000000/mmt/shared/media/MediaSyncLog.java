@@ -1,4 +1,4 @@
-package lemon.shared.media;
+package com.github.cjm0000000.mmt.shared.media;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
 

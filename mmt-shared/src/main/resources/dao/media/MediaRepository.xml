@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.shared.media.persistence.MediaRepository">
-	<insert id="addMedia" parameterType="lemon.shared.media.Media" >
+<mapper namespace="com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository">
+	<insert id="addMedia" parameterType="com.github.cjm0000000.mmt.shared.media.Media" >
 		INSERT INTO media(id,cust_id,media_type,media_size,real_name,display_name,media_path) 
 			VALUES(#{id},#{cust_id},#{media_type},#{media_size},#{real_name},#{display_name},#{media_path})
 	</insert>
-	<insert id="addMediaSync" parameterType="lemon.shared.media.MediaSync">
+	<insert id="addMediaSync" parameterType="com.github.cjm0000000.mmt.shared.media.MediaSync">
 		INSERT INTO media_sync(id,m_id,cust_id,service_type,media_id,created_at,expire_time)
 			VALUES(#{id},#{m_id},#{cust_id},#{service_type},#{media_id},#{created_at},#{expire_time})
 	</insert>
-	<insert id="addMediaSyncLog" parameterType="lemon.shared.media.MediaSyncLog">
+	<insert id="addMediaSyncLog" parameterType="com.github.cjm0000000.mmt.shared.media.MediaSyncLog">
 		INSERT INTO media_sync_log(id,cust_id,service_type,media_id,result)
 			VALUES(#{id},#{cust_id},#{service_type},#{media_id},#{result})
 	</insert>
@@ -25,12 +25,12 @@
 			WHERE m_id=#{m_id}
 		AND service_type=#{service_type}
 	</delete>
-	<select id="getMedia" parameterType="long" resultType="lemon.shared.media.Media">
+	<select id="getMedia" parameterType="long" resultType="com.github.cjm0000000.mmt.shared.media.Media">
 		SELECT A.id,A.cust_id,A.media_type,A.media_size,A.real_name,A.display_name,A.media_path,A.timestamp
 			FROM media A
 		WHERE A.id=#{id}
 	</select>
-	<select id="getMediaSync" resultType="lemon.shared.media.MediaSync">
+	<select id="getMediaSync" resultType="com.github.cjm0000000.mmt.shared.media.MediaSync">
 		SELECT A.id,A.m_id,A.cust_id,A.service_type,A.media_id,A.created_at,A.expire_time,A.timestamp
 			FROM media_sync A
 		WHERE A.m_id=#{m_id}
@@ -38,7 +38,7 @@
 			AND A.service_type=#{service_type}
 		</if>
 	</select>
-	<select id="getMediaSyncs" resultType="lemon.shared.media.MediaSync">
+	<select id="getMediaSyncs" resultType="com.github.cjm0000000.mmt.shared.media.MediaSync">
 		SELECT A.id,A.m_id,A.cust_id,A.service_type,A.media_id,A.created_at,A.expire_time,A.timestamp
 			FROM media_sync A
 		WHERE A.m_id IN
@@ -47,13 +47,13 @@
 		</foreach>
 		ORDER BY A.m_id
 	</select>
-	<update id="updateMedia" parameterType="lemon.shared.media.Media">
+	<update id="updateMedia" parameterType="com.github.cjm0000000.mmt.shared.media.Media">
 		UPDATE media A
 			SET A.display_name=#{display_name},
 				A.media_path=#{media_path}
 			WHERE A.id=#{id}
 	</update>
-	<select id="list" resultType="lemon.shared.media.Media">
+	<select id="list" resultType="com.github.cjm0000000.mmt.shared.media.Media">
 		<bind name="_display_name" value="(display_name == null ? '' : display_name) + '%'" />
 		SELECT A.id,A.cust_id,A.media_type,A.media_size,A.real_name,A.display_name,A.media_path,A.timestamp
 			FROM media A

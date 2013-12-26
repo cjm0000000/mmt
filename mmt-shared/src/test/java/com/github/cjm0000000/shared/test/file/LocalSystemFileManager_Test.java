@@ -1,4 +1,4 @@
-package lemon.shared.test.file;
+package com.github.cjm0000000.shared.test.file;
 
 import java.io.File;
 
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.github.cjm0000000.mmt.core.file.FileManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class LocalSystemFileManagerTest extends AbstractTester {
-	private static final String ROOT = LocalSystemFileManagerTest.class.getResource("/").getPath();
+public class LocalSystemFileManager_Test extends AbstractTester {
+	private static final String ROOT = LocalSystemFileManager_Test.class.getResource("/").getPath();
 	private static final String PATH = "\\usr";
 	private static final String FILENAME = "balabala.tmp";
 	@Autowired @Qualifier("localSystemFileManager")

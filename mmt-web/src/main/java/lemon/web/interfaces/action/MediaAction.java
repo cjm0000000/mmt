@@ -12,10 +12,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.media.Media;
-import lemon.shared.media.MediaSync;
-import lemon.shared.media.MediaSyncLog;
-import lemon.shared.media.persistence.MediaRepository;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -44,6 +40,10 @@ import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.file.FileManager;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.media.Media;
+import com.github.cjm0000000.mmt.shared.media.MediaSync;
+import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
+import com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
