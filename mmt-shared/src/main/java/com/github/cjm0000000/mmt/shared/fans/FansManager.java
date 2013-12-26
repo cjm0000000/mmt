@@ -1,7 +1,5 @@
 package com.github.cjm0000000.mmt.shared.fans;
 
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -11,6 +9,7 @@ import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.fans.persistence.FansRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
 /**
  * manager for fans

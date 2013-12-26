@@ -1,10 +1,11 @@
 package lemon.shared.message.log;
 
 import lemon.shared.message.log.persistence.MsgLogRepository;
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
 /**
  * Message log manager

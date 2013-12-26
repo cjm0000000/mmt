@@ -1,7 +1,5 @@
-package lemon.shared.toolkit.weather.mapper;
+package com.github.cjm0000000.mmt.shared.weather.persistence;
 
-
-import lemon.shared.toolkit.weather.bean.City;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -10,6 +8,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.shared.weather.City;
+
 /**
  * City Repository
  * @author lemon
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface CityMapper {
+public interface CityRepository {
 
 	/**
 	 * 添加城市

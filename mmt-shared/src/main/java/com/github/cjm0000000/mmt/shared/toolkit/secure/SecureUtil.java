@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.secure;
+package com.github.cjm0000000.mmt.shared.toolkit.secure;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;

@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -35,6 +34,7 @@ import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuAdpater;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;

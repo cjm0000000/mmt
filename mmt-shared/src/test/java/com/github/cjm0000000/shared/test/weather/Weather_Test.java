@@ -1,22 +1,22 @@
-package lemon.shared.test.toolkit;
+package com.github.cjm0000000.shared.test.weather;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.shared.toolkit.weather.Weather;
-import lemon.shared.toolkit.weather.bean.City;
-import lemon.shared.toolkit.weather.bean.WeatherInfo;
-import lemon.shared.toolkit.weather.mapper.CityMapper;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.cjm0000000.mmt.shared.weather.City;
+import com.github.cjm0000000.mmt.shared.weather.Weather;
+import com.github.cjm0000000.mmt.shared.weather.WeatherInfo;
+import com.github.cjm0000000.mmt.shared.weather.persistence.CityRepository;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class WeatherTest extends AbstractTester {
+public class Weather_Test extends AbstractTester {
 	@Autowired
-	private CityMapper cityMapper;
+	private CityRepository cityMapper;
 	@Autowired
 	private Weather weather;
 	

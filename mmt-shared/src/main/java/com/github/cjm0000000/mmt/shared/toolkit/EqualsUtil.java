@@ -1,4 +1,4 @@
-package lemon.shared.toolkit;
+package com.github.cjm0000000.mmt.shared.toolkit;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
@@ -24,7 +25,6 @@ import lemon.shared.message.metadata.specific.weixin.MediaMessage;
 import lemon.shared.message.metadata.specific.weixin.WXVideoMessage;
 import lemon.shared.message.parser.AbstractMsgParser;
 import lemon.shared.message.parser.MsgParser;
-import lemon.shared.toolkit.http.HttpConnector;
 
 /**
  * The WeiXin API for message

@@ -12,7 +12,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -44,6 +43,7 @@ import com.github.cjm0000000.mmt.shared.media.Media;
 import com.github.cjm0000000.mmt.shared.media.MediaSync;
 import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
 import com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 

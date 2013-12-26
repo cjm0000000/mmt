@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.idcenter;
+package com.github.cjm0000000.mmt.shared.toolkit.idcenter;
 
 import java.util.HashMap;
 import java.util.Map;

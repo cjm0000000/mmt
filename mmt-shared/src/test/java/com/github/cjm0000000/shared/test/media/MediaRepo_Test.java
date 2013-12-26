@@ -5,9 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.toolkit.EqualsUtil;
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +13,8 @@ import com.github.cjm0000000.mmt.shared.media.Media;
 import com.github.cjm0000000.mmt.shared.media.MediaSync;
 import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
 import com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.EqualsUtil;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
 public class MediaRepo_Test extends AbstractTester {

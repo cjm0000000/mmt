@@ -3,7 +3,6 @@ package lemon.web.security;
 import java.util.HashSet;
 import java.util.Set;
 
-import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.Role;
 import lemon.web.system.bean.User;
@@ -22,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
 
 /**
  * 用户细节管理

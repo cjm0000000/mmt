@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.weather;
+package com.github.cjm0000000.mmt.shared.weather;
 
 import java.io.IOException;
 
@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import lemon.shared.toolkit.http.HttpConnector;
-import lemon.shared.toolkit.weather.bean.City;
-import lemon.shared.toolkit.weather.bean.WeatherInfo;
-import lemon.shared.toolkit.weather.mapper.CityMapper;
+import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
+import com.github.cjm0000000.mmt.shared.weather.persistence.CityRepository;
 
 /**
  * 天气查询API<br>
@@ -34,7 +32,7 @@ public class Weather {
 	/** 获取城市天气信息URL */
 	private static final String SEARCH_WEATHER_URL = "http://m.weather.com.cn/data/#cityid#.html";
 	@Autowired
-	private CityMapper cityMapper;
+	private CityRepository cityMapper;
 	
 	/**
 	 * 根据城市名称查询天气

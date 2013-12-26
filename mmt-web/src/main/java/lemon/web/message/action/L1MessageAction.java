@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
+
 import lemon.shared.message.local.LocalMsgBean;
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
 import lemon.web.system.bean.User;
 import lemon.web.ui.BS3UI;
 

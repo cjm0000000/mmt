@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +12,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
 public class CustomMenuRepo_Test extends AbstractTester {

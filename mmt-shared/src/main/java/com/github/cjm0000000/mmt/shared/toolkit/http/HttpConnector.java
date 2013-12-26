@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.http;
+package com.github.cjm0000000.mmt.shared.toolkit.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

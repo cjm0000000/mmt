@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.shared.toolkit.idcenter.IdWorkerManager;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +13,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.customer.Customer;
 import com.github.cjm0000000.mmt.shared.customer.CustomerService;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
 public class CustomerRepo_Test extends AbstractTester {

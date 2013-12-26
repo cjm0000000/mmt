@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.idcenter;
+package com.github.cjm0000000.mmt.shared.toolkit.idcenter;
 
 /**
  * 单个JVM版本

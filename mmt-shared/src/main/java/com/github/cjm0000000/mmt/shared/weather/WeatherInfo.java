@@ -1,4 +1,4 @@
-package lemon.shared.toolkit.weather.bean;
+package com.github.cjm0000000.mmt.shared.weather;
 
 /**
  * 存放天气信息

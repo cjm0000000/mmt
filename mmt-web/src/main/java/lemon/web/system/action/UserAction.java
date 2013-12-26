@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -34,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.shared.customer.Customer;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
 
 /**
  * 用户管理
