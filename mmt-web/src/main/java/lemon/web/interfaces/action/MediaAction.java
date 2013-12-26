@@ -12,7 +12,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.file.FileManager;
 import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;
@@ -43,6 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.file.FileManager;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;

@@ -2,7 +2,6 @@ package lemon.shared.test.file;
 
 import java.io.File;
 
-import lemon.shared.file.FileManager;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -11,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.cjm0000000.mmt.core.file.FileManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
 public class LocalSystemFileManagerTest extends AbstractTester {

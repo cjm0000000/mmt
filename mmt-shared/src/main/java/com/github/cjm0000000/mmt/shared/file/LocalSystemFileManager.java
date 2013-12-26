@@ -1,4 +1,4 @@
-package lemon.shared.file;
+package com.github.cjm0000000.mmt.shared.file;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.file.FileManager;
 
 /**
  * Local system file manager
