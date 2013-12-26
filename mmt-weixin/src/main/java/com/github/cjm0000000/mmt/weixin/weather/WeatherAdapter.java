@@ -1,4 +1,4 @@
-package lemon.weixin.toolkit;
+package com.github.cjm0000000.mmt.weixin.weather;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,12 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
+import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.shared.weather.Weather;
 import com.github.cjm0000000.mmt.shared.weather.WeatherInfo;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
-
-import lemon.shared.message.metadata.send.NewsMessage;
-import lemon.shared.message.parser.NewsMsgParser;
 
 @Service
 public class WeatherAdapter {
@@ -31,8 +29,6 @@ public class WeatherAdapter {
 	private static final int REPORT_DAYS = 5;
 	@Autowired
 	private Weather weather;
-	@Autowired
-	private NewsMsgParser parser;
 
 	/**
 	 * 把Weather信息生成图文消息
@@ -53,7 +49,6 @@ public class WeatherAdapter {
 			return null;
 		
 		String[] days = getDaysArray(today, REPORT_DAYS);
-		msg.setArticleCount(days.length);
 		
 		//加载模板
 		initVelocity();
@@ -64,7 +59,8 @@ public class WeatherAdapter {
 		StringWriter writer = new StringWriter();
 
 		Velocity.mergeTemplate("lemon/weixin/toolkit/weather.xml", MmtCharset.LOCAL_CHARSET, context, writer);
-		return parser.toMsg(writer.toString());
+		//TODO 天气消息直接转NewsMessage
+		return null;
 	}
 	
 	/**

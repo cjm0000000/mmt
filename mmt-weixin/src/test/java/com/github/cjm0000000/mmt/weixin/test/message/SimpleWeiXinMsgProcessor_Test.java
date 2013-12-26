@@ -15,7 +15,6 @@ import lemon.shared.message.parser.NewsMsgParser;
 import lemon.shared.message.parser.TextMsgParser;
 import lemon.shared.message.parser.weixin.VideoMsgParser;
 import lemon.shared.message.parser.weixin.VoiceMsgParser;
-import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -37,6 +36,7 @@ import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+import com.github.cjm0000000.mmt.weixin.message.process.SimpleWeiXinMsgProcessor;
 import com.github.cjm0000000.mmt.weixin.test.AbstractWeiXinTester;
 
 public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {

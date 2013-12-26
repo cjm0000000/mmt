@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.access.Access;
 import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;

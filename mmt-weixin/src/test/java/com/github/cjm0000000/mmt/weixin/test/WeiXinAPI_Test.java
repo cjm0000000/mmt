@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.config.Status;
-import com.github.cjm0000000.mmt.shared.access.Access;
 import com.github.cjm0000000.mmt.shared.customer.Customer;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 import com.github.cjm0000000.mmt.weixin.WeiXin;

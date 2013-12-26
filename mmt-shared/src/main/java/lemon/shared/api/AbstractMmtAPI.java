@@ -15,9 +15,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.access.Access;
 import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;

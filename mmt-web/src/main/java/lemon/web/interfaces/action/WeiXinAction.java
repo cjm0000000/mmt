@@ -1,7 +1,6 @@
 package lemon.web.interfaces.action;
 
 import lemon.web.system.bean.User;
-import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+import com.github.cjm0000000.mmt.weixin.message.process.SimpleWeiXinMsgProcessor;
 
 /**
  * 微信接口配置

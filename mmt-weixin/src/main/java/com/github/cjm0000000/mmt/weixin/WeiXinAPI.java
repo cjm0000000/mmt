@@ -1,4 +1,4 @@
-package lemon.weixin;
+package com.github.cjm0000000.mmt.weixin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
-import com.github.cjm0000000.mmt.weixin.WeiXin;
-import com.github.cjm0000000.mmt.weixin.WeiXinException;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 

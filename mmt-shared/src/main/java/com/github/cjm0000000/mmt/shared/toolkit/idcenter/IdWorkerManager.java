@@ -3,7 +3,7 @@ package com.github.cjm0000000.mmt.shared.toolkit.idcenter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.cjm0000000.mmt.shared.access.Access;
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;

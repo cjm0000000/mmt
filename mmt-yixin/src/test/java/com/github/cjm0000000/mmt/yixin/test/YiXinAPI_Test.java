@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.github.cjm0000000.mmt.shared.access.Access;
+import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
 
 public class YiXinAPI_Test extends AbstractYiXinTester {

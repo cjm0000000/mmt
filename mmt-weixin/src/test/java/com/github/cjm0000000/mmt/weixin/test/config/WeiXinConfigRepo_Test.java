@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.UUID;
 
-import lemon.weixin.message.processor.SimpleWeiXinMsgProcessor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
@@ -16,6 +14,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.EqualsUtil;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
+import com.github.cjm0000000.mmt.weixin.message.process.SimpleWeiXinMsgProcessor;
 import com.github.cjm0000000.mmt.weixin.test.AbstractWeiXinTester;
 
 public class WeiXinConfigRepo_Test extends AbstractWeiXinTester {

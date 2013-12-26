@@ -22,7 +22,7 @@ import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.access.MsgGateWay;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
-import com.github.cjm0000000.mmt.core.message.processor.PassiveMsgProcessor;
+import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 
 /**
@@ -34,9 +34,9 @@ import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 	private static Log logger = LogFactory.getLog(AbstractMsgGateWay.class);
 
-	protected PassiveMsgProcessor msgProcessor;
+	protected PassiveProcessor msgProcessor;
 	
-	public AbstractMsgGateWay(PassiveMsgProcessor msgProcessor){
+	public AbstractMsgGateWay(PassiveProcessor msgProcessor){
 		this.msgProcessor = msgProcessor;
 	}
 	
