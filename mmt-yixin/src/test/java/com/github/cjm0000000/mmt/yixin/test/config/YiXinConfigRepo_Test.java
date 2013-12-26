@@ -4,14 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import lemon.shared.customer.Customer;
-import lemon.shared.customer.persistence.CustomerRepository;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.shared.customer.Customer;
+import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
 import com.github.cjm0000000.mmt.yixin.test.AbstractYiXinTester;

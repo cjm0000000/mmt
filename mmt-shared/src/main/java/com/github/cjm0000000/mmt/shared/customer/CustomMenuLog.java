@@ -1,4 +1,4 @@
-package lemon.shared.customer;
+package com.github.cjm0000000.mmt.shared.customer;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
 
@@ -39,4 +39,12 @@ public class CustomMenuLog extends MmtService {
 		this.action = action;
 	}
 	
+	public static enum Action {
+		/** Create */
+		CREATE,
+		/** Search */
+		SEARCH,
+		/** Delete */
+		DELETE
+	}
 }

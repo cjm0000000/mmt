@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import lemon.shared.customer.Customer;
-import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.shared.toolkit.secure.SecureUtil;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
@@ -34,6 +32,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.shared.customer.Customer;
+import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 
 /**
  * 用户管理

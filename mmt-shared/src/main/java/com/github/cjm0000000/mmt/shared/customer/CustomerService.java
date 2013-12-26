@@ -1,4 +1,4 @@
-package lemon.shared.customer;
+package com.github.cjm0000000.mmt.shared.customer;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.MmtService;

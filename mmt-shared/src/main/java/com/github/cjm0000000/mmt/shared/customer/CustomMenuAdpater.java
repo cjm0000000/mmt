@@ -1,4 +1,4 @@
-package lemon.shared.customer;
+package com.github.cjm0000000.mmt.shared.customer;
 
 import java.util.List;
 

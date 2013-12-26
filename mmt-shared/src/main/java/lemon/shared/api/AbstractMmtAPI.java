@@ -22,10 +22,9 @@ import com.github.cjm0000000.mmt.shared.access.AccessToken;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
+import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog;
+import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
 
-import lemon.shared.customer.Action;
-import lemon.shared.customer.CustomMenuLog;
-import lemon.shared.customer.persistence.CustomMenuRepository;
 import lemon.shared.message.log.MsgLog;
 import lemon.shared.message.log.MsgLogManager;
 import lemon.shared.message.metadata.Message;
@@ -115,7 +114,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		String result = HttpConnector.post(getCreateMenuUrl(), menuJson, params);
 		//save log
 		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
-				.toString(), Action.CREATE, config.getCust_id(), menuJson, result);
+				.toString(), CustomMenuLog.Action.CREATE, config.getCust_id(), menuJson, result);
 		customMenuMapper.saveMenuSyncLog(log);
 		//parser result
 		JSONObject json = JSONObject.fromObject(result);
@@ -132,7 +131,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 		String result = HttpConnector.post(getDeleteMenuUrl(), params);
 		// save log
 		CustomMenuLog log = generateCustomMenuLog(params.get("access_token")
-				.toString(), Action.DELETE, config.getCust_id(), null, result);
+				.toString(), CustomMenuLog.Action.DELETE, config.getCust_id(), null, result);
 		customMenuMapper.saveMenuSyncLog(log);
 		JSONObject json = JSONObject.fromObject(result);
 		return (ReturnCode) JSONObject.toBean(json, ReturnCode.class);
@@ -267,7 +266,7 @@ public abstract class AbstractMmtAPI implements MmtAPI {
 	 * @return
 	 */
 	private CustomMenuLog generateCustomMenuLog(String access_token,
-			Action action, int cust_id, String msg, String result) {
+			CustomMenuLog.Action action, int cust_id, String msg, String result) {
 		CustomMenuLog log = new CustomMenuLog();
 		log.setAccess_token(access_token);
 		log.setAction(action);

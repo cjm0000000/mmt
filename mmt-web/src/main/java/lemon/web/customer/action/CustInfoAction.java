@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import lemon.shared.customer.Customer;
-import lemon.shared.customer.persistence.CustomerRepository;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -24,6 +22,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.core.config.Status;
+import com.github.cjm0000000.mmt.shared.customer.Customer;
+import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 
 /**
  * 客户信息管理

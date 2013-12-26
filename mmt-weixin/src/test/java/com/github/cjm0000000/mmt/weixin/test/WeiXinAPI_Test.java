@@ -1,8 +1,6 @@
 package com.github.cjm0000000.mmt.weixin.test;
 
 import lemon.shared.api.MmtAPI;
-import lemon.shared.customer.Customer;
-import lemon.shared.customer.persistence.CustomerRepository;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -13,6 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.shared.access.Access;
+import com.github.cjm0000000.mmt.shared.customer.Customer;
+import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;

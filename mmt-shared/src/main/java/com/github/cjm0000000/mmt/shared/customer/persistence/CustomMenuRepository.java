@@ -1,14 +1,14 @@
-package lemon.shared.customer.persistence;
+package com.github.cjm0000000.mmt.shared.customer.persistence;
 
 import java.util.List;
-
-import lemon.shared.customer.CustomMenu;
-import lemon.shared.customer.CustomMenuLog;
 
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
+
+import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
+import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog;
 
 
 /**

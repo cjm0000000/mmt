@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.shared.customer.persistence.CustomerRepository">
-	<select id="getCustomerList" resultType="lemon.shared.customer.Customer">
+<mapper namespace="com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository">
+	<select id="getCustomerList" resultType="com.github.cjm0000000.mmt.shared.customer.Customer">
 		<bind name="_cust_name" value="(cust_name == null ? '' : cust_name) + '%'" />
 		SELECT C.cust_id,C.cust_name,C.memo,C.`status` 
 			FROM customer C 
@@ -22,16 +22,16 @@
 			AND C.cust_name LIKE #{_cust_name}
 		</if>
 	</select>
-	<select id="getCustomer" parameterType="int" resultType="lemon.shared.customer.Customer">
+	<select id="getCustomer" parameterType="int" resultType="com.github.cjm0000000.mmt.shared.customer.Customer">
 		SELECT C.cust_id,C.cust_name,C.memo,C.`status` 
 			FROM customer C 
 		WHERE C.cust_id=#{cust_id}
 	</select>
-	<insert id="addCustomer" parameterType="lemon.shared.customer.Customer" useGeneratedKeys="true" keyProperty="cust_id">
+	<insert id="addCustomer" parameterType="com.github.cjm0000000.mmt.shared.customer.Customer" useGeneratedKeys="true" keyProperty="cust_id">
 		INSERT INTO customer(cust_name,memo,status) 
 			VALUES(#{cust_name},#{memo},#{status})
 	</insert>
-	<update id="updateCustomer" parameterType="lemon.shared.customer.Customer">
+	<update id="updateCustomer" parameterType="com.github.cjm0000000.mmt.shared.customer.Customer">
 		UPDATE customer C 
 			SET C.cust_name=#{cust_name}, 
 				C.memo=#{memo} 
@@ -42,22 +42,22 @@
 			SET C.status='UNAVAILABLE' 
 		WHERE C.cust_id=#{cust_id}
 	</update>
-	<insert id="addService" parameterType="lemon.shared.customer.CustomerService">
+	<insert id="addService" parameterType="com.github.cjm0000000.mmt.shared.customer.CustomerService">
 		INSERT INTO customer_service(id,cust_id,service_type,status,expire_time) 
 			VALUES(#{id},#{cust_id},#{service_type},#{status},#{expire_time})
 	</insert>
-	<select id="getServiceById" parameterType="long" resultType="lemon.shared.customer.CustomerService">
+	<select id="getServiceById" parameterType="long" resultType="com.github.cjm0000000.mmt.shared.customer.CustomerService">
 		SELECT A.id,A.cust_id,A.service_type,A.status,A.expire_time 
 			FROM customer_service A 
 		WHERE A.id=#{id}
 	</select>
-	<select id="getService" resultType="lemon.shared.customer.CustomerService">
+	<select id="getService" resultType="com.github.cjm0000000.mmt.shared.customer.CustomerService">
 		SELECT A.id,A.cust_id,A.service_type,A.status,A.expire_time
 			FROM customer_service A 
 		WHERE A.cust_id=#{cust_id} 
 			AND A.service_type=#{service_type}
 	</select>
-	<select id="getServices" parameterType="long" resultType="lemon.shared.customer.CustomerService">
+	<select id="getServices" parameterType="long" resultType="com.github.cjm0000000.mmt.shared.customer.CustomerService">
 		SELECT A.id,A.cust_id,A.service_type,A.status,A.expire_time 
 			FROM customer_service A 
 		WHERE A.cust_id=#{cust_id}

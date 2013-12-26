@@ -1,4 +1,4 @@
-package lemon.shared.customer;
+package com.github.cjm0000000.mmt.shared.customer;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
