@@ -3,7 +3,6 @@ package lemon.shared.test.file;
 import java.io.File;
 
 import lemon.shared.file.FileManager;
-import lemon.shared.test.base.BaseMmtTest;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -12,7 +11,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class LocalSystemFileManagerTest extends BaseMmtTest {
+import com.github.cjm0000000.shared.test.AbstractTester;
+
+public class LocalSystemFileManagerTest extends AbstractTester {
 	private static final String ROOT = LocalSystemFileManagerTest.class.getResource("/").getPath();
 	private static final String PATH = "\\usr";
 	private static final String FILENAME = "balabala.tmp";

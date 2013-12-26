@@ -1,4 +1,4 @@
-package lemon.shared.test.base;
+package com.github.cjm0000000.shared.test;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,6 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring-db.xml", "classpath:spring-dao.xml",
 		"classpath:spring-service.xml" })
-public abstract class BaseMmtTest {
+public abstract class AbstractTester {
 	protected static final int CUST_ID = -5743;
 }

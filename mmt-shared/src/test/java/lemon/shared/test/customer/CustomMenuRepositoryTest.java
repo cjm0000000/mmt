@@ -9,15 +9,15 @@ import lemon.shared.customer.Action;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuLog;
 import lemon.shared.customer.persistence.CustomMenuRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class CustomMenuRepositoryTest extends BaseMmtTest {
+public class CustomMenuRepositoryTest extends AbstractTester {
 	private static final byte LEVEL = 9;
 	@Autowired
 	private CustomMenuRepository customMenuMapper;

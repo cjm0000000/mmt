@@ -1,15 +1,15 @@
 package lemon.shared.test.xstream;
 
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.xstream.XStreamHelper;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.cjm0000000.shared.test.AbstractTester;
 import com.thoughtworks.xstream.XStream;
 
-public class BeanTest extends BaseMmtTest {
+public class BeanTest extends AbstractTester {
 	private XStream xStream;
 	@Before
 	public void init() {

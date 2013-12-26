@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import lemon.shared.access.ReturnCode;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.customer.CustomMenu;
 import lemon.shared.customer.CustomMenuAdpater;
@@ -35,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.weixin.WeiXinException;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;

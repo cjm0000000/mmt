@@ -1,19 +1,19 @@
-package lemon.shared.test.access;
+package com.github.cjm0000000.shared.test.access;
 
 import static org.junit.Assert.*;
-import lemon.shared.access.Access;
-import lemon.shared.access.AccessToken;
-import lemon.shared.access.AccessTokenLog;
-import lemon.shared.access.persistence.AccessRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.mmt.shared.access.Access;
+import com.github.cjm0000000.mmt.shared.access.AccessToken;
+import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
+import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class AccessRepositoryTest extends BaseMmtTest {
+public class AccessRepository_Test extends AbstractTester {
 	@Autowired
 	private AccessRepository accessRepository;
 	
@@ -65,11 +65,6 @@ public class AccessRepositoryTest extends BaseMmtTest {
 		log.setId(IdWorkerManager.getIdWorker(AccessTokenLog.class).getId());
 		accessRepository.saveAccessTokenLog(log);
 		assertNotEquals(0, log.getId());
-	}
-	
-	public static void main(String[] args){
-		AccessRepositoryTest as = new AccessRepositoryTest();
-		System.out.println(as.getClass().getClassLoader());
 	}
 	
 }

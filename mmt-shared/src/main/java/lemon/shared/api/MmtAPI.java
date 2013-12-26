@@ -1,9 +1,9 @@
 package lemon.shared.api;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.shared.access.Access;
+import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 
-import lemon.shared.access.ReturnCode;
-import lemon.shared.access.Access;
 import lemon.shared.message.metadata.Message;
 
 /**

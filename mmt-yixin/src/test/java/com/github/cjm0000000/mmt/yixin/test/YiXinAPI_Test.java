@@ -1,6 +1,5 @@
 package com.github.cjm0000000.mmt.yixin.test;
 
-import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 import lemon.shared.toolkit.secure.SecureUtil;
 import static org.junit.Assert.*;
@@ -8,6 +7,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.github.cjm0000000.mmt.shared.access.Access;
 
 public class YiXinAPI_Test extends AbstractYiXinTester {
 	@Autowired @Qualifier("yiXinAPI")

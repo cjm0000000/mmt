@@ -8,7 +8,6 @@ import java.util.UUID;
 import lemon.shared.customer.Customer;
 import lemon.shared.customer.CustomerService;
 import lemon.shared.customer.persistence.CustomerRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Test;
@@ -16,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class CustomerRepositoryTest extends BaseMmtTest {
+public class CustomerRepositoryTest extends AbstractTester {
 	@Autowired
 	private CustomerRepository custMapper;
 	private int CUST_ID_ = -5743;

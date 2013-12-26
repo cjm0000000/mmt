@@ -9,7 +9,6 @@ import lemon.shared.media.Media;
 import lemon.shared.media.MediaSync;
 import lemon.shared.media.MediaSyncLog;
 import lemon.shared.media.persistence.MediaRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.EqualsUtil;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -17,8 +16,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MediaRepoTest extends BaseMmtTest {
+public class MediaRepoTest extends AbstractTester {
 	@Autowired
 	private MediaRepository mediaRepository;
 

@@ -22,7 +22,6 @@ import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
 import lemon.shared.message.persistence.MsgRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Ignore;
@@ -30,8 +29,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MsgRepositoryTest extends BaseMmtTest {
+public class MsgRepositoryTest extends AbstractTester {
 	@Autowired
 	private MsgRepository msgRepository;
 

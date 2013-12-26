@@ -1,4 +1,4 @@
-package lemon.shared.access;
+package com.github.cjm0000000.mmt.shared.access;
 
 /**
  * API return code

@@ -7,14 +7,15 @@ import java.util.UUID;
 
 import lemon.shared.message.local.LocalMsgBean;
 import lemon.shared.message.local.persistence.LocalMsgBeanRepository;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.idcenter.IdWorkerManager;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class LocalMsgBeanRepositoryTest extends BaseMmtTest{
+import com.github.cjm0000000.shared.test.AbstractTester;
+
+public class LocalMsgBeanRepositoryTest extends AbstractTester{
 	@Autowired
 	private LocalMsgBeanRepository msgBeanMapper;
 	

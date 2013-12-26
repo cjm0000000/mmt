@@ -3,7 +3,6 @@ package lemon.shared.test.toolkit;
 import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
-import lemon.shared.test.base.BaseMmtTest;
 import lemon.shared.toolkit.weather.Weather;
 import lemon.shared.toolkit.weather.bean.City;
 import lemon.shared.toolkit.weather.bean.WeatherInfo;
@@ -13,7 +12,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class WeatherTest extends BaseMmtTest {
+import com.github.cjm0000000.shared.test.AbstractTester;
+
+public class WeatherTest extends AbstractTester {
 	@Autowired
 	private CityMapper cityMapper;
 	@Autowired

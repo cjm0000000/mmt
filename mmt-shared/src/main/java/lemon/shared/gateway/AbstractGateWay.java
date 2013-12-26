@@ -21,8 +21,8 @@ import static com.github.cjm0000000.mmt.core.config.MmtCharset.*;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
+import com.github.cjm0000000.mmt.shared.access.Access;
 
-import lemon.shared.access.Access;
 import lemon.shared.api.MmtAPI;
 
 /**

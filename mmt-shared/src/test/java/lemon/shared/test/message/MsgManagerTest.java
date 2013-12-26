@@ -21,14 +21,14 @@ import lemon.shared.message.metadata.specific.weixin.WXVoiceMessage;
 import lemon.shared.message.metadata.specific.yixin.YXAudioMessage;
 import lemon.shared.message.metadata.specific.yixin.YXMusicMessage;
 import lemon.shared.message.metadata.specific.yixin.YXVideoMessage;
-import lemon.shared.test.base.BaseMmtTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.service.ServiceType;
+import com.github.cjm0000000.shared.test.AbstractTester;
 
-public class MsgManagerTest extends BaseMmtTest {
+public class MsgManagerTest extends AbstractTester {
 	@Autowired
 	private MsgManager msgManager;
 
