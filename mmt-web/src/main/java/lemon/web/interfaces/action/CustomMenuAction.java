@@ -12,7 +12,6 @@ import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuAPI;
@@ -316,12 +317,12 @@ public final class CustomMenuAction extends AdminNavAction {
 		l1_list.clear();
 		l2_list.clear();
 
-		//TODO 生成JSON
-		//JSONArray jsonArray = JSONArray.fromObject(result, JSONHelper.filterNull());
+		//TODO 生成JSON,可能会有问题
+		JSONObject jsonArray = (JSONObject) JSON.toJSON(result);
 		JSONObject jsonObj = new JSONObject();
-		//jsonObj.put("button", jsonArray);
+		jsonObj.put("button", jsonArray);
 		result.clear();
-		return jsonObj.toString();
+		return JSON.toJSONString(jsonObj);
 	}
 	
 	/**

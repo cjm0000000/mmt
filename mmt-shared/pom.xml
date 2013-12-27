@@ -30,7 +30,7 @@
     		<version>1.3.174</version>
     		<scope>test</scope>
 		</dependency>
-		<!-- Spring配置�?�� -->
+		<!-- Spring配置开始 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -74,7 +74,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		<!-- ========== Spring配置结束 ========== -->
-		<!-- ========== Mybatis配置�?�� ========== -->
+		<!-- ========== Mybatis配置开始 ========== -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -86,14 +86,7 @@
 			<version>1.2.0</version>
 		</dependency>
 		<!-- ========== Mybatis配置结束 ========== -->
-		<!-- ========== c3p0配置�?�� ========== -->
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
-		</dependency>
-		<!-- ========== c3p0配置结束========== -->
-		<!-- ========== MYSQL驱动配置�?�� ========== -->
+		<!-- ========== MYSQL驱动配置开始  ========== -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

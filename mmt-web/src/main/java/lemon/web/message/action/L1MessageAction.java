@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.github.cjm0000000.mmt.shared.message.local.LocalMsgBean;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -147,10 +146,8 @@ public class L1MessageAction extends MessageAction {
 	 * @param json
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private Collection<LocalMsgBean> json2collection(String json) {
-		JSONArray jsonArray = JSONArray.fromObject(json);
-		return JSONArray.toCollection(jsonArray, LocalMsgBean.class);
+		return JSON.parseArray(json, LocalMsgBean.class);
 	}
 	
 	/**

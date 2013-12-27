@@ -19,7 +19,6 @@ import lemon.web.system.bean.SystemConfig;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
 import lemon.web.toolkit.ArchiveManager;
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +33,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.file.FileManager;
@@ -329,7 +330,7 @@ public final class MediaAction extends AdminNavAction {
 		log.setService_type(ServiceType.WEIXIN);
 		mediaRepository.addMediaSyncLog(log);
 		
-		JSONObject resObj = JSONObject.fromObject(res);
+		JSONObject resObj = JSON.parseObject(res);
 		if(resObj.get("errcode") != null)
 			return sendJSONError("上传到微信服务器出错[errcode=" + resObj.get("errcode")
 					+ ",errmsg=" + resObj.get("errmsg") + "]");
@@ -337,7 +338,7 @@ public final class MediaAction extends AdminNavAction {
 			return sendJSONError("与微信服务器同步出错。");
 		//存到同步表
 		MediaSync ms = new MediaSync();
-		ms.setCreated_at(resObj.getInt("created_at"));
+		ms.setCreated_at(resObj.getIntValue("created_at"));
 		ms.setCust_id(user.getCust_id());
 		//微信文件过期时间是三天
 		ms.setExpire_time(ms.getCreated_at() + 3 * 24 * 3600);

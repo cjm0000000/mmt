@@ -1,9 +1,8 @@
 package lemon.web.base;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.github.cjm0000000.mmt.web.WebException;
 
 import lemon.web.global.JSONResult;
@@ -79,9 +78,14 @@ public class MMTAction {
 		return prepareJSON(false, BS3UI.danger(error));
 	}
 	
+	/**
+	 * parse to JSON string
+	 * @param success
+	 * @param message
+	 * @return
+	 */
 	private String prepareJSON(boolean success, String message){
-		JSONResult result = new JSONResult(success, message);
-		return JSONObject.fromObject(result).toString();
+		return JSON.toJSONString(new JSONResult(success, message));
 	}
 	
 }
