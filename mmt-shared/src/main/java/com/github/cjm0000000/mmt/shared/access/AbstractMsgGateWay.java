@@ -1,7 +1,9 @@
 package com.github.cjm0000000.mmt.shared.access;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.Filter;
@@ -39,6 +41,12 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 	public AbstractMsgGateWay(PassiveProcessor msgProcessor){
 		this.msgProcessor = msgProcessor;
 	}
+	
+	/**
+	 * 获取接口编码
+	 * @return
+	 */
+	protected abstract String getGateWayCharset();
 	
 	/**
 	 * 在处理消息之前需要做的事情<BR>
@@ -79,9 +87,9 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 	@Override
 	public final void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		//FIXME 植入代码开始跟踪请求 - begin
 		if(logger.isDebugEnabled())
 			logger.debug("接受到消息请求。");
-		//FIXME 植入代码开始跟踪消息
 		HttpServletRequest req 		= (HttpServletRequest) request;
 		HttpServletResponse resp 	= (HttpServletResponse) response;
 		//获取客户令牌
@@ -99,11 +107,15 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 			process0(cfg, req, resp);
 		else
 			access(cfg, req, resp);
+		//FIXME 植入代码开始跟踪请求 - end
 	}
 	
 	@Override
 	public final BaseMessage processMsg(MmtConfig cfg, InputStream is) {
-		return msgProcessor.process(cfg.getApi_url(), getMessage(is));
+		String xml = getStringFromStream(is);
+		//save log
+		saveRecvLog(xml);
+		return msgProcessor.process(cfg.getApi_url(), getMessage(xml));
 	}
 	
 	/**
@@ -113,7 +125,7 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 	 * @param resp
 	 * @throws IOException 
 	 */
-	private final void access(MmtConfig cfg, HttpServletRequest req,
+	private void access(MmtConfig cfg, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
 		if(logger.isDebugEnabled())
 			logger.debug("Verify signature[cust_id=" + cfg.getCust_id() + "].");
@@ -121,6 +133,7 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 		doAuthentication(cfg, req);
 		//回应Server
 		resp.getWriter().print(req.getParameter("echostr"));
+		//FIXME 验证签名结束
 	}
 	
 	/**
@@ -136,12 +149,12 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 	}
 	
 	/**
-	 * get receive message via input stream
-	 * @param is
+	 * get receive message
+	 * @param xml
 	 * @return
 	 */
-	private BaseMessage getMessage(InputStream is) {
-		return MmtXMLParser.fromXML(is);
+	private BaseMessage getMessage(String xml) {
+		return MmtXMLParser.fromXML(xml);
 	}
 	
 	/**
@@ -159,10 +172,50 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
 		preProcessMsg(cfg, request);
 		try (PrintWriter out = response.getWriter()) {
 			BaseMessage result = processMsg(cfg, request.getInputStream());
-			out.println(MmtXMLParser.toXML(result));
+			String respXML = MmtXMLParser.toXML(result);
+			//save log
+			saveSendLog(respXML);
+			//response to server
+			out.println(respXML);
 			out.flush();
+			//FIXME 消息处理正常结束
 		} catch (IOException e) {
+			//FIXME 消息异常结束
 			throw new MmtException("Process message failed. ", e.getCause());
+		}
+	}
+	
+	/**
+	 * 保存接收日志
+	 * @param xml
+	 */
+	private void saveRecvLog(String xml){
+		
+	}
+	
+	/**
+	 * 保存发送日志
+	 * @param xml
+	 */
+	private void saveSendLog(String xml){
+		
+	}
+	
+	/**
+	 * get string from input stream
+	 * @param is0
+	 * @return
+	 */
+	private String getStringFromStream(InputStream is0) {
+		try (InputStream is = is0) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = br.readLine()) != null)
+				sb.append(line);
+			return new String(sb.toString().getBytes(LOCAL_CHARSET), getGateWayCharset());
+		} catch (IOException e) {
+			throw new MmtException("Cant't get string from InputStream.", e.getCause());
 		}
 	}
 

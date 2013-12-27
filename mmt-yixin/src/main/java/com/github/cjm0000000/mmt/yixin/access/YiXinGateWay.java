@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
 import com.github.cjm0000000.mmt.shared.access.AbstractMsgGateWay;
@@ -54,6 +55,11 @@ public final class YiXinGateWay extends AbstractMsgGateWay {
 	@Override
 	protected void preProcessMsg(MmtConfig cfg, HttpServletRequest req) {
 		// 易信暂时不需要实现，API没有相关说明，如果加了验证，很可能消息处理会失败
+	}
+
+	@Override
+	protected String getGateWayCharset() {
+		return MmtCharset.YIXIN_CHARSET;
 	}
 	
 }
