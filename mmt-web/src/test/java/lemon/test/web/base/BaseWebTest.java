@@ -13,9 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-		"file:../shared/src/test/resources/spring-db.xml",
-		"file:../shared/src/test/resources/spring-dao.xml",
-		"file:../shared/src/test/resources/spring-service.xml" })
+		"file:../mmt-shared/src/test/resources/spring-db.xml",
+		"file:../mmt-shared/src/test/resources/spring-dao.xml",
+		"file:../mmt-shared/src/test/resources/spring-service.xml" })
 public abstract class BaseWebTest {
 	protected static final int CUST_ID = -5743;
 }

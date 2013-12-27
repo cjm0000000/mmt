@@ -6,16 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import lemon.shared.api.MmtAPI;
-import lemon.shared.toolkit.json.JSONHelper;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.system.bean.User;
 import lemon.web.system.mapper.SystemConfigMapper;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
@@ -32,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
+import com.github.cjm0000000.mmt.shared.customer.CustomMenuAPI;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuAdpater;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
@@ -40,7 +37,6 @@ import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 import com.github.cjm0000000.mmt.yixin.YiXinException;
-import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
 
 /**
@@ -66,12 +62,10 @@ public final class CustomMenuAction extends AdminNavAction {
 	private WeiXinConfigRepository wxConfigMapper;
 	@Autowired
 	private YiXinConfigRepository yxConfigMapper;
-	@Resource(name="weiXinAPI")
-	private MmtAPI weixinApi;
-	@Resource(name="yiXinAPI")
-	private MmtAPI yixinApi;
 	@Autowired
 	private SystemConfigMapper systemConfigMapper;
+	//TODO @Autowired
+	private CustomMenuAPI customMenuAPI;
 	
 	static{
 		VIRTUAL_MENU.setMenu_id(VIRTUAL_ROOT_MENU_ID);
@@ -193,7 +187,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		try{
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
-			rCode = weixinApi.createMenus(cfg, json);
+			rCode = customMenuAPI.createMenus(json);
 		}catch(WeiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -216,14 +210,11 @@ public final class CustomMenuAction extends AdminNavAction {
 	@RequestMapping(value = "sync_menu_yx", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String syncMenu2YX(ModelMap model){
 		User user = (User) model.get(TOKEN);
-		YiXinConfig cfg = yxConfigMapper.get(user.getCust_id());
-		if(cfg == null)
-			return sendJSONError("请先配置易信接口。");
 		ReturnCode rCode = null;
 		try{
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
-			rCode = yixinApi.createMenus(cfg, json);
+			rCode = customMenuAPI.createMenus(json);
 		}catch(YiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -325,10 +316,10 @@ public final class CustomMenuAction extends AdminNavAction {
 		l1_list.clear();
 		l2_list.clear();
 
-		// 生成JSON
-		JSONArray jsonArray = JSONArray.fromObject(result, JSONHelper.filterNull());
+		//TODO 生成JSON
+		//JSONArray jsonArray = JSONArray.fromObject(result, JSONHelper.filterNull());
 		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("button", jsonArray);
+		//jsonObj.put("button", jsonArray);
 		result.clear();
 		return jsonObj.toString();
 	}

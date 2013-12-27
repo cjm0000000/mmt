@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.shared.access;
+package com.github.cjm0000000.mmt.core.access;
 
 import com.github.cjm0000000.mmt.core.service.MmtService;
 

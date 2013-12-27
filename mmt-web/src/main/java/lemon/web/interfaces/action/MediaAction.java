@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import lemon.shared.api.MmtAPI;
 import lemon.web.base.AdminNavAction;
 import lemon.web.base.MMTAction;
 import lemon.web.base.paging.Pagination;
@@ -40,6 +39,7 @@ import com.github.cjm0000000.mmt.core.config.MmtCharset;
 import com.github.cjm0000000.mmt.core.file.FileManager;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.media.Media;
+import com.github.cjm0000000.mmt.shared.media.MediaAPI;
 import com.github.cjm0000000.mmt.shared.media.MediaSync;
 import com.github.cjm0000000.mmt.shared.media.MediaSyncLog;
 import com.github.cjm0000000.mmt.shared.media.persistence.MediaRepository;
@@ -71,7 +71,7 @@ public final class MediaAction extends AdminNavAction {
 	@Autowired
 	private WeiXinConfigRepository wxConfigMapper;
 	@Resource(name="weiXinAPI")
-	private MmtAPI weixinApi;
+	private MediaAPI mediaAPI;
 	
 	static{
 		initVerifyRules();
@@ -318,7 +318,8 @@ public final class MediaAction extends AdminNavAction {
 		WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
 		if(cfg  == null)
 			return sendJSONError("请先配置微信接口。");
-		String res = weixinApi.uploadMedia(cfg, media.getMedia_type(), bytes, media.getDisplay_name());
+		String res = null;//TODO 上传media
+		mediaAPI.uploadMedia(media.getMedia_type(), bytes, media.getDisplay_name());
 		//save media sync log
 		MediaSyncLog log = new MediaSyncLog();
 		log.setCust_id(media.getCust_id());
