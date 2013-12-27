@@ -9,7 +9,7 @@
 				value="%d{ABSOLUTE} %c:%L%x[%t] %-5p- %m%n" />
 		</layout>
 	</appender>
-	<logger name="lemon.yixin">
+	<logger name="com.github.cjm0000000.mmt.yixin">
 		<level value="DEBUG" />
 	</logger>
 	<root>

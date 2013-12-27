@@ -20,7 +20,7 @@
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mmtDS4H2" />
-		<property name="mapperLocations" value="classpath*:dao/*/*.xml" />
+		<property name="mapperLocations" value="classpath*:dao/*/*Repo.xml" />
 	</bean>
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
