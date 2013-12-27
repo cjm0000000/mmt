@@ -16,7 +16,7 @@ import com.github.cjm0000000.mmt.web.log.LoginLog;
  *
  */
 @Repository
-public interface SystemLogRepository {
+public interface SysLogRepository {
 	/**
 	 * save login log
 	 * @param log

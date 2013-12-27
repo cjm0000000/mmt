@@ -15,7 +15,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
 import com.github.cjm0000000.mmt.web.WebException;
 import com.github.cjm0000000.mmt.web.common.MMTAction;
 import com.github.cjm0000000.mmt.web.log.LoginLog;
-import com.github.cjm0000000.mmt.web.log.persistence.SystemLogRepository;
+import com.github.cjm0000000.mmt.web.log.persistence.SysLogRepository;
 import com.github.cjm0000000.mmt.web.system.bean.User;
 import com.github.cjm0000000.mmt.web.system.bean.UserConfig;
 import com.github.cjm0000000.mmt.web.system.persistence.UserConfigRepository;
@@ -36,7 +36,7 @@ public class MMTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	@Autowired
 	private UserConfigRepository userConfigMapper;
 	@Autowired
-	private SystemLogRepository systemLogManager;
+	private SysLogRepository systemLogManager;
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
 

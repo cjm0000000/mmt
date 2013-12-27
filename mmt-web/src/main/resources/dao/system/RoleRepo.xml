@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.web.system.mapper.RoleMapper">
-	<select id="getRoleList" parameterType="int" resultType="lemon.web.system.bean.Role">
+<mapper namespace="com.github.cjm0000000.mmt.web.system.persistence.RoleRepository">
+	<select id="getRoleList" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Role">
 		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort,A.reloadable
 			FROM system_role A 
 		WHERE A.`status`='AVAILABLE' 
@@ -15,11 +15,11 @@
 			FROM system_role A 
 		WHERE A.`status`='AVAILABLE'
 	</select>
-	<insert id="addRole" parameterType="lemon.web.system.bean.Role" useGeneratedKeys="true" keyProperty="role_id">
+	<insert id="addRole" parameterType="com.github.cjm0000000.mmt.web.system.bean.Role" useGeneratedKeys="true" keyProperty="role_id">
 		INSERT INTO system_role(role_name,role_desc,status,sort,reloadable) 
 			VALUES(#{role_name},#{role_desc},#{status},#{sort},#{reloadable})
 	</insert>
-	<update id="update" parameterType="lemon.web.system.bean.Role">
+	<update id="update" parameterType="com.github.cjm0000000.mmt.web.system.bean.Role">
 		UPDATE system_role A 
 			SET A.role_name=#{role_name}, 
 				A.role_desc=#{role_desc}, 
@@ -40,7 +40,7 @@
 			#{role_ids}
 		</foreach>
 	</update>
-	<select id="getRole" parameterType="int" resultType="lemon.web.system.bean.Role">
+	<select id="getRole" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Role">
 		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort,A.reloadable
 			FROM system_role A WHERE A.role_id=#{role_id}
 	</select>
@@ -68,7 +68,7 @@
 			#{list}
 		</foreach>
 	</insert>
-	<select id="getAuthority" parameterType="int" resultType="lemon.web.system.bean.Menu">
+	<select id="getAuthority" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuico,B.menu_id  authority
         	FROM system_menu A        
         		LEFT JOIN system_role_menu B on A.menu_id = B.menu_id AND B.role_id=#{role_id}
@@ -88,7 +88,7 @@
 				WHERE A.role_id=B.role_id 
 					AND b.menu_id=#{menu_id})
 	</update>
-	<select id="getRoleListByAuthority" parameterType="int" resultType="lemon.web.system.bean.Role">
+	<select id="getRoleListByAuthority" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Role">
 		SELECT A.role_id,A.role_name,A.`status`,A.role_desc,A.sort,A.reloadable
 			FROM system_role A, system_role_menu B
 		WHERE A.role_id=B.role_id

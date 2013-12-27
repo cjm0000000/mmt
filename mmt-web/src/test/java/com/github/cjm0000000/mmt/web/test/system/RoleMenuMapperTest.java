@@ -9,12 +9,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.web.system.bean.Menu;
-import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuMapper;
+import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuRepository;
 import com.github.cjm0000000.mmt.web.test.AbstractWebTester;
 
 public class RoleMenuMapperTest extends AbstractWebTester {
 	@Autowired
-	private RoleMenuMapper roleMenuMapper;
+	private RoleMenuRepository roleMenuMapper;
 	
 	@Test
 	@Ignore

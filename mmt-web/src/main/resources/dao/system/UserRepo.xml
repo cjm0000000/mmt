@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.web.system.mapper.UserMapper">
-	<insert id="addUser" parameterType="lemon.web.system.bean.User" useGeneratedKeys="true" keyProperty="user_id">
+<mapper namespace="com.github.cjm0000000.mmt.web.system.persistence.UserRepository">
+	<insert id="addUser" parameterType="com.github.cjm0000000.mmt.web.system.bean.User" useGeneratedKeys="true" keyProperty="user_id">
 		INSERT INTO system_user(password,username,idcard,mphone,bz,xm,islock,status) 
 			VALUES(#{password},#{username},#{idcard},#{mphone},#{bz},#{xm},#{islock},'AVAILABLE')
 	</insert>
@@ -14,7 +14,7 @@
 			FROM system_user A 
 		WHERE A.username=#{username}
 	</select>
-	<select id="getUserById" parameterType="int" resultType="lemon.web.system.bean.User">
+	<select id="getUserById" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
 		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
@@ -25,7 +25,7 @@
 		WHERE A.user_id=#{user_id}
 			AND A.`status`='AVAILABLE'
 	</select>
-	<select id="checkLogin" resultType="lemon.web.system.bean.User">
+	<select id="checkLogin" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
 		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
 				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
@@ -45,7 +45,7 @@
 			#{userIds}
 		</foreach>
 	</update>
-	<select id="getUserList" resultType="lemon.web.system.bean.User">
+	<select id="getUserList" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
 		<bind name="_username" value="(username == null ? '' : username) + '%'" />
 		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
 				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
@@ -78,7 +78,7 @@
 				A.cust_id=#{cust_id}
 		WHERE A.user_id=#{user_id}
 	</update>
-	<update id="updateUser" parameterType="lemon.web.system.bean.User">
+	<update id="updateUser" parameterType="com.github.cjm0000000.mmt.web.system.bean.User">
 		UPDATE system_user A
 		<set>
 			<if test="username != null and username != '' ">

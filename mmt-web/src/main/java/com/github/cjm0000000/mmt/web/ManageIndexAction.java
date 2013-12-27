@@ -12,7 +12,7 @@ import com.github.cjm0000000.mmt.web.common.MMTAction;
 import com.github.cjm0000000.mmt.web.global.MMT;
 import com.github.cjm0000000.mmt.web.system.bean.Menu;
 import com.github.cjm0000000.mmt.web.system.bean.User;
-import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuMapper;
+import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuRepository;
 /**
  * Manage index page, for redirect
  * 
@@ -24,7 +24,7 @@ import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuMapper;
 @SessionAttributes(MMTAction.TOKEN)
 public class ManageIndexAction extends MMTAction {
 	@Autowired
-	private RoleMenuMapper roleMenuMapper;
+	private RoleMenuRepository roleMenuMapper;
 	
 	/**
 	 * show manager home page

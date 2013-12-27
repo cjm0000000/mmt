@@ -17,7 +17,7 @@ import com.github.cjm0000000.mmt.web.system.bean.Menu;
  *
  */
 @Repository
-public interface RoleMenuMapper {
+public interface RoleMenuRepository {
 	/**
 	 * get third menu by menu URL and super menu URL
 	 * @param url

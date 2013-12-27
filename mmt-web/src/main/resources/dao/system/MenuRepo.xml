@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lemon.web.system.mapper.MenuMapper">
-	<insert id="addMenu" parameterType="lemon.web.system.bean.Menu" useGeneratedKeys="true" keyProperty="menu_id">
+<mapper namespace="com.github.cjm0000000.mmt.web.system.persistence.MenuRepository">
+	<insert id="addMenu" parameterType="com.github.cjm0000000.mmt.web.system.bean.Menu" useGeneratedKeys="true" keyProperty="menu_id">
 		INSERT INTO system_menu(menu_name,menulevcod,supmenucode,menuurl,menuico,sort) 
 			VALUES(#{menu_name},#{menulevcod},#{supmenucode},#{menuurl},#{menuico},#{sort})
 	</insert>
@@ -11,7 +11,7 @@
 			#{menuIds}
 		</foreach>
 	</delete>
-	<update id="editMenu" parameterType="lemon.web.system.bean.Menu">
+	<update id="editMenu" parameterType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		UPDATE system_menu A
 			<set>
 				<if test="menu_name != null and menu_name != ''">
@@ -35,29 +35,29 @@
 			</set>
 		WHERE A.menu_id=#{menu_id}
 	</update>
-	<select id="getMenu" parameterType="int" resultType="lemon.web.system.bean.Menu">
+	<select id="getMenu" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.menu_id=#{menu_id}
 	</select>
-	<select id="getMenuList" resultType="lemon.web.system.bean.Menu">
+	<select id="getMenuList" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A 
 		ORDER BY A.menulevcod,A.sort
 	</select>
-	<select id="getMenuListByLevel" parameterType="string" resultType="lemon.web.system.bean.Menu">
+	<select id="getMenuListByLevel" parameterType="string" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.menulevcod=#{level}
 		ORDER BY A.sort
 	</select>
-	<select id="getMenuListByParent" parameterType="int" resultType="lemon.web.system.bean.Menu">
+	<select id="getMenuListByParent" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.supmenucode=#{parent_id}
 		ORDER BY A.sort
 	</select>
-	<select id="getParentMenuList" resultType="lemon.web.system.bean.Menu">
+	<select id="getParentMenuList" resultType="com.github.cjm0000000.mmt.web.system.bean.Menu">
 		SELECT A.menu_id,A.menu_name,A.menulevcod,A.supmenucode,A.menuurl,A.menuico,A.sort
 			FROM system_menu A
 		WHERE A.menulevcod IN ('1','2')

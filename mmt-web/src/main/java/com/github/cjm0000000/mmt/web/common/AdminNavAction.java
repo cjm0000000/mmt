@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.cjm0000000.mmt.web.common.paging.Pagination;
 import com.github.cjm0000000.mmt.web.system.bean.Menu;
 import com.github.cjm0000000.mmt.web.system.persistence.MenuRepository;
-import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuMapper;
+import com.github.cjm0000000.mmt.web.system.persistence.RoleMenuRepository;
 
 /**
  * 管理员导航条
@@ -24,7 +24,7 @@ public abstract class AdminNavAction extends MMTAction {
 	/** 默认每页数量 */
 	protected static final int PAGESIZE = 10;
 	@Autowired
-	private RoleMenuMapper roleMenuMapper;
+	private RoleMenuRepository roleMenuMapper;
 	@Autowired
 	private MenuRepository menuMapper;
 	

@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
 import com.github.cjm0000000.mmt.web.log.LoginLog;
-import com.github.cjm0000000.mmt.web.log.persistence.SystemLogRepository;
+import com.github.cjm0000000.mmt.web.log.persistence.SysLogRepository;
 import com.github.cjm0000000.mmt.web.test.AbstractWebTester;
 
 public class SystemLog_Test extends AbstractWebTester{
 	@Autowired
-	private SystemLogRepository logManager;
+	private SysLogRepository logManager;
 	
 	@Test
 	public void testLoginLog(){
