@@ -551,6 +551,18 @@ CREATE TABLE `msg_send_text` (
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息发送表';
 
+#
+# KeyEvent接收表
+#
+CREATE TABLE `event_recv_key` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventKey` varchar(255) NOT NULL DEFAULT '' COMMENT '事件KEY',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='KeyEvent接收表';
+
+
+
 #############################  CONFIG   #############################
 #
 # 微信配置信息表

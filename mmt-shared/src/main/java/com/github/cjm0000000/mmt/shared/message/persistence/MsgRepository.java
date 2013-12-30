@@ -19,7 +19,6 @@ import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
 import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.message.event.EventDetail;
 
 /**
  * message repository
@@ -85,14 +84,6 @@ public interface MsgRepository {
 	 */
 	@Lang(RawLanguageDriver.class)
 	AudioMessage getRecvAudioMsg(long id);
-	
-	/**
-	 * get receive event message
-	 * @param id
-	 * @return
-	 */
-	@Lang(RawLanguageDriver.class)
-	EventDetail getRecvEvent(long id);
 	
 	/**
 	 * get receive image message
@@ -181,14 +172,6 @@ public interface MsgRepository {
 	 */
 	@Lang(RawLanguageDriver.class)
 	int saveRecvAudioMsg(AudioMessage msg);
-	
-	/**
-	 * save receive event message
-	 * @param msg
-	 * @return
-	 */
-	@Lang(RawLanguageDriver.class)
-	int saveRecvEventMsg(EventDetail msg);
 	
 	/**
 	 * save receive image message

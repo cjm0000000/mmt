@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
+import com.github.cjm0000000.mmt.core.message.event.KeyEvent;
 import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.recv.IVideo;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
@@ -22,7 +23,7 @@ import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
 import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
-import com.github.cjm0000000.mmt.shared.message.event.EventDetail;
+import com.github.cjm0000000.mmt.shared.message.persistence.EventRepository;
 import com.github.cjm0000000.mmt.shared.message.persistence.MsgRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -36,6 +37,8 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 public class MsgManager {
 	@Autowired
 	private MsgRepository msgRepository;
+	@Autowired
+	private EventRepository eventRepository;
 	
 	/**
 	 * get receive detail message
@@ -98,15 +101,6 @@ public class MsgManager {
 	 */
 	public AudioMessage getRecvYXAudioMsg(long msg_id){
 		return msgRepository.getRecvAudioMsg(msg_id);
-	}
-	
-	/**
-	 * get receive event message by message id
-	 * @param msg_id
-	 * @return
-	 */
-	public EventDetail getRecvEventMsg(long msg_id){
-		return msgRepository.getRecvEvent(msg_id);
 	}
 	
 	/**
@@ -212,14 +206,11 @@ public class MsgManager {
 	}
 	
 	/**
-	 * save received event message
-	 * @param msg
+	 * save receive key event
+	 * @param event
 	 */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveRecvEventMsg(SimpleEvent msg){
-		saveRecvEvent(msg);
-		//TODO save recv event detail
-		msgRepository.saveRecvEventMsg(null);
+	public void saveRecvKeyEvent(KeyEvent event){
+		saveRecvEvent(event);
 	}
 	
 	/**
@@ -336,7 +327,6 @@ public class MsgManager {
 	 * save common receive message 
 	 * @param msg
 	 */
-	@Transactional(propagation = Propagation.REQUIRED)
 	private void saveRecvMsg(SimpleRecvMessage msg){
 		prepareMsgId(msg);
 		msgRepository.saveRecvMsgDetail(msg);
@@ -346,8 +336,7 @@ public class MsgManager {
 	 * save common send message 
 	 * @param msg
 	 */
-	@Transactional(propagation = Propagation.REQUIRED)
-	private void saveSendMsg(BaseMessage msg){
+	public void saveSendMsg(BaseMessage msg){
 		prepareMsgId(msg);
 		msgRepository.saveSendMsgDetail(msg);
 	}

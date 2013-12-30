@@ -47,11 +47,6 @@
 				</choose>
 			</if>
 	</select>
-	<select id="getRecvMsgDetail" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.BaseMessage">
-		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType
-			FROM msg_recv_detail A
-		WHERE A.id=#{id}
-	</select>
 	<select id="getRecvTextMsg" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.recv.TextMessage">
 		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.content 
 			FROM msg_recv_detail A, msg_recv_text B 
@@ -64,13 +59,6 @@
 			FROM msg_recv_detail A, msg_recv_audio_yixin B 
 		WHERE A.id=B.detail_id 
 			AND A.msgType='audio' 
-			AND A.id=#{id}
-	</select>
-	<select id="getRecvEvent" parameterType="long" resultType="com.github.cjm0000000.mmt.shared.message.event.EventDetail">
-		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId,B.eventType,B.eventKey,B.ticket,B.latitude,B.longitude,B.precision
-			FROM msg_recv_detail A, msg_recv_event B 
-		WHERE A.id=B.detail_id 
-			AND A.msgType='event' 
 			AND A.id=#{id}
 	</select>
 	<select id="getRecvImageMsg" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.recv.ImageMessage">
@@ -145,10 +133,6 @@
 		INSERT INTO msg_recv_audio_yixin(detail_id,cust_id,url,name,mimeType)
 			VALUES(#{id},#{cust_id},#{url},#{name},#{mimeType})
 	</insert>
-	<insert id="saveRecvEventMsg" parameterType="com.github.cjm0000000.mmt.shared.message.event.EventDetail" >
-		INSERT INTO msg_recv_event(detail_id,cust_id,eventType,eventKey)
-			VALUES(#{id},#{cust_id},#{eventType},#{eventKey})
-	</insert>
 	<insert id="saveRecvImageMsg" parameterType="com.github.cjm0000000.mmt.core.message.recv.ImageMessage" >
 		INSERT INTO msg_recv_image(detail_id,cust_id,picUrl,mediaId)
 			VALUES (#{id},#{cust_id},#{picUrl},#{mediaId})
@@ -160,10 +144,6 @@
 	<insert id="saveRecvLocationMsg" parameterType="com.github.cjm0000000.mmt.core.message.recv.LocationMessage" >
 		INSERT INTO msg_recv_location(detail_id,cust_id,location_X,location_Y,scale,label)
 			VALUES (#{id},#{cust_id},#{location_X},#{location_Y},#{scale},#{label})
-	</insert>
-	<insert id="saveRecvMsgDetail" parameterType="com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage" >
-		INSERT INTO msg_recv_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) 
-			VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now())
 	</insert>
 	<insert id="saveRecvTextMsg" parameterType="com.github.cjm0000000.mmt.core.message.recv.TextMessage" >
 		INSERT INTO msg_recv_text(detail_id,cust_id,content) 
@@ -200,5 +180,14 @@
 	<insert id="saveSendTextMsg" parameterType="com.github.cjm0000000.mmt.core.message.send.passive.TextMessage" >
 		INSERT INTO msg_send_text(detail_id,cust_id,content) 
 			VALUES (#{id},#{cust_id},#{content})
+	</insert>
+	<select id="getRecvMsgDetail" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.BaseMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType
+			FROM msg_recv_detail A
+		WHERE A.id=#{id}
+	</select>
+	<insert id="saveRecvMsgDetail" parameterType="com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage" >
+		INSERT INTO msg_recv_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) 
+			VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},#{msgId},now())
 	</insert>
 </mapper>
