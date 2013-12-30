@@ -27,9 +27,20 @@ import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test cases for 
+ * @author lemon
+ * @version 1.0
+ *
+ */
 public class MsgManager_Test extends AbstractTester {
 	@Autowired
 	private MsgManager msgManager;
+	
+	@Override
+	public void defaultCase() {
+		saveSendTextMsg();
+	}
 
 	@Test
 	public void saveRecvAudioMsg() {
@@ -197,8 +208,7 @@ public class MsgManager_Test extends AbstractTester {
 		assertTrue(arts2.containsAll(arts2));
 	}
 	
-	@Test
-	public void saveSendTextMsg(){
+	private void saveSendTextMsg(){
 		com.github.cjm0000000.mmt.core.message.send.passive.TextMessage msg = new com.github.cjm0000000.mmt.core.message.send.passive.TextMessage();
 		prepareMsg(msg);
 		msg.setContent(UUID.randomUUID().toString());
@@ -238,5 +248,5 @@ public class MsgManager_Test extends AbstractTester {
 		assertMsg(actual, expected);
 		assertEquals(expected.getMsgId(), actual.getMsgId());
 	}
-	
+
 }

@@ -29,6 +29,12 @@ import com.github.cjm0000000.mmt.shared.message.persistence.MsgRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test cases for message repository
+ * @author lemon
+ * @version 1.0
+ *
+ */
 public class MsgRepository_Test extends AbstractTester {
 	@Autowired
 	private MsgRepository msgRepository;
@@ -216,6 +222,11 @@ public class MsgRepository_Test extends AbstractTester {
 		// TODO msg.setMsgId(System.currentTimeMillis());
 		msg.setService_type(ServiceType.OTHER);
 		msg.setToUserName("toUserName");
+	}
+
+	@Override
+	protected void defaultCase() {
+		
 	}
 	
 }

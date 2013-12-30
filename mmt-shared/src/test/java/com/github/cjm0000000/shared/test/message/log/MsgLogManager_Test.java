@@ -10,22 +10,42 @@ import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
 import com.github.cjm0000000.mmt.shared.message.log.MsgLogManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for message log
+ * @author lemon
+ * @version 1.0
+ *
+ */
 public class MsgLogManager_Test extends AbstractTester {
 	@Autowired
 	private MsgLogManager msgLogManager;
 	
-	@Test
-	public void saveRecvLog(){
-		MsgLog log = generateMsgLog();
-		assertNotEquals(0, msgLogManager.saveRecvLog(log));
+	@Override
+	protected void defaultCase() {
+		saveRecvLog();
 	}
-
+	
+	/**
+	 * save send log
+	 */
 	@Test
 	public void saveSendLog(){
 		MsgLog log = generateMsgLog();
 		assertNotEquals(0, msgLogManager.saveSendLog(log));
 	}
 	
+	/**
+	 * save receive log
+	 */
+	private void saveRecvLog(){
+		MsgLog log = generateMsgLog();
+		assertNotEquals(0, msgLogManager.saveRecvLog(log));
+	}
+	
+	/**
+	 * generate message log
+	 * @return
+	 */
 	private MsgLog generateMsgLog(){
 		MsgLog log = new MsgLog();
 		log.setCust_id(CUST_ID);
@@ -34,4 +54,5 @@ public class MsgLogManager_Test extends AbstractTester {
 		log.setTimestamp(null);
 		return log;
 	}
+
 }

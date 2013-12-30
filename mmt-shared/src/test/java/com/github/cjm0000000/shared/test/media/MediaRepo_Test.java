@@ -17,44 +17,19 @@ import com.github.cjm0000000.mmt.shared.toolkit.EqualsUtil;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for media repository
+ * @author lemon
+ * @version 2.0
+ *
+ */
 public class MediaRepo_Test extends AbstractTester {
 	@Autowired
 	private MediaRepository mediaRepository;
-
-	@Test
-	public void testMedia(){
-		String display_name = "中文.xls";
-		String media_path = "/usr/local";
-		String media_type = "image";
-		int media_size = 743;
-		String real_name = UUID.randomUUID().toString() + ".jpeg";
-		//Test add
-		Media media = newMedia(display_name, media_path, media_type,
-				media_size, real_name);
-		assertNotEquals(0, mediaRepository.addMedia(media));
-		//Test get
-		Media m2 = mediaRepository.getMedia(media.getId());
-		m2.setTimestamp(null);
-		assertTrue(EqualsUtil.deepEquals(media, m2));
-		//Test update
-		String update_display_name = "更新后.xml";
-		m2.setDisplay_name(update_display_name);
-		assertNotEquals(0, mediaRepository.updateMedia(m2));
-		m2 = mediaRepository.getMedia(m2.getId());
-		assertEquals(update_display_name, m2.getDisplay_name());
-		//Test delete
-		mediaRepository.deleteMedia(new String[]{String.valueOf(m2.getId())});
-		m2 = mediaRepository.getMedia(m2.getId());
-		assertNull(m2);
-		//Test list
-		display_name = UUID.randomUUID().toString();
-		media = newMedia(display_name, media_path, media_type, media_size,
-				real_name);
-		assertNotEquals(0, mediaRepository.addMedia(media));
-		List<Media> list = mediaRepository.list(CUST_ID, display_name, 0, 10);
-		assertNotNull(list);
-		int count = mediaRepository.mediaCount(CUST_ID, display_name);
-		assertEquals(count, list.size());
+	
+	@Override
+	public void defaultCase() {
+		testMedia();
 	}
 	
 	@Test
@@ -120,6 +95,44 @@ public class MediaRepo_Test extends AbstractTester {
 	}
 	
 	/**
+	 * test for media
+	 */
+	private void testMedia(){
+		String display_name = "中文" + UUID.randomUUID().toString() + ".jpeg";
+		String media_path = "/usr/local";
+		String media_type = "image";
+		int media_size = 743;
+		String real_name = "RN-" + UUID.randomUUID().toString() + ".jpeg";
+		//Test add
+		Media media = newMedia(display_name, media_path, media_type,
+				media_size, real_name);
+		assertNotEquals(0, mediaRepository.addMedia(media));
+		//Test get
+		Media m2 = mediaRepository.getMedia(media.getId());
+		m2.setTimestamp(null);
+		assertTrue(EqualsUtil.deepEquals(media, m2));
+		//Test update
+		String update_display_name = "更新后" + UUID.randomUUID().toString() + ".xml";
+		m2.setDisplay_name(update_display_name);
+		assertNotEquals(0, mediaRepository.updateMedia(m2));
+		m2 = mediaRepository.getMedia(m2.getId());
+		assertEquals(update_display_name, m2.getDisplay_name());
+		//Test delete
+		mediaRepository.deleteMedia(new String[]{String.valueOf(m2.getId())});
+		m2 = mediaRepository.getMedia(m2.getId());
+		assertNull(m2);
+		//Test list
+		display_name = UUID.randomUUID().toString();
+		media = newMedia(display_name, media_path, media_type, media_size,
+				real_name);
+		assertNotEquals(0, mediaRepository.addMedia(media));
+		List<Media> list = mediaRepository.list(CUST_ID, display_name, 0, 10);
+		assertNotNull(list);
+		int count = mediaRepository.mediaCount(CUST_ID, display_name);
+		assertEquals(count, list.size());
+	}
+	
+	/**
 	 * New a media object
 	 * @param display_name
 	 * @param media_path
@@ -158,4 +171,5 @@ public class MediaRepo_Test extends AbstractTester {
 		ms.setService_type(st);
 		return ms;
 	}
+
 }

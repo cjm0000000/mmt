@@ -14,11 +14,21 @@ import com.github.cjm0000000.mmt.shared.message.local.persistence.LocalMsgBeanRe
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for local message repository
+ * @author lemon
+ * @version 1.0
+ *
+ */
 public class LocalMsgBeanRepo_Test extends AbstractTester{
 	@Autowired
 	private LocalMsgBeanRepository msgBeanMapper;
 	
-	@Test
+	@Override
+	protected void defaultCase() {
+		addL1Msg();
+	}
+	
 	public void addL1Msg(){
 		LocalMsgBean mb = addMsg(1);
 		//verify
@@ -123,4 +133,5 @@ public class LocalMsgBeanRepo_Test extends AbstractTester{
 		assertNotEquals(0, msgBeanMapper.addMsg(mb, level));
 		return mb;
 	}
+
 }

@@ -1,5 +1,6 @@
 package com.github.cjm0000000.shared.test;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,4 +16,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 		"classpath:spring-service.xml" })
 public abstract class AbstractTester {
 	protected static final int CUST_ID = -5743;
+	
+	/**
+	 * 默认测试用例
+	 */
+	protected abstract void defaultCase();
+	
+	/**
+	 * 运行默认测试用例
+	 */
+	@Test
+	public final void runDefault(){
+		defaultCase();
+	}
 }

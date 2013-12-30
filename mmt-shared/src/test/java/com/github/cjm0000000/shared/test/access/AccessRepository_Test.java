@@ -13,26 +13,19 @@ import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for access repository
+ * @author lemon
+ * @version 2.0
+ *
+ */
 public class AccessRepository_Test extends AbstractTester {
 	@Autowired
 	private AccessRepository accessRepository;
 	
-	/**
-	 * business: access
-	 */
-	@Test
-	public void access(){
-		Access acc = new Access();
-		acc.setCust_id(CUST_ID);
-		acc.setEchostr("5945972242298150991");
-		acc.setId(IdWorkerManager.getIdWorker(Access.class).getId());
-		acc.setNonce("1384404554");
-		acc.setService_type(ServiceType.WEIXIN);
-		acc.setSignature("ceced3c856eb62356041dfa5b5d73dc417eba36c");
-		acc.setTimestamp_api("1384357959");
-		acc.setToken("58fd5e5c1228c6501fcff382b7488ca2");
-		int result = accessRepository.saveAccessLog(acc);
-		assertNotEquals(0, result);
+	@Override
+	public void defaultCase() {
+		access();
 	}
 	
 	@Test
@@ -67,4 +60,21 @@ public class AccessRepository_Test extends AbstractTester {
 		assertNotEquals(0, log.getId());
 	}
 	
+	/**
+	 * business: access
+	 */
+	private void access(){
+		Access acc = new Access();
+		acc.setCust_id(CUST_ID);
+		acc.setEchostr("5945972242298150991");
+		acc.setId(IdWorkerManager.getIdWorker(Access.class).getId());
+		acc.setNonce("1384404554");
+		acc.setService_type(ServiceType.WEIXIN);
+		acc.setSignature("ceced3c856eb62356041dfa5b5d73dc417eba36c");
+		acc.setTimestamp_api("1384357959");
+		acc.setToken("58fd5e5c1228c6501fcff382b7488ca2");
+		int result = accessRepository.saveAccessLog(acc);
+		assertNotEquals(0, result);
+	}
+
 }

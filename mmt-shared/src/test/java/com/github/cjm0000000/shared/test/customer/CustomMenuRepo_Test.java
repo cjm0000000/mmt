@@ -15,17 +15,22 @@ import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepositor
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for custom menu
+ * @author lemon
+ * @version 1.0
+ *
+ */
 public class CustomMenuRepo_Test extends AbstractTester {
 	private static final byte LEVEL = 9;
 	@Autowired
 	private CustomMenuRepository customMenuMapper;
 
-	@Test
-	public void add() {
-		CustomMenu menu = getCustomMenu();
-		assertNotEquals(0, customMenuMapper.addMenu(menu));
+	@Override
+	protected void defaultCase() {
+		addMenu();
 	}
-
+	
 	@Test
 	public void update() {
 		CustomMenu menu = getCustomMenu();
@@ -108,16 +113,28 @@ public class CustomMenuRepo_Test extends AbstractTester {
 	@Test
 	public void saveMenuSyncLog(){
 		CustomMenuLog log = new CustomMenuLog();
-		log.setAccess_token("access_token");
+		log.setAccess_token("access_token" + UUID.randomUUID().toString());
 		log.setAction(CustomMenuLog.Action.DELETE);
 		log.setCust_id(CUST_ID);
-		log.setMsg("msg");
-		log.setResult("result");
+		log.setMsg("msg: " + UUID.randomUUID().toString());
+		log.setResult("result: " + UUID.randomUUID().toString());
 		log.setService_type(ServiceType.OTHER);
 		log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
 		assertNotEquals(0, customMenuMapper.saveMenuSyncLog(log));
 	}
+	
+	/**
+	 * add custom menu
+	 */
+	private void addMenu() {
+		CustomMenu menu = getCustomMenu();
+		assertNotEquals(0, customMenuMapper.addMenu(menu));
+	}
 
+	/**
+	 * get custom menu
+	 * @return
+	 */
 	private CustomMenu getCustomMenu() {
 		CustomMenu menu = new CustomMenu();
 		menu.setCust_id(CUST_ID);
@@ -130,4 +147,5 @@ public class CustomMenuRepo_Test extends AbstractTester {
 		menu.setMenu_id(IdWorkerManager.getIdWorker(CustomMenu.class).getId());
 		return menu;
 	}
+
 }

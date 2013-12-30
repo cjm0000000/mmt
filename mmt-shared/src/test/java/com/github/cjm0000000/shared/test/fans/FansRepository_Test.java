@@ -2,7 +2,6 @@ package com.github.cjm0000000.shared.test.fans;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
@@ -11,12 +10,22 @@ import com.github.cjm0000000.mmt.shared.fans.Fans;
 import com.github.cjm0000000.mmt.shared.fans.FansManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
+/**
+ * Unit test case for fans repository
+ * @author lemon
+ * @version 1.1
+ *
+ */
 public class FansRepository_Test extends AbstractTester {
 	@Autowired
 	private FansManager fansManager;
 	
-	@Test
-	public void addFans(){
+	@Override
+	public void defaultCase() {
+		addFans();
+	}
+	
+	private void addFans(){
 		assertNotNull(fansManager);
 		String user_id = "ot9x4jpm4x_rBrqacQ8hzikL9D-M";
 		//save
@@ -30,5 +39,4 @@ public class FansRepository_Test extends AbstractTester {
 		//disable
 		fansManager.disableFans(CUST_ID,ServiceType.OTHER, user_id);
 	}
-	
 }
