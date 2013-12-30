@@ -430,7 +430,7 @@ CREATE TABLE `msg_recv_voice_weixin` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `mediaId` char(64) NOT NULL,
   `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
-  `recognition` varchar(255) NOT NULL,
+  `recognition` varchar(255) default '' COMMENT '语音识别结果',
   PRIMARY KEY (`detail_id`)
 ) COMMENT='微信语音消息接收表';
 

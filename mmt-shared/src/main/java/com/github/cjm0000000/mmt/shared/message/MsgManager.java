@@ -78,7 +78,7 @@ public class MsgManager {
 	 * @param msgId
 	 * @return
 	 */
-	public SimpleRecvMessage getRecvMsgDetail(long msgId){
+	public BaseMessage getRecvMsgDetail(long msgId){
 		return msgRepository.getRecvMsgDetail(msgId);
 	}
 	

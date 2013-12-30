@@ -28,6 +28,8 @@ public class BaseMessage extends MmtService {
 	@MmtAlias("MsgType")
 	protected String msgType;
 	
+	BaseMessage(){}
+	
 	public BaseMessage(String msgType) {
 		this.msgType = msgType;
 	}

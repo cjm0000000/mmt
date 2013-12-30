@@ -16,6 +16,10 @@ public class VoiceMessage extends MediaMessage {
 	@MmtCDATA
 	@MmtAlias("Format")
 	private String format;
+	/** 对于开通语音识别的账户，这里存放的是语音识别的结果 */
+	@MmtCDATA
+	@MmtAlias("Recognition")
+	private String recognition;
 
 	public VoiceMessage() {
 		super(MsgType.VOICE);
@@ -25,6 +29,12 @@ public class VoiceMessage extends MediaMessage {
 	}
 	public void setFormat(String format) {
 		this.format = format;
+	}
+	public String getRecognition() {
+		return recognition;
+	}
+	public void setRecognition(String recognition) {
+		this.recognition = recognition;
 	}
 
 }

@@ -47,8 +47,8 @@
 				</choose>
 			</if>
 	</select>
-	<select id="getRecvMsgDetail" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage">
-		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,A.msgId
+	<select id="getRecvMsgDetail" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.BaseMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType
 			FROM msg_recv_detail A
 		WHERE A.id=#{id}
 	</select>

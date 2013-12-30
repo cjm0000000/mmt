@@ -168,6 +168,7 @@ public class MsgRepository_Test extends AbstractTester {
 		prepareMsg(msg);
 		msg.setMediaId(UUID.randomUUID().toString());
 		msg.setFormat("amr");
+		msg.setRecognition("语音识别结果。");
 		assertNotEquals(0, msgRepository.saveRecvVoiceMsg(msg));
 	}
 	
@@ -203,6 +204,7 @@ public class MsgRepository_Test extends AbstractTester {
 	public void saveSendNewsMsg(){
 		NewsMessage msg = new NewsMessage();
 		prepareMsg(msg);
+		msg.setNews(new NewsNode[2]);
 		assertNotEquals(0, msgRepository.saveSendNewsMsg(msg));
 	}
 	
@@ -214,14 +216,18 @@ public class MsgRepository_Test extends AbstractTester {
 		assertNotEquals(0, msgRepository.saveSendTextMsg(msg));
 	}
 
+	/**
+	 * 生成BaseMessage
+	 * @param msg
+	 */
 	private void prepareMsg(BaseMessage msg) {
 		msg.setCreateTime(String.valueOf((System.currentTimeMillis() / 1000)));
 		msg.setCust_id(CUST_ID);
-		msg.setFromUserName("fromUserName");
+		msg.setFromUserName("FROM-" + UUID.randomUUID().toString());
 		msg.setId(IdWorkerManager.getIdWorker(BaseMessage.class).getId());
 		// TODO msg.setMsgId(System.currentTimeMillis());
 		msg.setService_type(ServiceType.OTHER);
-		msg.setToUserName("toUserName");
+		msg.setToUserName("TO-" + UUID.randomUUID().toString());
 	}
 
 	@Override

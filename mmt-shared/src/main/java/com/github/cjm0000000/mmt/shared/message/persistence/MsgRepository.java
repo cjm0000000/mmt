@@ -68,7 +68,7 @@ public interface MsgRepository {
 	 * @param id
 	 * @return
 	 */
-	 SimpleRecvMessage getRecvMsgDetail(long id);
+	 BaseMessage getRecvMsgDetail(long id);
 
 	/**
 	 * get receive text message
