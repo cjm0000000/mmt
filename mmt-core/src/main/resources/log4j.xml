@@ -10,13 +10,13 @@
 		</layout>
 	</appender>
 	<logger name="com.github.cjm0000000.mmt.core">
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</logger>
 	<logger name="com.alibaba.fastjson">
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</logger>
 	<root>
-		<priority value="DEBUG" />
+		<priority value="INFO" />
 		<appender-ref ref="CONSOLE" />
 	</root>
 </log4j:configuration>
