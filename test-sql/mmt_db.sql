@@ -563,6 +563,39 @@ CREATE TABLE `event_recv_key` (
   PRIMARY KEY (`detail_id`)
 ) COMMENT='KeyEvent接收表';
 
+--
+-- LocationEvent接收表
+--
+CREATE TABLE `event_recv_location` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `latitude` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置纬度',
+  `longitude` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置经度',
+  `precision` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置精度',
+  PRIMARY KEY (`detail_id`)
+) COMMENT='LocationEvent接收表';
+
+--
+-- ScanEvent接收表
+--
+CREATE TABLE `event_recv_scan` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventKey` varchar(255) NOT NULL DEFAULT '' COMMENT '事件KEY',
+  `ticket` varchar(255) NOT NULL DEFAULT '' COMMENT '二维码的ticket',
+  PRIMARY KEY (`detail_id`)
+) COMMENT='ScanEvent接收表';
+
+--
+-- SimpleEvent接收表
+--
+CREATE TABLE `event_recv_simple` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventType` varchar(20) NOT NULL DEFAULT '' COMMENT '事件类型',
+  PRIMARY KEY (`detail_id`)
+) COMMENT='SimpleEvent接收表';
+
 ----------------------------------------------------------  CONFIG   ----------------------------------------------------------
 --
 -- 微信配置信息表
