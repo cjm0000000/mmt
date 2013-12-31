@@ -12,8 +12,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
-import com.github.cjm0000000.mmt.core.message.event.EventType;
-import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
 import com.github.cjm0000000.mmt.core.message.recv.LocationMessage;
@@ -84,16 +82,6 @@ public class MsgRepository_Test extends AbstractTester {
 		msg.setName("JUnit Test Audio");
 		msg.setUrl("http://www.baidu.com/url");
 		assertNotEquals(0, msgRepository.saveRecvAudioMsg(msg));
-	}
-
-	@Test
-	public void saveRecvEventMsg() {
-		SimpleEvent msg = new SimpleEvent();
-		prepareMsg(msg);
-		//msg.setEventKey(UUID.randomUUID().toString());
-		msg.setEventType(EventType.subscribe);
-		//TODO 修改event repository 体系
-		assertNotEquals(0, msgRepository.saveRecvEventMsg(null));
 	}
 
 	@Test

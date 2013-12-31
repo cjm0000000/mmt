@@ -14,6 +14,10 @@ public class KeyEvent extends SimpleEvent {
 	@MmtCDATA
 	@MmtAlias("EventKey")
 	protected String eventKey;
+	
+	public KeyEvent(){
+		super(EventType.CLICK);
+	}
 
 	public String getEventKey() {
 		return eventKey;

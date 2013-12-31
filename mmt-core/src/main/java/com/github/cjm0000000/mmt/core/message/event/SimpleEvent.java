@@ -21,6 +21,12 @@ public class SimpleEvent extends BaseMessage {
 	public SimpleEvent(){
 		super(MsgType.EVENT);
 	}
+	
+	public SimpleEvent(EventType eventType){
+		this();
+		this.eventType = eventType;
+	}
+	
 	public EventType getEventType() {
 		return eventType;
 	}

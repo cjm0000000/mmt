@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.springframework.stereotype.Repository;
 
+import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.event.EventType;
 import com.github.cjm0000000.mmt.core.message.event.KeyEvent;
 import com.github.cjm0000000.mmt.core.message.event.LocationEvent;
@@ -79,6 +80,14 @@ public interface EventRepository {
 	 */
 	@Lang(RawLanguageDriver.class)
 	SimpleEvent getRecvSimpleEvent(long id);
+	
+	/**
+	 * save event detail
+	 * @param event
+	 * @return
+	 */
+	@Lang(RawLanguageDriver.class)
+	int saveRecvEventDetail(BaseMessage event);
 	
 	/**
 	 * save key event

@@ -17,6 +17,10 @@ public class LocationEvent extends SimpleEvent {
 	@MmtAlias("Precision")
 	private double precision;
 	
+	public LocationEvent(){
+		super(EventType.LOCATION);
+	}
+	
 	public double getLatitude() {
 		return latitude;
 	}
