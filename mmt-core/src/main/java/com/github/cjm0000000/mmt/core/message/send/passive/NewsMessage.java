@@ -33,7 +33,7 @@ public class NewsMessage extends BaseMessage {
 		this.articleCount = news.length;
 	}
 	public int getArticleCount() {
-		return news.length;
+		return articleCount;
 	}
 	
 }

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.event.KeyEvent;
+import com.github.cjm0000000.mmt.core.message.event.LocationEvent;
+import com.github.cjm0000000.mmt.core.message.event.ScanEvent;
 import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.recv.IVideo;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
@@ -39,6 +41,76 @@ public class MsgManager {
 	private MsgRepository msgRepository;
 	@Autowired
 	private EventRepository eventRepository;
+	
+	/**
+	 * get receive subscribe event
+	 * @param cust_id
+	 * @param service_type
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<SimpleEvent> getSubscribeList(int cust_id,
+			ServiceType service_type, int start, int limit) {
+		//TODO implement getSubscribeList
+		return null;
+	}
+	
+	/**
+	 * get receive unsubscribe event
+	 * @param cust_id
+	 * @param service_type
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<SimpleEvent> getUnsubscribeList(int cust_id,
+			ServiceType service_type, int start, int limit) {
+		//TODO implement getUnsubscribeList
+		return null;
+	}
+	
+	/**
+	 * get receive scan event
+	 * @param cust_id
+	 * @param service_type
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<ScanEvent> getScanList(int cust_id,
+			ServiceType service_type, int start, int limit) {
+		//TODO implement getScanList
+		return null;
+	}
+	
+	/**
+	 * get receive location event
+	 * @param cust_id
+	 * @param service_type
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<LocationEvent> getLocationList(int cust_id,
+			ServiceType service_type, int start, int limit) {
+		//TODO implement getLocationList
+		return null;
+	}
+	
+	/**
+	 * get receive CLICK event
+	 * @param cust_id
+	 * @param service_type
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	public List<KeyEvent> getClickList(int cust_id,
+			ServiceType service_type, int start, int limit) {
+		//TODO implement getClickList
+		return null;
+	}
 	
 	/**
 	 * get receive detail message
@@ -194,6 +266,42 @@ public class MsgManager {
 	}
 	
 	/**
+	 * get receive key event by event id
+	 * @param eventId
+	 * @return
+	 */
+	public KeyEvent getRecvKeyEvent(long eventId){
+		return eventRepository.getRecvKeyEvent(eventId);
+	}
+	
+	/**
+	 * get receive location event by event id
+	 * @param eventId
+	 * @return
+	 */
+	public LocationEvent getRecvLocationEvent(long eventId){
+		return eventRepository.getRecvLocationEvent(eventId);
+	}
+	
+	/**
+	 * get receive scan event by event id
+	 * @param eventId
+	 * @return
+	 */
+	public ScanEvent getRecvScanEvent(long eventId){
+		return eventRepository.getRecvScanEvent(eventId);
+	}
+	
+	/**
+	 * get receive simple event by event id
+	 * @param eventId
+	 * @return
+	 */
+	public SimpleEvent getRecvSimpleEvent(long eventId){
+		return eventRepository.getRecvSimpleEvent(eventId);
+	}
+	
+	/**
 	 * save received audio message
 	 * @param msg
 	 */
@@ -203,14 +311,6 @@ public class MsgManager {
 			throw new MmtException("不是YXAudioMessage类型，无法保存。");
 		saveRecvMsg((AudioMessage) msg);
 		msgRepository.saveRecvAudioMsg((AudioMessage)msg);
-	}
-	
-	/**
-	 * save receive key event
-	 * @param event
-	 */
-	public void saveRecvKeyEvent(KeyEvent event){
-		saveRecvEvent(event);
 	}
 	
 	/**
@@ -291,6 +391,46 @@ public class MsgManager {
 	}
 	
 	/**
+	 * save receive key event
+	 * @param event
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveRecvKeyEvent(KeyEvent event){
+		saveRecvEvent(event);
+		eventRepository.saveRecvKeyEvent(event);
+	}
+	
+	/**
+	 * save receive location event
+	 * @param event
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveRecvLocationEvent(LocationEvent event){
+		saveRecvEvent(event);
+		eventRepository.saveRecvLocationEvent(event);
+	}
+	
+	/**
+	 * save receive scan event
+	 * @param event
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveRecvScanEvent(ScanEvent event){
+		saveRecvEvent(event);
+		eventRepository.saveRecvScanEvent(event);
+	}
+	
+	/**
+	 * save receive simple event
+	 * @param event
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveRecvSimpleEvent(SimpleEvent event){
+		saveRecvEvent(event);
+		eventRepository.saveRecvSimpleEvent(event);
+	}
+	
+	/**
 	 * save send music message
 	 * @param msg
 	 */
@@ -316,11 +456,12 @@ public class MsgManager {
 	}
 	
 	/**
-	 * save common recv event
+	 * save common receive event
 	 * @param event
 	 */
 	private void saveRecvEvent(SimpleEvent event){
-		//TODO save common event
+		prepareMsgId(event);
+		eventRepository.saveRecvEventDetail(event);
 	}
 	
 	/**
@@ -336,7 +477,7 @@ public class MsgManager {
 	 * save common send message 
 	 * @param msg
 	 */
-	public void saveSendMsg(BaseMessage msg){
+	private void saveSendMsg(BaseMessage msg){
 		prepareMsgId(msg);
 		msgRepository.saveSendMsgDetail(msg);
 	}

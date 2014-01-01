@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.event.EventType;
+import com.github.cjm0000000.mmt.core.message.event.KeyEvent;
+import com.github.cjm0000000.mmt.core.message.event.LocationEvent;
+import com.github.cjm0000000.mmt.core.message.event.ScanEvent;
 import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
 import com.github.cjm0000000.mmt.core.message.recv.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.recv.LinkMessage;
@@ -25,6 +28,8 @@ import com.github.cjm0000000.mmt.core.message.send.node.NewsNode;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
+import com.github.cjm0000000.mmt.shared.message.persistence.EventRepository;
+import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 import com.github.cjm0000000.shared.test.AbstractTester;
 
 /**
@@ -36,6 +41,8 @@ import com.github.cjm0000000.shared.test.AbstractTester;
 public class MsgManager_Test extends AbstractTester {
 	@Autowired
 	private MsgManager msgManager;
+	@Autowired
+	private EventRepository eventRepository;
 	
 	@Override
 	public void defaultCase() {
@@ -53,18 +60,6 @@ public class MsgManager_Test extends AbstractTester {
 		assertRecvMsg(msg, msg2);
 		assertEquals(msg.getName(), msg2.getName());
 		assertEquals(msg.getUrl(), msg2.getUrl());
-	}
-
-	@Test
-	public void saveRecvSimpleEvent() {
-		SimpleEvent msg = new SimpleEvent();
-		prepareMsg(msg);
-		//msg.setEventKey(UUID.randomUUID().toString());
-		msg.setEventType(EventType.subscribe);
-		msgManager.saveRecvEventMsg(msg);
-		SimpleEvent msg2 = msgManager.getRecvEventMsg(msg.getId());
-		//assertRecvMsg(msg, msg2);
-		assertEquals(msg.getEventType(), msg2.getEventType());
 	}
 
 	@Test
@@ -208,6 +203,62 @@ public class MsgManager_Test extends AbstractTester {
 		assertTrue(arts2.containsAll(arts2));
 	}
 	
+	@Test
+	public void saveRecvKeyEvent(){
+		KeyEvent event = new KeyEvent();
+		String eventKey = "EventKey" + UUID.randomUUID().toString();
+		event.setEventType(EventType.CLICK);
+		event.setEventKey(eventKey);
+		final long eventId = saveEventDetail(event);
+		assertNotEquals(0, eventRepository.saveRecvKeyEvent(event));
+		KeyEvent eventAfterInsert = eventRepository.getRecvKeyEvent(eventId);
+		assertNotNull(eventAfterInsert);
+		assertEvent(event, eventAfterInsert);
+		assertEquals(event.getEventKey(), eventAfterInsert.getEventKey());
+	}
+	
+	@Test
+	public void saveRecvLocationEvent(){
+		LocationEvent event = new LocationEvent();
+		event.setLatitude(2412.153456D);
+		event.setLongitude(211.614321D);
+		event.setPrecision(2320.416D);
+		final long eventId = saveEventDetail(event);
+		assertNotEquals(0, eventRepository.saveRecvLocationEvent(event));
+		LocationEvent eventAfterInsert = eventRepository.getRecvLocationEvent(eventId);
+		assertNotNull(eventAfterInsert);
+		assertEvent(event, eventAfterInsert);
+		assertEquals(event.getLatitude(), eventAfterInsert.getLatitude(), 0.000001D);
+		assertEquals(event.getLongitude(), eventAfterInsert.getLongitude(), 0.000001D);
+		assertEquals(event.getPrecision(), eventAfterInsert.getPrecision(), 0.000001D);
+	}
+	
+	@Test
+	public void saveRecvScanEvent(){
+		ScanEvent event = new ScanEvent();
+		event.setEventType(EventType.scan);
+		event.setTicket("TIC" + UUID.randomUUID().toString());
+		event.setEventKey("KEY" + UUID.randomUUID().toString());
+		final long eventId = saveEventDetail(event);
+		assertNotEquals(0, eventRepository.saveRecvScanEvent(event));
+		ScanEvent eventAfterInsert = eventRepository.getRecvScanEvent(eventId);
+		assertNotNull(eventAfterInsert);
+		assertEvent(event, eventAfterInsert);
+		assertEquals(event.getTicket(), eventAfterInsert.getTicket());
+		assertEquals(event.getEventKey(), eventAfterInsert.getEventKey());
+	}
+	
+	@Test
+	public void saveRecvSimpleEvent(){
+		SimpleEvent event = new SimpleEvent();
+		event.setEventType(EventType.unsubscribe);
+		final long eventId = saveEventDetail(event);
+		assertNotEquals(0, eventRepository.saveRecvSimpleEvent(event));
+		SimpleEvent eventAfterInsert = eventRepository.getRecvSimpleEvent(eventId);
+		assertNotNull(eventAfterInsert);
+		assertEvent(event, eventAfterInsert);
+	}
+	
 	private void saveSendTextMsg(){
 		com.github.cjm0000000.mmt.core.message.send.passive.TextMessage msg = new com.github.cjm0000000.mmt.core.message.send.passive.TextMessage();
 		prepareMsg(msg);
@@ -244,9 +295,48 @@ public class MsgManager_Test extends AbstractTester {
 		assertEquals(expected.getToUserName(), actual.getToUserName());
 	}
 	
+	/**
+	 * 断言接收消息
+	 * @param actual
+	 * @param expected
+	 */
 	private void assertRecvMsg(SimpleRecvMessage actual, SimpleRecvMessage expected){
 		assertMsg(actual, expected);
 		assertEquals(expected.getMsgId(), actual.getMsgId());
+	}
+	
+	/**
+	 * 断言事件
+	 * @param actual
+	 * @param expected
+	 */
+	private void assertEvent(SimpleEvent actual, SimpleEvent expected){
+		assertMsg(actual, expected);
+		assertEquals(expected.getEventType(), actual.getEventType());
+	}
+	
+	/**
+	 * 保存基本信息
+	 * @param msg
+	 * @return
+	 */
+	private long saveEventDetail(BaseMessage msg){
+		prepareSimpleEvent(msg);
+		assertNotEquals(0, eventRepository.saveRecvEventDetail(msg));
+		return msg.getId();
+	}
+	
+	/**
+	 * 生成SimpleEvent
+	 * @param msg
+	 */
+	private void prepareSimpleEvent(BaseMessage msg) {
+		msg.setCreateTime(String.valueOf((System.currentTimeMillis() / 1000)));
+		msg.setCust_id(CUST_ID);
+		msg.setFromUserName("FROM-" + UUID.randomUUID().toString());
+		msg.setId(IdWorkerManager.getIdWorker(BaseMessage.class).getId());
+		msg.setService_type(ServiceType.OTHER);
+		msg.setToUserName("TO-" + UUID.randomUUID().toString());
 	}
 
 }
