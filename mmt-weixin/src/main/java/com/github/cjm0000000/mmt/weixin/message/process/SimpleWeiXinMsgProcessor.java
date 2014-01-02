@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.recv.IVideo;
+import com.github.cjm0000000.mmt.core.message.recv.yixin.MusicMessage;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
@@ -69,6 +70,11 @@ public final class SimpleWeiXinMsgProcessor extends AbstractPassiveMsgProcessor 
     replyMsg.setService_type(getServiceType());
     // msgManager.saveSendNewsMsg(replyMsg);
     return replyMsg;
+  }
+  
+  @Override
+  public BaseMessage processMusicMsg(MmtConfig cfg, MusicMessage msg) {
+    throw new WeiXinException("不支持的消息格式。");
   }
 
   @Override

@@ -32,6 +32,11 @@ public final class YiXinGateWay extends AbstractMsgGateWay {
   private YiXinConfigRepository yiXinConfigMapper;
 
   @Override
+  public MmtConfig getConfig(String mmt_token) {
+    return YiXin.getConfig(mmt_token);
+  }
+  
+  @Override
   public void destroy() {
     YiXin.destory();
     logger.info("易信网关销毁成功...");
@@ -55,11 +60,6 @@ public final class YiXinGateWay extends AbstractMsgGateWay {
   @Override
   protected String getGateWayCharset() {
     return MmtCharset.YIXIN_CHARSET;
-  }
-
-  @Override
-  protected MmtConfig getConfig(String mmt_token) {
-    return YiXin.getConfig(mmt_token);
   }
 
 }

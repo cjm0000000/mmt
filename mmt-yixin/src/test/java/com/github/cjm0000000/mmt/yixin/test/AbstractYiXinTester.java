@@ -13,20 +13,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * 
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({
-		"file:../mmt-shared/src/test/resources/spring-db.xml",
-		"file:../mmt-shared/src/test/resources/spring-dao.xml",
-		"file:../mmt-shared/src/test/resources/spring-service.xml" })
+@ContextConfiguration({"file:../mmt-shared/src/test/resources/spring-db.xml",
+    "file:../mmt-shared/src/test/resources/spring-dao.xml",
+    "file:../mmt-shared/src/test/resources/spring-service.xml"})
 public abstract class AbstractYiXinTester {
-	protected static final int CUST_ID = -5743;
-	
-	/**
-	 * default test case
-	 */
-	protected abstract void defaultCase();
-	
-	@Test
-	public void run(){
-		defaultCase();
-	}
+  protected static final int CUST_ID = -5743;
+
+  /**
+   * default test case
+   */
+  protected abstract void defaultCase();
+
+  @Test
+  public void run() {
+    defaultCase();
+  }
 }
