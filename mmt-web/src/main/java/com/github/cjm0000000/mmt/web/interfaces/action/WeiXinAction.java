@@ -11,9 +11,9 @@ import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.web.system.bean.User;
 import com.github.cjm0000000.mmt.weixin.WeiXin;
+import com.github.cjm0000000.mmt.weixin.api.passive.SimpleWeiXinMsgProcessor;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
-import com.github.cjm0000000.mmt.weixin.message.process.SimpleWeiXinMsgProcessor;
 
 /**
  * 微信接口配置

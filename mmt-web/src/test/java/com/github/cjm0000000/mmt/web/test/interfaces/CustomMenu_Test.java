@@ -10,16 +10,16 @@ import com.github.cjm0000000.mmt.shared.customer.CustomMenuAPI;
 import com.github.cjm0000000.mmt.web.test.AbstractWebTester;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
-public class WeiXin_Test extends AbstractWebTester {
-	@Autowired @Qualifier("weiXinAPI")
-	private CustomMenuAPI menuAPI;
-	@Autowired
-	private WeiXinConfigRepository wxConfigMapper;
-	
-	@Test
-	@Ignore
-	public void testCreateMenu(){
-		ReturnCode rCode = menuAPI.createMenus("null");
-		System.out.println(rCode.getErrcode()+ " " + rCode.getErrmsg());
-	}
+public class CustomMenu_Test extends AbstractWebTester {
+  @Autowired
+  @Qualifier("weiXinAPI")
+  private CustomMenuAPI menuAPI;
+  @Autowired
+  private WeiXinConfigRepository wxConfigMapper;
+
+  @Test
+  public void testCreateMenu() {
+    ReturnCode rCode = menuAPI.createMenus("null");
+    System.out.println(rCode.getErrcode() + " " + rCode.getErrmsg());
+  }
 }

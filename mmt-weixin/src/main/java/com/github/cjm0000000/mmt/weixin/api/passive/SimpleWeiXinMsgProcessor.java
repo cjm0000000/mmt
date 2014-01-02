@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.weixin.message.process;
+package com.github.cjm0000000.mmt.weixin.api.passive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

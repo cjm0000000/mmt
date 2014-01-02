@@ -12,10 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * 
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({
-		"file:../mmt-shared/src/test/resources/spring-db.xml",
-		"file:../mmt-shared/src/test/resources/spring-dao.xml",
-		"file:../mmt-shared/src/test/resources/spring-service.xml" })
+@ContextConfiguration({"file:../mmt-shared/src/test/resources/spring-db.xml",
+    "file:../mmt-shared/src/test/resources/spring-dao.xml",
+    "file:../mmt-shared/src/test/resources/spring-service.xml"})
 public abstract class AbstractWebTester {
-	protected static final int CUST_ID = -5743;
+  protected static final int CUST_ID = -5743;
 }
