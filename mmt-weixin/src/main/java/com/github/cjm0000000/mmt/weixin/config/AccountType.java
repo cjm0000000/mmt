@@ -1,12 +1,15 @@
 package com.github.cjm0000000.mmt.weixin.config;
 
 /**
- * 账户类别
+ * 微信账户类别
+ * 
  * @author lemon
  * @version 1.0
- *
+ * 
  */
 public enum AccountType {
-	DY,
-	FW
+  /** 订阅号 */
+  DY,
+  /** 服务号 */
+  FW
 }

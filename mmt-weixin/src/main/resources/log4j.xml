@@ -12,6 +12,30 @@
 	<logger name="com.github.cjm0000000.mmt.weixin">
 		<level value="DEBUG" />
 	</logger>
+	<logger name="org.mybatis.spring">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.aop">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.beans">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.context">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.core">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.jdbc">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.test">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.springframework.transaction">
+		<level value="INFO" />
+	</logger>
 	<root>
 		<priority value="DEBUG" />
 		<appender-ref ref="CONSOLE" />

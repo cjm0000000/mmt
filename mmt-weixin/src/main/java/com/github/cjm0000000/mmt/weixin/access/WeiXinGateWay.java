@@ -19,7 +19,7 @@ import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 
 /**
- * MicroChat gateway
+ * WeiXin gateway
  * 
  * @author lemon
  * @version 1.0
@@ -35,6 +35,11 @@ public final class WeiXinGateWay extends AbstractMsgGateWay {
   public void destroy() {
     WeiXin.destory();
     logger.info("微信网销毁成功...");
+  }
+  
+  @Override
+  public MmtConfig getConfig(String mmt_token) {
+    return WeiXin.getConfig(mmt_token);
   }
 
   @Override
@@ -57,8 +62,4 @@ public final class WeiXinGateWay extends AbstractMsgGateWay {
     return MmtCharset.WEIXIN_CHARSET;
   }
 
-  @Override
-  public MmtConfig getConfig(String mmt_token) {
-    return WeiXin.getConfig(mmt_token);
-  }
 }
