@@ -37,8 +37,10 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 	private CustomerRepository customerMapper;
 	@Autowired
 	private WeiXinConfigRepository	wxConfigMapper;
+	@Autowired
+	private MMTContext context;
 	
-	private PassiveProcessor api = MMTContext.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+	private PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
 	
 	@Before
 	public void init() {

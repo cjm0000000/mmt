@@ -34,7 +34,9 @@ public class SimpleYiXinMsgProcessor_Test extends AbstractYiXinTester {
 	private CustomerRepository customerMapper;
 	@Autowired
 	private YiXinConfigRepository	yxConfigMapper;
-	private PassiveProcessor api = MMTContext.getApplicationContext().getBean(SimpleYiXinMsgProcessor.class);
+	@Autowired
+	private MMTContext context;
+	private PassiveProcessor api = context.getApplicationContext().getBean(SimpleYiXinMsgProcessor.class);
 	
 	@Before
 	public void init() {
