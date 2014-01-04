@@ -187,7 +187,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		try{
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
-			rCode = customMenuAPI.createMenus(json);
+			rCode = customMenuAPI.createMenus(cfg, json);
 		}catch(WeiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -214,7 +214,8 @@ public final class CustomMenuAction extends AdminNavAction {
 		try{
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
-			rCode = customMenuAPI.createMenus(json);
+			WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
+			rCode = customMenuAPI.createMenus(cfg, json);
 		}catch(YiXinException e){
 			return sendJSONError(e.getMessage());
 		}

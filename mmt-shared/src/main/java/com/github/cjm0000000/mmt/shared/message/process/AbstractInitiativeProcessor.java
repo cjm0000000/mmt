@@ -25,7 +25,6 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 public abstract class AbstractInitiativeProcessor implements InitiativeProcessor {
   @Autowired
   private AccessRepository accessRepository;
-  private static final String COMMON_URL = "https://api.weixin.qq.com/cgi-bin/token";
 
   /**
    * 获取AccessToken请求的参数
@@ -34,6 +33,13 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
    * @return
    */
   public abstract Map<String, Object> getAccessTokenRequestParams(MmtConfig config);
+
+  /**
+   * 获取通用接口URL
+   * 
+   * @return
+   */
+  public abstract String getCommonUrl();
 
   /**
    * 发送错误信息
@@ -53,7 +59,7 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
     // 请求参数
     Map<String, Object> params = getAccessTokenRequestParams(cfg);
     // 获取结果
-    String result = HttpConnector.get(COMMON_URL, params);
+    String result = HttpConnector.get(getCommonUrl(), params);
     // save log
     AccessTokenLog log = new AccessTokenLog();
     log.setCust_id(cfg.getCust_id());
