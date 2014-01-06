@@ -2,6 +2,7 @@ package com.github.cjm0000000.mmt.weixin.api.initiative;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
@@ -18,11 +19,11 @@ import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
  * 
  */
 @Service("weiXinCustomMenuAPI")
-public class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
+public final class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
   private static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create";
   // private static final String MENU_SEARCH_URL = "https://api.weixin.qq.com/cgi-bin/menu/get";
   private static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete";
-
+  @Autowired
   private WeiXinCommonAPI commonAPI;
 
   @Override
