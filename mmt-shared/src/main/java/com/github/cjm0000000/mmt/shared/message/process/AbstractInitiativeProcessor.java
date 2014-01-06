@@ -35,6 +35,12 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
    * @return
    */
   public abstract Map<String, Object> getAccessTokenRequestParams(MmtConfig config);
+  
+  /**
+   * verify MmtConfig type
+   * @param config
+   */
+  public abstract void checkConfigType(MmtConfig config);
 
   /**
    * 获取通用接口URL
@@ -52,6 +58,7 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
 
   @Override
   public String getAccessToken(MmtConfig cfg) {
+    checkConfigType(cfg);
     if (logger.isDebugEnabled()) logger.debug("try to get access token from database.");
     // 从数据库读取Access Token
     AccessToken token = accessRepository.getAccessToken(cfg.getCust_id(), getServiceType());

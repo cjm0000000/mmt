@@ -1,6 +1,7 @@
 package com.github.cjm0000000.mmt.weixin.api.initiative;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.github.cjm0000000.mmt.core.access.JSONResponse;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
@@ -17,6 +18,7 @@ import com.github.cjm0000000.mmt.shared.message.process.AbstractInitiativeMsgPro
  * @version 2.0
  * 
  */
+@Service
 public final class WeiXinInitiativeMsgProcessor extends AbstractInitiativeMsgProcessor {
   @Autowired
   private WeiXinCommonAPI commonAPI;

@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.yixin.message.process;
+package com.github.cjm0000000.mmt.yixin.api.passive;
 
 import org.springframework.stereotype.Service;
 

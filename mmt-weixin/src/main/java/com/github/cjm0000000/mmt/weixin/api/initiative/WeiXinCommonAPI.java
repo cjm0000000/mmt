@@ -25,13 +25,18 @@ public final class WeiXinCommonAPI extends AbstractInitiativeProcessor {
   private static final String COMMON_URL = "https://api.weixin.qq.com/cgi-bin/token";
 
   @Override
+  public void checkConfigType(MmtConfig config) {
+    if (!(config instanceof WeiXinConfig))
+      throw new WeiXinException("内部错误，请联系管理员。", new ClassCastException("config不是WeiXinConfig类型"));
+  }
+
+  @Override
   public ServiceType getServiceType() {
     return ServiceType.WEIXIN;
   }
 
   @Override
   public Map<String, Object> getAccessTokenRequestParams(MmtConfig config) {
-    checkConfigType(config);
     WeiXinConfig cfg = (WeiXinConfig) config;
     // 请求参数
     Map<String, Object> params = new HashMap<>();
@@ -50,16 +55,6 @@ public final class WeiXinCommonAPI extends AbstractInitiativeProcessor {
   @Override
   public void sendError(String errorMsg) {
     throw new WeiXinException(errorMsg);
-  }
-
-  /**
-   * 检测是否是有效的WeiXinConfig
-   * 
-   * @param config
-   */
-  public void checkConfigType(MmtConfig config) {
-    if (!(config instanceof WeiXinConfig))
-      throw new WeiXinException("内部错误，请联系管理员。", new ClassCastException("config不是WeiXinConfig类型"));
   }
 
 }
