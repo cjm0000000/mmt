@@ -18,9 +18,9 @@ import com.github.cjm0000000.mmt.shared.customer.Customer;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomerRepository;
 import com.github.cjm0000000.mmt.shared.message.MsgManager;
 import com.github.cjm0000000.mmt.yixin.YiXin;
+import com.github.cjm0000000.mmt.yixin.api.passive.SimpleYiXinMsgProcessor;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
-import com.github.cjm0000000.mmt.yixin.message.process.SimpleYiXinMsgProcessor;
 import com.github.cjm0000000.mmt.yixin.test.AbstractYiXinTester;
 
 /**

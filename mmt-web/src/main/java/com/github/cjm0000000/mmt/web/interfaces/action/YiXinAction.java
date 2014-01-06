@@ -11,9 +11,9 @@ import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.web.system.bean.User;
 import com.github.cjm0000000.mmt.yixin.YiXin;
+import com.github.cjm0000000.mmt.yixin.api.passive.SimpleYiXinMsgProcessor;
 import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 import com.github.cjm0000000.mmt.yixin.config.persistence.YiXinConfigRepository;
-import com.github.cjm0000000.mmt.yixin.message.process.SimpleYiXinMsgProcessor;
 
 /**
  * 易信接口配置
