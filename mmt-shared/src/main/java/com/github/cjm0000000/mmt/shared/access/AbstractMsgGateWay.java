@@ -26,7 +26,7 @@ import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.access.MsgGateWay;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
-import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
+import com.github.cjm0000000.mmt.core.message.process.PassiveMsgProcessor;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.shared.MMTContext;
 
@@ -239,11 +239,11 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
    * @param cfg
    * @return
    */
-  private PassiveProcessor getProcessor(MmtConfig cfg) {
+  private PassiveMsgProcessor getProcessor(MmtConfig cfg) {
     if (cfg == null || cfg.getBiz_class() == null || "".equals(cfg.getBiz_class()))
       throw new MmtException("No implement bussiness class found!!!");
     try {
-      return (PassiveProcessor) context.getApplicationContext().getBean(
+      return (PassiveMsgProcessor) context.getApplicationContext().getBean(
           Class.forName(cfg.getBiz_class()));
     } catch (BeansException | ClassNotFoundException e) {
       throw new MmtException("No implement bussiness class found!!!", e.getCause());

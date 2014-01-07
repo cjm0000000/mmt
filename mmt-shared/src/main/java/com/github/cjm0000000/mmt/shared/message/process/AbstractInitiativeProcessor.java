@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.core.access.AccessToken;
+import com.github.cjm0000000.mmt.core.access.AccessTokenService;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
@@ -23,7 +23,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
  * @version 2.0
  * 
  */
-public abstract class AbstractInitiativeProcessor implements InitiativeProcessor {
+public abstract class AbstractInitiativeProcessor implements AccessTokenService {
   private static final Logger logger = Logger.getLogger(AbstractInitiativeProcessor.class);
   @Autowired
   private AccessRepository accessRepository;

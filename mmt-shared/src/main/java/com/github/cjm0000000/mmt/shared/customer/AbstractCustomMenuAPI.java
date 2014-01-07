@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.access.AccessTokenServiceManager;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog.Action;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
@@ -24,7 +24,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
  * @version 2.0
  * 
  */
-public abstract class AbstractCustomMenuAPI implements CustomMenuAPI {
+public abstract class AbstractCustomMenuAPI implements AccessTokenServiceManager, CustomMenuAPI {
   private static final Logger logger = Logger.getLogger(AbstractCustomMenuAPI.class);
   @Autowired
   private CustomMenuRepository customMenuRepository;
@@ -42,12 +42,6 @@ public abstract class AbstractCustomMenuAPI implements CustomMenuAPI {
    * @return
    */
   public abstract String getDeleteMenuUrl();
-  
-  /**
-   * get initiative processor
-   * @return
-   */
-  public abstract InitiativeProcessor getInitiativeProcessor();
 
   /**
    * 验证接口配置
@@ -115,18 +109,19 @@ public abstract class AbstractCustomMenuAPI implements CustomMenuAPI {
     log.setCust_id(cust_id);
     log.setMsg(msg);
     log.setResult(result);
-    log.setService_type(getInitiativeProcessor().getServiceType());
+    log.setService_type(getAccessTokenService().getServiceType());
     log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
     return log;
   }
-  
+
   /**
    * get access token string
+   * 
    * @param cfg
    * @return
    */
-  private String getAccessToken(MmtConfig cfg){
-    return getInitiativeProcessor().getAccessToken(cfg);
+  private String getAccessToken(MmtConfig cfg) {
+    return getAccessTokenService().getAccessToken(cfg);
   }
 
 }

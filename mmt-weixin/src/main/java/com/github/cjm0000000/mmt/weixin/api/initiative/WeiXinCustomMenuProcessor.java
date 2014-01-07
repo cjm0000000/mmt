@@ -3,8 +3,8 @@ package com.github.cjm0000000.mmt.weixin.api.initiative;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.access.AccessTokenService;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.customer.AbstractCustomMenuAPI;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
@@ -35,7 +35,7 @@ public final class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
   }
 
   @Override
-  public InitiativeProcessor getInitiativeProcessor() {
+  public AccessTokenService getAccessTokenService() {
     return commonAPI;
   }
 

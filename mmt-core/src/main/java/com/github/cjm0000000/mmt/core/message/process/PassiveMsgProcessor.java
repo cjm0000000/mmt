@@ -10,7 +10,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceProperty;
  * @version 2.0
  *
  */
-public interface PassiveProcessor extends ServiceProperty {
+public interface PassiveMsgProcessor extends ServiceProperty {
 	/**
 	 * process passive message 
 	 * @param mmt_token	 unique in MMT system

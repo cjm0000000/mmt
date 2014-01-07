@@ -2,10 +2,10 @@ package com.github.cjm0000000.mmt.shared.message.process;
 
 import org.apache.log4j.Logger;
 
+import com.github.cjm0000000.mmt.core.access.AccessTokenServiceManager;
 import com.github.cjm0000000.mmt.core.access.JSONResponse;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.process.InitiativeMsgProcessor;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.core.message.send.initiative.ImageMessage;
 import com.github.cjm0000000.mmt.core.message.send.initiative.MusicMessage;
 import com.github.cjm0000000.mmt.core.message.send.initiative.NewsMessage;
@@ -22,17 +22,13 @@ import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
  * @version 2.0
  * 
  */
-public abstract class AbstractInitiativeMsgProcessor implements InitiativeMsgProcessor {
+public abstract class AbstractInitiativeMsgProcessor
+    implements
+      InitiativeMsgProcessor,
+      AccessTokenServiceManager {
   private static final Logger logger = Logger.getLogger(AbstractInitiativeMsgProcessor.class);
   private static final String SEND_MSG_URL =
       "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
-
-  /**
-   * get real initiative processor
-   * 
-   * @return
-   */
-  public abstract InitiativeProcessor getInitiativeProcessor();
 
   /**
    * get send message URL
@@ -41,7 +37,7 @@ public abstract class AbstractInitiativeMsgProcessor implements InitiativeMsgPro
    * @return
    */
   protected String getSendMsgUrl(MmtConfig cfg) {
-    return SEND_MSG_URL + getInitiativeProcessor().getAccessToken(cfg);
+    return SEND_MSG_URL + getAccessTokenService().getAccessToken(cfg);
   }
 
   /**

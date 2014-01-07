@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.cjm0000000.mmt.core.config.Status;
-import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
+import com.github.cjm0000000.mmt.core.message.process.PassiveMsgProcessor;
 import com.github.cjm0000000.mmt.core.message.recv.TextMessage;
 import com.github.cjm0000000.mmt.core.message.send.passive.NewsMessage;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
@@ -87,7 +87,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 
   @Test
   public void textMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String txtMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378050293</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[ss]]></Content><MsgId>5918680940678217795</MsgId></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -97,7 +97,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 
   @Test
   public void subscribeTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090586</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[subscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -107,7 +107,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 
   @Test
   public void unsubscribe() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378090569</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[unsubscribe]]></Event><EventKey><![CDATA[]]></EventKey></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -117,7 +117,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 
   @Test
   public void linkMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[weixin]]></ToUserName><FromUserName><![CDATA[lemon]]></FromUserName><CreateTime>1378090569</CreateTime><MsgType><![CDATA[link]]></MsgType><MsgId>1024102410241024</MsgId><Title><![CDATA[Link \"TEST\" Title]]></Title><Description><![CDATA[Link DESC]]></Description><Url><![CDATA[http://www.163.com/s/a/d/f/a]]></Url></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -127,7 +127,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
 
   @Test
   public void imageMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091075</CreateTime><MsgType><![CDATA[image]]></MsgType><PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/QXd6JDcZQ1ls9utpyRLS45ib4XPBm8jLD27oeCgOrlsjgJuUictQTHXw/0]]></PicUrl><MsgId>5918856098034483283</MsgId><MediaId><![CDATA[ZTjFiu7uLSfqupgRn2z4uZT8JqulZXKntm6ERVXrFtcppQOTF9x8Ow-cCb1yoUoy]]></MediaId></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -138,7 +138,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
   @Test
   @Ignore
   public void locationMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378091153</CreateTime><MsgType><![CDATA[location]]></MsgType><Location_X>30.278790</Location_X><Location_Y>120.145454</Location_Y><Scale>20</Scale><Label><![CDATA[浙江省杭州市: 310000]]></Label><MsgId>5918856433041932373</MsgId></xml>";
     NewsMessage result = (NewsMessage) api.process(MMT_TOKEN, MmtXMLParser.fromXML(recvMsg));
     assertEquals(result.getArticleCount(), 5);
@@ -147,7 +147,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
   @Test
   @Ignore
   public void videoMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1377961745</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[Iy6-lX7dSLa45ztf6AVdjTDcHTWLk3C80VHMGi40HfI1CnpPqixCb6FUJ2ZG4wNd]]></MediaId><ThumbMediaId><![CDATA[gJNpZwX41lZ651onCiBzaYkYOTrqDC_v6oBY9TNocYCMWHG7Zsp67-jq-NRQS1Uk]]></ThumbMediaId><MsgId>5918300629914091537</MsgId></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,
@@ -158,7 +158,7 @@ public class SimpleWeiXinMsgProcessor_Test extends AbstractWeiXinTester {
   @Test
   @Ignore
   public void voiceMsgTest() {
-    PassiveProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
+    PassiveMsgProcessor api = context.getApplicationContext().getBean(SimpleWeiXinMsgProcessor.class);
     String recvMsg = "<xml><ToUserName><![CDATA[gh_de370ad657cf]]></ToUserName><FromUserName><![CDATA[ot9x4jpm4x_rBrqacQ8hzikL9D-M]]></FromUserName><CreateTime>1378040271</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[PG_BHErDUcBylPzSDZHgpGa34axYmbe3_HGaQ7VCYQa_ihn9ON8lpevua76VMsHj]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>5918637896515977279</MsgId><Recognition><![CDATA[]]></Recognition></xml>";
     com.github.cjm0000000.mmt.core.message.send.passive.TextMessage result =
         (com.github.cjm0000000.mmt.core.message.send.passive.TextMessage) api.process(MMT_TOKEN,

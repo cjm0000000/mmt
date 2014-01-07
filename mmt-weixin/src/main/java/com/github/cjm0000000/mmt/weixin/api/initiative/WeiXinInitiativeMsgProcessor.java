@@ -3,9 +3,9 @@ package com.github.cjm0000000.mmt.weixin.api.initiative;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.access.AccessTokenService;
 import com.github.cjm0000000.mmt.core.access.JSONResponse;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.core.message.recv.IVideo;
 import com.github.cjm0000000.mmt.core.message.send.initiative.VideoMessage;
 import com.github.cjm0000000.mmt.core.message.send.initiative.VoiceMessage;
@@ -24,7 +24,7 @@ public final class WeiXinInitiativeMsgProcessor extends AbstractInitiativeMsgPro
   private WeiXinCommonAPI commonAPI;
 
   @Override
-  public InitiativeProcessor getInitiativeProcessor() {
+  public AccessTokenService getAccessTokenService() {
     return commonAPI;
   }
 
