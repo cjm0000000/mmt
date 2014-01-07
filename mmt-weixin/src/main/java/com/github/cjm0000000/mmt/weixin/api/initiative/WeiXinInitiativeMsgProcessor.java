@@ -18,7 +18,7 @@ import com.github.cjm0000000.mmt.shared.message.process.AbstractInitiativeMsgPro
  * @version 2.0
  * 
  */
-@Service
+@Service("weiXinInitiativeMsgProcessor")
 public final class WeiXinInitiativeMsgProcessor extends AbstractInitiativeMsgProcessor {
   @Autowired
   private WeiXinCommonAPI commonAPI;
