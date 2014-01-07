@@ -17,7 +17,7 @@ import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
  * 
  */
 @Service("weiXinCustomMenuAPI")
-public final class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
+public final class WeiXinCustomMenuAPI extends AbstractCustomMenuAPI {
   private static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create";
   // private static final String MENU_SEARCH_URL = "https://api.weixin.qq.com/cgi-bin/menu/get";
   private static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete";
