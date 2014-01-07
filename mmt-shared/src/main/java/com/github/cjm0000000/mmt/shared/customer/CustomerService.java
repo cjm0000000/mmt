@@ -1,7 +1,7 @@
 package com.github.cjm0000000.mmt.shared.customer;
 
+import com.github.cjm0000000.mmt.core.MmtBase;
 import com.github.cjm0000000.mmt.core.config.Status;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * MMT customer service entity
@@ -9,7 +9,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  *
  */
-public class CustomerService extends MmtService {
+public class CustomerService extends MmtBase {
 	private Status status;
 	private int expire_time;
 	

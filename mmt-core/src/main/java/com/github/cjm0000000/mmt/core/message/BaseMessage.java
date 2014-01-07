@@ -1,8 +1,8 @@
 package com.github.cjm0000000.mmt.core.message;
 
+import com.github.cjm0000000.mmt.core.MmtBase;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Simple message entity
@@ -11,7 +11,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 2.0
  * 
  */
-public class BaseMessage extends MmtService {
+public class BaseMessage extends MmtBase {
 	/** ToUserName */
 	@MmtCDATA
 	@MmtAlias("ToUserName")

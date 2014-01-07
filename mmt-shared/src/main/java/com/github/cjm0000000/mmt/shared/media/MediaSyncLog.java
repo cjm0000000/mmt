@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.shared.media;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * Media synchronize log
@@ -8,7 +8,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.1
  *
  */
-public class MediaSyncLog extends MmtService{
+public class MediaSyncLog extends MmtBase{
 	private long media_id;
 	private String result;
 	

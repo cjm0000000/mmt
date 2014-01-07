@@ -1,13 +1,14 @@
-package com.github.cjm0000000.mmt.core.service;
+package com.github.cjm0000000.mmt.core;
 
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
+import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
  * Base element for customer
  * @author lemon
  * @version 1.0
  */
-public class MmtService {
+public class MmtBase {
 	@MmtOmitField
 	protected long id;
 	@MmtOmitField

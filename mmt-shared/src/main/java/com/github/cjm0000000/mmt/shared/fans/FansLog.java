@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.shared.fans;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * 粉丝操作日志
@@ -9,7 +9,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  * 
  */
-public class FansLog extends MmtService {
+public class FansLog extends MmtBase {
 	private Actions action;
 	private String user_id;
 
