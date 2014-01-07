@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg height="641" version="1.1" width="1111" xmlns="http://www.w3.org/2000/svg">
-<rect fill="#ffffc8" height="76" stroke="#ffffc8" stroke-width="1" width="104" x="478" y="94"/>
-<rect fill="none" height="76" stroke="#3c3cc8" stroke-width="1" width="104" x="478" y="94"/>
-<text font-family="Dialog" font-size="12" x="487" y="130">
-ServiceProperty</text>
-<text font-family="Dialog" font-size="12" x="492" y="109">
+<rect fill="#ffffc8" height="76" stroke="#ffffc8" stroke-width="1" width="104" x="510" y="94"/>
+<rect fill="none" height="76" stroke="#3c3cc8" stroke-width="1" width="104" x="510" y="94"/>
+<text font-family="Dialog" font-size="12" x="542" y="130">
+Service</text>
+<text font-family="Dialog" font-size="12" x="524" y="109">
 &lt;&lt;interface&gt;&gt;</text>
-<rect fill="#3c3cc8" height="1" stroke="#3c3cc8" stroke-width="1" width="104" x="478" y="142"/>
-<text font-family="Dialog" font-size="12" x="482" y="157">
+<rect fill="#3c3cc8" height="1" stroke="#3c3cc8" stroke-width="1" width="104" x="510" y="142"/>
+<text font-family="Dialog" font-size="12" x="514" y="157">
 getServiceType()</text>
 <rect fill="#ffffc8" height="76" stroke="#ffffc8" stroke-width="1" width="232" x="446" y="294"/>
 <rect fill="none" height="76" stroke="#3c3cc8" stroke-width="1" width="232" x="446" y="294"/>
-<text font-family="Dialog" font-size="12" x="511" y="330">
-InitiativeProcessor</text>
+<text font-family="Dialog" font-size="12" x="505" y="330">
+AccessTokenService</text>
 <text font-family="Dialog" font-size="12" x="524" y="309">
 &lt;&lt;interface&gt;&gt;</text>
 <rect fill="#3c3cc8" height="1" stroke="#3c3cc8" stroke-width="1" width="232" x="446" y="342"/>
 <text font-family="Dialog" font-size="12" x="450" y="357">
 getAccessToken(cfg : MmtConfig) : String</text>
-<polyline fill="none" points="526,294 526,169" stroke="#000000" stroke-width="1"/>
-<polygon fill="#ffffff" points="526,169 533,181 519,181" stroke="#ffffff" stroke-width="1"/>
-<polygon fill="none" points="526,169 533,181 519,181" stroke="#000000" stroke-width="1"/>
+<polyline fill="none" points="566,294 566,169" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="566,169 573,181 559,181" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="566,169 573,181 559,181" stroke="#000000" stroke-width="1"/>
 <rect fill="#ffffc8" height="171" stroke="#ffffc8" stroke-width="1" width="321" x="38" y="14"/>
 <rect fill="none" height="171" stroke="#3c3cc8" stroke-width="1" width="321" x="38" y="14"/>
 <text font-family="Dialog" font-size="12" x="136" y="50">
@@ -41,22 +41,24 @@ sendVideoMsg(msg : IVideo) : JSONResponse</text>
 sendMusicMsg(msg : MusicMessage) : JSONResponse</text>
 <text font-family="Dialog" font-size="12" x="42" y="172">
 sendNewsMsg(msg : NewsMessage) : JSONResponse</text>
-<rect fill="#c8c8ff" height="138" stroke="#c8c8ff" stroke-width="1" width="331" x="766" y="270"/>
-<rect fill="none" height="138" stroke="#000000" stroke-width="1" width="331" x="766" y="270"/>
-<text font-family="Dialog" font-size="12" font-style="italic" x="858" y="284">
+<rect fill="#c8c8ff" height="157" stroke="#c8c8ff" stroke-width="1" width="331" x="766" y="254"/>
+<rect fill="none" height="157" stroke="#000000" stroke-width="1" width="331" x="766" y="254"/>
+<text font-family="Dialog" font-size="12" font-style="italic" x="858" y="268">
 AbstractInitiativeProcessor</text>
-<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="331" x="766" y="296"/>
-<text font-family="Dialog" font-size="12" x="770" y="311">
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="331" x="766" y="280"/>
+<text font-family="Dialog" font-size="12" x="770" y="295">
 accessRepository : AccessRepository</text>
-<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="331" x="766" y="323"/>
-<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="338">
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="331" x="766" y="307"/>
+<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="322">
 getAccessTokenRequestParams(config : MmtConfig) : Map</text>
-<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="357">
+<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="341">
 getCommonUrl() : String</text>
-<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="376">
+<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="360">
 sendError(errorMsg : String)</text>
-<text font-family="Dialog" font-size="12" x="770" y="395">
+<text font-family="Dialog" font-size="12" x="770" y="379">
 getAccessToken(cfg : MmtConfig) : String</text>
+<text font-family="Dialog" font-size="12" font-style="italic" x="770" y="398">
+checkConfigType(config : MmtConfig)</text>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="766" x2="761" y1="334" y2="334"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="756" x2="751" y1="334" y2="334"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="746" x2="741" y1="334" y2="334"/>
@@ -88,9 +90,9 @@ getCommonUrl() : String</text>
 sendError(errorMsg : String)</text>
 <text font-family="Dialog" font-size="12" x="770" y="614">
 checkConfigType(config : MmtConfig)</text>
-<polyline fill="none" points="926,470 926,407" stroke="#000000" stroke-width="1"/>
-<polygon fill="#ffffff" points="926,407 933,419 919,419" stroke="#ffffff" stroke-width="1"/>
-<polygon fill="none" points="926,407 933,419 919,419" stroke="#000000" stroke-width="1"/>
+<polyline fill="none" points="926,470 926,410" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="926,410 933,422 919,422" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="926,410 933,422 919,422" stroke="#000000" stroke-width="1"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="198" x2="198" y1="230" y2="225"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="198" x2="198" y1="220" y2="215"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="198" x2="198" y1="210" y2="205"/>
@@ -106,7 +108,7 @@ checkConfigType(config : MmtConfig)</text>
 AbstractInitiativeMsgProcessor</text>
 <rect fill="#3c3cc8" height="1" stroke="#3c3cc8" stroke-width="1" width="377" x="14" y="256"/>
 <text font-family="Dialog" font-size="12" x="18" y="271">
-initiativeProcessor : InitiativeProcessor</text>
+initiativeProcessor : AccessTokenService</text>
 <rect fill="#3c3cc8" height="1" stroke="#3c3cc8" stroke-width="1" width="377" x="14" y="283"/>
 <text font-family="Dialog" font-size="12" x="18" y="298">
 sendTextMsg(msg : TextMessage) : JSONResponse</text>
@@ -117,7 +119,7 @@ sendMusicMsg(msg : MusicMessage) : JSONResponse</text>
 <text font-family="Dialog" font-size="12" x="18" y="355">
 sendNewsMsg(msg : NewsMessage) : JSONResponse</text>
 <text font-family="Dialog" font-size="12" font-style="italic" x="18" y="374">
-getInitiativeProcessor() : InitiativeProcessor</text>
+getInitiativeProcessor() : AccessTokenService</text>
 <text font-family="Dialog" font-size="12" x="18" y="393">
 getSendMsgUrl(cfg : MmtConfig) : String</text>
 <text font-family="Dialog" font-size="12" x="18" y="412">
@@ -134,7 +136,7 @@ WeiXinInitiativeMsgProcessor</text>
 commonAPI : WeiXinCommonAPI</text>
 <rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="311" x="38" y="539"/>
 <text font-family="Dialog" font-size="12" x="42" y="554">
-getInitiativeProcessor() : InitiativeProcessor</text>
+getInitiativeProcessor() : AccessTokenService</text>
 <text font-family="Dialog" font-size="12" x="42" y="573">
 sendVoiceMsg(msg : VoiceMessage) : JSONResponse</text>
 <text font-family="Dialog" font-size="12" x="42" y="592">
