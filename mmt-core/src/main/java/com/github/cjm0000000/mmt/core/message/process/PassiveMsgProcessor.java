@@ -2,7 +2,7 @@ package com.github.cjm0000000.mmt.core.message.process;
 
 import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
-import com.github.cjm0000000.mmt.core.service.ServiceProperty;
+import com.github.cjm0000000.mmt.core.service.Service;
 
 /**
  * customer passive message processor
@@ -10,7 +10,7 @@ import com.github.cjm0000000.mmt.core.service.ServiceProperty;
  * @version 2.0
  *
  */
-public interface PassiveMsgProcessor extends ServiceProperty {
+public interface PassiveMsgProcessor extends Service {
 	/**
 	 * process passive message 
 	 * @param mmt_token	 unique in MMT system
