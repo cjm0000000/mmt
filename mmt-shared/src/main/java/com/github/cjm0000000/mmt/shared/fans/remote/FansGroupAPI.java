@@ -38,7 +38,7 @@ public interface FansGroupAPI {
    * @param openId
    * @return
    */
-  FansGroup getGroupByOpenId(MmtConfig cfg, String openId);
+  JSONResponse getGroupByOpenId(MmtConfig cfg, String openId);
 
   /**
    * modify group name

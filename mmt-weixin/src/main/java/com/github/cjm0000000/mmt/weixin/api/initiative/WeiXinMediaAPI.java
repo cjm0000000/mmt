@@ -14,7 +14,7 @@ import com.github.cjm0000000.mmt.shared.media.AbstractMediaAPI;
  * 
  */
 @Service("weiXinMediaAPI")
-public class WeiXinMediaAPI extends AbstractMediaAPI {
+public final class WeiXinMediaAPI extends AbstractMediaAPI {
   private static final String MEDIA_UPLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload";
   //private static final String MEDIA_DOWNLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/get";
   @Autowired
