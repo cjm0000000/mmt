@@ -2,13 +2,14 @@ package com.github.cjm0000000.mmt.shared.message.process;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.core.access.AccessToken;
+import com.github.cjm0000000.mmt.core.access.AccessTokenService;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.access.AccessTokenLog;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
@@ -22,7 +23,8 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
  * @version 2.0
  * 
  */
-public abstract class AbstractInitiativeProcessor implements InitiativeProcessor {
+public abstract class AbstractInitiativeProcessor implements AccessTokenService {
+  private static final Logger logger = Logger.getLogger(AbstractInitiativeProcessor.class);
   @Autowired
   private AccessRepository accessRepository;
 
@@ -33,6 +35,12 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
    * @return
    */
   public abstract Map<String, Object> getAccessTokenRequestParams(MmtConfig config);
+  
+  /**
+   * verify MmtConfig type
+   * @param config
+   */
+  public abstract void checkConfigType(MmtConfig config);
 
   /**
    * 获取通用接口URL
@@ -50,16 +58,25 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
 
   @Override
   public String getAccessToken(MmtConfig cfg) {
+    checkConfigType(cfg);
+    if (logger.isDebugEnabled()) logger.debug("try to get access token from database.");
     // 从数据库读取Access Token
     AccessToken token = accessRepository.getAccessToken(cfg.getCust_id(), getServiceType());
     // 增加10秒：一次请求的时间可能需要花去5S
-    if (token != null && token.getExpire_time() >= ((System.currentTimeMillis() / 1000) + 10))
+    if (token != null && token.getExpire_time() >= ((System.currentTimeMillis() / 1000) + 10)) {
+      if (logger.isDebugEnabled())
+        logger
+            .debug("get access token from database[access_token=" + token.getAccess_token() + "]");
       return token.getAccess_token();
-
+    }
     // 请求参数
     Map<String, Object> params = getAccessTokenRequestParams(cfg);
+    if (logger.isDebugEnabled())
+      logger.debug("try to get access from remote server[params=" + params + "]");
     // 获取结果
     String result = HttpConnector.get(getCommonUrl(), params);
+    if (logger.isDebugEnabled())
+      logger.debug("get access token request successfully. result=" + result);
     // save log
     AccessTokenLog log = new AccessTokenLog();
     log.setCust_id(cfg.getCust_id());
@@ -85,5 +102,4 @@ public abstract class AbstractInitiativeProcessor implements InitiativeProcessor
     accessRepository.saveAccessToken(token);
     return token.getAccess_token();
   }
-
 }

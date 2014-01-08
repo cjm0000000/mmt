@@ -1,16 +1,16 @@
-package com.github.cjm0000000.mmt.core.message.process;
+package com.github.cjm0000000.mmt.core.access;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.service.ServiceProperty;
+import com.github.cjm0000000.mmt.core.service.Service;
 
 /**
- * customer initiative message processor
+ * access token service
  * 
  * @author lemon
  * @version 2.0
  * 
  */
-public interface InitiativeProcessor extends ServiceProperty {
+public interface AccessTokenService extends Service {
 
   /**
    * get access token

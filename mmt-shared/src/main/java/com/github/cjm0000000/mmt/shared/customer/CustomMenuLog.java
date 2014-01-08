@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.shared.customer;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * custom menu log
@@ -8,7 +8,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  *
  */
-public class CustomMenuLog extends MmtService {
+public class CustomMenuLog extends MmtBase {
 	private Action action;
 	private String access_token;
 	private String msg;

@@ -1,7 +1,6 @@
 package com.github.cjm0000000.mmt.shared.customer;
 
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.message.process.InitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 
 /**
@@ -11,7 +10,7 @@ import com.github.cjm0000000.mmt.shared.access.ReturnCode;
  * @version 2.0
  * 
  */
-public interface CustomMenuAPI extends InitiativeProcessor {
+public interface CustomMenuAPI {
   /**
    * create menus on remote server
    * 

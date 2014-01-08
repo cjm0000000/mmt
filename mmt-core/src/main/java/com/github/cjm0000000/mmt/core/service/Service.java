@@ -6,7 +6,7 @@ package com.github.cjm0000000.mmt.core.service;
  * @author lemon
  * @version 1.0
  */
-public interface ServiceProperty {
+public interface Service {
   /**
    * 获取服务类型
    * 

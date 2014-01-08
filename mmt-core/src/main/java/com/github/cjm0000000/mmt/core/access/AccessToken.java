@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.access;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * API返回的Token
@@ -8,7 +8,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  *
  */
-public class AccessToken extends MmtService {
+public class AccessToken extends MmtBase {
 	private String access_token;
 	private int expires_in;
 	private int expire_time;

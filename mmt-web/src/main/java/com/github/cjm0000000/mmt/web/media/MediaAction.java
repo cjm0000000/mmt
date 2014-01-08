@@ -319,7 +319,7 @@ public final class MediaAction extends AdminNavAction {
 		if(cfg  == null)
 			return sendJSONError("请先配置微信接口。");
 		String res = null;//TODO 上传media
-		mediaAPI.uploadMedia(media.getMedia_type(), bytes, media.getDisplay_name());
+		mediaAPI.uploadMedia(cfg, media.getMedia_type(), bytes, media.getDisplay_name());
 		//save media sync log
 		MediaSyncLog log = new MediaSyncLog();
 		log.setCust_id(media.getCust_id());

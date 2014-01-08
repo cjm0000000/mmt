@@ -1,11 +1,10 @@
 package com.github.cjm0000000.mmt.weixin.api.initiative;
 
-import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.cjm0000000.mmt.core.access.AccessTokenService;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
-import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.customer.AbstractCustomMenuAPI;
 import com.github.cjm0000000.mmt.weixin.config.AccountType;
 import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
@@ -18,27 +17,12 @@ import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
  * 
  */
 @Service("weiXinCustomMenuAPI")
-public class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
+public final class WeiXinCustomMenuAPI extends AbstractCustomMenuAPI {
   private static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create";
   // private static final String MENU_SEARCH_URL = "https://api.weixin.qq.com/cgi-bin/menu/get";
   private static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete";
-
+  @Autowired
   private WeiXinCommonAPI commonAPI;
-
-  @Override
-  public ServiceType getServiceType() {
-    return ServiceType.WEIXIN;
-  }
-
-  @Override
-  public Map<String, Object> getAccessTokenRequestParams(MmtConfig config) {
-    return commonAPI.getAccessTokenRequestParams(config);
-  }
-
-  @Override
-  public void sendError(String errorMsg) {
-    commonAPI.sendError(errorMsg);
-  }
 
   @Override
   public String getCreateMenuUrl() {
@@ -51,16 +35,16 @@ public class WeiXinCustomMenuProcessor extends AbstractCustomMenuAPI {
   }
 
   @Override
-  public void verifyConfig(MmtConfig config) {
-    if (config == null) sendError("客户微信配置信息不存在。");
-    commonAPI.checkConfigType(config);
-    WeiXinConfig cfg = (WeiXinConfig) config;
-    if (cfg.getAccount_type().equals(AccountType.DY)) sendError("订阅号不支持自定义菜单操作。");
+  public AccessTokenService getAccessTokenService() {
+    return commonAPI;
   }
 
   @Override
-  public String getCommonUrl() {
-    return commonAPI.getCommonUrl();
+  public void verifyConfig(MmtConfig config) {
+    if (config == null) commonAPI.sendError("客户微信配置信息不存在。");
+    commonAPI.checkConfigType(config);
+    WeiXinConfig cfg = (WeiXinConfig) config;
+    if (cfg.getAccount_type().equals(AccountType.DY)) commonAPI.sendError("订阅号不支持自定义菜单操作。");
   }
 
 }

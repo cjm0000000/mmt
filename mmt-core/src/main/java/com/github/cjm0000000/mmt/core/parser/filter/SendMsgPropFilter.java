@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.PropertyPreFilter;
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * send message properties filter
@@ -19,7 +19,7 @@ public class SendMsgPropFilter implements PropertyPreFilter {
 	private final static SendMsgPropFilter instance = new SendMsgPropFilter();
 	
 	private SendMsgPropFilter(){
-		Class<?> clazz = MmtService.class;
+		Class<?> clazz = MmtBase.class;
 		Field[] excludeFields = clazz.getDeclaredFields();
 		excludes = new HashSet<String>(excludeFields.length);
 		for (Field field : excludeFields)

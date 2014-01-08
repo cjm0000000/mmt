@@ -1,15 +1,15 @@
 package com.github.cjm0000000.mmt.shared.fans;
 
+import com.github.cjm0000000.mmt.core.MmtBase;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.config.Status;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 
 /**
  * Bean for fans
  * @author lemon
  * @version 1.0
  */
-public class Fans extends MmtService implements Cloneable {
+public class Fans extends MmtBase implements Cloneable {
 	private String user_id;
 	private String nick_name;
 	private Status status;

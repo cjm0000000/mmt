@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.shared.access;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * Access token log entity
@@ -8,7 +8,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  *
  */
-public class AccessTokenLog extends MmtService {
+public class AccessTokenLog extends MmtBase {
 	private String appid;
 	private String secret;
 	private String grant_type;

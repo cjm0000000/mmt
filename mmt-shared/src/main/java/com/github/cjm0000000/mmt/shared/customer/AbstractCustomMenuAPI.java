@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.core.MmtException;
+import com.github.cjm0000000.mmt.core.access.AccessTokenServiceManager;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenuLog.Action;
 import com.github.cjm0000000.mmt.shared.customer.persistence.CustomMenuRepository;
-import com.github.cjm0000000.mmt.shared.message.process.AbstractInitiativeProcessor;
 import com.github.cjm0000000.mmt.shared.toolkit.http.HttpConnector;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
 
@@ -24,9 +24,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
  * @version 2.0
  * 
  */
-public abstract class AbstractCustomMenuAPI extends AbstractInitiativeProcessor
-    implements
-      CustomMenuAPI {
+public abstract class AbstractCustomMenuAPI implements AccessTokenServiceManager, CustomMenuAPI {
   private static final Logger logger = Logger.getLogger(AbstractCustomMenuAPI.class);
   @Autowired
   private CustomMenuRepository customMenuRepository;
@@ -94,11 +92,6 @@ public abstract class AbstractCustomMenuAPI extends AbstractInitiativeProcessor
     return JSON.toJavaObject(json, ReturnCode.class);
   }
 
-  @Override
-  public void sendError(String errorMsg) {
-    throw new MmtException(errorMsg);
-  }
-
   /**
    * 拼装成LOG
    * 
@@ -116,9 +109,19 @@ public abstract class AbstractCustomMenuAPI extends AbstractInitiativeProcessor
     log.setCust_id(cust_id);
     log.setMsg(msg);
     log.setResult(result);
-    log.setService_type(getServiceType());
+    log.setService_type(getAccessTokenService().getServiceType());
     log.setId(IdWorkerManager.getIdWorker(CustomMenuLog.class).getId());
     return log;
+  }
+
+  /**
+   * get access token string
+   * 
+   * @param cfg
+   * @return
+   */
+  private String getAccessToken(MmtConfig cfg) {
+    return getAccessTokenService().getAccessToken(cfg);
   }
 
 }

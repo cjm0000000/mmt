@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.shared.message.log;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * Message log
@@ -9,7 +9,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  * 
  */
-public class MsgLog extends MmtService{
+public class MsgLog extends MmtBase{
 	private String msg;
 
 	public String getMsg() {

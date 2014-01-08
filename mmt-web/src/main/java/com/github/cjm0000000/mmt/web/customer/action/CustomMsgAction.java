@@ -29,6 +29,7 @@ import com.github.cjm0000000.mmt.web.common.MMTAction;
 import com.github.cjm0000000.mmt.web.common.paging.Pagination;
 import com.github.cjm0000000.mmt.web.system.bean.User;
 import com.github.cjm0000000.mmt.web.system.persistence.SysConfigRepository;
+import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
 import com.github.cjm0000000.mmt.weixin.config.persistence.WeiXinConfigRepository;
 /**
  * 即时消息管理
@@ -45,10 +46,10 @@ public class CustomMsgAction extends AdminNavAction {
 	private MsgManager msgManager;
 	@Autowired
 	private SysConfigRepository systemConfigMapper;
-	@Autowired @Qualifier("weiXinAPI")
+	@Autowired @Qualifier("weiXinInitiativeMsgProcessor")
 	private InitiativeMsgProcessor msgProcessor;
 	@Autowired
-	private WeiXinConfigRepository wxConfigMapper;
+	private WeiXinConfigRepository weiXinConfigRepository;
 	private static final String GROUP_FOR_SERVICE_TYPE 	= "SERVICE_TYPE";
 	private static final String GROUP_FOR_MSG_TYPE 		= "MESSAGE_TYPE";
 	
@@ -110,7 +111,8 @@ public class CustomMsgAction extends AdminNavAction {
 			return sendJSONError("消息不存在。");
 		BaseMessage sendMsg = generateFormattedMsg(repMsgType, content, msg.getFromUserName());
 		User user = (User) model.get(TOKEN);
-		ReturnCode rCode = null;//TODO = msgProcessor.sendTextMsg(sendMsg);
+		WeiXinConfig cfg = weiXinConfigRepository.get(user.getCust_id());
+		ReturnCode rCode = null; //TODO msgProcessor.sendTextMsg(cfg, sendMsg);
 		if(rCode.getErrcode() == 0)
 			return sendJSONMsg("发送成功。");
 		return sendJSONError("发送失败：" + rCode.getErrmsg());

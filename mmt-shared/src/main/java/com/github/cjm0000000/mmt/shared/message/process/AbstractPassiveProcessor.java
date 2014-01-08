@@ -12,7 +12,7 @@ import com.github.cjm0000000.mmt.core.access.Access;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.event.SimpleEvent;
-import com.github.cjm0000000.mmt.core.message.process.PassiveProcessor;
+import com.github.cjm0000000.mmt.core.message.process.PassiveMsgProcessor;
 import com.github.cjm0000000.mmt.core.message.recv.SimpleRecvMessage;
 import com.github.cjm0000000.mmt.shared.access.persistence.AccessRepository;
 import com.github.cjm0000000.mmt.shared.toolkit.idcenter.IdWorkerManager;
@@ -26,7 +26,7 @@ import com.github.cjm0000000.mmt.shared.toolkit.secure.SecureUtil;
  * @version 2.0
  * 
  */
-abstract class AbstractPassiveProcessor implements PassiveProcessor {
+abstract class AbstractPassiveProcessor implements PassiveMsgProcessor {
   private static final Logger logger = Logger.getLogger(AbstractPassiveProcessor.class);
   @Autowired
   private AccessRepository accessRepository;

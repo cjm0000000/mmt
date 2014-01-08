@@ -1,4 +1,4 @@
-package com.github.cjm0000000.mmt.weixin.api.initiative;
+package com.github.cjm0000000.mmt.yixin.api.initiative;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,35 +9,39 @@ import org.springframework.stereotype.Service;
 import com.github.cjm0000000.mmt.core.config.MmtConfig;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 import com.github.cjm0000000.mmt.shared.message.process.AbstractInitiativeProcessor;
-import com.github.cjm0000000.mmt.weixin.WeiXinException;
-import com.github.cjm0000000.mmt.weixin.config.WeiXinConfig;
+import com.github.cjm0000000.mmt.yixin.YiXinException;
+import com.github.cjm0000000.mmt.yixin.config.YiXinConfig;
 
 /**
- * WeiXin common APIs
+ * YiXin common APIs
  * 
  * @author lemon
  * @version 2.0
  * 
  */
 @Service
-public final class WeiXinCommonAPI extends AbstractInitiativeProcessor {
-  private static final Logger logger = Logger.getLogger(WeiXinCommonAPI.class);
-  private static final String COMMON_URL = "https://api.weixin.qq.com/cgi-bin/token";
+public final class YiXinCommonAPI extends AbstractInitiativeProcessor {
+  private static final Logger logger = Logger.getLogger(YiXinCommonAPI.class);
+  private static final String COMMON_URL = "https://api.yixin.im/cgi-bin/token";
 
-  @Override
+  /**
+   * 检测是否是有效的WeiXinConfig
+   * 
+   * @param config
+   */
   public void checkConfigType(MmtConfig config) {
-    if (!(config instanceof WeiXinConfig))
-      throw new WeiXinException("内部错误，请联系管理员。", new ClassCastException("config不是WeiXinConfig类型"));
+    if (!(config instanceof YiXinConfig))
+      throw new YiXinException("内部错误，请联系管理员。", new ClassCastException("config不是YiXinConfig类型"));
   }
 
   @Override
   public ServiceType getServiceType() {
-    return ServiceType.WEIXIN;
+    return ServiceType.YIXIN;
   }
 
   @Override
   public Map<String, Object> getAccessTokenRequestParams(MmtConfig config) {
-    WeiXinConfig cfg = (WeiXinConfig) config;
+    YiXinConfig cfg = (YiXinConfig) config;
     // 请求参数
     Map<String, Object> params = new HashMap<>();
     params.put("grant_type", "client_credential");
@@ -54,7 +58,7 @@ public final class WeiXinCommonAPI extends AbstractInitiativeProcessor {
 
   @Override
   public void sendError(String errorMsg) {
-    throw new WeiXinException(errorMsg);
+    throw new YiXinException(errorMsg);
   }
 
 }

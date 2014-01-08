@@ -17,6 +17,7 @@ import org.xml.sax.SAXException;
 
 import static com.github.cjm0000000.mmt.core.tookit.convert.PrimitiveTypeConvert.*;
 
+import com.github.cjm0000000.mmt.core.MmtBase;
 import com.github.cjm0000000.mmt.core.MmtException;
 import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.MsgType;
@@ -25,7 +26,6 @@ import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtAlias;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtCDATA;
 import com.github.cjm0000000.mmt.core.parser.annotations.MmtOmitField;
-import com.github.cjm0000000.mmt.core.service.MmtService;
 import com.github.cjm0000000.mmt.core.service.ServiceType;
 
 /**
@@ -122,7 +122,7 @@ public final class SimpleXMLDriver {
       Class<?> superClass = clzObj.getClass();
       Field[] fields;
       try {
-        while (!superClass.equals(MmtService.class) && !Object.class.equals(superClass)) {
+        while (!superClass.equals(MmtBase.class) && !Object.class.equals(superClass)) {
           fields = superClass.getDeclaredFields();
           traverseFields(clzObj, doc, fields);
           superClass = superClass.getSuperclass();

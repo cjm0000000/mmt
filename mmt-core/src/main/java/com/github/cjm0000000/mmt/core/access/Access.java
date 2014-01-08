@@ -1,6 +1,6 @@
 package com.github.cjm0000000.mmt.core.access;
 
-import com.github.cjm0000000.mmt.core.service.MmtService;
+import com.github.cjm0000000.mmt.core.MmtBase;
 
 /**
  * Site access object
@@ -8,7 +8,7 @@ import com.github.cjm0000000.mmt.core.service.MmtService;
  * @version 1.0
  *
  */
-public class Access extends MmtService {
+public class Access extends MmtBase {
 	private String signature;
 	private String timestamp_api;
 	private String nonce;
