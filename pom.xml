@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.cjm0000000</groupId>
 	<artifactId>mmt</artifactId>
@@ -12,7 +13,7 @@
 		<module>mmt-shared</module>
 		<module>mmt-weixin</module>
 		<module>mmt-yixin</module>
-    	<module>mmt-web</module>
+		<module>mmt-web</module>
 	</modules>
 	<properties>
 		<mmt-jdk-version>1.7</mmt-jdk-version>
@@ -58,6 +59,28 @@
 				<configuration>
 					<forkMode>once</forkMode>
 					<argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<check>true</check>
+					<instrumentation>
+						<ignores>
+						</ignores>
+						<excludes>
+							<exclude>**/*Test.class</exclude>
+						</excludes>
+					</instrumentation>
 				</configuration>
 			</plugin>
 		</plugins>
