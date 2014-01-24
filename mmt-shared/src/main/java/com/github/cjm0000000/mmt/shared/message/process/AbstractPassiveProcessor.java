@@ -55,7 +55,8 @@ abstract class AbstractPassiveProcessor implements PassiveMsgProcessor {
     // save log
     sa.setService_type(getServiceType());
     sa.setId(IdWorkerManager.getIdWorker(Access.class).getId());
-    accessRepository.saveAccessLog(sa);
+    // remember save access log when echostr is not null
+    if (sa.getEchostr() != null) accessRepository.saveAccessLog(sa);
     // nonce,token,timestamp dictionary sort
     List<String> list = new ArrayList<>(3);
     list.add(sa.getNonce());
