@@ -29,6 +29,8 @@ import com.github.cjm0000000.mmt.core.message.BaseMessage;
 import com.github.cjm0000000.mmt.core.message.process.PassiveMsgProcessor;
 import com.github.cjm0000000.mmt.core.parser.MmtXMLParser;
 import com.github.cjm0000000.mmt.shared.MMTContext;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
+import com.github.cjm0000000.mmt.shared.message.log.MsgLogManager;
 
 /**
  * basic message gateway
@@ -41,6 +43,8 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
   private static Log logger = LogFactory.getLog(AbstractMsgGateWay.class);
   @Autowired
   private MMTContext context;
+  @Autowired
+  private MsgLogManager msgLogManager;
 
   /**
    * 获取接口编码
@@ -123,7 +127,7 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
   public final BaseMessage processMsg(MmtConfig cfg, InputStream is) {
     String xml = getStringFromStream(is);
     // save log
-    saveRecvLog(xml);
+    saveRecvLog(cfg, xml);
     return getProcessor(cfg).process(cfg.getApi_url(), getMessage(xml));
   }
 
@@ -185,7 +189,7 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
       BaseMessage result = processMsg(cfg, request.getInputStream());
       String respXML = MmtXMLParser.toXML(result);
       // save log
-      saveSendLog(respXML);
+      saveSendLog(cfg, respXML);
       // response to server
       out.println(respXML);
       out.flush();
@@ -199,19 +203,38 @@ public abstract class AbstractMsgGateWay implements MsgGateWay, Filter {
   /**
    * 保存接收日志
    * 
+   * @param cfg
    * @param xml
    */
-  private void saveRecvLog(String xml) {
-
+  private void saveRecvLog(MmtConfig cfg, String xml) {
+    MsgLog log = prepareLog(cfg, xml);
+    if (msgLogManager.saveRecvLog(log) == 0) throw new MmtException("保存接收日志失败。");
   }
 
   /**
    * 保存发送日志
    * 
+   * @param cfg
    * @param xml
    */
-  private void saveSendLog(String xml) {
+  private void saveSendLog(MmtConfig cfg, String xml) {
+    MsgLog log = prepareLog(cfg, xml);
+    if (msgLogManager.saveSendLog(log) == 0) throw new MmtException("保存发送日志失败。");
+  }
 
+  /**
+   * 生成Log对象
+   * 
+   * @param cfg
+   * @param xml
+   * @return
+   */
+  private MsgLog prepareLog(MmtConfig cfg, String xml) {
+    MsgLog log = new MsgLog();
+    log.setCust_id(cfg.getCust_id());
+    log.setMsg(xml);
+    log.setService_type(getProcessor(cfg).getServiceType());
+    return log;
   }
 
   /**
