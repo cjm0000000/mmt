@@ -58,6 +58,8 @@ public abstract class AbstractPassiveMsgProcessor extends AbstractPassiveEventPr
    */
   protected BaseMessage processTextMsg(MmtConfig cfg,
       com.github.cjm0000000.mmt.core.message.recv.TextMessage msg) {
+    //save recv log
+    msgManager.saveRecvTextMsg(msg);
     // 生成回复消息
     String reply = mmtRobot.reply(cfg.getCust_id(), msg.getContent());
     if (null == reply) reply = cfg.getWelcome_msg();
