@@ -12,7 +12,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>lemon.web.global.MMTListener</listener-class>
+		<listener-class>com.github.cjm0000000.mmt.web.global.MMTListener</listener-class>
 	</listener>
 	<!--  获取Spring Security session的生命周期-->  
     <listener>  

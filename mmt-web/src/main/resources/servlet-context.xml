@@ -11,7 +11,7 @@
   http://www.springframework.org/schema/mvc
   http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd ">
   	<mvc:annotation-driven />
-	<context:component-scan base-package="lemon.web" />
+	<context:component-scan base-package="com.github.cjm0000000.mmt.web" />
 	<!-- Velocity 配置 -->
 	<bean id="velocityConfigurer"
 		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">

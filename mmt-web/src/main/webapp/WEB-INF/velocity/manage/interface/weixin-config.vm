@@ -10,13 +10,10 @@
 		### 数据表单
 		<div class="panel-body">
 			<div class="input-group col-lg-12" style="padding:5px;">
-				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
-					#if($service.service_type == 'WEIXIN')
-						<input type="checkbox" id="wxservice" name="wxservice" checked>
-					#else
-						<input type="checkbox" id="wxservice" name="wxservice">
-					#end
-				</div>
+				#if($service.service_type == 'WEIXIN')
+					#set($enableWX = 'checked')
+				#end
+				<input $!enableWX type="checkbox" id="wxservice" name="wxservice" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
 			</div>
 			<div id="form-main" #if($service.service_type != 'WEIXIN') style="display:none;" #end >
 				#if($cfg)
@@ -39,13 +36,10 @@
 				</div>
 				<div class="input-group col-lg-12" style="padding:5px;">
 					<span class="label label-primary">帐号类型</span>&nbsp;&nbsp;&nbsp;&nbsp;
-					<div id="service-no" class="label-toggle-switch make-switch" data-on-label="服务号" data-off-label="订阅号" data-on="warning" data-off="warning" />
-						#if($cfg.account_type != 'FW')
-							<input type="checkbox" id="service-switch" name="service-switch" >
-						#else
-							<input type="checkbox" id="service-switch" name="service-switch" checked>
-						#end
-					</div>
+					#if($cfg.account_type == 'FW')
+						#set($typeFW = 'checked')							
+					#end
+					<input $!typeFW type="checkbox" id="service-switch" name="service-switch" data-on-label="服务号" data-off-label="订阅号" data-on="warning" data-off="warning" />
 				</div>
 				<div id="service-require" #if($cfg.account_type != 'FW')style="display:none;" #end>
 					<div class="input-group col-lg-6" style="padding:5px;">
@@ -81,7 +75,8 @@
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/manage/interface/weixinconfig.js"></script>
 <script type="text/javascript">
-$(".switch").bootstrapSwitch();
+$("#wxservice").bootstrapSwitch();
+$("#service-switch").bootstrapSwitch();
 var url_save = "#{getContextPath}webservices/interface/weixinconfig/save";
 #if($service.service_type != 'WEIXIN')
 	$(".wx-config").attr('disabled',true);

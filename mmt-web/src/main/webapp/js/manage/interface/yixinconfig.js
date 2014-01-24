@@ -1,6 +1,6 @@
 $(function() {
 	//监听接口开关
-	$('#interface-switch').on('switch-change', function (e, data) {
+	$('#yxservice').on('switch-change', function (e, data) {
 	    if(data.value){
 	    	$("#form-main").css('display','inline');
 	    	$(".yx-config").attr('disabled',false);

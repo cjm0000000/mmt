@@ -46,4 +46,5 @@ public abstract class IncomingTasks {
 	//TODO [2013-11-23] 1 网页获取用户网络状态	见http://mp.weixin.qq.com/wiki/index.php?title=%E7%BD%91%E9%A1%B5%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E7%BD%91%E7%BB%9C%E7%8A%B6%E6%80%81
 	//TODO [2013-11-23] 2 隐藏微信中网页右上角按钮		见 http://mp.weixin.qq.com/wiki/index.php?title=%E9%9A%90%E8%97%8F%E5%BE%AE%E4%BF%A1%E4%B8%AD%E7%BD%91%E9%A1%B5%E5%8F%B3%E4%B8%8A%E8%A7%92%E6%8C%89%E9%92%AE
 	//TODO [2013-11-23] 3 隐藏微信中网页底部导航栏		见http://mp.weixin.qq.com/wiki/index.php?title=%E9%9A%90%E8%97%8F%E5%BE%AE%E4%BF%A1%E4%B8%AD%E7%BD%91%E9%A1%B5%E5%BA%95%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F
+  //TODO [2014-1-9] 每个公众账户的实现类需要隔离并且热部署；参考实现：自定义ClassLoad，实现类存储在数据库；
 }

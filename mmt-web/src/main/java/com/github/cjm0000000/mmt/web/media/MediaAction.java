@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -70,7 +71,7 @@ public final class MediaAction extends AdminNavAction {
 	private FileManager fileManager;
 	@Autowired
 	private WeiXinConfigRepository wxConfigMapper;
-	@Resource(name="weiXinAPI")
+	@Autowired @Qualifier("weiXinMediaAPI")
 	private MediaAPI mediaAPI;
 	
 	static{
