@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cjm0000000.mmt.shared.access.ReturnCode;
 import com.github.cjm0000000.mmt.shared.customer.CustomMenu;
@@ -64,8 +66,8 @@ public final class CustomMenuAction extends AdminNavAction {
 	private YiXinConfigRepository yxConfigMapper;
 	@Autowired
 	private SysConfigRepository systemConfigMapper;
-	//TODO @Autowired
-	private CustomMenuAPI customMenuAPI;
+	@Autowired @Qualifier("weiXinCustomMenuAPI")
+	private CustomMenuAPI wxMenuAPI;
 	
 	static{
 		VIRTUAL_MENU.setMenu_id(VIRTUAL_ROOT_MENU_ID);
@@ -187,7 +189,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		try{
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
-			rCode = customMenuAPI.createMenus(cfg, json);
+			rCode = wxMenuAPI.createMenus(cfg, json);
 		}catch(WeiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -215,7 +217,7 @@ public final class CustomMenuAction extends AdminNavAction {
 			String json = generateJson(user.getCust_id());
 			logger.debug(json);
 			WeiXinConfig cfg = wxConfigMapper.get(user.getCust_id());
-			rCode = customMenuAPI.createMenus(cfg, json);
+			rCode = wxMenuAPI.createMenus(cfg, json);
 		}catch(YiXinException e){
 			return sendJSONError(e.getMessage());
 		}
@@ -317,8 +319,7 @@ public final class CustomMenuAction extends AdminNavAction {
 		l1_list.clear();
 		l2_list.clear();
 
-		//TODO 生成JSON,可能会有问题
-		JSONObject jsonArray = (JSONObject) JSON.toJSON(result);
+		JSONArray jsonArray = (JSONArray) JSON.toJSON(result);
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("button", jsonArray);
 		result.clear();
