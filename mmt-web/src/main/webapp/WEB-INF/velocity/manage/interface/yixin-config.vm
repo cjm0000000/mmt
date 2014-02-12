@@ -11,13 +11,10 @@
 		### 数据表单
 		<div class="panel-body">
 			<div class="input-group col-lg-12" style="padding:5px;">
-				<div id="interface-switch" class="label-toggle-switch make-switch" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger" />
-					#if($service.service_type == 'YIXIN')
-						<input type="checkbox" id="yxservice" name="yxservice" checked>
-					#else
-						<input type="checkbox" id="yxservice" name="yxservice">
-					#end
-				</div>
+				#if($service.service_type == 'YIXIN')
+					#set($enableYX = 'checked')
+				#end
+				<input $!enableYX type="checkbox" id="yxservice" name="yxservice" data-on-label="已启用" data-off-label="未启用" data-on="success" data-off="danger"/>
 			</div>
 			<div id="form-main" #if($service.service_type != 'YIXIN') style="display:none;" #end >
 				#if($cfg)
@@ -70,7 +67,7 @@
 <script src="#{getContextPath}js/mmt.js"></script>
 <script src="#{getContextPath}js/manage/interface/yixinconfig.js"></script>
 <script type="text/javascript">
-$(".switch").bootstrapSwitch();
+$("#yxservice").bootstrapSwitch();
 var url_save = "#{getContextPath}webservices/interface/yixinconfig/save";
 #if($service.service_type != 'YIXIN')
 	$(".yx-config").attr('disabled',true);

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.cjm0000000.mmt.shared.message.persistence.EventRepository">
+	<select id="getRecvEventDetail" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.BaseMessage">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType
+			FROM msg_recv_detail A
+		WHERE A.id=#{id}
+	</select>
+	<select id="getRecvKeyEvent" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.event.KeyEvent">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.eventKey,'CLICK' eventType
+			FROM msg_recv_detail A, event_recv_key B
+		WHERE A.id=B.detail_id
+			AND A.id=#{id}
+	</select>
+	<select id="getRecvLocationEvent" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.event.LocationEvent">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.latitude,B.longitude,B.precision,'LOCATION' eventType
+			FROM msg_recv_detail A, event_recv_location B
+		WHERE A.id=B.detail_id
+			AND B.detail_id=#{id}
+	</select>
+	<select id="getRecvScanEvent" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.event.ScanEvent">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.eventKey,B.ticket,B.eventType
+			FROM msg_recv_detail A, event_recv_scan B
+		WHERE A.id=B.detail_id
+			AND B.detail_id=#{id}
+	</select>
+	<select id="getRecvSimpleEvent" parameterType="long" resultType="com.github.cjm0000000.mmt.core.message.event.SimpleEvent">
+		SELECT A.id,A.cust_id,A.service_type,A.toUserName,A.fromUserName,A.createTime,A.msgType,B.eventType,B.eventType
+			FROM msg_recv_detail A, event_recv_simple B
+		WHERE A.id=B.detail_id
+			AND B.detail_id=#{id}
+	</select>
+	<insert id="saveRecvEventDetail" parameterType="com.github.cjm0000000.mmt.core.message.BaseMessage" >
+		INSERT INTO msg_recv_detail(id,cust_id,service_type,toUserName,fromUserName,createTime,msgType,msgId,timestamp) 
+			VALUES (#{id},#{cust_id},#{service_type},#{toUserName},#{fromUserName},#{createTime},#{msgType},0,now())
+	</insert>
+	<insert id="saveRecvKeyEvent" parameterType="com.github.cjm0000000.mmt.core.message.event.KeyEvent" >
+		INSERT INTO event_recv_key(detail_id,cust_id,eventKey)
+			VALUES (#{id},#{cust_id},#{eventKey})
+	</insert>
+	<insert id="saveRecvLocationEvent" parameterType="com.github.cjm0000000.mmt.core.message.event.LocationEvent" >
+		INSERT INTO event_recv_location(detail_id,cust_id,latitude,longitude,precision)
+			VALUES (#{id},#{cust_id},#{latitude},#{longitude},#{precision})
+	</insert>
+	<insert id="saveRecvScanEvent" parameterType="com.github.cjm0000000.mmt.core.message.event.ScanEvent" >
+		INSERT INTO event_recv_scan(detail_id,cust_id,eventKey,eventType,ticket)
+			VALUES (#{id},#{cust_id},#{eventKey},#{eventType},#{ticket})
+	</insert>
+	<insert id="saveRecvSimpleEvent" parameterType="com.github.cjm0000000.mmt.core.message.event.SimpleEvent" >
+		INSERT INTO event_recv_simple(detail_id,cust_id,eventType)
+			VALUES (#{id},#{cust_id},#{eventType})
+	</insert>
+</mapper>

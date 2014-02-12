@@ -26,7 +26,7 @@
         <authentication-provider user-service-ref="mmtUserDetailsService" />
     </authentication-manager>
     <!-- 登录验证器 -->  
-    <beans:bean id="mmtAuthenticationFilter" class="lemon.web.security.MMTAuthenticationFilter">
+    <beans:bean id="mmtAuthenticationFilter" class="com.github.cjm0000000.mmt.web.security.MMTAuthenticationFilter">
 		<!-- 处理登录的action -->
 		<beans:property name="filterProcessesUrl" value="/mmt_auth_center" />
 		<!-- 验证成功后的处理 -->
@@ -48,7 +48,7 @@
         <beans:property name="defaultFailureUrl" value="/webservices/login" />
     </beans:bean>
     <!-- 权限过滤器 -->  
-    <beans:bean id="mmtSecurityFilter" class="lemon.web.security.MMTSecurityFilter">  
+    <beans:bean id="mmtSecurityFilter" class="com.github.cjm0000000.mmt.web.security.MMTSecurityFilter">  
         <!-- 用户拥有的权限 -->  
         <beans:property name="authenticationManager" ref="authenticationManager" />  
         <!-- 用户是否拥有所请求资源的权限 -->  

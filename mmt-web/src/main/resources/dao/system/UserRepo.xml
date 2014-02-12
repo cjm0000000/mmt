@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.cjm0000000.mmt.web.system.persistence.UserRepository">
+	<insert id="addUser" parameterType="com.github.cjm0000000.mmt.web.system.bean.User" useGeneratedKeys="true" keyProperty="user_id">
+		INSERT INTO system_user(password,username,idcard,mphone,bz,xm,islock,status) 
+			VALUES(#{password},#{username},#{idcard},#{mphone},#{bz},#{xm},#{islock},'AVAILABLE')
+	</insert>
+	<insert id="addUserRole" >
+		INSERT INTO system_user_role(user_id,role_id,cust_id) 
+			VALUES(#{user_id},#{role_id},#{cust_id})
+	</insert>
+	<select id="getUserIdByName" parameterType="string" resultType="int">
+		SELECT A.user_id 
+			FROM system_user A 
+		WHERE A.username=#{username}
+	</select>
+	<select id="getUserById" parameterType="int" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
+				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
+			FROM system_user A 
+            	LEFT JOIN system_user_role B ON A.user_id=B.user_id 
+           		LEFT JOIN system_role C ON B.role_id=C.role_id
+           		LEFT JOIN customer D ON B.cust_id=D.cust_id
+		WHERE A.user_id=#{user_id}
+			AND A.`status`='AVAILABLE'
+	</select>
+	<select id="checkLogin" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
+				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
+			FROM system_user A, system_user_role B, system_role C, customer D
+		WHERE A.user_id=B.user_id 
+			AND B.role_id=C.role_id
+			AND B.cust_id=D.cust_id
+			AND A.username=#{username} 
+			AND A.`password`=#{password} 
+			AND A.`status`='AVAILABLE' 
+	</select>
+	<update id="deleteUser">
+		UPDATE system_user A
+			SET A.`status`='UNAVAILABLE'
+		WHERE A.user_id IN
+		<foreach collection="array" item="userIds" index="index" open="(" separator="," close=")">
+			#{userIds}
+		</foreach>
+	</update>
+	<select id="getUserList" resultType="com.github.cjm0000000.mmt.web.system.bean.User">
+		<bind name="_username" value="(username == null ? '' : username) + '%'" />
+		SELECT A.user_id,A.username,A.`password`,A.xm,A.idcard,A.mphone,A.islock,A.bz,A.`status`,
+				IFNULL(C.role_id,0) role_id,IFNULL(C.role_name,'') role_name,
+				IFNULL(D.cust_id,0) cust_id,IFNULL(D.cust_name,'')cust_name
+			FROM system_user A 
+            	LEFT JOIN system_user_role B ON A.user_id=B.user_id 
+           		LEFT JOIN system_role C ON B.role_id=C.role_id
+           		LEFT JOIN customer D ON B.cust_id=D.cust_id
+		WHERE A.`status`='AVAILABLE' 
+		<if test="username != null and username != ''">
+			AND A.username LIKE #{_username}
+		</if>
+			ORDER BY A.username
+		<if test="limit!=0">
+			LIMIT #{start},#{limit}
+		</if>
+	</select>
+	<select id="getUserCnt" resultType="int">
+		<bind name="_username" value="(username == null ? '' : username) + '%'" />
+		SELECT COUNT(A.user_id) 
+			FROM system_user A 
+		WHERE A.`status`='AVAILABLE'
+		<if test="username != null and username != ''">
+			AND A.username LIKE #{_username}
+		</if>
+	</select>
+	<update id="updateUserRole">
+		UPDATE system_user_role A
+			SET A.role_id=#{role_id},
+				A.cust_id=#{cust_id}
+		WHERE A.user_id=#{user_id}
+	</update>
+	<update id="updateUser" parameterType="com.github.cjm0000000.mmt.web.system.bean.User">
+		UPDATE system_user A
+		<set>
+			<if test="username != null and username != '' ">
+				A.username=#{username},
+			</if>
+			<if test="idcard != null and idcard !='' ">
+				A.idcard=#{idcard},
+			</if>
+			<if test="islock != null and islock != '' ">
+				A.islock=#{islock},
+			</if>
+			<if test="status != null and status != '' ">
+				A.status=#{status},
+			</if>
+			<if test="mphone != null and mphone != '' ">
+				A.mphone=#{mphone},
+			</if>
+			<if test="bz != null and bz != '' ">
+				A.bz=#{bz},
+			</if>	
+			<if test="xm != null and xm != '' ">
+				A.xm=#{xm}
+			</if>
+		</set>
+			WHERE A.user_id=#{user_id}
+	</update>
+</mapper>

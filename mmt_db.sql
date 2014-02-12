@@ -316,17 +316,6 @@ CREATE TABLE `msg_recv_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息接收汇总表';
 
 #
-# 事件消息接收表
-#
-CREATE TABLE `msg_recv_event` (
-  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
-  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
-  `eventType` varchar(11) NOT NULL DEFAULT '' COMMENT '事件类型',
-  `eventKey` char(64) NOT NULL DEFAULT '' COMMENT '事件KEY',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='事件消息接收表';
-
-#
 # 图片消息接收表
 #
 CREATE TABLE `msg_recv_image` (
@@ -428,7 +417,7 @@ CREATE TABLE `msg_recv_voice_weixin` (
   `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
   `mediaId` char(64) NOT NULL,
   `format` varchar(10) NOT NULL DEFAULT '' COMMENT '格式',
-  `recognition` varchar(255) NOT NULL,
+  `recognition` varchar(255) default '' COMMENT '语音识别结果',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信语音消息接收表';
 
@@ -546,6 +535,50 @@ CREATE TABLE `msg_send_text` (
   `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '文本内容',
   PRIMARY KEY (`detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本消息发送表';
+
+#
+# KeyEvent接收表
+#
+CREATE TABLE `event_recv_key` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventKey` varchar(255) NOT NULL DEFAULT '' COMMENT '事件KEY',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='KeyEvent接收表';
+
+#
+# LocationEvent接收表
+#
+CREATE TABLE `event_recv_location` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `latitude` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置纬度',
+  `longitude` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置经度',
+  `precision` varchar(20) NOT NULL DEFAULT '' COMMENT '地理位置精度',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='LocationEvent接收表';
+
+#
+# ScanEvent接收表
+#
+CREATE TABLE `event_recv_scan` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventType` varchar(20) NOT NULL DEFAULT '' COMMENT '事件类型',
+  `eventKey` varchar(255) NOT NULL DEFAULT '' COMMENT '事件KEY',
+  `ticket` varchar(255) NOT NULL DEFAULT '' COMMENT '二维码的ticket',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ScanEvent接收表';
+
+#
+# SimpleEvent接收表
+#
+CREATE TABLE `event_recv_simple` (
+  `detail_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '对应detail表ID',
+  `cust_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户编号',
+  `eventType` varchar(20) NOT NULL DEFAULT '' COMMENT '事件类型',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='SimpleEvent接收表';
 
 #############################  CONFIG   #############################
 #

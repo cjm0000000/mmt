@@ -1,6 +1,6 @@
 $(function() {
 	//监听接口开关
-	$('#interface-switch').on('switch-change', function (e, data) {
+	$('#wxservice').on('switch-change', function (e, data) {
 	    if(data.value){
 	    	$("#form-main").css('display','inline');
 	    	$(".wx-config").attr('disabled',false);
@@ -10,7 +10,7 @@ $(function() {
 	});
 	
 	//监听服务号开关
-	$('#service-no').on('switch-change', function (e, data) {
+	$('#service-switch').on('switch-change', function (e, data) {
 	    if(data.value){
 	    	$("#service-require").css('display','inline');
 	    }else{
