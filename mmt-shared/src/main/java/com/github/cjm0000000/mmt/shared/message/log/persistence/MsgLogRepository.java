@@ -16,12 +16,13 @@ import com.github.cjm0000000.mmt.shared.message.log.MsgLog;
 @Repository
 public interface MsgLogRepository {
 
-	/**
-	 * save message log
-	 * @param method
-	 * @param log
-	 * @return
-	 */
-	@Insert("INSERT INTO msg_${method}_log(id,cust_id,service_type,msg,timestamp) VALUES(#{log.id},#{log.cust_id},#{log.service_type},#{log.msg},now())")
-	int saveMsgLog(@Param("method") String method, @Param("log") MsgLog log);
+  /**
+   * save message log
+   * 
+   * @param method
+   * @param log
+   * @return
+   */
+  @Insert("INSERT INTO msg_${method}_log(id,cust_id,service_type,msg,timestamp) VALUES(#{log.id},#{log.cust_id},#{log.service_type},#{log.msg},now())")
+  int saveMsgLog(@Param("method") String method, @Param("log") MsgLog log);
 }
